@@ -1,1 +1,5 @@
-# EECS494_Project_3
+Contributors:
+    Alex Levine     (alexml)
+    James Perretta  (jameslp)
+    Mariah Breakey  (mbreakey)
+    Tyler Friedman  (tyfried)
