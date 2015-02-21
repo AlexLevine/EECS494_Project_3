@@ -1,0 +1,28 @@
+2 players at once
+llama character
+    can pick up Ninja and throw him over gaps
+    Can shoot fire
+    Different speed than ninja?
+
+
+
+ninja character
+    Able to sprint
+    Able to use stealth (smoke bombs)
+    can shoot ice
+
+class hierarchy
+Level design
+    Fixed angled camera
+
+Movement and jumping for players
+
+Enemy
+    Touch it and it damages you
+    basic movement 
+    Line of sight movement
+    Certain enemies can only be hurt by fire
+        Fireball enemies must be hit with ice
+        Water based enemies must be frozen
+        (temporary? does it kill them permanently?)
+
