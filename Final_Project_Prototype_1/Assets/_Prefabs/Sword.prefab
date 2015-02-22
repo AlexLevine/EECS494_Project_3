@@ -12,7 +12,6 @@ GameObject:
   - 65: {fileID: 6550370}
   - 23: {fileID: 2350370}
   - 54: {fileID: 5450370}
-  - 114: {fileID: 11450368}
   - 114: {fileID: 11450370}
   m_Layer: 0
   m_Name: Sword
@@ -28,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10.2700005, y: 0, z: 0}
   m_LocalScale: {x: .100000001, y: .200000003, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,20 +86,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11450368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b5f4ba0e84b6794fb2412dc3ea484d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  center_x: 0
-  center_y: 0
-  start: {x: 5, y: 5}
 --- !u!114 &11450370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,9 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5f4ba0e84b6794fb2412dc3ea484d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player_name1: Llama
+  player_name2: Ninja
+  start_location: {fileID: 0}
   center_x: 0
   center_y: 0
-  start: {x: 5, y: 5}
+  start: {x: 5, y: 5, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

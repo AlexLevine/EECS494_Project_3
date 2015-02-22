@@ -4,7 +4,7 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    private int health;
+    public int health;
 
     //--------------------------------------------------------------------------
 
@@ -25,6 +25,8 @@ public class Actor : MonoBehaviour
     public virtual void receive_hit(int damage)
     {
         health -= damage;
+        // GetComponent<Flash_animation>().start_animation();
+
         if (health <= 0)
         {
             on_death();

@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 60876720}
   - 108: {fileID: 60876719}
+  - 114: {fileID: 60876721}
   m_Layer: 0
   m_Name: Directional light
   m_TagString: Untagged
@@ -137,6 +138,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &60876721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 60876718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bcaf690de0d4166bbf8c27e497d57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on_ground: 0
+  teamed_up: 0
 --- !u!1001 &104692771
 Prefab:
   m_ObjectHideFlags: 0
@@ -227,9 +241,11 @@ GameObject:
   - 33: {fileID: 801630191}
   - 65: {fileID: 801630190}
   - 23: {fileID: 801630189}
+  - 114: {fileID: 801630193}
+  - 114: {fileID: 801630194}
   m_Layer: 0
   m_Name: player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -285,6 +301,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &801630193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 801630188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &801630194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 801630188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bcaf690de0d4166bbf8c27e497d57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on_ground: 0
+  teamed_up: 0
 --- !u!1 &1186833589
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,9 +336,11 @@ GameObject:
   - 33: {fileID: 1186833592}
   - 65: {fileID: 1186833591}
   - 23: {fileID: 1186833590}
+  - 114: {fileID: 1186833594}
+  - 114: {fileID: 1186833595}
   m_Layer: 0
   m_Name: player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -354,6 +396,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &1186833594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1186833589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1186833595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1186833589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba20cea81f174810852a4aa2660cf7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on_ground: 0
+  teamed_up: 0
+  ice_projectile_prefab: {fileID: 0}
 --- !u!1 &1489643484
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,6 +519,7 @@ GameObject:
   - 54: {fileID: 2051236687}
   - 114: {fileID: 2051236689}
   - 114: {fileID: 2051236688}
+  - 114: {fileID: 2051236690}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -561,3 +629,14 @@ MonoBehaviour:
   center_x: 0
   center_y: 0
   start: {x: 5, y: 5, z: 0}
+--- !u!114 &2051236690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2051236682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
