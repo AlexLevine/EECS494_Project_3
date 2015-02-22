@@ -155,10 +155,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 190476621}
   - 33: {fileID: 190476620}
-  - 65: {fileID: 190476619}
   - 23: {fileID: 190476618}
   - 54: {fileID: 190476617}
   - 114: {fileID: 190476616}
+  - 65: {fileID: 190476619}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -225,9 +225,8 @@ Renderer:
 --- !u!65 &190476619
 BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6550370, guid: e4a1cf38ddf755744970ad037ca2c02a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1365671882}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 190476615}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -644,7 +643,8 @@ Prefab:
       propertyPath: player_name1
       value: Llama
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6550370, guid: e4a1cf38ddf755744970ad037ca2c02a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e4a1cf38ddf755744970ad037ca2c02a, type: 2}
   m_RootGameObject: {fileID: 190476615}
   m_IsPrefabParent: 0
