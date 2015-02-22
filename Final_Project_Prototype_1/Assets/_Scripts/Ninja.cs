@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
+
+    public GameObject ice_projectile_prefab;
+
     // Use this for initialization
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }// Start
@@ -12,29 +15,25 @@ public class Ninja : Player_character
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
     }// Update
 
     //--------------------------------------------------------------------------
 
-    protected override void get_input()
-    {
-        base.get_input();
-        print("ninja get input");
-    }// get_input
-
-    //--------------------------------------------------------------------------
-
-    protected override void elemental_attack()
+    public override void elemental_attack()
     {
         print("ice!!");
+        GameObject shooty_ice_box = Instantiate(ice_projectile_prefab, transform.position, transform.rotation) as GameObject;
+        shooty_ice_box.rigidbody.velocity = transform.forward * 12;
+
+
     }// elemental_attack
 
     //--------------------------------------------------------------------------
 
-    protected override int max_health
+    public override int max_health
     {
         get
         {
@@ -44,7 +43,7 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int run_speed
+    public override int run_speed
     {
         get
         {
@@ -54,7 +53,7 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int sprint_speed
+    public override int sprint_speed
     {
         get
         {
@@ -64,7 +63,7 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int jump_speed
+    public override int jump_speed
     {
         get
         {

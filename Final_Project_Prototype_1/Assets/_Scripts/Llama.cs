@@ -4,7 +4,7 @@ using System.Collections;
 public class Llama : Player_character
 {
     // Use this for initialization
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }// Start
@@ -12,18 +12,10 @@ public class Llama : Player_character
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
     }// Update
-
-    //--------------------------------------------------------------------------
-
-    protected override void get_input()
-    {
-        base.get_input();
-        print("llama get input");
-    }// get_input
 
     //--------------------------------------------------------------------------
 
@@ -34,14 +26,17 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override void elemental_attack()
+    public override void elemental_attack()
     {
         print("thermite!");
+        var flame_thrower = transform.Find("fire_breath");
+
+        flame_thrower.gameObject.active = true;
     }// elemental_attack
 
     //--------------------------------------------------------------------------
 
-    protected override int max_health
+    public override int max_health
     {
         get
         {
@@ -51,7 +46,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int run_speed
+    public override int run_speed
     {
         get
         {
@@ -61,7 +56,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int sprint_speed
+    public override int sprint_speed
     {
         get
         {
@@ -71,7 +66,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override int jump_speed
+    public override int jump_speed
     {
         get
         {

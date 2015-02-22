@@ -4,8 +4,10 @@ using System;
 
 public class Player_character : Actor
 {
+    public bool on_ground;
+
     // Use this for initialization
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }// Start
@@ -13,44 +15,53 @@ public class Player_character : Actor
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
-
-        get_input();
     }// Update
 
     //--------------------------------------------------------------------------
 
-    protected override void on_death()
+    public override void on_death()
     {
         print("you die!");
     }// on_death
 
     //--------------------------------------------------------------------------
 
-    protected virtual void get_input()
-    {
-        throw new Exception("Derived classes must override this method");
-    }// get_input
-
-    //--------------------------------------------------------------------------
-
-    protected virtual void elemental_attack()
+    public virtual void elemental_attack()
     {
         throw new Exception("Derived classes must override this method");
     }// elemental_attack
 
     //--------------------------------------------------------------------------
 
-    protected void run()
+    public void run(Vector3 tilt)
     {
+        float horiz_speed = run_speed * tilt.x;
+        float z_speed = run_speed * tilt.z;
+
+        Vector3 new_speed = rigidbody.velocity;
+
+        new_speed.x = horiz_speed;
+        new_speed.z = z_speed;
+
+        rigidbody.velocity = new_speed; 
+
+        if(tilt == Vector3.zero)
+        {
+            return;
+        }
+
+        var turn_to = Mathf.Atan2(tilt.x, tilt.z) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(0, turn_to, 0); 
 
     }// run
 
     //--------------------------------------------------------------------------
 
-    protected virtual int run_speed
+    public virtual int run_speed
     {
         get
         {
@@ -60,14 +71,14 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected void sprint()
+    public void sprint()
     {
 
     }// sprint
 
     //--------------------------------------------------------------------------
 
-    protected virtual int sprint_speed
+    public virtual int sprint_speed
     {
         get
         {
@@ -77,18 +88,43 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected void jump()
+    public void jump()
     {
+        if(!on_ground)
+        {
+            return;
+        }
+
+        Vector3 new_speed = rigidbody.velocity;
+        new_speed.y = jump_speed; 
+        rigidbody.velocity = new_speed;
 
     }// jump
 
     //--------------------------------------------------------------------------
 
-    protected virtual int jump_speed
+    public virtual int jump_speed
     {
         get
         {
             throw new Exception("Derived classes must override this property");
         }
     }// jump_speed
+
+    void OnCollisionEnter(Collision collision){
+        if(collision.gameObject.name.Contains("Floor"))
+        {
+            print("On Ground");
+            on_ground = true; 
+        }
+    }
+
+    void OnCollisionExit(Collision collision){
+        if(collision.gameObject.name.Contains("Floor"))
+        {
+            print("Leaving Ground");
+            on_ground = false; 
+        }
+    }
+
 }

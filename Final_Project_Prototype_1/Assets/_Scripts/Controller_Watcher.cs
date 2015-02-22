@@ -5,8 +5,12 @@ using InControl;
 public class Controller_Watcher : MonoBehaviour {
     public InputDevice device{get; set;}
 
+    Player_character this_actor; 
+
     void Start()
     {
+        this_actor = GetComponent<Player_character>();
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -18,19 +22,21 @@ public class Controller_Watcher : MonoBehaviour {
             return; 
         }
 
+        if (device.GetControl(InputControlType.Action1).WasPressed)
+        {
+            this_actor.jump();
+        }
 
-        if (device.GetControl( InputControlType.Action1 ))
+        if (device.GetControl(InputControlType.Action2).WasPressed)
         {
-            rigidbody.AddForce(Vector3.up * 10);
+            this_actor.elemental_attack();
         }
-        var horiz_movement = device.GetControl( InputControlType.LeftStickX);
-        if (horiz_movement < 0)
-        {
-            rigidbody.AddForce(Vector3.left * 10);
-        }
-        if (horiz_movement > 0)
-        {
-            rigidbody.AddForce(Vector3.right * 10);
-        }
+
+
+        var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
+        var horiz_tilt = device.GetControl( InputControlType.LeftStickX);
+        var tilt = new Vector3(horiz_tilt, 0, vertical_tilt);
+        this_actor.run(tilt);
+
     }
 }

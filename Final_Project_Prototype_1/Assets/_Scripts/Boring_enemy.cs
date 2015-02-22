@@ -4,7 +4,7 @@ using System.Collections;
 public class Boring_enemy : Enemy
 {
     // Use this for initialization
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }// Start
@@ -12,14 +12,14 @@ public class Boring_enemy : Enemy
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    protected override void Update ()
+    public override void Update ()
     {
         base.Update();
     }// Update
 
     //--------------------------------------------------------------------------
 
-    protected override int max_health
+    public override int max_health
     {
         get
         {
@@ -29,7 +29,7 @@ public class Boring_enemy : Enemy
 
     //--------------------------------------------------------------------------
 
-    protected override int attack_power
+    public override int attack_power
     {
         get
         {

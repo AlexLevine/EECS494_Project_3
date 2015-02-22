@@ -5,7 +5,7 @@ using System;
 public class Enemy : Actor
 {
     // Use this for initialization
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }// Start
@@ -13,7 +13,7 @@ public class Enemy : Actor
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    protected override void Update ()
+    public override void Update ()
     {
         base.Update();
     }// Update
@@ -30,7 +30,7 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    protected virtual int attack_power
+    public virtual int attack_power
     {
         get
         {

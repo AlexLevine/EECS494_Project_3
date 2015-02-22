@@ -8,14 +8,14 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         health = max_health;
     }// Start()
 
     //--------------------------------------------------------------------------
 
-    protected virtual void Update()
+    public virtual void Update()
     {
 
     }// Update()
@@ -33,14 +33,14 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    protected virtual void on_death()
+    public virtual void on_death()
     {
 
     }// on_death
 
     //--------------------------------------------------------------------------
 
-    protected virtual int max_health
+    public virtual int max_health
     {
         get
         {
