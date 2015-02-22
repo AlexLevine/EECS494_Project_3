@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5f4ba0e84b6794fb2412dc3ea484d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   player_name1: Llama
   player_name2: Ninja
   start_location: {fileID: 0}
@@ -370,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88bcaf690de0d4166bbf8c27e497d57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   on_ground: 0
   teamed_up: 0
 --- !u!114 &730029638
@@ -643,6 +645,7 @@ GameObject:
   - 92: {fileID: 1489643487}
   - 124: {fileID: 1489643486}
   - 81: {fileID: 1489643485}
+  - 114: {fileID: 1489643490}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -709,12 +712,23 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1489643484}
-  m_LocalRotation: {x: .15028584, y: .00647721393, z: .000984625542, w: .988620937}
+  m_LocalRotation: {x: .382686585, y: .00555902021, z: -.000742140575, w: .923861206}
   m_LocalPosition: {x: 1, y: .5, z: -6.80000019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1489643490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1489643484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc5bfd0493de468d839ccf18c7f474a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1571183633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba20cea81f174810852a4aa2660cf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   on_ground: 0
   teamed_up: 0
   ice_projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358,
