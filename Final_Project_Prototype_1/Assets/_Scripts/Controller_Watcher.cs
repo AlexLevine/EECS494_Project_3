@@ -32,6 +32,15 @@ public class Controller_Watcher : MonoBehaviour {
             this_actor.elemental_attack();
         }
 
+        if (device.GetControl(InputControlType.Action3).WasPressed)
+        {
+            this_actor.team_up_engage();
+        }
+
+        if (device.GetControl(InputControlType.Action4).WasPressed)
+        {
+            this_actor.throw_ninja();
+        }
 
         var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
         var horiz_tilt = device.GetControl( InputControlType.LeftStickX);

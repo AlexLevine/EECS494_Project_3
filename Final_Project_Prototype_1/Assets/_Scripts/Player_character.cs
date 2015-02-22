@@ -5,6 +5,7 @@ using System;
 public class Player_character : Actor
 {
     public bool on_ground;
+    public bool teamed_up = false;
 
     // Use this for initialization
     public override void Start()
@@ -88,12 +89,8 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void jump()
+    public virtual void jump()
     {
-        if(!on_ground)
-        {
-            return;
-        }
 
         Vector3 new_speed = rigidbody.velocity;
         new_speed.y = jump_speed; 
@@ -111,6 +108,22 @@ public class Player_character : Actor
         }
     }// jump_speed
 
+    //--------------------------------------------------------------------------
+
+    public virtual void throw_ninja()
+    {
+        
+    }// throw_ninja
+
+    //--------------------------------------------------------------------------
+
+    public virtual void team_up_engage()
+    {
+        
+    }// team_up_engage
+
+    //--------------------------------------------------------------------------
+
     void OnCollisionEnter(Collision collision){
         if(collision.gameObject.name.Contains("Floor"))
         {
@@ -126,5 +139,4 @@ public class Player_character : Actor
             on_ground = false; 
         }
     }
-
 }

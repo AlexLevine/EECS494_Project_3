@@ -19,10 +19,38 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    void pick_up_or_throw_ninja()
+    public override void jump()
     {
+        if(!on_ground)
+        {
+            return;
+        }
 
-    }// pick_up_or_throw_ninja
+        base.jump();
+    }
+
+    //--------------------------------------------------------------------------
+
+    public override void throw_ninja()
+    {
+        if (!teamed_up)
+        {
+            return;
+        }
+
+        var ninja = GameObject.Find("Ninja");
+
+        teamed_up = false;
+        ninja.GetComponent<Player_character>().teamed_up = false;
+
+        var new_ninja_velocity = Vector3.one;// transform.forward;
+        // new_ninja_velocity.x *= 5;
+        new_ninja_velocity.y *= 15;
+        // new_ninja_velocity.z *= 5;
+
+        ninja.rigidbody.velocity = new_ninja_velocity;
+
+    }// throw_ninja
 
     //--------------------------------------------------------------------------
 
