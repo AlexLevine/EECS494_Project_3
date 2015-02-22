@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sword_script : MonoBehaviour {
-
-    private int health = 3;
+public class Sword_script : Enemy {
     
     private float speed = 4f;
 
     //the 2 players that the sword targets
-    const string player_name1 = "player1";
-    const string player_name2 = "player2";
+    public string player_name1 = "Llama";
+    public string player_name2 = "Ninja";
 
     private float rand_speed;
     
@@ -28,11 +26,44 @@ public class Sword_script : MonoBehaviour {
     
     private Color originalColor;
 
-    
+    public override int attack_power
+    {
+        get 
+        {
+            return 1; 
+        }
+    }
+
+    public override int max_health
+    {
+        get 
+        {
+            return 3; 
+        }
+    }
+
+    public override void on_player_hit()
+    {
+        base.on_player_hit();
+        Destroy(gameObject, 0.2f);
+
+    }
+
+
     // Use this for initialization
     void Start () 
     {
-        start = start_location.transform.position; 
+        if(start_location != null)
+        {
+            start = start_location.transform.position;  
+        }
+        else
+        {
+            start = transform.position; 
+        }
+
+        
+
 
         originalColor = renderer.material.color;
         dest = new Vector3 (0, 0, 0);
@@ -93,28 +124,5 @@ public class Sword_script : MonoBehaviour {
                 Quaternion.LookRotation(this.rigidbody.velocity),
                 Time.deltaTime * speed);
         }
-    }
-    
-    public void Damage(int damageAmount)
-    {
-        health -= damageAmount;
-
-        if (health <= 0) {
-            // dead
-            Destroy(gameObject);
-
-        }
-        StartCoroutine (flashSprite ());
-    }
-
-    public IEnumerator flashSprite() 
-    {
-        for (int i = 0; i < 5; ++i) {
-            renderer.material.color = Color.white;
-            yield return new WaitForSeconds(.1f);
-            renderer.material.color = originalColor;
-            yield return new WaitForSeconds(.1f);
-        }
-        renderer.material.color = originalColor;
     }
 }

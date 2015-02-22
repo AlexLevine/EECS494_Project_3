@@ -18,6 +18,8 @@ public class Enemy : Actor
         base.Update();
     }// Update
 
+    public virtual void on_player_hit(){}
+
     //--------------------------------------------------------------------------
 
     void OnCollisionEnter(Collision c)
@@ -25,6 +27,7 @@ public class Enemy : Actor
         if (c.gameObject.tag == "Player")
         {
             c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
+            on_player_hit();
         }
     }// OnCollisionEnter
 
@@ -37,4 +40,10 @@ public class Enemy : Actor
             throw new Exception("Derived classes must override this property");
         }
     }// attack_power
+
+
+    public override void on_death()
+    {
+        Destroy(gameObject);
+    }// on_death
 }
