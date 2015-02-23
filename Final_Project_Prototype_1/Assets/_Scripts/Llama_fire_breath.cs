@@ -4,16 +4,16 @@ using System.Collections;
 public class Llama_fire_breath : MonoBehaviour {
 
     public float duration{get{return 3f;}}
-    private float time_elapsed = 0; 
+    private float time_elapsed = 0;
 
     void Update()
     {
-        time_elapsed += Time.deltaTime; 
+        time_elapsed += Time.deltaTime;
 
         if(duration <= time_elapsed)
         {
-            active = false; 
-            time_elapsed = 0; 
+            gameObject.SetActive(false);
+            time_elapsed = 0;
         }
     }
 
