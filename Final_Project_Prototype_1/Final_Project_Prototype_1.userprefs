@@ -1,12 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Sword_script.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Health_gui.cs">
     <Files>
-      <File FileName="Assets\_Scripts\Sword_script.cs" Line="127" Column="3" />
-      <File FileName="Assets\_Scripts\Ice.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Room.cs" Line="8" Column="3" />
-      <File FileName="Assets\_Scripts\Pit.cs" Line="10" Column="55" />
-      <File FileName="Assets\_Scripts\Fireball.cs" Line="8" Column="38" />
+      <File FileName="Assets\_Scripts\Controller_Watcher.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Llama.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Llama_fire_breath.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Ice_Projectile.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Ninja.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Enemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Add_Controllers.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Actor.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Pit.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Player_character.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Health_gui.cs" Line="13" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
