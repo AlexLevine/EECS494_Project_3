@@ -59,7 +59,7 @@ public class Llama : Player_character
         print("thermite!");
         var flame_thrower = transform.Find("fire_breath");
 
-        flame_thrower.gameObject.active = true;
+        flame_thrower.gameObject.SetActive(true);
     }// elemental_attack
 
     //--------------------------------------------------------------------------
