@@ -18,13 +18,15 @@ public class Meltable : MonoBehaviour {
         {
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime);
         }
+        if(transform.localScale == Vector3.zero)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other){
-        print("HELLO!");
         if(other.gameObject.name.Contains("fire_breath"))
         {
-            print("Setting Melting to true");
             melting = true; 
             //Destroy(gameObject);
         }
