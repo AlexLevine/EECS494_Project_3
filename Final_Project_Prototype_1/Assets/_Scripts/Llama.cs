@@ -45,7 +45,7 @@ public class Llama : Player_character
 
         var new_ninja_velocity = Vector3.one;// transform.forward;
         // new_ninja_velocity.x *= 5;
-        new_ninja_velocity.y *= 15;
+        new_ninja_velocity.y *= 10;
         // new_ninja_velocity.z *= 5;
 
         ninja.rigidbody.velocity = new_ninja_velocity;
