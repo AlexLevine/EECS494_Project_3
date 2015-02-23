@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Camera_follow : MonoBehaviour
 {
-    public static float min_camera_distance = 4f;
+    public static float min_camera_distance = 6f;
     // public static float camera_y_distance = 4f;
 
     // Use this for initialization
@@ -20,8 +20,10 @@ public class Camera_follow : MonoBehaviour
 
         var distance = llama.transform.position - ninja.transform.position;
 
-        var camera_distance = Mathf.Max(
-            Mathf.Abs(distance.x), Mathf.Abs(distance.z));
+        var camera_distance = Mathf.Max(new float[] {
+            Mathf.Abs(distance.x), Mathf.Abs(distance.y), Mathf.Abs(distance.z)
+        });
+
         camera_distance = Mathf.Max(min_camera_distance, camera_distance);
 
         var midpoint = Vector3.Lerp(
@@ -29,7 +31,7 @@ public class Camera_follow : MonoBehaviour
 
         var new_camera_pos = midpoint;
         new_camera_pos.z -= camera_distance;
-        new_camera_pos.y += camera_distance / 2f;
+        new_camera_pos.y += camera_distance;
 
         transform.position = new_camera_pos;
     }
