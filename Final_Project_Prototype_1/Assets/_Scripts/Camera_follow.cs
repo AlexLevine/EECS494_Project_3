@@ -13,7 +13,7 @@ public class Camera_follow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         var llama = GameObject.Find("Llama");
         var ninja = GameObject.Find("Ninja");
