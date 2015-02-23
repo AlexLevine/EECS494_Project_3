@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Llama_fire_breath : MonoBehaviour {
 
-    public float duration{get{return 3f;}}
+    public float duration{get{return 1f;}}
     private float time_elapsed = 0; 
 
     void Update()
