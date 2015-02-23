@@ -10,5 +10,11 @@ public class Ice_Projectile : MonoBehaviour
         {
             enemy.receive_hit(9001);
         }
+        if(other.tag == "Player")
+        {
+            return; 
+        }
+        
+        Destroy(gameObject);
     }
 }

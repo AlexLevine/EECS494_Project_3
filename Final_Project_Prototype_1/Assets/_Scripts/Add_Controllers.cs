@@ -55,6 +55,10 @@ public class Add_Controllers : MonoBehaviour {
     }
 
     void OnGUI(){
+        if(waiting_for_player == players_set_e.DONE)
+        {
+            return; 
+        }
         GUI.Box(new Rect(0, 0, 220, 25), "Assigning Controllers");    
         
         switch(waiting_for_player){

@@ -18,7 +18,7 @@ public class Meltable : MonoBehaviour {
         {
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime);
         }
-        if(transform.localScale == Vector3.zero)
+        if(transform.localScale.x <= 0.2f)
         {
             Destroy(gameObject);
         }

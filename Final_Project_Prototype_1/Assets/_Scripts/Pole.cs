@@ -31,4 +31,12 @@ public class Pole : MonoBehaviour {
             llama = true;
         }
     }
+
+    void OnGUI()
+    {
+        if(level_over)
+        {
+            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "You're Winner!");                
+        }
+    }
 }
