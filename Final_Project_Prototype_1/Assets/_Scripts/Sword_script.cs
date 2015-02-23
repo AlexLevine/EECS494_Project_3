@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Sword_script : Enemy {
-    
+
     private float speed = 4f;
 
     //the 2 players that the sword targets
@@ -10,38 +10,38 @@ public class Sword_script : Enemy {
     public string player_name2 = "Ninja";
 
     private float rand_speed;
-    
-    public GameObject start_location; 
+
+    public GameObject start_location;
 
     public float center_x = 0f;
     public float center_y = 0f;
-    
+
     private float leftEdge;
     private float rightEdge;
     private float downEdge;
     private float upEdge;
 
-    public Vector3 start; 
+    public Vector3 start;
     private Vector3 dest;
-    
-    private Color originalColor;
+
+    // private Color originalColor;
 
 	private int locate_timer;
 	const int full_locate_timer = 100;
 
     public override int attack_power
     {
-        get 
+        get
         {
-            return 1; 
+            return 1;
         }
     }
 
     public override int max_health
     {
-        get 
+        get
         {
-            return 3; 
+            return 3;
         }
     }
 
@@ -54,29 +54,26 @@ public class Sword_script : Enemy {
 
 
     // Use this for initialization
-    void Start () 
+    public override void Start()
     {
-        if(start_location != null)
-        {
-            start = start_location.transform.position;  
-        }
-        else
-        {
-            start = transform.position; 
-        }
+        base.Start();
 
-        
+        start = (start_location == null ?
+                 transform.position : start_location.transform.position);
 
-
-        originalColor = renderer.material.color;
+        // originalColor = renderer.material.color;
         dest = new Vector3 (0, 0, 0);
         transform.position = start;
 
 		locate_timer = full_locate_timer;
-    }
-    
-    void Update () 
+    }// Start
+
+    //--------------------------------------------------------------------------
+
+    public override void Update()
     {
+        base.Update();
+
         //Basic Movement
         Vector3 pos = this.transform.position;
 
@@ -87,8 +84,8 @@ public class Sword_script : Enemy {
         if (GameObject.Find(player_name1))
         {
             player1_pos = GameObject.Find(player_name1).transform.position;
-        } 
-        if (GameObject.Find(player_name2)) 
+        }
+        if (GameObject.Find(player_name2))
         {
             player2_pos = GameObject.Find(player_name2).transform.position;
         }
@@ -104,7 +101,7 @@ public class Sword_script : Enemy {
 					dest = pos;
 			}
         	// else if (Mathf.Sqrt(Mathf.Pow((player1_pos.y - pos.y), 2) + Mathf.Pow((player1_pos.x - pos.x), 2)) <
-        	//     Mathf.Sqrt(Mathf.Pow((player2_pos.y - pos.y), 2) + Mathf.Pow((player2_pos.x - pos.x), 2)))  
+        	//     Mathf.Sqrt(Mathf.Pow((player2_pos.y - pos.y), 2) + Mathf.Pow((player2_pos.x - pos.x), 2)))
         	else if (Vector3.Distance (player1_pos, pos) < Vector3.Distance (player2_pos, pos)) {
 					dest = player1_pos;
 			} else {
@@ -114,10 +111,10 @@ public class Sword_script : Enemy {
 
         Vector3 angle = dest - pos;
         angle.Normalize ();
-        
+
         this.rigidbody.velocity = angle * speed;
 
-        if (this.rigidbody.velocity != Vector3.zero) 
+        if (this.rigidbody.velocity != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,

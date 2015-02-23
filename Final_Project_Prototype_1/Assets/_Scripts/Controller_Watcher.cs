@@ -5,7 +5,7 @@ using InControl;
 public class Controller_Watcher : MonoBehaviour {
     public InputDevice device{get; set;}
 
-    Player_character this_actor; 
+    Player_character this_actor;
 
     void Start()
     {
@@ -15,11 +15,11 @@ public class Controller_Watcher : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () 
+    void Update ()
     {
         if(device == null)
         {
-            return; 
+            return;
         }
 
         if (device.GetControl(InputControlType.Action1).WasPressed)
