@@ -60,13 +60,52 @@ namespace Keyboard_controls
 				{
 					Handle = "Jump",
 					Target = InputControlType.Action1,
-					Source = KeyCodeButton( KeyCode.Space )
+					Source = KeyCodeButton( KeyCode.Period )
 				},
 				new InputControlMapping
 				{
 					Handle = "AltJump",
 					Target = InputControlType.Action1,
+					Source = KeyCodeButton( KeyCode.X )
+				},
+
+				new InputControlMapping
+				{
+					Handle = "Projectile",
+					Target = InputControlType.Action2,
 					Source = KeyCodeButton( KeyCode.Comma )
+				},
+				new InputControlMapping
+				{
+					Handle = "AltProjectile",
+					Target = InputControlType.Action1,
+					Source = KeyCodeButton( KeyCode.Z )
+				},
+
+				new InputControlMapping
+				{
+					Handle = "Team up",
+					Target = InputControlType.Action3,
+					Source = KeyCodeButton( KeyCode.M )
+				},
+				new InputControlMapping
+				{
+					Handle = "Alt Team up",
+					Target = InputControlType.Action3,
+					Source = KeyCodeButton( KeyCode.C )
+				},
+
+				new InputControlMapping
+				{
+					Handle = "Throw",
+					Target = InputControlType.Action3,
+					Source = KeyCodeButton( KeyCode.N )
+				},
+				new InputControlMapping
+				{
+					Handle = "Alt Throw",
+					Target = InputControlType.Action3,
+					Source = KeyCodeButton( KeyCode.V )
 				}//,
 				// new InputControlMapping
 				// {
