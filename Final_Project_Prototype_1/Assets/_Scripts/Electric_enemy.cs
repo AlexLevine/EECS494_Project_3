@@ -17,9 +17,10 @@ public class Electric_enemy : Enemy {
 
 	public Vector3 start;
 	
-	
+	//private Color originalColor;
+
 	//Chance that the enemy will change directions
-	private float chanceToChangeDirections = 0.001f;
+	//private float chanceToChangeDirections = 0.001f;
 
 	public override int attack_power
 	{
@@ -40,13 +41,13 @@ public class Electric_enemy : Enemy {
 	public override void on_player_hit()
 	{
 		base.on_player_hit();
-		Destroy(gameObject, 0.2f);
+		//Destroy(gameObject, 0.2f);
 		
 	}
 
 	
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 		base.Start();
 		
 		start = (start_location == null ?
@@ -59,12 +60,19 @@ public class Electric_enemy : Enemy {
 		rightEdge = start.x + offset;
 
 		this.rigidbody.velocity = new Vector3 (speed, 0, 0);
+
+		//originalColor = renderer.material.color;
 		
 	}
 	
-	void Update () {
+	public override void Update() {
+
+		base.Update();
 		//Basic Movement
 		Vector3 pos = transform.position;
+
+//		if (renderer.material.color == originalColor) renderer.material.color = Color.white;
+//		else renderer.material.color = originalColor;
 	
 //		if (Random.value < chanceToChangeDirections){
 //			peo.vel = new Vector2 (speed * rand_speed, peo.vel.y);
