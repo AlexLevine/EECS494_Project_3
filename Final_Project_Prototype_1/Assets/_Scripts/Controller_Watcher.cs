@@ -42,6 +42,11 @@ public class Controller_Watcher : MonoBehaviour {
             this_actor.throw_ninja();
         }
 
+        // if(device.GetControl(InputDevice.RightBumper.WasPressed))
+        // {
+        //     this.actor.special_ability();
+        // }
+
         var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
         var horiz_tilt = device.GetControl( InputControlType.LeftStickX);
         var tilt = new Vector3(horiz_tilt, 0, vertical_tilt);

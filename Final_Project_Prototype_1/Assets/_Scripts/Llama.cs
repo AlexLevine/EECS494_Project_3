@@ -29,6 +29,13 @@ public class Llama : Player_character
         base.jump();
     }
 
+    // public override void special_ability()
+    public void special_ability()
+    { // Tackle / Sprint
+        Vector3 sprint_speed = new Vector3(0, 0, 3);
+        base.run(sprint_speed);
+    }
+
     //--------------------------------------------------------------------------
 
     public override void throw_ninja()
