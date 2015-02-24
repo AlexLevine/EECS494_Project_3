@@ -176,7 +176,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0352ecba195734598bc209263008dfa2, type: 2}
+  - {fileID: 2100000, guid: 4cdaaf838648643dfa6040cba8ff2422, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -875,7 +875,8 @@ MonoBehaviour:
   enableXInput: 0
   useFixedUpdate: 0
   dontDestroyOnLoad: 0
-  customProfiles: []
+  customProfiles:
+  - Keyboard_controls.Keyboard_profile
 --- !u!4 &1913730732
 Transform:
   m_ObjectHideFlags: 0
