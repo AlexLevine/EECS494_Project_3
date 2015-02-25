@@ -158,7 +158,6 @@ public class Player_character : Actor
     void OnCollisionEnter(Collision collision){
         if(collision.gameObject.tag.Contains("floor"))
         {
-            print("On Ground");
             on_ground = true;
         }
     }
@@ -167,7 +166,6 @@ public class Player_character : Actor
     void OnCollisionStay(Collision collision){
         if(collision.gameObject.tag.Contains("floor"))
         {
-            print("On Ground");
             on_ground = true;
         }
     }
@@ -176,7 +174,6 @@ public class Player_character : Actor
     void OnCollisionExit(Collision collision){
         if(collision.gameObject.tag.Contains("floor"))
         {
-            print("Leaving Ground");
             on_ground = false;
         }
     }

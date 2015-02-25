@@ -8,7 +8,8 @@ public class Llama_spit : MonoBehaviour
         var enemy = other.gameObject.GetComponent<Enemy>();
         if(enemy != null)
         {
-            enemy.receive_hit(9001);
+            enemy.receive_hit(1);
+            Timer.num_enemies_killed_by_llama++; 
         }
 
         print(other.gameObject.tag);
@@ -17,7 +18,6 @@ public class Llama_spit : MonoBehaviour
             return;
         }
 
-        print("bye now");
         Destroy(gameObject);
     }
 }
