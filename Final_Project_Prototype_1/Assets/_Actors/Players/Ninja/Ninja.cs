@@ -41,7 +41,6 @@ public class Ninja : Player_character
 
     public override void projectile_attack()
     {
-        print("ice!!");
         GameObject projectile = Instantiate(
             projectile_prefab, transform.position,
             transform.rotation) as GameObject;

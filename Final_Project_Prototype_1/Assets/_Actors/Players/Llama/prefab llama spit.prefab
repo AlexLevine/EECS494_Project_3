@@ -14,7 +14,7 @@ GameObject:
   - 54: {fileID: 5448584}
   - 114: {fileID: 11437398}
   m_Layer: 0
-  m_Name: prefab ninja projectile
+  m_Name: prefab llama spit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 146830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.44000006, y: -1.10000002, z: .400000006}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,7 +44,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d0f5cd70d682c4fb4a042d2a6a1bae67, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 146830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa560d6631c84d11bfdfe213addc8ab, type: 3}
+  m_Script: {fileID: 11500000, guid: fcd6e5ed8216d43bba56bf3f624ab1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &13546830
