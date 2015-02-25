@@ -67,10 +67,14 @@ public class Llama : Player_character
 
     public override void projectile_attack()
     {
-        print("thermite!");
+        var projectile_start_pos = transform.position;
+        print(projectile_start_pos);
+        projectile_start_pos += transform.forward * 1f;
+        projectile_start_pos.y += 1f;
+        print(projectile_start_pos);
 
         GameObject spit = Instantiate(
-            spit_prefab, transform.position,
+            spit_prefab, projectile_start_pos,
             transform.rotation) as GameObject;
         spit.rigidbody.velocity = transform.forward * 12;
     }// projectile_attack
