@@ -26,8 +26,8 @@ public class Sword_script : Enemy {
 
     // private Color originalColor;
 
-	private int locate_timer;
-	const int full_locate_timer = 100;
+    private int locate_timer;
+    const int full_locate_timer = 100;
 
     public override int attack_power
     {
@@ -65,7 +65,7 @@ public class Sword_script : Enemy {
         dest = new Vector3 (0, 0, 0);
         transform.position = start;
 
-		locate_timer = full_locate_timer;
+        locate_timer = full_locate_timer;
     }// Start
 
     //--------------------------------------------------------------------------
@@ -91,23 +91,23 @@ public class Sword_script : Enemy {
         }
 
         if (locate_timer <= 0) {
-			locate_timer = full_locate_timer;
-			// set destination point
-			if (player1_pos == pos && player2_pos != pos) {
-					dest = player2_pos;
-			} else if (player2_pos == pos && player1_pos != pos) {
-					dest = player1_pos;
-			} else if (player2_pos == pos && player1_pos == pos) {
-					dest = pos;
-			}
-        	// else if (Mathf.Sqrt(Mathf.Pow((player1_pos.y - pos.y), 2) + Mathf.Pow((player1_pos.x - pos.x), 2)) <
-        	//     Mathf.Sqrt(Mathf.Pow((player2_pos.y - pos.y), 2) + Mathf.Pow((player2_pos.x - pos.x), 2)))
-        	else if (Vector3.Distance (player1_pos, pos) < Vector3.Distance (player2_pos, pos)) {
-					dest = player1_pos;
-			} else {
-					dest = player2_pos;
-			}
-		} else --locate_timer;
+            locate_timer = full_locate_timer;
+            // set destination point
+            if (player1_pos == pos && player2_pos != pos) {
+                    dest = player2_pos;
+            } else if (player2_pos == pos && player1_pos != pos) {
+                    dest = player1_pos;
+            } else if (player2_pos == pos && player1_pos == pos) {
+                    dest = pos;
+            }
+            // else if (Mathf.Sqrt(Mathf.Pow((player1_pos.y - pos.y), 2) + Mathf.Pow((player1_pos.x - pos.x), 2)) <
+            //     Mathf.Sqrt(Mathf.Pow((player2_pos.y - pos.y), 2) + Mathf.Pow((player2_pos.x - pos.x), 2)))
+            else if (Vector3.Distance (player1_pos, pos) < Vector3.Distance (player2_pos, pos)) {
+                    dest = player1_pos;
+            } else {
+                    dest = player2_pos;
+            }
+        } else --locate_timer;
 
         Vector3 angle = dest - pos;
         angle.Normalize ();

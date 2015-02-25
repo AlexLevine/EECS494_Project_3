@@ -9,13 +9,9 @@ public class Moving_platform : MonoBehaviour
     // Points that the platform should move between.
     public GameObject[] path_nodes;
 
-    public float speed
-    {
-        get
-        {
-            return 3f;
-        }
-    }
+    public bool is_moving; 
+
+    public float speed;
 
     //--------------------------------------------------------------------------
 

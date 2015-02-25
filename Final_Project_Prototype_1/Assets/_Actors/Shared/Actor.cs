@@ -40,6 +40,11 @@ public class Actor : MonoBehaviour
 
     }// on_death
 
+    public virtual void special_ability()
+    {
+        
+    }
+
     //--------------------------------------------------------------------------
 
     public virtual int max_health

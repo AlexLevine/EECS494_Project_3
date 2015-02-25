@@ -1,104 +1,63 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class Electric_enemy : Enemy {
+public class Electric_enemy : Enemy
+{
+    public int destination_index = 0;
 
-	private float speed = 2f;
+    // Points that the platform should move between.
+    public GameObject[] path_nodes;
 
-	public float offset = 5f;
+    public bool is_moving; 
 
-	//Distance where enemy turns around
-	public float leftEdge;
-	public float rightEdge;
-	private float downEdge;
-	private float upEdge;
+    public float speed;
 
-	public GameObject start_location;
+    //--------------------------------------------------------------------------
+    
+    public override int attack_power
+    {
+        get
+        {
+            return 1;
+        }
+    }
 
-	public Vector3 start;
-	
-	//private Color originalColor;
+    public override int max_health
+    {
+        get
+        {
+            return 3;
+        }
+    }
 
-	//Chance that the enemy will change directions
-	//private float chanceToChangeDirections = 0.001f;
+    //--------------------------------------------------------------------------
 
-	public override int attack_power
-	{
-		get
-		{
-			return 1;
-		}
-	}
-	
-	public override int max_health
-	{
-		get
-		{
-			return 3;
-		}
-	}
-	
-	public override void on_player_hit()
-	{
-		base.on_player_hit();
-		//Destroy(gameObject, 0.2f);
-		
-	}
+    void Start()
+    {
+        transform.position = path_nodes[destination_index].transform.position;
+        ++destination_index;
+    }// Start
 
-	
-	// Use this for initialization
-	public override void Start () {
-		base.Start();
-		
-		start = (start_location == null ?
-		         transform.position : start_location.transform.position);
-		
-		// originalColor = renderer.material.color;
-		transform.position = start;
+    //--------------------------------------------------------------------------
 
-		leftEdge = start.x - offset;
-		rightEdge = start.x + offset;
+    void FixedUpdate()
+    {
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            path_nodes[destination_index].transform.position,
+            speed * Time.fixedDeltaTime);
 
-		this.rigidbody.velocity = new Vector3 (speed, 0, 0);
+        var distance_to_dest = Vector3.Distance(
+            transform.position,
+            path_nodes[destination_index].transform.position);
 
-		//originalColor = renderer.material.color;
-		
-	}
-	
-	public override void Update() {
-
-		base.Update();
-		//Basic Movement
-		Vector3 pos = transform.position;
-
-//		if (renderer.material.color == originalColor) renderer.material.color = Color.white;
-//		else renderer.material.color = originalColor;
-	
-//		if (Random.value < chanceToChangeDirections){
-//			peo.vel = new Vector2 (speed * rand_speed, peo.vel.y);
-//		}
-//		else if (Random.value < (chanceToChangeDirections * 2)) { // the 2 makes up for the fact that this
-//			// statement gets called half as much as the one above
-//			peo.vel = new Vector2 (peo.vel.x, speed * rand_speed);
-//		}
-		
-		
-		
-		if (pos.x < leftEdge) {
-			//this.rigidbody.velocity = new Vector3 (speed, 0, 0);
-			speed *= -1f;
-		} else if (pos.x > rightEdge) {
-			//this.rigidbody.velocity = new Vector3 (-speed, 0, 0);
-			speed *= -1f;
-		}
-
-//		if (pos.y > upEdge) {
-//			peo.vel = new Vector2 (peo.vel.x, -speed);
-//		}
-//		if (pos.y < downEdge) {
-//			peo.vel = new Vector2 (peo.vel.x, speed);
-//		}
-		
-			this.rigidbody.velocity = new Vector3 (speed, 0, 0);
-	}
+        var reached_destination = Mathf.Approximately(distance_to_dest, 0);
+        if (!reached_destination)
+        {
+            return;
+        }
+        ++destination_index;
+        destination_index %= path_nodes.Length;
+    }// Update
 }

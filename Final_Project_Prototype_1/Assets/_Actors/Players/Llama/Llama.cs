@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
+
 
 public class Llama : Player_character
 {
@@ -36,8 +38,6 @@ public class Llama : Player_character
     // public override void special_ability()
     public void special_ability()
     { // Tackle / Sprint
-        Vector3 sprint_speed = new Vector3(0, 0, 3);
-        base.run(sprint_speed);
     }
 
     //--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ public class Llama : Player_character
     {
         get
         {
-            return 5;
+            return 7;
         }
     }// jump_speed
 }

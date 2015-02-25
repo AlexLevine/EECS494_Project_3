@@ -42,15 +42,16 @@ public class Controller_Watcher : MonoBehaviour {
             this_actor.throw_ninja();
         }
 
-        // if(device.GetControl(InputDevice.RightBumper.WasPressed))
-        // {
-        //     this.actor.special_ability();
-        // }
+        bool sprint = false; 
+        if(device.GetControl(InputControlType.RightBumper).IsPressed)
+        {
+            sprint = true; 
+        }
 
         var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
         var horiz_tilt = device.GetControl( InputControlType.LeftStickX);
         var tilt = new Vector3(horiz_tilt, 0, vertical_tilt);
-        this_actor.run(tilt);
+        this_actor.run(tilt, sprint);
 
     }
 }

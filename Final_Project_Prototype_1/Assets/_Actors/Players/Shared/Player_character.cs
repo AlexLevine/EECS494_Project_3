@@ -37,7 +37,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void run(Vector3 tilt)
+    public void run(Vector3 tilt, bool sprint)
     {
         // if (hit_edge_of_screen(GameObject.Find("Llama")) ||
         //     hit_edge_of_screen(GameObject.Find("Ninja")))
@@ -45,8 +45,16 @@ public class Player_character : Actor
         //     return;
         // }
 
-        float horiz_speed = run_speed * tilt.x;
-        float z_speed = run_speed * tilt.z;
+        var speed = run_speed; 
+
+        if(sprint)
+        {
+            speed = sprint_speed;
+        }
+
+
+        float horiz_speed = (float)(speed * tilt.x);
+        float z_speed = (float)(speed * tilt.z);
 
         Vector3 new_speed = rigidbody.velocity;
 
@@ -157,6 +165,22 @@ public class Player_character : Actor
 
     void OnCollisionExit(Collision collision){
         if(collision.gameObject.tag.Contains("floor"))
+        {
+            print("Leaving Ground");
+            on_ground = false;
+        }
+    }
+
+    void OnTriggerStay(Collider other){
+        if(other.gameObject.tag.Contains("floor"))
+        {
+            print("On Ground");
+            on_ground = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+        if(other.gameObject.tag.Contains("floor"))
         {
             print("Leaving Ground");
             on_ground = false;
