@@ -163,6 +163,16 @@ public class Player_character : Actor
         }
     }
 
+
+    void OnCollisionStay(Collision collision){
+        if(collision.gameObject.tag.Contains("floor"))
+        {
+            print("On Ground");
+            on_ground = true;
+        }
+    }
+
+
     void OnCollisionExit(Collision collision){
         if(collision.gameObject.tag.Contains("floor"))
         {
@@ -171,19 +181,19 @@ public class Player_character : Actor
         }
     }
 
-    void OnTriggerStay(Collider other){
-        if(other.gameObject.tag.Contains("floor"))
-        {
-            print("On Ground");
-            on_ground = true;
-        }
-    }
+    // void OnTriggerStay(Collider other){
+    //     if(other.gameObject.tag.Contains("floor"))
+    //     {
+    //         print("On Ground");
+    //         on_ground = true;
+    //     }
+    // }
 
-    void OnTriggerExit(Collider other){
-        if(other.gameObject.tag.Contains("floor"))
-        {
-            print("Leaving Ground");
-            on_ground = false;
-        }
-    }
+    // void OnTriggerExit(Collider other){
+    //     if(other.gameObject.tag.Contains("floor"))
+    //     {
+    //         print("Leaving Ground");
+    //         on_ground = false;
+    //     }
+    // }
 }

@@ -3120,7 +3120,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 403014573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.20000005, y: -7.19999981, z: 48.5}
+  m_LocalPosition: {x: 2.20000005, y: -12.1999998, z: 48.5}
   m_LocalScale: {x: 10, y: 30, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6881,6 +6881,10 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11420648, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: projectile_prefab
+      value: 
+      objectReference: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
   m_RootGameObject: {fileID: 2043862545}
@@ -13716,7 +13720,7 @@ Transform:
   m_PrefabInternal: {fileID: 2083038515}
   m_GameObject: {fileID: 1696683374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.70000005, y: 8.60000038, z: 49.7000008}
+  m_LocalPosition: {x: 2.70000005, y: 4.4000001, z: 49.7000008}
   m_LocalScale: {x: .5, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16283,7 +16287,7 @@ MonoBehaviour:
   health: 0
   on_ground: 0
   teamed_up: 0
-  projectile_prefab: {fileID: 0}
+  projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
 --- !u!114 &2043862553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16472,7 +16476,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494828, guid: cc3a9285321d12b46a048173018f524d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8.60000038
+      value: 4.4000001
       objectReference: {fileID: 0}
     - target: {fileID: 494828, guid: cc3a9285321d12b46a048173018f524d, type: 2}
       propertyPath: m_LocalPosition.z
