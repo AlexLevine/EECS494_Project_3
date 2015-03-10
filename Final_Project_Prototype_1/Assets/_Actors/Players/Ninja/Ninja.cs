@@ -50,7 +50,27 @@ public class Ninja : Player_character
     }// projectile_attack
 
     //--------------------------------------------------------------------------
-    public override void team_up_engage()
+
+    public override void physical_attack()
+    {
+        GetComponent<Sword_swing>().swing();
+    }// physical_attack
+
+    //--------------------------------------------------------------------------
+
+    public override void run(Vector3 tilt, bool sprint)
+    {
+        if (GetComponent<Sword_swing>().is_swinging)
+        {
+            return;
+        }
+
+        base.run(tilt, sprint);
+    }
+
+    //--------------------------------------------------------------------------
+
+    public override void team_up_engage_or_throw()
     {
         if (teamed_up)
         {
@@ -69,7 +89,7 @@ public class Ninja : Player_character
 
         teamed_up = true;
         llama_go.GetComponent<Llama>().teamed_up = true;
-    }// team_up_engage
+    }// team_up_engage_or_throw
 
     public override void jump()
     {

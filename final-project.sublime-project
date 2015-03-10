@@ -1,0 +1,10 @@
+{
+    "folders":
+    [
+        {
+            "path": "Final_Project_Prototype_1/Assets",
+            "file_exclude_patterns": ["*.meta"],
+            "file_include_patterns": ["*.cs"]
+        },
+    ],
+}

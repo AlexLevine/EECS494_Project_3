@@ -37,7 +37,14 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void run(Vector3 tilt, bool sprint)
+    public virtual void physical_attack()
+    {
+        throw new Exception("Derived classes must override this method");
+    }// physical_attack
+
+    //--------------------------------------------------------------------------
+
+    public virtual void run(Vector3 tilt, bool sprint)
     {
         // if (hit_edge_of_screen(GameObject.Find("Llama")) ||
         //     hit_edge_of_screen(GameObject.Find("Ninja")))
@@ -45,7 +52,7 @@ public class Player_character : Actor
         //     return;
         // }
 
-        var speed = run_speed; 
+        var speed = run_speed;
 
         if(sprint)
         {
@@ -141,17 +148,17 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void throw_ninja()
-    {
+    // public virtual void throw_ninja()
+    // {
 
-    }// throw_ninja
+    // }// throw_ninja
 
     //--------------------------------------------------------------------------
 
-    public virtual void team_up_engage()
+    public virtual void team_up_engage_or_throw()
     {
 
-    }// team_up_engage
+    }// team_up_engage_or_throw
 
     //--------------------------------------------------------------------------
 

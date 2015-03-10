@@ -38,7 +38,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void throw_ninja()
+    public override void team_up_engage_or_throw()
     {
         if (!teamed_up)
         {
@@ -57,7 +57,7 @@ public class Llama : Player_character
 
         ninja.GetComponent<Rigidbody>().velocity = new_ninja_velocity;
 
-    }// throw_ninja
+    }// team_up_engage_or_throw
 
     //--------------------------------------------------------------------------
 
@@ -72,6 +72,12 @@ public class Llama : Player_character
             transform.rotation) as GameObject;
         spit.GetComponent<Rigidbody>().velocity = transform.forward * 12;
     }// projectile_attack
+
+    //--------------------------------------------------------------------------
+
+    public override void physical_attack()
+    {
+    }// physical_attack
 
     //--------------------------------------------------------------------------
 

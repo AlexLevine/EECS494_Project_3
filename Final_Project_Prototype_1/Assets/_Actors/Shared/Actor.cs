@@ -22,7 +22,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void receive_hit(int damage)
+    public virtual void receive_hit(int damage, GameObject attacker=null)
     {
         health -= damage;
         // GetComponent<Flash_animation>().start_animation();
@@ -42,7 +42,7 @@ public class Actor : MonoBehaviour
 
     public virtual void special_ability()
     {
-        
+
     }
 
     //--------------------------------------------------------------------------

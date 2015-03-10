@@ -34,18 +34,18 @@ public class Controller_Watcher : MonoBehaviour {
 
         if (device.GetControl(InputControlType.Action3).WasPressed)
         {
-            this_actor.team_up_engage();
+            this_actor.team_up_engage_or_throw();
         }
 
         if (device.GetControl(InputControlType.Action4).WasPressed)
         {
-            this_actor.throw_ninja();
+            this_actor.physical_attack();
         }
 
-        bool sprint = false; 
+        bool sprint = false;
         if(device.GetControl(InputControlType.RightBumper).IsPressed)
         {
-            sprint = true; 
+            sprint = true;
         }
 
         var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
