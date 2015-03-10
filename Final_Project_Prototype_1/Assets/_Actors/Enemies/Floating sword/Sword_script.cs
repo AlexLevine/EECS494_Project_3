@@ -112,13 +112,13 @@ public class Sword_script : Enemy {
         Vector3 angle = dest - pos;
         angle.Normalize ();
 
-        this.rigidbody.velocity = angle * speed;
+        this.GetComponent<Rigidbody>().velocity = angle * speed;
 
-        if (this.rigidbody.velocity != Vector3.zero)
+        if (this.GetComponent<Rigidbody>().velocity != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
-                Quaternion.LookRotation(this.rigidbody.velocity),
+                Quaternion.LookRotation(this.GetComponent<Rigidbody>().velocity),
                 Time.deltaTime * speed);
         }
 

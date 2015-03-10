@@ -26,13 +26,13 @@ public class Ninja : Player_character
 
         var llama = GameObject.Find("Llama_Torso");
 
-        var new_ninja_pos = collider.bounds.center;
+        var new_ninja_pos = GetComponent<Collider>().bounds.center;
 
         var y_offset =
-                collider.bounds.extents.y + llama.collider.bounds.extents.y;
-        new_ninja_pos.y = llama.collider.bounds.center.y + y_offset;
-        new_ninja_pos.z = llama.collider.bounds.center.z;
-        new_ninja_pos.x = llama.collider.bounds.center.x;
+                GetComponent<Collider>().bounds.extents.y + llama.GetComponent<Collider>().bounds.extents.y;
+        new_ninja_pos.y = llama.GetComponent<Collider>().bounds.center.y + y_offset;
+        new_ninja_pos.z = llama.GetComponent<Collider>().bounds.center.z;
+        new_ninja_pos.x = llama.GetComponent<Collider>().bounds.center.x;
 
         transform.position = new_ninja_pos;
     }// Update
@@ -44,7 +44,7 @@ public class Ninja : Player_character
         GameObject projectile = Instantiate(
             projectile_prefab, transform.position,
             transform.rotation) as GameObject;
-        projectile.rigidbody.velocity = transform.forward * 12;
+        projectile.GetComponent<Rigidbody>().velocity = transform.forward * 12;
 
 
     }// projectile_attack

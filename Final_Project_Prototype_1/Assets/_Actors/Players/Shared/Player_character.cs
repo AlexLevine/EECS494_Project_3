@@ -56,12 +56,12 @@ public class Player_character : Actor
         float horiz_speed = (float)(speed * tilt.x);
         float z_speed = (float)(speed * tilt.z);
 
-        Vector3 new_speed = rigidbody.velocity;
+        Vector3 new_speed = GetComponent<Rigidbody>().velocity;
 
         new_speed.x = horiz_speed;
         new_speed.z = z_speed;
 
-        rigidbody.velocity = new_speed;
+        GetComponent<Rigidbody>().velocity = new_speed;
 
         if(tilt == Vector3.zero)
         {
@@ -123,9 +123,9 @@ public class Player_character : Actor
     public virtual void jump()
     {
 
-        Vector3 new_speed = rigidbody.velocity;
+        Vector3 new_speed = GetComponent<Rigidbody>().velocity;
         new_speed.y = jump_speed;
-        rigidbody.velocity = new_speed;
+        GetComponent<Rigidbody>().velocity = new_speed;
 
     }// jump
 

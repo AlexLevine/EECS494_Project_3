@@ -59,7 +59,7 @@ public class Llama : Player_character
         new_ninja_velocity.y *= 10;
         // new_ninja_velocity.z *= 5;
 
-        ninja.rigidbody.velocity = new_ninja_velocity;
+        ninja.GetComponent<Rigidbody>().velocity = new_ninja_velocity;
 
     }// throw_ninja
 
@@ -74,7 +74,7 @@ public class Llama : Player_character
         GameObject spit = Instantiate(
             spit_prefab, projectile_start_pos,
             transform.rotation) as GameObject;
-        spit.rigidbody.velocity = transform.forward * 12;
+        spit.GetComponent<Rigidbody>().velocity = transform.forward * 12;
     }// projectile_attack
 
     //--------------------------------------------------------------------------

@@ -16,7 +16,7 @@ public class Pole : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
         if (llama || ninja){
-            renderer.material.color = Color.black;
+            GetComponent<Renderer>().material.color = Color.black;
             level_over = true;
         }
     }
