@@ -9,12 +9,12 @@ public class Electric_enemy : Enemy
     // Points that the platform should move between.
     public GameObject[] path_nodes;
 
-    public bool is_moving; 
+    public bool is_moving;
 
     public float speed;
 
     //--------------------------------------------------------------------------
-    
+
     public override int attack_power
     {
         get
@@ -33,8 +33,9 @@ public class Electric_enemy : Enemy
 
     //--------------------------------------------------------------------------
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
     }// Start

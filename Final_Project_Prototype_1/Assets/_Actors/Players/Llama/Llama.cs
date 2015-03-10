@@ -35,10 +35,6 @@ public class Llama : Player_character
         base.jump();
     }
 
-    // public override void special_ability()
-    public void special_ability()
-    { // Tackle / Sprint
-    }
 
     //--------------------------------------------------------------------------
 
