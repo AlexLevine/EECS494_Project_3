@@ -58,6 +58,29 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
+    public override void team_up_attack(float vertical_tilt, float horizontal_tilt)
+    {
+        GameObject jousting_pole = GameObject.Find("Ninja_Jousting_Pole");
+        if(jousting_pole == null)
+        {
+            print("Ninja_Jousting_Pole does not exist for some reason");
+            return;
+        }
+
+        if(!jousting_pole.activeSelf)
+        {
+            jousting_pole.SetActive(true);
+        }
+
+        float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1, 
+        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+
+
+        // Adjust the tilt that the jousting pole is pointing
+    }
+
+    //--------------------------------------------------------------------------
+
     public override void run(Vector3 tilt, bool sprint)
     {
         if (GetComponent<Sword_swing>().is_swinging)
@@ -89,6 +112,8 @@ public class Ninja : Player_character
 
         teamed_up = true;
         llama_go.GetComponent<Llama>().teamed_up = true;
+        // Turn on jousting pole
+
     }// team_up_engage_or_throw
 
     public override void jump()

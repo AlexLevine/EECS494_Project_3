@@ -42,6 +42,15 @@ public class Controller_Watcher : MonoBehaviour {
             this_actor.physical_attack();
         }
 
+        if(device.GetControl(InputControlType.LeftBumper).IsPressed)
+        {
+            float r_vert = device.GetControl(InputControlType.RightStickY);
+            float r_horz = device.GetControl(InputControlType.RightStickX);
+
+            this_actor.team_up_attack(r_vert, r_horz);
+        }
+
+
         bool sprint = false;
         if(device.GetControl(InputControlType.RightBumper).IsPressed)
         {

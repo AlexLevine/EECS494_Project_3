@@ -44,6 +44,13 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    public virtual void team_up_attack(float vertical_tilt, float horizontal_tilt)
+    {
+        throw new Exception("Derived classes must override this method");
+    }// team_up_attack
+
+    //--------------------------------------------------------------------------
+
     public virtual void run(Vector3 tilt, bool sprint)
     {
         // if (hit_edge_of_screen(GameObject.Find("Llama")) ||
