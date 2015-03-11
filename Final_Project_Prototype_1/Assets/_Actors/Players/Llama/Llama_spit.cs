@@ -8,7 +8,7 @@ public class Llama_spit : MonoBehaviour
         var enemy = other.gameObject.GetComponent<Enemy>();
         if(enemy != null)
         {
-            enemy.receive_hit(1);
+            enemy.on_hit_spit(1);
             Timer.num_enemies_killed_by_llama++; 
         }
 

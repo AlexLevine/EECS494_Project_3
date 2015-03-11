@@ -110,7 +110,15 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    public override void on_death()
+	public virtual void on_hit_charge(int damage)
+	{
+		// default behavior
+		receive_hit (damage);
+	}// on_hit_charge
+	
+	//--------------------------------------------------------------------------
+	
+	public override void on_death()
     {
         enemies.Remove(gameObject);
         foreach (var player in Player_character.players)

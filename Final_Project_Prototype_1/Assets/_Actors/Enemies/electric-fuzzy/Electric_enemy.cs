@@ -10,6 +10,10 @@ public class Electric_enemy : Enemy
     public GameObject[] path_nodes;
 
     public bool is_moving;
+	private bool stunned;
+	private int stunned_timer;
+	const int init_stunned_timer = 200;
+
 
     public float speed;
 
@@ -38,32 +42,51 @@ public class Electric_enemy : Enemy
         base.Start();
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
+		stunned = false;
     }// Start
 
     //--------------------------------------------------------------------------
 
     void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            path_nodes[destination_index].transform.position,
-            speed * Time.fixedDeltaTime);
+        if (!stunned) {
+			transform.position = Vector3.MoveTowards (
+       	    	transform.position,
+       	    	path_nodes [destination_index].transform.position,
+       	    	speed * Time.fixedDeltaTime);
+        	
+			var distance_to_dest = Vector3.Distance (
+            	transform.position,
+       	   		path_nodes [destination_index].transform.position);
+			var reached_destination = Mathf.Approximately (distance_to_dest, 0);
 
-        var distance_to_dest = Vector3.Distance(
-            transform.position,
-            path_nodes[destination_index].transform.position);
+			if (!reached_destination) {
+				return;
+			}
 
-        var reached_destination = Mathf.Approximately(distance_to_dest, 0);
-        if (!reached_destination)
-        {
-            return;
-        }
-        ++destination_index;
-        destination_index %= path_nodes.Length;
+			++destination_index;
+			destination_index %= path_nodes.Length;
+		} else {
+			if (stunned_timer <= 0) {
+				stunned_timer = init_stunned_timer;
+				stunned = false;
+			} else --stunned_timer;
+		}
+
+
     }// Update
 
 	public override void on_hit_sword(int damage) {
-		// do nothing - immune to sword
-	}
+		// immune to sword - electricute Ninja
+		var ninja = GameObject.Find ("Ninja");
+		// ninja receives damage of his sword
+		ninja.GetComponent<Ninja> ().receive_hit (damage);
+	}// on_hit_sword
+
+	public override void on_hit_spit(int damage)
+	{
+		stunned = true;
+
+	}// on_hit_spit
 
 }
