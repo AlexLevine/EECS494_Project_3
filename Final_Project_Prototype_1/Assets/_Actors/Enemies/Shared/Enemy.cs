@@ -45,6 +45,11 @@ public class Enemy : Actor
     {
         var potential_targets = get_potential_lock_on_targets(player);
 
+        if (potential_targets.Count == 0)
+        {
+            return null;
+        }
+
         // I am currently very angry at C#'s apparent lack of a min() function
         // that does this.
         GameObject closest_target = potential_targets[0];
@@ -115,9 +120,9 @@ public class Enemy : Actor
 		// default behavior
 		receive_hit (damage);
 	}// on_hit_charge
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	public override void on_death()
     {
         enemies.Remove(gameObject);

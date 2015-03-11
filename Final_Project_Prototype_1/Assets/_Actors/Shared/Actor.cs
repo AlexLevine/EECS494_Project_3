@@ -24,6 +24,11 @@ public class Actor : MonoBehaviour
 
     public void look_toward(GameObject obj, float step=360f)
     {
+        if (obj == null)
+        {
+            return;
+        }
+
         var target_direction =
                 obj.transform.position - transform.position;
 
