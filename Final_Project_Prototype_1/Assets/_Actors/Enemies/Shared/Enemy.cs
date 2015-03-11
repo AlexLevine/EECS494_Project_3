@@ -121,6 +121,13 @@ public class Enemy : Actor
 		receive_hit (damage);
 	}// on_hit_charge
 
+    //--------------------------------------------------------------------------
+
+    public virtual void on_hit_by_jousting_pole(int damage)
+    {
+        receive_hit(damage);
+    }// on_hit_by_jousting_pole
+
 	//--------------------------------------------------------------------------
 
 	public override void on_death()

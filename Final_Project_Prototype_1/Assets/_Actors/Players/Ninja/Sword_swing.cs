@@ -65,6 +65,7 @@ public class Sword_swing : MonoBehaviour
             sword.transform.localPosition = sword_neutral_pos;
             sword.transform.localEulerAngles = sword_neutral_rotation;
             state = Sword_state_e.IDLE;
+            sword.GetComponent<Ninja_sword>().is_swinging = false;
             break;
         }
     }
@@ -80,6 +81,7 @@ public class Sword_swing : MonoBehaviour
         sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
         sword.transform.localEulerAngles = new Vector3(0, 45f, 0);
         state = Sword_state_e.SWINGING;
+        sword.GetComponent<Ninja_sword>().is_swinging = true;
     }
 
     public float max_swing_angle_distance

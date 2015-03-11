@@ -55,7 +55,6 @@ GameObject:
   - 4: {fileID: 493608}
   - 95: {fileID: 9593602}
   - 54: {fileID: 5493602}
-  - 135: {fileID: 13593602}
   - 135: {fileID: 13593604}
   m_Layer: 0
   m_Name: prefab Electric_enemy
@@ -330,18 +329,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!135 &13593602
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 193608}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: -2, y: 0, z: 0}
 --- !u!135 &13593604
 SphereCollider:
   m_ObjectHideFlags: 1
