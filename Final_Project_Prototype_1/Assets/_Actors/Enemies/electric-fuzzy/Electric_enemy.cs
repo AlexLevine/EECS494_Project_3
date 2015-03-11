@@ -54,7 +54,7 @@ public class Electric_enemy : Enemy
        	    	transform.position,
        	    	path_nodes [destination_index].transform.position,
        	    	speed * Time.fixedDeltaTime);
-        	
+
 			var distance_to_dest = Vector3.Distance (
             	transform.position,
        	   		path_nodes [destination_index].transform.position);
@@ -86,6 +86,8 @@ public class Electric_enemy : Enemy
 	public override void on_hit_spit(int damage)
 	{
 		stunned = true;
+
+        base.on_hit_spit(damage);
 
 	}// on_hit_spit
 

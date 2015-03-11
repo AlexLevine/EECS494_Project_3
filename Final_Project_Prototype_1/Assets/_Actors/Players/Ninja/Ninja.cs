@@ -22,6 +22,7 @@ public class Ninja : Player_character
         if (!teamed_up)
         {
             jousting_pole.SetActive(false);
+            sword_obj.SetActive(true);
             return;
         }
 
@@ -85,12 +86,12 @@ public class Ninja : Player_character
             return;
         }
 
-        float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1,
-        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+        float adjusted_vert = vertical_tilt * 10;   // some float from -1 to 1,
+        float adjusted_horz = horizontal_tilt * -45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
 
-        print(adjusted_horz);
-        print(adjusted_vert);
+        // print(adjusted_horz);
+        // print(adjusted_vert);
 
         // jousting_pole.transform.position = jousting_pole_start_pos;
         jousting_pole.transform.position = this.transform.position;
@@ -156,6 +157,8 @@ public class Ninja : Player_character
 
         teamed_up = true;
         llama_go.GetComponent<Llama>().teamed_up = true;
+
+        sword_obj.SetActive(false);
         // Turn on jousting pole
 
     }// team_up_engage_or_throw
@@ -178,7 +181,7 @@ public class Ninja : Player_character
         GameObject llama_go = GameObject.Find("Llama");
         llama_go.GetComponent<Llama>().teamed_up = false;
 
-    }// team_up_disengage
+    }// jump
 
 
     //--------------------------------------------------------------------------

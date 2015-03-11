@@ -34,9 +34,10 @@ GameObject:
   - 33: {fileID: 3332564}
   - 65: {fileID: 6559120}
   - 23: {fileID: 2394528}
+  - 114: {fileID: 11423266}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,6 +71,7 @@ GameObject:
   - 33: {fileID: 3319364}
   - 65: {fileID: 6511716}
   - 23: {fileID: 2301752}
+  - 114: {fileID: 11416232}
   m_Layer: 0
   m_Name: Pole
   m_TagString: Untagged
@@ -117,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.05000019, y: -1.41999996, z: .219999999}
+  m_LocalPosition: {x: 4.0999999, y: -.230000004, z: -38.9000015}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children:
   - {fileID: 459618}
@@ -356,7 +358,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &6500278
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -417,6 +419,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11416232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eddc9503d848240879cc9e0a82b2ac63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11420648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -457,6 +470,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_playing: 0
+--- !u!114 &11423266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46dc8c4702714595bc9b0c3523b7ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_swinging: 0
 --- !u!114 &11487018
 MonoBehaviour:
   m_ObjectHideFlags: 1

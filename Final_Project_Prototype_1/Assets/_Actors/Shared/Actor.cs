@@ -41,12 +41,23 @@ public class Actor : MonoBehaviour
 
     public virtual void receive_hit(int damage, GameObject attacker=null)
     {
+        var invincibility_animation = GetComponent<Flash_animation>();
+        if (invincibility_animation != null
+            && invincibility_animation.is_playing)
+        {
+            return;
+        }
+
         health -= damage;
-        // GetComponent<Flash_animation>().start_animation();
 
         if (health <= 0)
         {
             on_death();
+        }
+
+        if (invincibility_animation != null)
+        {
+            invincibility_animation.start_animation();
         }
     }// receive_hit
 

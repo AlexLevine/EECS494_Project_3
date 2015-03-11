@@ -56,8 +56,9 @@ GameObject:
   - 95: {fileID: 9593602}
   - 54: {fileID: 5493602}
   - 135: {fileID: 13593604}
+  - 114: {fileID: 11463982}
   m_Layer: 0
-  m_Name: prefab Electric_enemy
+  m_Name: prefab Fire_enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,7 +309,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -329,6 +330,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11463982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5098b87185bcb44809a5c94b1bda00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  destination_index: 0
+  path_nodes:
+  - {fileID: 193606}
+  - {fileID: 193604}
+  is_moving: 1
+  speed: 2
 --- !u!135 &13593604
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -7,7 +7,10 @@ public class Ninja_jousting_pole : MonoBehaviour
     {
         get
         {
-            return 1 * GameObject.Find("Llama").rigidbody.velocity;
+            var power = (int) (
+                1 * GameObject.Find(
+                    "Llama").GetComponent<Rigidbody>().velocity.magnitude);
+            return power;
         }
     }// attack_power
 
@@ -21,7 +24,7 @@ public class Ninja_jousting_pole : MonoBehaviour
             return;
         }
 
-        enemy.on_hit_sword(attack_power);
+        enemy.on_hit_by_jousting_pole(attack_power);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
