@@ -6,6 +6,7 @@ public class Ninja : Player_character
 
     public GameObject projectile_prefab;
     public GameObject jousting_pole;
+    public GameObject sword_obj; 
 
     // private Vector3 jousting_pole_start_pos; 
     // private Quaternion jousting_pole_start_rot; 
@@ -25,6 +26,7 @@ public class Ninja : Player_character
     {
         if (!teamed_up)
         {
+            jousting_pole.SetActive(false);
             return;
         }
 
@@ -59,7 +61,13 @@ public class Ninja : Player_character
 
     public override void physical_attack()
     {
-        GetComponent<Sword_swing>().swing();
+        if(teamed_up)
+        {
+            toggle_jousting_pole();
+        }
+        else{
+            GetComponent<Sword_swing>().swing();            
+        }
     }// physical_attack
 
     //--------------------------------------------------------------------------
@@ -72,10 +80,15 @@ public class Ninja : Player_character
             return;
         }
 
-        // if(!teamed_up)
-        // {
-        //     return;
-        // }
+        if(!jousting_pole.activeSelf)
+        {
+            return; 
+        }
+
+        if(!teamed_up)
+        {
+            return;
+        }
 
         float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1, 
         float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
@@ -97,12 +110,19 @@ public class Ninja : Player_character
 
     public override void toggle_jousting_pole()
     {
+        if(!teamed_up)
+        {
+            return;
+        }
+
         if(!jousting_pole.activeSelf)
         {
+            sword_obj.SetActive(false);
             jousting_pole.SetActive(true);
         }
         else
         {            
+            sword_obj.SetActive(true);
             jousting_pole.SetActive(false);
         }
 
