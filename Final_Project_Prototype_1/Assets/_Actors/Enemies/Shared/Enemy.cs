@@ -94,6 +94,22 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
+	public virtual void on_hit_spit(int damage)
+    {
+		// default behavior
+		receive_hit (damage);
+	}// on_hit_spit
+
+    //--------------------------------------------------------------------------
+
+	public virtual void on_hit_sword(int damage)
+    {
+		// default behavior
+		receive_hit (damage);
+	}// on_hit_sword
+
+    //--------------------------------------------------------------------------
+
     public override void on_death()
     {
         enemies.Remove(gameObject);

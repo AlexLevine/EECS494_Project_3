@@ -48,6 +48,10 @@ public class Controller_Watcher : MonoBehaviour
             this_player.toggle_lock_on();
         }
 
+        float r_vert = device.GetControl(InputControlType.RightStickY);
+        float r_horz = device.GetControl(InputControlType.RightStickX);
+        this_actor.adjust_jousting_pole(r_vert, r_horz);
+
         bool sprint = false;
         if(device.GetControl(InputControlType.RightBumper).IsPressed)
         {

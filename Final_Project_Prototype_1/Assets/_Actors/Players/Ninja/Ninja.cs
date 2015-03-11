@@ -5,6 +5,8 @@ public class Ninja : Player_character
 {
 
     public GameObject projectile_prefab;
+    public GameObject jousting_pole;
+    public GameObject sword_obj;
 
     // // Use this for initialization
     // public override void Start()
@@ -19,6 +21,7 @@ public class Ninja : Player_character
     {
         if (!teamed_up)
         {
+            jousting_pole.SetActive(false);
             return;
         }
 
@@ -53,8 +56,72 @@ public class Ninja : Player_character
 
     public override void physical_attack()
     {
-        GetComponent<Sword_swing>().swing();
+        if(teamed_up)
+        {
+            toggle_jousting_pole();
+        }
+        else{
+            GetComponent<Sword_swing>().swing();
+        }
     }// physical_attack
+
+    //--------------------------------------------------------------------------
+
+    public override void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
+    {
+        if(jousting_pole == null)
+        {
+            print("Ninja_Jousting_Pole does not exist for some reason");
+            return;
+        }
+
+        if(!jousting_pole.activeSelf)
+        {
+            return;
+        }
+
+        if(!teamed_up)
+        {
+            return;
+        }
+
+        float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1,
+        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+        // Adjust the tilt that the jousting pole is pointing
+
+        print(adjusted_horz);
+        print(adjusted_vert);
+
+        // jousting_pole.transform.position = jousting_pole_start_pos;
+        jousting_pole.transform.position = this.transform.position;
+        // jousting_pole.transform.rotation = jousting_pole_start_rot;
+        jousting_pole.transform.rotation = this.transform.rotation;
+
+
+        jousting_pole.transform.RotateAround(transform.position, transform.up, adjusted_horz);
+        jousting_pole.transform.RotateAround(transform.position, transform.right, adjusted_vert);
+
+    }
+
+    public override void toggle_jousting_pole()
+    {
+        if(!teamed_up)
+        {
+            return;
+        }
+
+        if(!jousting_pole.activeSelf)
+        {
+            sword_obj.SetActive(false);
+            jousting_pole.SetActive(true);
+        }
+        else
+        {
+            sword_obj.SetActive(true);
+            jousting_pole.SetActive(false);
+        }
+
+    }
 
     //--------------------------------------------------------------------------
 
@@ -89,6 +156,8 @@ public class Ninja : Player_character
 
         teamed_up = true;
         llama_go.GetComponent<Llama>().teamed_up = true;
+        // Turn on jousting pole
+
     }// team_up_engage_or_throw
 
     public override void jump()
