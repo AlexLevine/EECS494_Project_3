@@ -35,6 +35,11 @@ public class Llama : Player_character
         base.jump();
     }
 
+    public override void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
+    {return;}
+
+    public override void toggle_jousting_pole()
+    {return;}
 
     //--------------------------------------------------------------------------
 

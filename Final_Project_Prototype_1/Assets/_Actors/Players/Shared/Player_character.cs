@@ -44,7 +44,13 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void team_up_attack(float vertical_tilt, float horizontal_tilt)
+    public virtual void toggle_jousting_pole()
+    {
+        throw new Exception("Derived classes must override this method");
+
+    }
+
+    public virtual void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
     {
         throw new Exception("Derived classes must override this method");
     }// team_up_attack

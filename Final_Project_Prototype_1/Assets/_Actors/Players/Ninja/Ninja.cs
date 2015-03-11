@@ -5,11 +5,17 @@ public class Ninja : Player_character
 {
 
     public GameObject projectile_prefab;
+    public GameObject jousting_pole;
+
+    // private Vector3 jousting_pole_start_pos; 
+    // private Quaternion jousting_pole_start_rot; 
 
     // Use this for initialization
     public override void Start()
     {
         base.Start();
+        // jousting_pole_start_pos = jousting_pole.transform.localPosition;
+        // jousting_pole_start_rot = jousting_pole.transform.rotation;  
     }// Start
 
     //--------------------------------------------------------------------------
@@ -58,25 +64,48 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void team_up_attack(float vertical_tilt, float horizontal_tilt)
+    public override void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
     {
-        GameObject jousting_pole = GameObject.Find("Ninja_Jousting_Pole");
         if(jousting_pole == null)
         {
             print("Ninja_Jousting_Pole does not exist for some reason");
             return;
         }
 
+        // if(!teamed_up)
+        // {
+        //     return;
+        // }
+
+        float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1, 
+        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+        // Adjust the tilt that the jousting pole is pointing
+
+        print(adjusted_horz);
+        print(adjusted_vert);
+
+        // jousting_pole.transform.position = jousting_pole_start_pos;
+        jousting_pole.transform.position = this.transform.position;
+        // jousting_pole.transform.rotation = jousting_pole_start_rot;
+        jousting_pole.transform.rotation = this.transform.rotation;
+
+
+        jousting_pole.transform.RotateAround(transform.position, transform.up, adjusted_horz);
+        jousting_pole.transform.RotateAround(transform.position, transform.right, adjusted_vert);
+
+    }
+
+    public override void toggle_jousting_pole()
+    {
         if(!jousting_pole.activeSelf)
         {
             jousting_pole.SetActive(true);
         }
+        else
+        {            
+            jousting_pole.SetActive(false);
+        }
 
-        float adjusted_vert = vertical_tilt * 45;   // some float from -1 to 1, 
-        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
-
-
-        // Adjust the tilt that the jousting pole is pointing
     }
 
     //--------------------------------------------------------------------------

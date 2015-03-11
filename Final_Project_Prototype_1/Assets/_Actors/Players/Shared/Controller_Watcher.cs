@@ -42,14 +42,14 @@ public class Controller_Watcher : MonoBehaviour {
             this_actor.physical_attack();
         }
 
-        if(device.GetControl(InputControlType.LeftBumper).IsPressed)
+        float r_vert = device.GetControl(InputControlType.RightStickY);
+        float r_horz = device.GetControl(InputControlType.RightStickX);
+        this_actor.adjust_jousting_pole(r_vert, r_horz);
+
+        if(device.GetControl(InputControlType.LeftBumper).WasReleased)
         {
-            float r_vert = device.GetControl(InputControlType.RightStickY);
-            float r_horz = device.GetControl(InputControlType.RightStickX);
-
-            this_actor.team_up_attack(r_vert, r_horz);
+            this_actor.toggle_jousting_pole();
         }
-
 
         bool sprint = false;
         if(device.GetControl(InputControlType.RightBumper).IsPressed)
