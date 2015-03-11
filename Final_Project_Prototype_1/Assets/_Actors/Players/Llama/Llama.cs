@@ -55,6 +55,14 @@ public class Llama : Player_character
         teamed_up = false;
         ninja.GetComponent<Player_character>().teamed_up = false;
 
+		//rotate to throw
+		var rotate = transform.forward;
+		var temp = rotate.z;
+		rotate.z = rotate.x;
+		rotate.x = -temp;
+		transform.RotateAround(transform.position,rotate,-10*Mathf.PI);
+
+
         var new_ninja_velocity = Vector3.one;// transform.forward;
         // new_ninja_velocity.x *= 5;
         new_ninja_velocity.y *= 10;
