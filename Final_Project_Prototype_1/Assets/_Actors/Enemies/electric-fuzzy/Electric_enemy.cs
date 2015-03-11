@@ -63,7 +63,10 @@ public class Electric_enemy : Enemy
     }// Update
 
 	public override void on_hit_sword(int damage) {
-		// do nothing - immune to sword
+		// immune to sword - electricute Ninja
+		var ninja = GameObject.Find ("Ninja");
+		// ninja receives damage of his sword
+		ninja.GetComponent<Ninja> ().receive_hit (damage);
 	}
 
 }
