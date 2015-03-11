@@ -1,22 +1,73 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Enemy : Actor
 {
-    // Use this for initialization
-    public override void Start()
+    public static List<GameObject> enemies = new List<GameObject>();
+
+    void Awake()
     {
-        base.Start();
-    }// Start
+        enemies.Add(gameObject);
+    }
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update ()
+    // // Use this for initialization
+    // public override void Start()
+    // {
+    //     base.Start();
+    // }// Start
+
+    //--------------------------------------------------------------------------
+
+    // // Update is called once per frame
+    // public override void Update ()
+    // {
+    //     base.Update();
+    // }// Update
+
+    //--------------------------------------------------------------------------
+
+    public static List<GameObject> get_potential_lock_on_targets(
+        GameObject player)
     {
-        base.Update();
-    }// Update
+        return enemies.FindAll(
+            (GameObject obj) => Vector3.Angle(
+                player.transform.position, obj.transform.position) <= 90f);
+    }// get_potential_lock_on_targets
+
+    //--------------------------------------------------------------------------
+
+    public static GameObject get_closest_potential_lock_on_target(
+        GameObject player)
+    {
+        var potential_targets = get_potential_lock_on_targets(player);
+
+        // I am currently very angry at C#'s apparent lack of a min() function
+        // that does this.
+        GameObject closest_target = potential_targets[0];
+        var closest_distance = Vector3.Distance(
+            player.transform.position, closest_target.transform.position);
+        foreach (var obj in potential_targets)
+        {
+            var distance = Vector3.Distance(
+                player.transform.position, obj.transform.position);
+            if (distance < closest_distance)
+            {
+                closest_target = obj;
+                closest_distance = distance;
+            }
+        }
+
+        return closest_target;
+        // return potential_targets.MinBy(
+        //     (GameObject obj) => Vector3.Distance(
+        //         transform.position, obj.transform.position));
+    }// get_closest_potential_lock_on_target
+
+    //--------------------------------------------------------------------------
 
     public virtual void on_player_hit(){}
 
@@ -41,9 +92,17 @@ public class Enemy : Actor
         }
     }// attack_power
 
+    //--------------------------------------------------------------------------
 
     public override void on_death()
     {
+        enemies.Remove(gameObject);
+        foreach (var player in Player_character.players)
+        {
+            player.GetComponent<Player_character>().notify_enemy_killed(
+                gameObject);
+        }
+
         Destroy(gameObject);
     }// on_death
 }

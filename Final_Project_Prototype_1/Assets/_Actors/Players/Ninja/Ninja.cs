@@ -6,11 +6,11 @@ public class Ninja : Player_character
 
     public GameObject projectile_prefab;
 
-    // Use this for initialization
-    public override void Start()
-    {
-        base.Start();
-    }// Start
+    // // Use this for initialization
+    // public override void Start()
+    // {
+    //     base.Start();
+    // }// Start
 
     //--------------------------------------------------------------------------
 

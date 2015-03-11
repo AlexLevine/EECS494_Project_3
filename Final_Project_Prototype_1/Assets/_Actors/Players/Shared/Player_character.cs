@@ -1,25 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Player_character : Actor
 {
     public bool on_ground;
     public bool teamed_up = false;
 
-    // Use this for initialization
-    public override void Start()
+    public GameObject lock_on_target = null;
+
+    public static List<GameObject> players = new List<GameObject>();
+
+    void Awake()
     {
-        base.Start();
-    }// Start
+        players.Add(gameObject);
+    }
+    // Use this for initialization
+    // public override void Start()
+    // {
+    //     base.Start();
+    // }// Start
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }// Update
+    // // Update is called once per frame
+    // public override void Update()
+    // {
+    //     base.Update();
+    // }// Update
 
     //--------------------------------------------------------------------------
 
@@ -41,6 +50,41 @@ public class Player_character : Actor
     {
         throw new Exception("Derived classes must override this method");
     }// physical_attack
+
+    //--------------------------------------------------------------------------
+
+    public void toggle_lock_on()
+    {
+        if (is_locked_on)
+        {
+            lock_on_target = null;
+            return;
+        }
+
+        lock_on_target = Enemy.get_closest_potential_lock_on_target(gameObject);
+
+        look_toward(lock_on_target, 360f);
+    }// toggle_lock_on
+
+    //--------------------------------------------------------------------------
+
+    public bool is_locked_on
+    {
+        get
+        {
+            return lock_on_target != null;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    public void notify_enemy_killed(GameObject enemy)
+    {
+        if (enemy == lock_on_target)
+        {
+            lock_on_target = null;
+        }
+    }// notify_enemy_killed
 
     //--------------------------------------------------------------------------
 
@@ -72,6 +116,12 @@ public class Player_character : Actor
 
         if(tilt == Vector3.zero)
         {
+            return;
+        }
+
+        if (is_locked_on)
+        {
+            look_toward(lock_on_target);
             return;
         }
 

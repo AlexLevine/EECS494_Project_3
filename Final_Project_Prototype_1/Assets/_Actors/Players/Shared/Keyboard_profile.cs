@@ -106,7 +106,14 @@ namespace Keyboard_controls
                     Handle = "Alt Throw",
                     Target = InputControlType.Action4,
                     Source = KeyCodeButton( KeyCode.V )
-                }//,
+                },
+
+                new InputControlMapping
+                {
+                    Handle = "Lock on",
+                    Target = InputControlType.LeftBumper,
+                    Source = KeyCodeButton( KeyCode.LeftShift )
+                },
                 // new InputControlMapping
                 // {
                 //  Handle = "Combo",

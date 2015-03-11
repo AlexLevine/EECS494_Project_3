@@ -9,19 +9,19 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    // Use this for initialization
-    public override void Start()
-    {
-        base.Start();
-    }// Start
+    // // Use this for initialization
+    // public override void Start()
+    // {
+    //     base.Start();
+    // }// Start
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }// Update
+    // // Update is called once per frame
+    // public override void Update()
+    // {
+    //     base.Update();
+    // }// Update
 
     //--------------------------------------------------------------------------
 

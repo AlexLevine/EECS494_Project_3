@@ -2,14 +2,15 @@
 using System.Collections;
 using InControl;
 
-public class Controller_Watcher : MonoBehaviour {
+public class Controller_Watcher : MonoBehaviour
+{
     public InputDevice device{get; set;}
 
-    Player_character this_actor;
+    Player_character this_player;
 
     void Start()
     {
-        this_actor = GetComponent<Player_character>();
+        this_player = GetComponent<Player_character>();
 
         DontDestroyOnLoad(gameObject);
     }
@@ -24,22 +25,27 @@ public class Controller_Watcher : MonoBehaviour {
 
         if (device.GetControl(InputControlType.Action1).WasPressed)
         {
-            this_actor.jump();
+            this_player.jump();
         }
 
         if (device.GetControl(InputControlType.Action2).WasPressed)
         {
-            this_actor.projectile_attack();
+            this_player.projectile_attack();
         }
 
         if (device.GetControl(InputControlType.Action3).WasPressed)
         {
-            this_actor.team_up_engage_or_throw();
+            this_player.team_up_engage_or_throw();
         }
 
         if (device.GetControl(InputControlType.Action4).WasPressed)
         {
-            this_actor.physical_attack();
+            this_player.physical_attack();
+        }
+
+        if(device.GetControl(InputControlType.LeftBumper).WasPressed)
+        {
+            this_player.toggle_lock_on();
         }
 
         bool sprint = false;
@@ -51,7 +57,7 @@ public class Controller_Watcher : MonoBehaviour {
         var vertical_tilt = device.GetControl( InputControlType.LeftStickY);
         var horiz_tilt = device.GetControl( InputControlType.LeftStickX);
         var tilt = new Vector3(horiz_tilt, 0, vertical_tilt);
-        this_actor.run(tilt, sprint);
+        this_player.run(tilt, sprint);
 
     }
 }

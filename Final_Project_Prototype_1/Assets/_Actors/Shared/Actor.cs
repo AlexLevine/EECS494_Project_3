@@ -22,6 +22,18 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
+    public void look_toward(GameObject obj, float step=360f)
+    {
+        var target_direction =
+                obj.transform.position - transform.position;
+
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, target_direction, step, 0f);
+        transform.rotation = Quaternion.LookRotation(new_forward);
+    }// look_toward
+
+    //--------------------------------------------------------------------------
+
     public virtual void receive_hit(int damage, GameObject attacker=null)
     {
         health -= damage;
