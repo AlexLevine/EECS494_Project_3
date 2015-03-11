@@ -50,7 +50,7 @@ public class Controller_Watcher : MonoBehaviour
 
         float r_vert = device.GetControl(InputControlType.RightStickY);
         float r_horz = device.GetControl(InputControlType.RightStickX);
-        this_actor.adjust_jousting_pole(r_vert, r_horz);
+        this_player.adjust_jousting_pole(r_vert, r_horz);
 
         bool sprint = false;
         if(device.GetControl(InputControlType.RightBumper).IsPressed)

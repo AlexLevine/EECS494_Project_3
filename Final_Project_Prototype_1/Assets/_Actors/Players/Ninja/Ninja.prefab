@@ -15,8 +15,6 @@ GameObject:
   - 114: {fileID: 11420650}
   - 114: {fileID: 11420648}
   - 114: {fileID: 11420652}
-  - 114: {fileID: 11451794}
-  - 114: {fileID: 11472374}
   - 114: {fileID: 11487018}
   m_Layer: 0
   m_Name: Ninja
@@ -433,9 +431,10 @@ MonoBehaviour:
   health: 0
   on_ground: 0
   teamed_up: 0
+  lock_on_target: {fileID: 0}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 177610}
-  sword_obj: {fileID: 0}
+  sword_obj: {fileID: 134222}
 --- !u!114 &11420650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,40 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11451794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a0b0add7c6e154e813c1147dd38f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sword: {fileID: 0}
-  sword_swing_end: {fileID: 0}
-  sword_neutral_pos: {x: 0, y: 0, z: 0}
-  sword_neutral_rotation: {x: 0, y: 0, z: 0}
-  state: 0
-  angle_distance_swung: 0
---- !u!114 &11472374
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a0b0add7c6e154e813c1147dd38f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sword: {fileID: 0}
-  sword_swing_end: {fileID: 0}
-  sword_neutral_pos: {x: 0, y: 0, z: 0}
-  sword_neutral_rotation: {x: 0, y: 0, z: 0}
-  state: 0
-  angle_distance_swung: 0
 --- !u!114 &11487018
 MonoBehaviour:
   m_ObjectHideFlags: 1

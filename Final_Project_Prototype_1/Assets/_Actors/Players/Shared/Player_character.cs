@@ -24,11 +24,17 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // // Update is called once per frame
-    // public override void Update()
-    // {
-    //     base.Update();
-    // }// Update
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+
+        if (is_locked_on)
+        {
+            look_toward(lock_on_target);
+            return;
+        }
+    }// Update
 
     //--------------------------------------------------------------------------
 
