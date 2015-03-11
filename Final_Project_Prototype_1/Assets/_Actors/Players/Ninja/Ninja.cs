@@ -115,12 +115,16 @@ public class Ninja : Player_character
         {
             sword_obj.SetActive(false);
             jousting_pole.SetActive(true);
+            return;
         }
-        else
+
+        if (!teamed_up)
         {
             sword_obj.SetActive(true);
-            jousting_pole.SetActive(false);
         }
+
+        jousting_pole.SetActive(false);
+
 
     }
 
@@ -149,7 +153,7 @@ public class Ninja : Player_character
         var distance = Vector3.Distance(
             transform.position, llama_go.transform.position);
 
-        if (distance > 2f)
+        if (distance > 4f)
         {
             print("out of range, doofus");
             return;

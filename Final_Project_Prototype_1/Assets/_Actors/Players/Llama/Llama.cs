@@ -60,13 +60,15 @@ public class Llama : Player_character
 		var temp = rotate.z;
 		rotate.z = rotate.x;
 		rotate.x = -temp;
-		transform.RotateAround(transform.position,rotate,-10*Mathf.PI);
+		// transform.RotateAround(transform.position,rotate,-10*Mathf.PI);
 
+        var new_ninja_velocity = transform.forward + transform.up;//Vector3.one;// transform.forward;
 
-        var new_ninja_velocity = Vector3.one;// transform.forward;
-        // new_ninja_velocity.x *= 5;
+        print("new vel: " + new_ninja_velocity);
+        new_ninja_velocity.x *= 5;
         new_ninja_velocity.y *= 10;
-        // new_ninja_velocity.z *= 5;
+        new_ninja_velocity.z *= 5;
+        print("new vel: " + new_ninja_velocity);
 
         ninja.GetComponent<Rigidbody>().velocity = new_ninja_velocity;
 

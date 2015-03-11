@@ -59,8 +59,13 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void toggle_lock_on()
+    public virtual void toggle_lock_on()
     {
+        // if (teamed_up)
+        // {
+        //     return;
+        // }
+
         if (is_locked_on)
         {
             lock_on_target = null;
@@ -116,6 +121,11 @@ public class Player_character : Actor
         // {
         //     return;
         // }
+
+        if (!on_ground && !teamed_up)
+        {
+            return;
+        }
 
         var speed = run_speed;
 
