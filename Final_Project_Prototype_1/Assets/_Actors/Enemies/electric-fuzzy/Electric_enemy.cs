@@ -61,4 +61,9 @@ public class Electric_enemy : Enemy
         ++destination_index;
         destination_index %= path_nodes.Length;
     }// Update
+
+	public override void on_hit_sword(int damage) {
+		// do nothing - immune to sword
+	}
+
 }

@@ -41,6 +41,16 @@ public class Enemy : Actor
         }
     }// attack_power
 
+	public virtual void on_hit_spit(int damage) {
+		// default behavior
+		receive_hit (damage);
+	}
+
+	public virtual void on_hit_sword(int damage) {
+		// default behavior
+		receive_hit (damage);
+	}
+
 
     public override void on_death()
     {
