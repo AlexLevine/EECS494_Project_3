@@ -2,24 +2,23 @@
 using System.Collections;
 using System;
 
-public class Fire_enemy : Enemy {
+public class Evil_Eyeball : Enemy {
 
 	public int destination_index = 0;
-
+	
 	// Points that the platform should move between.
 	public GameObject[] path_nodes;
-
+	
 	public bool is_moving;
-	public bool on_fire;
-	// private bool stunned;
-//	private int stunned_timer;
-//	const int init_stunned_timer = 200;
-
-
+	private bool stunned;
+	private int stunned_timer;
+	const int init_stunned_timer = 300;
+	
+	
 	public float speed;
-
+	
 	//--------------------------------------------------------------------------
-
+	
 	public override int attack_power
 	{
 		get
@@ -27,80 +26,74 @@ public class Fire_enemy : Enemy {
 			return 1;
 		}
 	}
-
+	
 	public override int max_health
 	{
 		get
 		{
-			return 5;
+			return 3;
 		}
 	}
-
+	
 	//--------------------------------------------------------------------------
-
+	
 	public override void Start()
 	{
 		base.Start();
 		transform.position = path_nodes[destination_index].transform.position;
 		++destination_index;
-		on_fire = true;
+		stunned = false;
 	}// Start
-
+	
 	//--------------------------------------------------------------------------
-
+	
 	void FixedUpdate()
 	{
+		if (!stunned) {
+			Debug.Log(destination_index, gameObject);
 			transform.position = Vector3.MoveTowards (
 				transform.position,
 				path_nodes [destination_index].transform.position,
 				speed * Time.fixedDeltaTime);
-
+			
 			var distance_to_dest = Vector3.Distance (
 				transform.position,
 				path_nodes [destination_index].transform.position);
 			var reached_destination = Mathf.Approximately (distance_to_dest, 0);
-
+			
 			if (!reached_destination) {
 				return;
 			}
-
+			
 			++destination_index;
 			destination_index %= path_nodes.Length;
-
-
-	}// Update
-
-	// public override void on_hit_sword(int damage) {
-	// 	// immune to sword - electricute Ninja
-	// 	var ninja = GameObject.Find ("Ninja");
-	// 	// ninja receives damage of his sword
-	// 	ninja.GetComponent<Ninja> ().receive_hit (damage);
-	// }// on_hit_sword
-
-	public override void on_hit_charge(int damage) {
-		if (on_fire) {
-			// burns llama - and takes no damge if still on fire
-			var llama = GameObject.Find ("Llama");
-			llama.GetComponent<Llama> ().receive_hit (damage);
+		} else {
+			if (stunned_timer <= 0) {
+				stunned_timer = init_stunned_timer;
+				stunned = false;
+			} else --stunned_timer;
 		}
-	}// on_hit_charge
+		
+		
+	}// Update
+	
+	public override void on_hit_sword(int damage) {
+		// immune to sword - do nothing
 
+	}// on_hit_sword
+	
 	public override void on_hit_spit(int damage)
 	{
-		base.on_hit_spit (damage);
-
-		// put out fire:
-		foreach (Transform t in transform)
-		{
-			if(t.name == "Fire_origin") {
-				t.GetComponentInChildren<ParticleSystem>().enableEmission = false;
-				on_fire = false;
-			}
-		}
-
-
+		stunned = true;
+		
 	}// on_hit_spit
 
+	public override void on_hit_charge(int damage)
+	{
+		// immune to charge - possibly do something to Llama here
+	}// on_hit_charge
 
-
+	public override void on_hit_by_jousting_pole(int damage) {
+		// immune to pole
+	} // on_hit_by_jousting_pole
 }

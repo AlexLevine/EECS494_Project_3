@@ -83,6 +83,13 @@ public class Electric_enemy : Enemy
 		ninja.GetComponent<Ninja> ().receive_hit (damage);
 	}// on_hit_sword
 
+	public override void on_hit_by_jousting_pole(int damage) {
+		// immune to pole - electricute Ninja
+		var ninja = GameObject.Find ("Ninja");
+		// ninja receives damage of his pole
+		ninja.GetComponent<Ninja> ().receive_hit (damage);
+	} // on_hit_by_jousting_pole
+
 	public override void on_hit_spit(int damage)
 	{
 		stunned = true;
