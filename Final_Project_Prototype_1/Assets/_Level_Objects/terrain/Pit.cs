@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pit : MonoBehaviour {
 	public Vector3 pit_refresh_point;
-	private int push_back = 5;
+	public int push_back = 10;
 	
 	// Use this for initialization
 	void Start () {

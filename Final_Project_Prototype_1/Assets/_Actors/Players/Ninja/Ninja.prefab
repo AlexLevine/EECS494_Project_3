@@ -448,6 +448,7 @@ MonoBehaviour:
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 177610}
   sword_obj: {fileID: 134222}
+  out_of_range: {fileID: 2100000, guid: 2805ebebbee61f74d9924d8d23c4fbd0, type: 2}
 --- !u!114 &11420650
 MonoBehaviour:
   m_ObjectHideFlags: 1

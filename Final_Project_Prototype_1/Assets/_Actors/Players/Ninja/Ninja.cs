@@ -7,6 +7,9 @@ public class Ninja : Player_character
     public GameObject projectile_prefab;
     public GameObject jousting_pole;
     public GameObject sword_obj;
+    public Material out_of_range;
+    private Material normal;
+    private float o_o_r=2;
 
     // // Use this for initialization
     // public override void Start()
@@ -23,6 +26,13 @@ public class Ninja : Player_character
         {
             jousting_pole.SetActive(false);
             sword_obj.SetActive(true);
+            
+			//out_of_range
+			//print(o_o_r);
+			if (o_o_r++==1){
+				GetComponent<Renderer>().material = normal;
+			}
+            
             return;
         }
 
@@ -155,7 +165,9 @@ public class Ninja : Player_character
 
         if (distance > 4f)
         {
-            print("out of range, doofus");
+			normal = GetComponent<Renderer>().material;
+           	GetComponent<Renderer>().material = out_of_range;
+           	o_o_r = 0;
             return;
         }
 

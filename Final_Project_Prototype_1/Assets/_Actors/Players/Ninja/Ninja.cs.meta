@@ -1,8 +1,17 @@
 fileFormatVersion: 2
 guid: 4ba20cea81f174810852a4aa2660cf7b
+timeCreated: 1426370471
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - lock_on_target: {instanceID: 0}
+  - projectile_prefab: {instanceID: 0}
+  - jousting_pole: {instanceID: 0}
+  - sword_obj: {instanceID: 0}
+  - out_of_range: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

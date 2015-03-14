@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using InControl;
 
 public class Add_Controllers_Debug : MonoBehaviour {
@@ -12,7 +13,7 @@ public class Add_Controllers_Debug : MonoBehaviour {
 	
 	public GameObject cont_watch_obj_1, cont_watch_obj_2;
 	
-	private Controller_Watcher p1, p2; 
+	private Controller_Watcher p1, p2;
 	
 	players_set_e waiting_for_player; 
 	
@@ -26,9 +27,9 @@ public class Add_Controllers_Debug : MonoBehaviour {
 		
 		var nin = Instantiate (cont_watch_obj_2,this.transform.position,Quaternion.identity) as GameObject;
 		nin.name = "Ninja";
-		p2 = nin.GetComponent<Controller_Watcher>();
 		var ninja = GameObject.Find("Ninja");
 		ninja.transform.position = new Vector3(3,0,-40);
+		p2 = nin.GetComponent<Controller_Watcher>();
 		
 		waiting_for_player = players_set_e.START; 
 	}
