@@ -31,6 +31,8 @@ public class Player_character : Actor
     private Rigidbody kr;
 
     private bool on_ground;
+    private float time_in_air = 0;
+    private float max_time_in_air { get { return 0.1f; } }
     // private bool is_jumping = false; // TODO: adjust aerial control
     private bool teamed_up = false;
 
@@ -65,6 +67,11 @@ public class Player_character : Actor
         if (on_ground)
         {
             velocity.y = 0;
+            time_in_air = 0;
+        }
+        else
+        {
+            time_in_air += Time.deltaTime;
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -308,7 +315,7 @@ public class Player_character : Actor
 
     public virtual void jump()
     {
-        if (!on_ground)
+        if (!on_ground && time_in_air > max_time_in_air)
         {
             return;
         }
