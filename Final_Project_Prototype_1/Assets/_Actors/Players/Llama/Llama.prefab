@@ -26,11 +26,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 412618}
-  - 114: {fileID: 11412618}
   - 114: {fileID: 11412616}
   - 54: {fileID: 5412616}
   - 114: {fileID: 11412620}
   - 23: {fileID: 2312618}
+  - 114: {fileID: 11465758}
   m_Layer: 0
   m_Name: Llama
   m_TagString: Player
@@ -75,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.23000002, z: -37.9000015}
+  m_LocalPosition: {x: 0, y: .209999993, z: -37.9000015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 412616}
@@ -190,10 +190,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!65 &6512616
 BoxCollider:
@@ -215,7 +215,7 @@ BoxCollider:
   m_GameObject: {fileID: 112620}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -231,21 +231,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  on_ground: 0
-  teamed_up: 0
-  lock_on_target: {fileID: 0}
+  min_move_distance: .00100000005
+  skin_width: .00999999978
+  velocity: {x: 0, y: 0, z: 0}
   spit_prefab: {fileID: 146830, guid: 4fc7ad1c9f1ac462f8dd85d13f8a39ff, type: 2}
---- !u!114 &11412618
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 112618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90676c26d2f5548e39dbfc330026ff88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11412620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,6 +247,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_playing: 0
+--- !u!114 &11465758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646b6831ed6ce4625a0fda80b11a2e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_id: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

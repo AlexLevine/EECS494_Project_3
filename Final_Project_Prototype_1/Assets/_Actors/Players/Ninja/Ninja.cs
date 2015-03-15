@@ -11,6 +11,23 @@ public class Ninja : Player_character
     private Material normal;
     private float o_o_r=2;
 
+    //--------------------------------------------------------------------------
+
+    private static Ninja instance;
+
+    //--------------------------------------------------------------------------
+
+    public static Ninja get()
+    {
+        return instance;
+    }// get
+
+    //--------------------------------------------------------------------------
+
+    void Awake()
+    {
+        instance = this;
+    }// Awake
     // // Use this for initialization
     // public override void Start()
     // {
@@ -22,17 +39,17 @@ public class Ninja : Player_character
     // Update is called once per frame
     public override void Update()
     {
-        if (!teamed_up)
+        if (!is_teamed_up)
         {
             jousting_pole.SetActive(false);
             sword_obj.SetActive(true);
-            
+
 			//out_of_range
 			//print(o_o_r);
 			if (o_o_r++==1){
 				GetComponent<Renderer>().material = normal;
 			}
-            
+
             return;
         }
 
@@ -53,21 +70,21 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void projectile_attack()
-    {
-        GameObject projectile = Instantiate(
-            projectile_prefab, transform.position,
-            transform.rotation) as GameObject;
-        projectile.GetComponent<Rigidbody>().velocity = transform.forward * 12;
+    // public override void projectile_attack()
+    // {
+    //     GameObject projectile = Instantiate(
+    //         projectile_prefab, transform.position,
+    //         transform.rotation) as GameObject;
+    //     projectile.GetComponent<Rigidbody>().velocity = transform.forward * 12;
 
 
-    }// projectile_attack
+    // }// projectile_attack
 
     //--------------------------------------------------------------------------
 
-    public override void physical_attack()
+    public override void attack()
     {
-        if(teamed_up)
+        if(is_teamed_up)
         {
             toggle_jousting_pole();
         }
@@ -91,7 +108,7 @@ public class Ninja : Player_character
             return;
         }
 
-        if(!teamed_up)
+        if(!is_teamed_up)
         {
             return;
         }
@@ -116,7 +133,7 @@ public class Ninja : Player_character
 
     public override void toggle_jousting_pole()
     {
-        if(!teamed_up)
+        if(!is_teamed_up)
         {
             return;
         }
@@ -128,7 +145,7 @@ public class Ninja : Player_character
             return;
         }
 
-        if (!teamed_up)
+        if (!is_teamed_up)
         {
             sword_obj.SetActive(true);
         }
@@ -140,26 +157,26 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void run(Vector3 tilt, bool sprint)
+    public override void move(Vector3 delta_position)
     {
-        if (GetComponent<Sword_swing>().is_swinging)
-        {
-            return;
-        }
+        // if (GetComponent<Sword_swing>().is_swinging)
+        // {
+        //     return;
+        // }
 
-        base.run(tilt, sprint);
+        base.move(delta_position);
     }
 
     //--------------------------------------------------------------------------
 
     public override void team_up_engage_or_throw()
     {
-        if (teamed_up)
+        if (is_teamed_up)
         {
             return;
         }
 
-        GameObject llama_go = GameObject.Find("Llama");
+        GameObject llama_go = Llama.get().gameObject;
         var distance = Vector3.Distance(
             transform.position, llama_go.transform.position);
 
@@ -171,32 +188,21 @@ public class Ninja : Player_character
             return;
         }
 
-        teamed_up = true;
-        llama_go.GetComponent<Llama>().teamed_up = true;
-
+        team_up_engage();
         sword_obj.SetActive(false);
-        // Turn on jousting pole
 
     }// team_up_engage_or_throw
 
     public override void jump()
     {
-        if(!on_ground && !teamed_up)
-        {
-            return;
-        }
-
         base.jump();
 
-        if (!teamed_up)
+        if (!is_teamed_up)
         {
             return;
         }
 
-        teamed_up = false;
-        GameObject llama_go = GameObject.Find("Llama");
-        llama_go.GetComponent<Llama>().teamed_up = false;
-
+        team_up_disengage();
     }// jump
 
 
@@ -213,33 +219,33 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override int run_speed
-    {
-        get
-        {
-            return 5;
-        }
-    }// run_speed
+    // public override float run_speed
+    // {
+    //     get
+    //     {
+    //         return 5;
+    //     }
+    // }// run_speed
 
-    //--------------------------------------------------------------------------
+    // //--------------------------------------------------------------------------
 
-    public override int sprint_speed
-    {
-        get
-        {
-            return 10;
-        }
-    }// sprint_speed
+    // public override float sprint_speed
+    // {
+    //     get
+    //     {
+    //         return 10;
+    //     }
+    // }// sprint_speed
 
-    //--------------------------------------------------------------------------
+    // //--------------------------------------------------------------------------
 
-    public override int jump_speed
-    {
-        get
-        {
-            return 5;
-        }
-    }// jump_speed
+    // public override float jump_speed
+    // {
+    //     get
+    //     {
+    //         return 15;
+    //     }
+    // }// jump_speed
 }
 
 

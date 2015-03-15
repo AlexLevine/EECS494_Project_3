@@ -140,15 +140,6 @@ public class Enemy : Actor
     void OnDestroy()
     {
         enemies.Remove(gameObject);
-        foreach (var player in Player_character.players)
-        {
-            if (player == null)
-            {
-                continue;
-            }
-
-            player.GetComponent<Player_character>().notify_enemy_killed(
-                gameObject);
-        }
+        Player_character.notify_enemy_gone(gameObject);
     }// OnDestroy
 }

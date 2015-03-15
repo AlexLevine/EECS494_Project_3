@@ -2,25 +2,58 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+// using Rewired;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Player_character : Actor
 {
-    public bool on_ground;
-    public bool teamed_up = false;
+    // public int player_id = 0;
+    public float min_move_distance = 0.001f;
+    public float skin_width = 0.01f;
+    public Vector3 velocity = Vector3.zero;
 
-    public GameObject lock_on_target = null;
+    public virtual float gravity { get { return -25f; } }
+    public bool is_locked_on { get { return lock_on_target != null; } }
+    public virtual float jump_speed { get { return 15f; } }
+    public virtual float run_speed { get { return 5f; } }
+    public virtual float sprint_speed { get { return run_speed * 2f; } }
+    public virtual float acceleration { get { return 5f; } }
 
-    public static List<GameObject> players = new List<GameObject>();
+    public bool is_teamed_up { get { return teamed_up; } }
+
+    //--------------------------------------------------------------------------
+
+    private static List<GameObject> player_characters = new List<GameObject>();
+
+    //--------------------------------------------------------------------------
+
+    // private Player rewired_player;
+    private Rigidbody kr;
+
+    private bool on_ground;
+    // private bool is_jumping = false; // TODO: adjust aerial control
+    private bool teamed_up = false;
+
+    private GameObject lock_on_target = null;
+    // private float y_velocity = 0;
+
+    //--------------------------------------------------------------------------
 
     void Awake()
     {
-        players.Add(gameObject);
-    }
+        // rewired_player = ReInput.players.GetPlayer(player_id);
+        // print(rewired_player);
+        player_characters.Add(gameObject);
+    }// Awake
+
+    //--------------------------------------------------------------------------
+
     // Use this for initialization
-    // public override void Start()
-    // {
-    //     base.Start();
-    // }// Start
+    public override void Start()
+    {
+        base.Start();
+        kr = gameObject.GetComponent<Rigidbody>();
+    }// Start
 
     //--------------------------------------------------------------------------
 
@@ -28,6 +61,16 @@ public class Player_character : Actor
     public override void Update()
     {
         base.Update();
+
+        if (on_ground)
+        {
+            velocity.y = 0;
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        // process_input();
+        move(velocity * Time.deltaTime);
 
         if (is_locked_on)
         {
@@ -38,6 +81,51 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    // private void process_input()
+    // {
+    //     if (rewired_player.GetButtonDown("jump"))
+    //     {
+    //         jump();
+    //     }
+
+    //     if (rewired_player.GetButtonDown("team_up"))
+    //     {
+    //         team_up_engage_or_throw();
+    //     }
+
+    //     if (rewired_player.GetButtonDown("attack"))
+    //     {
+    //         attack();
+    //     }
+
+    //     if(rewired_player.GetButtonDown("lock_on") ||
+    //        rewired_player.GetButtonUp("lock_on"))
+    //     {
+    //         toggle_lock_on();
+    //     }
+
+    //     Vector3 tilt = Vector3.zero;
+    //     tilt.x = rewired_player.GetAxis("move_x"); // left and right
+    //     tilt.z = rewired_player.GetAxis("move_z"); // forward and backward
+
+    //     var sprint = rewired_player.GetButton("sprint");
+
+    //     var target_velocity = tilt * (sprint ? sprint_speed : run_speed);
+    //     // if (!on_ground)
+    //     // {
+    //     //     target_velocity.x =
+    //     // }
+
+    //     target_velocity.y = velocity.y;
+    //     // target_velocity *= Time.deltaTime;
+
+    //     velocity = target_velocity;
+
+    //     // move(delta_position);
+    // }// process_input
+
+    //--------------------------------------------------------------------------
+
     public override void on_death()
     {
         print("you die!");
@@ -45,16 +133,16 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void projectile_attack()
-    {
-        throw new Exception("Derived classes must override this method");
-    }// projectile_attack
+    // public virtual void projectile_attack()
+    // {
+    //     // throw new Exception("Derived classes must override this method");
+    // }// projectile_attack
 
     //--------------------------------------------------------------------------
 
-    public virtual void physical_attack()
+    public virtual void attack()
     {
-        throw new Exception("Derived classes must override this method");
+        // throw new Exception("Derived classes must override this method");
     }// physical_attack
 
     //--------------------------------------------------------------------------
@@ -74,80 +162,61 @@ public class Player_character : Actor
 
         lock_on_target = Enemy.get_closest_potential_lock_on_target(gameObject);
 
-        look_toward(lock_on_target, 360f);
+        look_toward(lock_on_target);
     }// toggle_lock_on
 
     //--------------------------------------------------------------------------
 
-    public bool is_locked_on
+    public static void notify_enemy_gone(GameObject enemy)
     {
-        get
+        foreach (var player in player_characters)
         {
-            return lock_on_target != null;
+            if (player == null)
+            {
+                continue;
+            }
+
+            player.GetComponent<Player_character>().on_enemy_gone(
+                enemy.gameObject);
         }
-    }
+    }// notify_enemy_gone
 
     //--------------------------------------------------------------------------
 
-    public void notify_enemy_killed(GameObject enemy)
+    private void on_enemy_gone(GameObject enemy)
     {
         if (enemy == lock_on_target)
         {
             lock_on_target = null;
         }
-    }// notify_enemy_killed
+    }// on_enemy_gone
 
     //--------------------------------------------------------------------------
 
     public virtual void toggle_jousting_pole()
     {
-        throw new Exception("Derived classes must override this method");
-
-    }
+    }// toggle_jousting_pole
 
     //--------------------------------------------------------------------------
 
     public virtual void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
     {
-        throw new Exception("Derived classes must override this method");
-    }// team_up_attack
+    }// adjust_jousting_pole
 
     //--------------------------------------------------------------------------
 
-    public virtual void run(Vector3 tilt, bool sprint)
+    public virtual void move(Vector3 delta_position)
     {
-        // if (hit_edge_of_screen(GameObject.Find("Llama")) ||
-        //     hit_edge_of_screen(GameObject.Find("Ninja")))
-        // {
-        //     return;
-        // }
+        // print(amount);
+        step_axis_direction(Vector3.right, delta_position.x);
+        // print("delta_position.y: " + delta_position.y);
+        var y_collision = step_axis_direction(Vector3.up, delta_position.y);
+        step_axis_direction(Vector3.forward, delta_position.z);
 
-        if (!on_ground && !teamed_up)
+        if (delta_position.y < 0)
         {
-            return;
-        }
-
-        var speed = run_speed;
-
-        if(sprint)
-        {
-            speed = sprint_speed;
-        }
-
-
-        float horiz_speed = (float)(speed * tilt.x);
-        float z_speed = (float)(speed * tilt.z);
-
-        Vector3 new_speed = GetComponent<Rigidbody>().velocity;
-
-        new_speed.x = horiz_speed;
-        new_speed.z = z_speed;
-
-        GetComponent<Rigidbody>().velocity = new_speed;
-
-        if(tilt == Vector3.zero)
-        {
-            return;
+            // is_jumping = false;
+            on_ground = y_collision;
         }
 
         if (is_locked_on)
@@ -156,11 +225,50 @@ public class Player_character : Actor
             return;
         }
 
-        var turn_to = Mathf.Atan2(tilt.x, tilt.z) * Mathf.Rad2Deg;
+        if (delta_position.x == 0 && delta_position.z == 0)
+        {
+            return;
+        }
 
-        transform.rotation = Quaternion.Euler(0, turn_to, 0);
+        collision_safe_rotate_towards(
+            delta_position, 10 * Time.deltaTime);
+        // TODO: gradual rotation
+        // var turn_to = Mathf.Atan2(
+        //     velocity.x, velocity.z) * Mathf.Rad2Deg;
 
-    }// run
+        // transform.rotation = Quaternion.Euler(0, turn_to, 0);
+    }// move
+
+    //--------------------------------------------------------------------------
+
+    private bool step_axis_direction(Vector3 direction, float step_amount)
+    {
+        if (Mathf.Abs(step_amount) < min_move_distance)
+        {
+            // print("too slow! " + Mathf.Abs(step_amount));
+            return false;
+        }
+
+        var move_increment = direction * step_amount;
+        // print("before: " + move_increment);
+        RaycastHit hit_info;
+        var hit = kr.SweepTest(
+            move_increment, out hit_info,
+            move_increment.magnitude + skin_width);
+        if (hit)
+        {
+            // print("hit");
+            move_increment = move_increment.normalized * Mathf.Max(
+                hit_info.distance - skin_width, 0);
+        }
+
+        // print("after: " + move_increment);
+
+        // print("move_increment.y: " + move_increment.y);
+        transform.position += move_increment;
+
+        return hit;
+    }// step_axis_direction
 
     //--------------------------------------------------------------------------
 
@@ -181,16 +289,6 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual int run_speed
-    {
-        get
-        {
-            throw new Exception("Derived classes must override this property");
-        }
-    }// run_speed
-
-    //--------------------------------------------------------------------------
-
     public void sprint()
     {
 
@@ -198,41 +296,21 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual int sprint_speed
-    {
-        get
-        {
-            throw new Exception("Derived classes must override this property");
-        }
-    }// sprint_speed
-
-    //--------------------------------------------------------------------------
-
     public virtual void jump()
     {
+        if (!on_ground)
+        {
+            return;
+        }
 
-        Vector3 new_speed = GetComponent<Rigidbody>().velocity;
-        new_speed.y = jump_speed;
-        GetComponent<Rigidbody>().velocity = new_speed;
+        velocity.y = jump_speed;
+        // is_jumping = true;
+        on_ground = false;
+        // Vector3 new_speed = GetComponent<Rigidbody>().velocity;
+        // new_speed.y = jump_speed;
+        // GetComponent<Rigidbody>().velocity = new_speed;
 
     }// jump
-
-    //--------------------------------------------------------------------------
-
-    public virtual int jump_speed
-    {
-        get
-        {
-            throw new Exception("Derived classes must override this property");
-        }
-    }// jump_speed
-
-    //--------------------------------------------------------------------------
-
-    // public virtual void throw_ninja()
-    // {
-
-    // }// throw_ninja
 
     //--------------------------------------------------------------------------
 
@@ -243,42 +321,21 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    void OnCollisionEnter(Collision collision){
-        if(collision.gameObject.tag.Contains("floor"))
+    protected void team_up_engage()
+    {
+        foreach (var player_char in player_characters)
         {
-            on_ground = true;
+            player_char.GetComponent<Player_character>().teamed_up = true;
         }
-    }
+    }// team_up_engage
 
+    //--------------------------------------------------------------------------
 
-    void OnCollisionStay(Collision collision){
-        if(collision.gameObject.tag.Contains("floor"))
+    protected void team_up_disengage()
+    {
+        foreach (var player_char in player_characters)
         {
-            on_ground = true;
+            player_char.GetComponent<Player_character>().teamed_up = false;
         }
-    }
-
-
-    void OnCollisionExit(Collision collision){
-        if(collision.gameObject.tag.Contains("floor"))
-        {
-            on_ground = false;
-        }
-    }
-
-    // void OnTriggerStay(Collider other){
-    //     if(other.gameObject.tag.Contains("floor"))
-    //     {
-    //         print("On Ground");
-    //         on_ground = true;
-    //     }
-    // }
-
-    // void OnTriggerExit(Collider other){
-    //     if(other.gameObject.tag.Contains("floor"))
-    //     {
-    //         print("Leaving Ground");
-    //         on_ground = false;
-    //     }
-    // }
+    }// team_up_disengage
 }

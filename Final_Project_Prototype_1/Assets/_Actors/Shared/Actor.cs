@@ -4,7 +4,7 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    public int health;
+    private int health;
 
     //--------------------------------------------------------------------------
 
@@ -32,10 +32,30 @@ public class Actor : MonoBehaviour
         var target_direction =
                 obj.transform.position - transform.position;
 
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, target_direction, step, 0f);
-        transform.rotation = Quaternion.LookRotation(new_forward);
+        collision_safe_rotate_towards(target_direction, step);
+
+
+        // var new_forward = Vector3.RotateTowards(
+        //     transform.forward, target_direction, step, 0f);
+        // // only allow rotation around y axis
+        // // new_forward.x = obj.transform.eulerAngles.x;
+        // // new_forward.z = obj.transform.eulerAngles.z;
+
+        // transform.rotation = Quaternion.LookRotation(new_forward);
     }// look_toward
+
+    //--------------------------------------------------------------------------
+
+    public virtual void collision_safe_rotate_towards(
+        Vector3 direction, float step)
+    {
+        direction.y = transform.forward.y;
+
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, direction, step, 0f);
+
+        transform.rotation = Quaternion.LookRotation(new_forward);
+    }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------
 

@@ -12,7 +12,6 @@ GameObject:
   - 65: {fileID: 6520652}
   - 23: {fileID: 2320652}
   - 54: {fileID: 5420652}
-  - 114: {fileID: 11420650}
   - 114: {fileID: 11420648}
   - 114: {fileID: 11420652}
   - 114: {fileID: 11487018}
@@ -442,24 +441,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  on_ground: 0
-  teamed_up: 0
-  lock_on_target: {fileID: 0}
+  min_move_distance: .00100000005
+  skin_width: .00999999978
+  velocity: {x: 0, y: 0, z: 0}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 177610}
   sword_obj: {fileID: 134222}
   out_of_range: {fileID: 2100000, guid: 2805ebebbee61f74d9924d8d23c4fbd0, type: 2}
---- !u!114 &11420650
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90676c26d2f5548e39dbfc330026ff88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11420652
 MonoBehaviour:
   m_ObjectHideFlags: 1
