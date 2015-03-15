@@ -30,7 +30,7 @@ GameObject:
   - 33: {fileID: 3313298}
   - 65: {fileID: 6518668}
   - 23: {fileID: 2372824}
-  - 114: {fileID: 11425496}
+  - 114: {fileID: 11435056}
   m_Layer: 0
   m_Name: Bridge_Switch
   m_TagString: floor
@@ -177,7 +177,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11425496
+--- !u!114 &11435056
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -185,10 +185,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 181926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39abf587cbc922148a88eab787b41433, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bbff9a915e91ad49a27898583b6d4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  on: {fileID: 2100000, guid: 1e724fbf2ac14b64aacbec8e27e8258e, type: 2}
+  switchee: {fileID: 140496}
 --- !u!114 &11456404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,6 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
+  switch_on_material: {fileID: 2100000, guid: 1e724fbf2ac14b64aacbec8e27e8258e, type: 2}
+  switch_off_material: {fileID: 2100000, guid: 2805ebebbee61f74d9924d8d23c4fbd0, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
