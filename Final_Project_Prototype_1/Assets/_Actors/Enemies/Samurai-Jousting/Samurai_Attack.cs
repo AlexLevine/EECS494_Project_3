@@ -59,19 +59,21 @@ public class Samurai_Attack : Enemy {
                 }
                 else
                 {
-                    float step = speed * Time.deltaTime;
-
-                    Vector3 new_dir = Vector3.RotateTowards(transform.position,
-                                                   closest_player, step, 0.0f);
-                    print(new_dir);                                  
-                    transform.rotation = Quaternion.LookRotation(new_dir);
+                    if(closest_player == llama.transform.position)
+                    {
+                        look_toward(llama);
+                    }
+                    else
+                    {
+                        look_toward(ninja);
+                    }
                 }
 
                 // ------------------------------
                 if(dist_to_closest_player < attack_thresh)
                 {
                     RaycastHit hit;
-                    if (Physics.Raycast(transform.position, Vector3.forward, out hit))
+                    if (Physics.Raycast(transform.position, transform.forward, out hit))
                     {
                         if(hit.collider.gameObject.name == "Llama" ||
                            hit.collider.gameObject.name == "Ninja" )
@@ -83,7 +85,7 @@ public class Samurai_Attack : Enemy {
                 break;
 
             case samurai_states_e.ATTACKING:
-                GetComponent<Rigidbody>().velocity = Vector3.forward * speed;
+                GetComponent<Rigidbody>().velocity = transform.forward * speed;
                 break;
 
             case samurai_states_e.PAUSING:
