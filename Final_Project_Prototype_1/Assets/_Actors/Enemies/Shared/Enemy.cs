@@ -7,7 +7,7 @@ public class Enemy : Actor
 {
     public static List<GameObject> enemies = new List<GameObject>();
 
-    void Awake()
+    public virtual void Awake()
     {
         enemies.Add(gameObject);
     }

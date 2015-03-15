@@ -4,7 +4,7 @@ using System;
 
 public class Flying_enemy_script : Enemy {
 
-	public GameObject enemy_prefab;
+	public GameObject projectile_prefab;
 	public float spawn_distance;
 	
 	public int num_to_spawn;
@@ -34,19 +34,19 @@ public class Flying_enemy_script : Enemy {
 	}
 	
 	// Use this for initialization
-	void Start()
+	public override void Start()
 	{
-		if (enemy_prefab.GetComponent<Enemy>() == null)
-		{
-			throw new Exception("Only enemies can be attached to span points");
-		}
+		base.Start ();
+
 	}// Start
 	
 	//--------------------------------------------------------------------------
 	
 	// Update is called once per frame
-	void Update()
+	public override void Update()
 	{
+		base.Update ();
+
 		var llama_pos = GameObject.Find("Llama").transform.position;
 		var ninja_pos = GameObject.Find("Ninja").transform.position;
 		
@@ -63,7 +63,7 @@ public class Flying_enemy_script : Enemy {
 			
 			is_spawning = true;
 			
-			print("spawn!");
+			//print("spawn!");
 			StartCoroutine(spawn());
 		}
 	}// Update
@@ -75,7 +75,9 @@ public class Flying_enemy_script : Enemy {
 		while (num_to_spawn > 0)
 		{
 			--num_to_spawn;
-			Instantiate(enemy_prefab, transform.position, Quaternion.identity);
+			Vector3 spawn_point = transform.position;
+			spawn_point.y -= 1f;
+			Instantiate(projectile_prefab, spawn_point, Quaternion.identity);
 			yield return new WaitForSeconds(time_between_spawns);
 		}
 	}// spawn

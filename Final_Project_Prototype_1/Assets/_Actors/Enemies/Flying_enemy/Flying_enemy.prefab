@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  enemy_prefab: {fileID: 150370, guid: e4a1cf38ddf755744970ad037ca2c02a, type: 2}
+  projectile_prefab: {fileID: 194890, guid: e73d4d901e384414f87b85c0e3834f87, type: 2}
   spawn_distance: 20
   num_to_spawn: 100
   time_between_spawns: 10
