@@ -7,9 +7,7 @@ public class Ninja_jousting_pole : MonoBehaviour
     {
         get
         {
-            var power = (int) (
-                1 * GameObject.Find(
-                    "Llama").GetComponent<Rigidbody>().velocity.magnitude);
+            var power = (int) (Llama.get().velocity.magnitude);
             return power;
         }
     }// attack_power

@@ -61,6 +61,8 @@ public class Rewired_character_controller : MonoBehaviour
         tilt.x = player.GetAxis("move_x"); // left and right
         tilt.z = player.GetAxis("move_z"); // forward and backward
 
+        pc.adjust_jousting_pole(tilt.z, tilt.x);
+
         var sprint = player.GetButton("sprint");
 
         var target_velocity = tilt * (sprint ? pc.sprint_speed : pc.run_speed);

@@ -4,6 +4,8 @@ using System.Collections;
 public class Llama : Player_character
 {
     public GameObject spit_prefab;
+    public GameObject spit_spawn_point;
+
     private bool throw_ninja = false;
     private float rotation_count;
     private const float rotation_wait = .5f;
@@ -110,14 +112,15 @@ public class Llama : Player_character
 
     public override void attack()
     {
-        var projectile_start_pos = transform.position;
-        projectile_start_pos += transform.forward * 1f;
-        projectile_start_pos.y += 1f;
-
         GameObject spit = Instantiate(
-            spit_prefab, projectile_start_pos,
+            spit_prefab, spit_spawn_point.transform.position,
             transform.rotation) as GameObject;
-        spit.GetComponent<Rigidbody>().velocity = transform.forward * 12;
+        var direction = (is_locked_on ?
+            (lock_on_target_pos - spit.transform.position).normalized :
+            transform.forward);
+        print(direction);
+
+        spit.GetComponent<Rigidbody>().velocity = direction * 14f;
     }// projectile_attack
 
     //--------------------------------------------------------------------------

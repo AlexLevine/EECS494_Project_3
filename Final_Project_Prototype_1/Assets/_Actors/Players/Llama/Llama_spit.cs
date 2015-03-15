@@ -5,6 +5,7 @@ public class Llama_spit : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
+        // print("blaaaah");
         var enemy = other.gameObject.GetComponent<Enemy>();
         if(enemy != null)
         {

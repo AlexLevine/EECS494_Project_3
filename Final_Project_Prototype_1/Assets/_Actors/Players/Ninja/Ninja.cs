@@ -89,7 +89,8 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
+    public override void adjust_jousting_pole(
+        float vertical_tilt, float horizontal_tilt)
     {
         if(jousting_pole == null)
         {
@@ -108,11 +109,8 @@ public class Ninja : Player_character
         }
 
         float adjusted_vert = vertical_tilt * 10;   // some float from -1 to 1,
-        float adjusted_horz = horizontal_tilt * -45; // max angle is 45 degrees
+        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
-
-        // print(adjusted_horz);
-        // print(adjusted_vert);
 
         // jousting_pole.transform.position = jousting_pole_start_pos;
         jousting_pole.transform.position = transform.position;

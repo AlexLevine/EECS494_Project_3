@@ -14,6 +14,12 @@ public class Player_character : Actor
 
     public virtual float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
+    public Vector3 lock_on_target_pos {
+        get { return lock_on_target.transform.position; } }
+    // {
+    //     get { return (is_locked_on ?
+    //             (Vector3?) (lock_on_target_pos.transform.position) : null); }
+    // }
     public virtual float jump_speed { get { return 15f; } }
     public virtual float run_speed { get { return 5f; } }
     public virtual float sprint_speed { get { return run_speed * 2f; } }
