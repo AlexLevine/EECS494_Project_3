@@ -14,7 +14,7 @@ public class Bridge : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		float temp = Quaternion.Angle (transform.rotation,Quaternion.Euler(0,0,0));
-		if (temp>=0 && temp<=90){
+		if (on && temp>=0 && temp<=90){
 			transform.RotateAround(rotate,new Vector3(1,0,0),20*Time.fixedDeltaTime);
 		}
 	}
