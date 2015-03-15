@@ -132,13 +132,23 @@ public class Enemy : Actor
 
 	public override void on_death()
     {
+        Destroy(gameObject);
+    }// on_death
+
+    //--------------------------------------------------------------------------
+
+    void OnDestroy()
+    {
         enemies.Remove(gameObject);
         foreach (var player in Player_character.players)
         {
+            if (player == null)
+            {
+                continue;
+            }
+
             player.GetComponent<Player_character>().notify_enemy_killed(
                 gameObject);
         }
-
-        Destroy(gameObject);
-    }// on_death
+    }// OnDestroy
 }
