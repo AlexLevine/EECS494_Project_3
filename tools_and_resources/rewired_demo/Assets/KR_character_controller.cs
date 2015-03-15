@@ -8,19 +8,21 @@ public class KR_character_controller : MonoBehaviour {
     public int playerId = 0; // The Rewired player id of this character
 
     public float moveSpeed = 5.0f;
+    public float jump_speed = 20f;
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
+    public float gravity = -10f;
 
     private Player player; // The Rewired Player
     private Rigidbody kr;
     private Vector3 moveVector;
-    public bool is_jumping = false;
+    private bool is_jumping = false;
     private float y_velocity = 0;
 
-    public bool is_grounded;
+    private bool is_grounded;
 
     // Contains bit fields indicating which sides of the character were last collided with.
-    public int collisionFlags;
+    // public int collisionFlags;
 
     void Awake() {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -62,17 +64,20 @@ public class KR_character_controller : MonoBehaviour {
         {
             print("jump!");
             is_jumping = true;
-            y_velocity = 20f;
+            y_velocity = jump_speed;
+            is_grounded = false;
         }
         else
         {
-            y_velocity += -10f * Time.deltaTime;
+            print("current y vel: " + y_velocity);
+            y_velocity += gravity * Time.deltaTime;
         }
 
+        var delta_position = tilt * moveSpeed;
+        delta_position.y = y_velocity;
+        delta_position *= Time.deltaTime;
 
-        tilt.y = y_velocity;
-
-        move(tilt * moveSpeed * Time.deltaTime);
+        move(delta_position);
 
         // var sphere_collider = GetComponent<SphereCollider();
         // if (sphere_collider == null)
@@ -113,6 +118,7 @@ public class KR_character_controller : MonoBehaviour {
     {
         if (Mathf.Abs(step_amount) < min_move_distance)
         {
+            print("too slow! " + Mathf.Abs(step_amount));
             return false;
         }
 
