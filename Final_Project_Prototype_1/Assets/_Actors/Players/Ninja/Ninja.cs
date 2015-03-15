@@ -39,6 +39,8 @@ public class Ninja : Player_character
     // Update is called once per frame
     public override void Update()
     {
+        base.Update();
+
         if (!is_teamed_up)
         {
             jousting_pole.SetActive(false);
@@ -52,8 +54,6 @@ public class Ninja : Player_character
 
             return;
         }
-
-        base.Update();
 
         var llama = GameObject.Find("Llama_Torso");
 
@@ -159,10 +159,10 @@ public class Ninja : Player_character
 
     public override void move(Vector3 delta_position)
     {
-        // if (GetComponent<Sword_swing>().is_swinging)
-        // {
-        //     return;
-        // }
+        if (GetComponent<Sword_swing>().is_swinging)
+        {
+            return;
+        }
 
         base.move(delta_position);
     }

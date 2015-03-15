@@ -22,12 +22,14 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public void look_toward(GameObject obj, float step=360f)
+    public void look_toward(GameObject obj, float step=10f)
     {
         if (obj == null)
         {
             return;
         }
+
+        step *= Time.deltaTime;
 
         var target_direction =
                 obj.transform.position - transform.position;

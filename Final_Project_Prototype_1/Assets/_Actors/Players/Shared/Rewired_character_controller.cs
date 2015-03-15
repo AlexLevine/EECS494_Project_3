@@ -51,7 +51,7 @@ public class Rewired_character_controller : MonoBehaviour
         }
 
         if(player.GetButtonDown("lock_on") ||
-           player.GetButtonUp("lock_on"))
+           player.GetButtonUp("lock_on") && pc.is_locked_on)
         {
             pc.toggle_lock_on();
         }

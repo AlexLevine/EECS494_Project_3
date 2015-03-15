@@ -160,8 +160,18 @@ public class Player_character : Actor
             return;
         }
 
-        lock_on_target = Enemy.get_closest_potential_lock_on_target(gameObject);
+        var closest_enemy = Enemy.get_closest_potential_lock_on_target(
+            gameObject);
 
+        var distance = Vector3.Distance(
+            transform.position, closest_enemy.transform.position);
+        print("distance: " + distance);
+        if (distance > 10f)
+        {
+            return;
+        }
+
+        lock_on_target = closest_enemy;
         look_toward(lock_on_target);
     }// toggle_lock_on
 
