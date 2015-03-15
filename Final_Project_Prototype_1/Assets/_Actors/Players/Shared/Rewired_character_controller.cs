@@ -42,6 +42,7 @@ public class Rewired_character_controller : MonoBehaviour
 
         if (player.GetButtonDown("team_up"))
         {
+            print("team up");
             pc.team_up_engage_or_throw();
         }
 

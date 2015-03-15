@@ -78,14 +78,17 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    void OnCollisionEnter(Collision c)
+    void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.tag == "Player")
         {
-            c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
+            var parent = c.gameObject.transform.parent;
+            (parent != null ? parent.gameObject :
+                c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
+            // c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
             on_player_hit();
         }
-    }// OnCollisionEnter
+    }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
 

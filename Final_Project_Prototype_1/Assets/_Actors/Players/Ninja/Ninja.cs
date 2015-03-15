@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
+    public GameObject team_up_point;
 
     public GameObject projectile_prefab;
     public GameObject jousting_pole;
@@ -24,8 +25,10 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         instance = this;
     }// Awake
     // // Use this for initialization
@@ -55,17 +58,8 @@ public class Ninja : Player_character
             return;
         }
 
-        var llama = GameObject.Find("Llama_Torso");
-
-        var new_ninja_pos = GetComponent<Collider>().bounds.center;
-
-        var y_offset =
-                GetComponent<Collider>().bounds.extents.y + llama.GetComponent<Collider>().bounds.extents.y;
-        new_ninja_pos.y = llama.GetComponent<Collider>().bounds.center.y + y_offset;
-        new_ninja_pos.z = llama.GetComponent<Collider>().bounds.center.z;
-        new_ninja_pos.x = llama.GetComponent<Collider>().bounds.center.x;
-
-        transform.position = new_ninja_pos;
+        transform.position = team_up_point.transform.position;
+        transform.rotation = team_up_point.transform.parent.rotation;
     }// Update
 
     //--------------------------------------------------------------------------
@@ -121,9 +115,9 @@ public class Ninja : Player_character
         // print(adjusted_vert);
 
         // jousting_pole.transform.position = jousting_pole_start_pos;
-        jousting_pole.transform.position = this.transform.position;
+        jousting_pole.transform.position = transform.position;
         // jousting_pole.transform.rotation = jousting_pole_start_rot;
-        jousting_pole.transform.rotation = this.transform.rotation;
+        jousting_pole.transform.rotation = transform.rotation;
 
 
         jousting_pole.transform.RotateAround(transform.position, transform.up, adjusted_horz);
@@ -182,12 +176,14 @@ public class Ninja : Player_character
 
         if (distance > 4f)
         {
+            print("out of range");
 			normal = GetComponent<Renderer>().material;
            	GetComponent<Renderer>().material = out_of_range;
            	o_o_r = 0;
             return;
         }
 
+        print("teaming up");
         team_up_engage();
         sword_obj.SetActive(false);
 

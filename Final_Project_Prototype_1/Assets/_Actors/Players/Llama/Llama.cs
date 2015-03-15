@@ -22,8 +22,10 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         instance = this;
     }// Awake
 

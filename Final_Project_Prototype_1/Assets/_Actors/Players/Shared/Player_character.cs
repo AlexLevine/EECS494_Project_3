@@ -41,8 +41,9 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    void Awake()
+    public virtual void Awake()
     {
+        // print("awake");
         // rewired_player = ReInput.players.GetPlayer(player_id);
         // print(rewired_player);
         player_characters.Add(gameObject);
@@ -172,7 +173,7 @@ public class Player_character : Actor
 
         var distance = Vector3.Distance(
             transform.position, closest_enemy.transform.position);
-        print("distance: " + distance);
+        // print("distance: " + distance);
         if (distance > 10f)
         {
             return;
@@ -340,6 +341,7 @@ public class Player_character : Actor
 
     protected void team_up_engage()
     {
+        print(player_characters.Count);
         foreach (var player_char in player_characters)
         {
             player_char.GetComponent<Player_character>().teamed_up = true;

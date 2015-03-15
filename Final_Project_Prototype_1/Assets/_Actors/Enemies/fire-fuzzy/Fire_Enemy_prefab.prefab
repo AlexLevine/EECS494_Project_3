@@ -433,12 +433,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5098b87185bcb44809a5c94b1bda00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   destination_index: 0
   path_nodes:
   - {fileID: 193606}
   - {fileID: 193604}
   is_moving: 1
+  on_fire: 0
   speed: 2
 --- !u!135 &13560546
 SphereCollider:
@@ -459,7 +459,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193608}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 10

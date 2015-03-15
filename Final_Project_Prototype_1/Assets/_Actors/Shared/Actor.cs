@@ -4,13 +4,14 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    private int health;
+    public int health { get { return health_; } }
+    private int health_;
 
     //--------------------------------------------------------------------------
 
     public virtual void Start()
     {
-        health = max_health;
+        health_ = max_health;
     }// Start()
 
     //--------------------------------------------------------------------------
@@ -70,9 +71,9 @@ public class Actor : MonoBehaviour
             return;
         }
 
-        health -= damage;
+        health_ -= damage;
 
-        if (health <= 0)
+        if (health_ <= 0)
         {
             on_death();
         }
