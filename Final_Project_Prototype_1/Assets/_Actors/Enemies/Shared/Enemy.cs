@@ -7,7 +7,7 @@ public class Enemy : Actor
 {
     public static List<GameObject> enemies = new List<GameObject>();
 
-    void Awake()
+    public virtual void Awake()
     {
         enemies.Add(gameObject);
     }
@@ -78,14 +78,17 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    void OnCollisionEnter(Collision c)
+    void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.tag == "Player")
         {
-            c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
+            var parent = c.gameObject.transform.parent;
+            (parent != null ? parent.gameObject :
+                c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
+            // c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
             on_player_hit();
         }
-    }// OnCollisionEnter
+    }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
 
@@ -140,15 +143,6 @@ public class Enemy : Actor
     void OnDestroy()
     {
         enemies.Remove(gameObject);
-        foreach (var player in Player_character.players)
-        {
-            if (player == null)
-            {
-                continue;
-            }
-
-            player.GetComponent<Player_character>().notify_enemy_killed(
-                gameObject);
-        }
+        Player_character.notify_enemy_gone(gameObject);
     }// OnDestroy
 }

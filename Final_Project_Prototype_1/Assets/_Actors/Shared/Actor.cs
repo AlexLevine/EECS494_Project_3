@@ -4,13 +4,14 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    public int health;
+    public int health { get { return health_; } }
+    private int health_;
 
     //--------------------------------------------------------------------------
 
     public virtual void Start()
     {
-        health = max_health;
+        health_ = max_health;
     }// Start()
 
     //--------------------------------------------------------------------------
@@ -22,20 +23,42 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public void look_toward(GameObject obj, float step=360f)
+    public void look_toward(GameObject obj, float step=10f)
     {
         if (obj == null)
         {
             return;
         }
 
+        step *= Time.deltaTime;
+
         var target_direction =
                 obj.transform.position - transform.position;
 
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, target_direction, step, 0f);
-        transform.rotation = Quaternion.LookRotation(new_forward);
+        collision_safe_rotate_towards(target_direction, step);
+
+
+        // var new_forward = Vector3.RotateTowards(
+        //     transform.forward, target_direction, step, 0f);
+        // // only allow rotation around y axis
+        // // new_forward.x = obj.transform.eulerAngles.x;
+        // // new_forward.z = obj.transform.eulerAngles.z;
+
+        // transform.rotation = Quaternion.LookRotation(new_forward);
     }// look_toward
+
+    //--------------------------------------------------------------------------
+
+    public virtual void collision_safe_rotate_towards(
+        Vector3 direction, float step)
+    {
+        direction.y = transform.forward.y;
+
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, direction, step, 0f);
+
+        transform.rotation = Quaternion.LookRotation(new_forward);
+    }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------
 
@@ -48,9 +71,9 @@ public class Actor : MonoBehaviour
             return;
         }
 
-        health -= damage;
+        health_ -= damage;
 
-        if (health <= 0)
+        if (health_ <= 0)
         {
             on_death();
         }

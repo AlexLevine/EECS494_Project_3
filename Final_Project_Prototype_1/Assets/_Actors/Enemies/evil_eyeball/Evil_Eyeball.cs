@@ -4,18 +4,26 @@ using System;
 
 public class Evil_Eyeball : Enemy {
 
-	public int destination_index = 0;
+	private float speed = 2f;
 	
-	// Points that the platform should move between.
-	public GameObject[] path_nodes;
+	//the 2 players that the sword targets
+	public string player_name1 = "Llama";
+	public string player_name2 = "Ninja";
+
+	public GameObject start_location;
+
+	private int locate_timer;
+	const int full_locate_timer = 300;
 	
 	public bool is_moving;
 	private bool stunned;
 	private int stunned_timer;
 	const int init_stunned_timer = 300;
-	
-	
-	public float speed;
+
+	public Vector3 start;
+	private Vector3 dest;
+
+
 	
 	//--------------------------------------------------------------------------
 	
@@ -40,33 +48,68 @@ public class Evil_Eyeball : Enemy {
 	public override void Start()
 	{
 		base.Start();
-		transform.position = path_nodes[destination_index].transform.position;
-		++destination_index;
+
+		start = (start_location == null ?
+		         transform.position : start_location.transform.position);
+		transform.position = start;
+
 		stunned = false;
+		locate_timer = 0;
 	}// Start
 	
 	//--------------------------------------------------------------------------
 	
-	void FixedUpdate()
+	void Update()
 	{
+		base.Update ();
 		if (!stunned) {
-			Debug.Log(destination_index, gameObject);
-			transform.position = Vector3.MoveTowards (
-				transform.position,
-				path_nodes [destination_index].transform.position,
-				speed * Time.fixedDeltaTime);
+			//Basic Movement
+			Vector3 pos = this.transform.position;
 			
-			var distance_to_dest = Vector3.Distance (
-				transform.position,
-				path_nodes [destination_index].transform.position);
-			var reached_destination = Mathf.Approximately (distance_to_dest, 0);
+			Vector3 player1_pos = pos;
+			Vector3 player2_pos = pos;
 			
-			if (!reached_destination) {
-				return;
+			// if the objects exist, find their postions
+			if (GameObject.Find(player_name1))
+			{
+				player1_pos = GameObject.Find(player_name1).transform.position;
+			}
+			if (GameObject.Find(player_name2))
+			{
+				player2_pos = GameObject.Find(player_name2).transform.position;
 			}
 			
-			++destination_index;
-			destination_index %= path_nodes.Length;
+			if (locate_timer <= 0) {
+				locate_timer = full_locate_timer;
+				// set destination point
+				if (player1_pos == pos && player2_pos != pos) {
+					dest = player2_pos;
+				} else if (player2_pos == pos && player1_pos != pos) {
+					dest = player1_pos;
+				} else if (player2_pos == pos && player1_pos == pos) {
+					dest = pos;
+				}
+				// else if (Mathf.Sqrt(Mathf.Pow((player1_pos.y - pos.y), 2) + Mathf.Pow((player1_pos.x - pos.x), 2)) <
+				//     Mathf.Sqrt(Mathf.Pow((player2_pos.y - pos.y), 2) + Mathf.Pow((player2_pos.x - pos.x), 2)))
+				else if (Vector3.Distance (player1_pos, pos) < Vector3.Distance (player2_pos, pos)) {
+					dest = player1_pos;
+				} else {
+					dest = player2_pos;
+				}
+			} else --locate_timer;
+			
+			Vector3 angle = dest - pos;
+			angle.Normalize ();
+			
+			this.GetComponent<Rigidbody>().velocity = angle * speed;
+			
+			if (this.GetComponent<Rigidbody>().velocity != Vector3.zero)
+			{
+				transform.rotation = Quaternion.Slerp(
+					transform.rotation,
+					Quaternion.LookRotation(this.GetComponent<Rigidbody>().velocity),
+					Time.deltaTime * speed);
+			}
 		} else {
 			if (stunned_timer <= 0) {
 				stunned_timer = init_stunned_timer;

@@ -15,8 +15,8 @@ public class Camera_follow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var llama = GameObject.Find("Llama");
-        var ninja = GameObject.Find("Ninja");
+        var llama = Llama.get().gameObject;
+        var ninja = Ninja.get().gameObject;
 
         var distance = llama.transform.position - ninja.transform.position;
 

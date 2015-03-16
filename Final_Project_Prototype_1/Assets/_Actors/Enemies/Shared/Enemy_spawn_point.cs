@@ -10,9 +10,7 @@ public class Enemy_spawn_point : MonoBehaviour
     public int num_to_spawn;
     public float time_between_spawns;
 
-    public bool _______________________________________;
-
-    public bool is_spawning = false;
+    private bool is_spawning = false;
 
     //--------------------------------------------------------------------------
 
@@ -30,8 +28,8 @@ public class Enemy_spawn_point : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var llama_pos = GameObject.Find("Llama").transform.position;
-        var ninja_pos = GameObject.Find("Ninja").transform.position;
+        var llama_pos = Llama.get().transform.position;
+        var ninja_pos = Ninja.get().transform.position;
 
         var llama_distance = Vector3.Distance(llama_pos, transform.position);
         var ninja_distance = Vector3.Distance(ninja_pos, transform.position);

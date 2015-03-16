@@ -1,17 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
-using InControl;
-
 
 public class Llama : Player_character
 {
     public GameObject spit_prefab;
-    private bool throw_ninja = false;
-    private float rotation_count;
-    private const float rotation_wait = .5f;
-    private Vector3 rotation_point;
-    private float amount_rotated;
-    private float rotation_angle = Mathf.PI/2;
+    public GameObject spit_spawn_point;
+
+    private static Llama instance;
+
+    //--------------------------------------------------------------------------
+
+    public static Llama get()
+    {
+        return instance;
+    }// get
+
+    //--------------------------------------------------------------------------
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        instance = this;
+    }// Awake
 
     //--------------------------------------------------------------------------
 
@@ -26,101 +37,95 @@ public class Llama : Player_character
     // // Update is called once per frame
 //    public override void Update()
 //    {
-//		base.Update(); 
+//		base.Update();
 //	}// Update
-	
-	void FixedUpdate(){
-		if (throw_ninja){
-		
-			//rotate to throw
-			var rotate = transform.forward;
-			var temp = rotate.z;
-			rotate.z = rotate.x;
-			rotate.x = -temp;
-			if (rotation_count<=rotation_wait){
-				transform.RotateAround(transform.position,rotate,-rotation_angle);
-				rotation_count+=Time.fixedDeltaTime;
-				amount_rotated+=rotation_angle;
-	         }
-	         else{
-				transform.RotateAround(transform.position,rotate,amount_rotated);
-				throw_ninja = false;
-				var ninja = GameObject.Find("Ninja");
-				teamed_up = false;
-				
-				ninja.GetComponent<Player_character>().teamed_up = false;
-				var new_ninja_velocity = transform.forward + transform.up;//Vector3.one;// transform.forward;
-				
-				print("new vel: " + new_ninja_velocity);
-				new_ninja_velocity.x *= 5;
-				new_ninja_velocity.y *= 10;
-				new_ninja_velocity.z *= 5;
-				print("new vel: " + new_ninja_velocity);
-				ninja.GetComponent<Rigidbody>().velocity = new_ninja_velocity;    
-			}
-		}
-	}
+
+	// void FixedUpdate(){
+	// 	if (throw_ninja){
+
+	// 		//rotate to throw
+	// 		var rotate = transform.forward;
+	// 		var temp = rotate.z;
+	// 		rotate.z = rotate.x;
+	// 		rotate.x = -temp;
+	// 		if (rotation_count<=rotation_wait){
+	// 			transform.RotateAround(transform.position,rotate,-rotation_angle);
+	// 			rotation_count+=Time.fixedDeltaTime;
+	// 			amount_rotated+=rotation_angle;
+	//          }
+	//          else{
+	// 			transform.RotateAround(transform.position,rotate,amount_rotated);
+	// 			throw_ninja = false;
+	// 			var ninja = Ninja.get();
+
+ //                team_up_disengage();
+
+	// 			var new_ninja_velocity = transform.forward + transform.up;//Vector3.one;// transform.forward;
+
+	// 			print("new vel: " + new_ninja_velocity);
+	// 			new_ninja_velocity.x *= 5;
+	// 			new_ninja_velocity.y *= 10;
+	// 			new_ninja_velocity.z *= 5;
+	// 			print("new vel: " + new_ninja_velocity);
+	// 			ninja.velocity = new_ninja_velocity;
+	// 		}
+	// 	}
+	// }
     //--------------------------------------------------------------------------
 
-    public override void jump()
+    // public override void jump()
+    // {
+    //     base.jump();
+    // }
+
+	public override void move(Vector3 delta_position)
     {
-        if(!on_ground)
+    	if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
             return;
         }
 
-        base.jump();
-    }
-    
-	public override void run(Vector3 tilt, bool sprint)
-    {
-    	if (throw_ninja) return;
-    	base.run(tilt,sprint);
-    }
-    
-
-    public override void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
-    {return;}
-
-    public override void toggle_jousting_pole()
-    {return;}
+    	base.move(delta_position);
+    }// move
 
     //--------------------------------------------------------------------------
 
     public override void team_up_engage_or_throw()
     {
-        if (!teamed_up)
-        {
-            return;
-        }
+        // if (!is_teamed_up)
+        // {
+        //     return;
+        // }
 
-        if (!throw_ninja){
-	        throw_ninja = true;
-			rotation_count = 0;
-			//rotation_point = transform.position;
-			amount_rotated = 0;
-		}
+        gameObject.GetComponent<Throw_animation>().start_animation();
+  //       if (!throw_ninja){
+	 //        throw_ninja = true;
+		// 	rotation_count = 0;
+		// 	//rotation_point = transform.position;
+		// 	amount_rotated = 0;
+		// }
     }// team_up_engage_or_throw
 
     //--------------------------------------------------------------------------
 
-    public override void projectile_attack()
+    public override void attack()
     {
-        var projectile_start_pos = transform.position;
-        projectile_start_pos += transform.forward * 1f;
-        projectile_start_pos.y += 1f;
-
         GameObject spit = Instantiate(
-            spit_prefab, projectile_start_pos,
+            spit_prefab, spit_spawn_point.transform.position,
             transform.rotation) as GameObject;
-        spit.GetComponent<Rigidbody>().velocity = transform.forward * 12;
+        var direction = (is_locked_on ?
+            (lock_on_target_pos - spit.transform.position).normalized :
+            transform.forward);
+        print(direction);
+
+        spit.GetComponent<Rigidbody>().velocity = direction * 14f;
     }// projectile_attack
 
     //--------------------------------------------------------------------------
 
-    public override void physical_attack()
-    {
-    }// physical_attack
+    // public override void physical_attack()
+    // {
+    // }// physical_attack
 
     //--------------------------------------------------------------------------
 
@@ -134,7 +139,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override int run_speed
+    public override float run_speed
     {
         get
         {
@@ -144,7 +149,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override int sprint_speed
+    public override float sprint_speed
     {
         get
         {
@@ -154,11 +159,11 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override int jump_speed
+    public override float jump_speed
     {
         get
         {
-            return 7;
+            return 15;
         }
     }// jump_speed
 }
