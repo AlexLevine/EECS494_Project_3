@@ -65,7 +65,7 @@ public class Sword_script : Enemy {
         dest = new Vector3 (0, 0, 0);
         transform.position = start;
 
-        locate_timer = full_locate_timer;
+        locate_timer = 0;
     }// Start
 
     //--------------------------------------------------------------------------
