@@ -50,7 +50,7 @@ public class Ninja : Player_character
             sword_obj.SetActive(true);
 
 			//out_of_range
-			//print(o_o_r);
+			// print(o_o_r);
 			if (o_o_r++==1){
 				GetComponent<Renderer>().material = normal;
 			}
@@ -59,6 +59,12 @@ public class Ninja : Player_character
         }
 
         transform.position = team_up_point.transform.position;
+
+        if (Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
+        {
+            return;
+        }
+
         transform.rotation = team_up_point.transform.parent.rotation;
     }// Update
 
@@ -82,7 +88,8 @@ public class Ninja : Player_character
         {
             toggle_jousting_pole();
         }
-        else{
+        else
+        {
             GetComponent<Sword_swing>().swing();
         }
     }// physical_attack
@@ -121,7 +128,9 @@ public class Ninja : Player_character
         jousting_pole.transform.RotateAround(transform.position, transform.up, adjusted_horz);
         jousting_pole.transform.RotateAround(transform.position, transform.right, adjusted_vert);
 
-    }
+    }// adjust_jousting_pole
+
+    //--------------------------------------------------------------------------
 
     public override void toggle_jousting_pole()
     {
@@ -145,7 +154,7 @@ public class Ninja : Player_character
         jousting_pole.SetActive(false);
 
 
-    }
+    }// toggle_jousting_pole
 
     //--------------------------------------------------------------------------
 
@@ -157,7 +166,7 @@ public class Ninja : Player_character
         }
 
         base.move(delta_position);
-    }
+    }// move
 
     //--------------------------------------------------------------------------
 
@@ -186,6 +195,8 @@ public class Ninja : Player_character
         sword_obj.SetActive(false);
 
     }// team_up_engage_or_throw
+
+    //--------------------------------------------------------------------------
 
     public override void jump()
     {

@@ -2395,6 +2395,10 @@ Prefab:
       propertyPath: player_id
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5420652, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
   m_IsPrefabParent: 0
@@ -3811,10 +3815,34 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11441230, guid: d4f62b710e85749a082618e44d85317c, type: 2}
-      propertyPath: player_id
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.57000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 403020, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: .680000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408520, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+      propertyPath: rotation_axis_pos
+      value: 
+      objectReference: {fileID: 1306893359}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f62b710e85749a082618e44d85317c, type: 2}
   m_IsPrefabParent: 0
@@ -4408,6 +4436,10 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 25fa881dbd110e38a00062d88f962b59, type: 3}
   m_PrefabInternal: {fileID: 1939465720}
+--- !u!1 &1306893359
+GameObject:
+  m_PrefabParentObject: {fileID: 130728, guid: d4f62b710e85749a082618e44d85317c, type: 2}
+  m_PrefabInternal: {fileID: 1127941859}
 --- !u!1001 &1316981305
 Prefab:
   m_ObjectHideFlags: 0
