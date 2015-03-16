@@ -66,16 +66,68 @@ public class Rewired_character_controller : MonoBehaviour
         var sprint = player.GetButton("sprint");
 
         var target_velocity = tilt * (sprint ? pc.sprint_speed : pc.run_speed);
-        // if (!on_ground)
-        // {
-        //     target_velocity.x =
-        // }
-
         target_velocity.y = pc.velocity.y;
-        // target_velocity *= Time.deltaTime;
-
-        pc.velocity = target_velocity;
+        calculate_new_pc_velocity(target_velocity);
 
         // move(delta_position);
     }// process_input
+
+    //--------------------------------------------------------------------------
+
+    private void calculate_new_pc_velocity(Vector3 target_velocity)
+    {
+        // Determine whether we need to keep the character's momentum or
+        // accelerate in the opposite direction.
+        // var velocity_step = pc.acceleration * Time.deltaTime;
+
+        if (pc.is_grounded)
+        {
+            pc.velocity = target_velocity;
+            // if (target_velocity.x == 0)
+            // {
+            //     pc.velocity.x = 0;
+            // }
+
+            // if (target_velocity.z == 0)
+            // {
+            //     pc.velocity.z = 0;
+            // }
+            return;
+        }
+
+
+
+
+        // target_velocity *= Time.deltaTime;
+        if (opposite_sign(target_velocity.x, pc.velocity.x) ||
+            Mathf.Abs(target_velocity.x) > Mathf.Abs(pc.velocity.x))
+        {
+            var velocity_step = pc.acceleration * Time.deltaTime;
+            if (target_velocity.x < pc.velocity.x)
+            {
+                velocity_step *= -1;
+            }
+
+            pc.velocity.x += velocity_step;
+        }
+
+        if (opposite_sign(target_velocity.z, pc.velocity.z) ||
+            Mathf.Abs(target_velocity.z) > Mathf.Abs(pc.velocity.z))
+        {
+            var velocity_step = pc.acceleration * Time.deltaTime;
+            if (target_velocity.z < pc.velocity.z)
+            {
+                velocity_step *= -1;
+            }
+
+            pc.velocity.z += velocity_step;
+        }
+    }// calculate_new_pc_velocity
+
+    //--------------------------------------------------------------------------
+
+    private bool opposite_sign(float first, float second)
+    {
+        return first < 0 && second > 0 || first > 0 && second < 0;
+    }// opposite_sign
 }

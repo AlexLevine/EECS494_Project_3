@@ -2,7 +2,6 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-// using Rewired;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player_character : Actor
@@ -12,18 +11,15 @@ public class Player_character : Actor
     public float skin_width = 0.01f;
     public Vector3 velocity = Vector3.zero;
 
+    public bool is_grounded { get { return on_ground; } }
     public virtual float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
-    // {
-    //     get { return (is_locked_on ?
-    //             (Vector3?) (lock_on_target_pos.transform.position) : null); }
-    // }
     public virtual float jump_speed { get { return 15f; } }
     public virtual float run_speed { get { return 5f; } }
     public virtual float sprint_speed { get { return run_speed * 2f; } }
-    public virtual float acceleration { get { return 5f; } }
+    public virtual float acceleration { get { return 20f; } }
 
     public bool is_teamed_up { get { return teamed_up; } }
 
@@ -36,7 +32,7 @@ public class Player_character : Actor
     // private Player rewired_player;
     private Rigidbody kr;
 
-    private bool on_ground;
+    protected bool on_ground;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     // private bool is_jumping = false; // TODO: adjust aerial control
@@ -73,7 +69,7 @@ public class Player_character : Actor
 
         if (on_ground)
         {
-            velocity.y = 0;
+            // velocity.y = 0;
             time_in_air = 0;
         }
         else
@@ -241,6 +237,10 @@ public class Player_character : Actor
         {
             // is_jumping = false;
             on_ground = y_collision;
+            if (on_ground)
+            {
+                velocity.y = 0;
+            }
         }
 
         if (is_locked_on)
@@ -356,7 +356,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected void team_up_disengage()
+    public void team_up_disengage()
     {
         foreach (var player_char in player_characters)
         {

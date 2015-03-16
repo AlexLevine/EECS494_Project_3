@@ -58,6 +58,8 @@ public class Ninja : Player_character
             return;
         }
 
+        on_ground = true;
+        velocity.y = 0;
         transform.position = team_up_point.transform.position;
 
         if (Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
@@ -165,6 +167,11 @@ public class Ninja : Player_character
             return;
         }
 
+        if (is_teamed_up)
+        {
+            delta_position.y = 0;
+        }
+
         base.move(delta_position);
     }// move
 
@@ -198,16 +205,21 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
+    public void on_thrown()
+    {
+        on_ground = false;
+    }// on_thrown
+
+    //--------------------------------------------------------------------------
+
     public override void jump()
     {
         base.jump();
 
-        if (!is_teamed_up)
+        if (is_teamed_up)
         {
-            return;
+            team_up_disengage();
         }
-
-        team_up_disengage();
     }// jump
 
 
