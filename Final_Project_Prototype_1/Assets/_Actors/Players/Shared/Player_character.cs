@@ -173,6 +173,11 @@ public class Player_character : Actor
         var closest_enemy = Enemy.get_closest_potential_lock_on_target(
             gameObject);
 
+        if (closest_enemy == null)
+        {
+            return;
+        }
+
         var distance = Vector3.Distance(
             transform.position, closest_enemy.transform.position);
         // print("distance: " + distance);

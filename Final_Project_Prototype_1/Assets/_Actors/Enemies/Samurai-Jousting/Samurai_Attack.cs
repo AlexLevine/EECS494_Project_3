@@ -4,26 +4,29 @@ using System.Collections;
 public class Samurai_Attack : Enemy {
     public enum samurai_states_e {
         WAITING,
-        LOOKING, 
+        LOOKING,
         ATTACKING,
-        PAUSING 
+        PAUSING
     }
 
     public GameObject llama, ninja;
     public samurai_states_e cur_state;
     public float look_thresh;
-    public float attack_thresh;  
+    public float attack_thresh;
 
     public float max_pause_time;
-    private float cur_pause_time; 
+    private float cur_pause_time;
 
-    public float speed; 
+    public float speed;
 
     // Use this for initialization
     public override void Start () {
         base.Start();
         cur_state = samurai_states_e.WAITING;
-        cur_pause_time = 0f; 
+        cur_pause_time = 0f;
+
+        llama = Llama.get().gameObject;
+        ninja = Ninja.get().gameObject;
 
         if(llama == null || ninja == null)
         {
@@ -32,11 +35,11 @@ public class Samurai_Attack : Enemy {
             Destroy(gameObject);
         }
     }
-    
+
     // Update is called once per frame
     public override void Update ()
     {
-        base.Update(); 
+        base.Update();
 
         Vector3 closest_player = look_for_player();
         float dist_to_closest_player = Vector3.Distance(closest_player,
@@ -47,7 +50,7 @@ public class Samurai_Attack : Enemy {
                 if(dist_to_closest_player <= look_thresh)
                 {
                     cur_state = samurai_states_e.LOOKING;
-                    return; 
+                    return;
                 }
                 break;
 
@@ -55,7 +58,7 @@ public class Samurai_Attack : Enemy {
                 if(dist_to_closest_player > look_thresh)
                 {
                     print(dist_to_closest_player);
-                    cur_state = samurai_states_e.WAITING; 
+                    cur_state = samurai_states_e.WAITING;
                 }
                 else
                 {
@@ -89,7 +92,7 @@ public class Samurai_Attack : Enemy {
                 break;
 
             case samurai_states_e.PAUSING:
-                cur_pause_time += Time.deltaTime; 
+                cur_pause_time += Time.deltaTime;
                 if(cur_pause_time >= max_pause_time)
                 {
                     cur_pause_time = 0;
@@ -108,23 +111,23 @@ public class Samurai_Attack : Enemy {
     //     cur_state = samurai_states_e.PAUSING;
     // }
     // void OnCollisionStay(Collision collision){
-    //     cur_state = samurai_states_e.PAUSING;        
+    //     cur_state = samurai_states_e.PAUSING;
     // }
 
 
     // returns the position of the nearest player to the enemy
     private Vector3 look_for_player()
     {
-        Vector3 llama_pos = llama.transform.position; 
-        Vector3 ninja_pos = ninja.transform.position; 
+        Vector3 llama_pos = llama.transform.position;
+        Vector3 ninja_pos = ninja.transform.position;
 
-        float llama_dist = Vector3.Distance(llama_pos, transform.position);     
+        float llama_dist = Vector3.Distance(llama_pos, transform.position);
         float ninja_dist = Vector3.Distance(ninja_pos, transform.position);
 
         if(llama_dist < ninja_dist)
         {
             return llama_pos;
-        }       
+        }
         else
         {
             return ninja_pos;
