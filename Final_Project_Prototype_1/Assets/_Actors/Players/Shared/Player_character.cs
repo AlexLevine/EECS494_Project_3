@@ -37,7 +37,7 @@ public class Player_character : Actor
 
     // private Player rewired_player;
     // private Rigidbody kinematic_rigidbody;
-    private CharacterController cc;
+    protected CharacterController cc;
     private Vector3 velocity = Vector3.zero;
 
     private bool on_ground = false;
@@ -239,9 +239,9 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void toggle_jousting_pole()
-    {
-    }// toggle_jousting_pole
+    // public virtual void toggle_jousting_pole()
+    // {
+    // }// toggle_jousting_pole
 
     //--------------------------------------------------------------------------
 

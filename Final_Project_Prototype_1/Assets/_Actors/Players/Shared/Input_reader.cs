@@ -87,9 +87,9 @@ public class Input_reader : MonoBehaviour
         }
 
         Vector3 tilt = Vector3.zero;
-        tilt.x = input_device.GetControl(InputControlType.LeftStickX);
-        tilt.z = input_device.GetControl(InputControlType.LeftStickY);
-        tilt = tilt.normalized;
+        tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;
+        tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
+        // tilt = tilt.normalized;
 
         pc.adjust_jousting_pole(tilt.z, tilt.x);
 

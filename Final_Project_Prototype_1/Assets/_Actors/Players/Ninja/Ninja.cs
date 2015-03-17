@@ -72,14 +72,14 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        if(is_teamed_up)
-        {
-            toggle_jousting_pole();
-        }
-        else
-        {
+        // if(is_teamed_up)
+        // {
+        //     toggle_jousting_pole();
+        // }
+        // else
+        // {
             GetComponent<Sword_swing>().swing();
-        }
+        // }
     }// physical_attack
 
     //--------------------------------------------------------------------------
@@ -103,24 +103,23 @@ public class Ninja : Player_character
             return;
         }
 
-        float adjusted_vert = vertical_tilt * 10;   // some float from -1 to 1,
+        float adjusted_vert = vertical_tilt * -10;   // some float from -1 to 1,
         float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
 
-        // jousting_pole.transform.position = jousting_pole_start_pos;
         jousting_pole.transform.position = transform.position;
-        // jousting_pole.transform.rotation = jousting_pole_start_rot;
         jousting_pole.transform.rotation = transform.rotation;
 
-
-        jousting_pole.transform.RotateAround(transform.position, transform.up, adjusted_horz);
-        jousting_pole.transform.RotateAround(transform.position, transform.right, adjusted_vert);
+        jousting_pole.transform.RotateAround(
+            transform.position, transform.up, adjusted_horz);
+        jousting_pole.transform.RotateAround(
+            transform.position, transform.right, adjusted_vert);
 
     }// adjust_jousting_pole
 
     //--------------------------------------------------------------------------
 
-    public override void toggle_jousting_pole()
+    private void toggle_jousting_pole()
     {
         if(!is_teamed_up)
         {
@@ -172,11 +171,17 @@ public class Ninja : Player_character
             return;
         }
 
-        GameObject llama_go = Llama.get().gameObject;
-        var distance = Vector3.Distance(
-            transform.position, llama_go.transform.position);
+        var llama_pos = Llama.get().gameObject.transform.position;
+        var distance = Vector3.Distance(transform.position, llama_pos);
 
-        if (distance > 4f)
+        RaycastHit hit_info;
+        var hit = Physics.Raycast(
+            transform.position, transform.position - llama_pos, out hit_info,
+            distance);
+
+        var blocked = hit && hit_info.collider.gameObject.tag != "Player";
+
+        if (distance > 4f || blocked)
         {
             print("out of range");
 			normal = GetComponent<Renderer>().material;
@@ -188,6 +193,7 @@ public class Ninja : Player_character
         // print("teaming up");
         team_up_engage();
         sword_obj.SetActive(false);
+        jousting_pole.SetActive(true);
 
     }// team_up_engage_or_throw
 

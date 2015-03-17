@@ -14,11 +14,13 @@ public class Switchee : MonoBehaviour {
     {
         if(gameObject.activeSelf)
         {
-            gameObject.SetActive(false);            
+            gameObject.SetActive(false);
+            print("deactivated");
         }
         else
         {
             gameObject.SetActive(true);
+            print("activated");
         }
     }
 
