@@ -92,6 +92,7 @@ GameObject:
   - 54: {fileID: 5493602}
   - 135: {fileID: 13593604}
   - 114: {fileID: 11463982}
+  - 114: {fileID: 11495752}
   m_Layer: 0
   m_Name: prefab Fire_enemy
   m_TagString: Untagged
@@ -440,6 +441,18 @@ MonoBehaviour:
   is_moving: 1
   on_fire: 0
   speed: 2
+--- !u!114 &11495752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c687e9866613ffb44a6c17e22a3a6a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_hit: 0
 --- !u!135 &13560546
 SphereCollider:
   m_ObjectHideFlags: 1
