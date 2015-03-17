@@ -101,7 +101,7 @@ GameObject:
   - 136: {fileID: 13647992}
   m_Layer: 8
   m_Name: hitbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
