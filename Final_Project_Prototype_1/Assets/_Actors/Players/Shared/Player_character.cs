@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class Player_character : Actor
 {
     // public int player_id = 0;
@@ -11,15 +11,15 @@ public class Player_character : Actor
     public float skin_width = 0.01f;
 
     public bool is_grounded { get { return on_ground; } }
-    public virtual float gravity { get { return -25f; } }
+    public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
-    public virtual float jump_speed { get { return 15f; } }
-    public virtual float run_speed { get { return 5f; } }
-    public virtual float sprint_speed { get { return run_speed * 2f; } }
-    public virtual float acceleration { get { return 20f; } }
+    public float jump_speed { get { return 15f; } }
+    public float run_speed { get { return 5f; } }
+    public float acceleration { get { return 20f; } }
 
+    public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
 
     //--------------------------------------------------------------------------
@@ -29,13 +29,15 @@ public class Player_character : Actor
     //--------------------------------------------------------------------------
 
     // private Player rewired_player;
-    private Rigidbody kinematic_rigidbody;
-    private Vector3 velocity = Vector3.zero;
+    // private Rigidbody kinematic_rigidbody;
+    protected CharacterController cc;
+    private Vector3 velocity_ = Vector3.zero;
 
-    private bool on_ground;
+    private bool on_ground = false;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
+    // private bool is_jumping = false;
 
     private GameObject lock_on_target = null;
     // private float y_velocity = 0;
@@ -56,7 +58,8 @@ public class Player_character : Actor
     public override void Start()
     {
         base.Start();
-        kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
+        cc = gameObject.GetComponent<CharacterController>();
+        // kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
     }// Start
 
     //--------------------------------------------------------------------------
@@ -66,9 +69,9 @@ public class Player_character : Actor
     {
         base.Update();
 
-        if (on_ground)
+        if (is_grounded)
         {
-            // velocity.y = 0;
+            // velocity_.y = 0;
             time_in_air = 0;
         }
         else
@@ -76,10 +79,10 @@ public class Player_character : Actor
             time_in_air += Time.deltaTime;
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity_.y += gravity * Time.deltaTime;
 
         // process_input();
-        move(velocity * Time.deltaTime);
+        move(velocity_ * Time.deltaTime);
 
         if (is_locked_on)
         {
@@ -90,7 +93,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // Given a target velocity, updates the player's x and z velocities as
+    // Given a target velocity_, updates the player's x and z velocities as
     // appropriate.
     // For example, the player should change direction more slowly while in
     // the air.
@@ -98,33 +101,34 @@ public class Player_character : Actor
     {
         if (is_grounded)
         {
-            velocity = target_velocity;
+            target_velocity.y = velocity_.y;
+            velocity_ = target_velocity;
             return;
         }
 
         // target_velocity *= Time.deltaTime;
-        if (opposite_sign(target_velocity.x, velocity.x) ||
-            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity.x))
+        if (opposite_sign(target_velocity.x, velocity_.x) ||
+            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
         {
             var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.x < velocity.x)
+            if (target_velocity.x < velocity_.x)
             {
                 velocity_step *= -1;
             }
 
-            velocity.x += velocity_step;
+            velocity_.x += velocity_step;
         }
 
-        if (opposite_sign(target_velocity.z, velocity.z) ||
-            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity.z))
+        if (opposite_sign(target_velocity.z, velocity_.z) ||
+            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
         {
             var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.z < velocity.z)
+            if (target_velocity.z < velocity_.z)
             {
                 velocity_step *= -1;
             }
 
-            velocity.z += velocity_step;
+            velocity_.z += velocity_step;
         }
     }// update_movement_velocity
 
@@ -137,7 +141,7 @@ public class Player_character : Actor
 
     public virtual void apply_momentum(Vector3 new_velocity)
     {
-        velocity = new_velocity;
+        velocity_ = new_velocity;
         if (new_velocity.y > 0)
         {
             on_ground = false;
@@ -228,9 +232,9 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void toggle_jousting_pole()
-    {
-    }// toggle_jousting_pole
+    // public virtual void toggle_jousting_pole()
+    // {
+    // }// toggle_jousting_pole
 
     //--------------------------------------------------------------------------
 
@@ -240,24 +244,56 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    public void stop()
+    {
+        velocity_ = Vector3.zero;
+    }// stop
+
+    //--------------------------------------------------------------------------
+
     public virtual void move(Vector3 delta_position)
     {
-        // print(amount);
-        step_axis_direction(Vector3.right, delta_position.x);
-        // print("delta_position.y: " + delta_position.y);
-        var y_collision = step_axis_direction(Vector3.up, delta_position.y);
-        step_axis_direction(Vector3.forward, delta_position.z);
+        // // print(amount);
+        // step_axis_direction(Vector3.right, delta_position.x);
+        // // print("delta_position.y: " + delta_position.y);
+        // var y_collision = step_axis_direction(Vector3.up, delta_position.y);
+        // step_axis_direction(Vector3.forward, delta_position.z);
 
-        if (delta_position.y < 0)
+        // if (delta_position.y < 0)
+        // {
+        //     // is_jumping = false;
+        //     on_ground = y_collision;
+        //     if (is_grounded)
+        //     {
+        //         velocity_.y = 0;
+        //     }
+        // }
+
+        var this_player_would_be_off_camera =
+                Camera_follow.point_step_would_leave_viewport(
+                    transform.position, delta_position);
+        var other_player_would_be_off_camera =
+                Camera_follow.point_step_would_leave_viewport(
+                    get_other_player().transform.position, delta_position * -1);
+        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
         {
-            // is_jumping = false;
-            on_ground = y_collision;
-            if (on_ground)
-            {
-                velocity.y = 0;
-            }
+            return;
         }
 
+        cc.Move(delta_position);
+        on_ground = delta_position.y < 0 && cc.isGrounded;
+        if (is_grounded)
+        {
+            velocity_.y = 0;
+        }
+
+        update_rotation(delta_position);
+    }// move
+
+    //--------------------------------------------------------------------------
+
+    public virtual void update_rotation(Vector3 delta_position)
+    {
         if (is_locked_on)
         {
             look_toward(lock_on_target);
@@ -271,81 +307,37 @@ public class Player_character : Actor
 
         collision_safe_rotate_towards(
             delta_position, 10 * Time.deltaTime);
-        // TODO: gradual rotation
-        // var turn_to = Mathf.Atan2(
-        //     velocity.x, velocity.z) * Mathf.Rad2Deg;
-
-        // transform.rotation = Quaternion.Euler(0, turn_to, 0);
-    }// move
+    }// update_rotation
 
     //--------------------------------------------------------------------------
 
-    // Returns true if a collision would have occurred.
-    private bool step_axis_direction(Vector3 direction, float step_amount)
-    {
-        if (Mathf.Abs(step_amount) < min_move_distance)
-        {
-            // print("too slow! " + Mathf.Abs(step_amount));
-            return false;
-        }
-
-        var move_increment = direction * step_amount;
-
-        // var desired_position = transform.position + move_increment;
-        // var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
-        // if (!point_inside_viewport(viewport_pos))
-        // {
-        //     return true;
-        // }
-
-        var this_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    transform.position, move_increment, step_amount);
-        var other_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    get_other_player().transform.position, move_increment * -1,
-                    step_amount);
-        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
-        {
-            return true;
-        }
-
-        // print("before: " + move_increment);
-        RaycastHit hit_info;
-        var hit = kinematic_rigidbody.SweepTest(
-            move_increment, out hit_info,
-            move_increment.magnitude + skin_width);
-        if (hit)
-        {
-            // print("hit");
-            move_increment = move_increment.normalized * Mathf.Max(
-                hit_info.distance - skin_width, 0);
-        }
-
-        // print("after: " + move_increment);
-
-        // print("move_increment.y: " + move_increment.y);
-        transform.position += move_increment;
-
-        return hit;
-    }// step_axis_direction
-
-    //--------------------------------------------------------------------------
-
-    // public static bool hit_edge_of_screen(GameObject obj)
+    // // Returns true if a collision would have occurred.
+    // private bool step_axis_direction(Vector3 direction, float step_amount)
     // {
-    //     var bottom_left = Camera.main.ViewportToWorldPoint(Vector3.zero);
-    //     print(bottom_left);
-    //     var top_right = Camera.main.ViewportToWorldPoint(Vector3.one);
-    //     print(top_right);
+    //     if (Mathf.Abs(step_amount) < min_move_distance)
+    //     {
+    //         // print("too slow! " + Mathf.Abs(step_amount));
+    //         return false;
+    //     }
 
-    //     var obj_off_left = obj.transform.position.x <= bottom_left.x;
-    //     var obj_off_right = obj.transform.position.x >= top_right.x;
-    //     var obj_off_front = obj.transform.position.z <= bottom_left.z;
-    //     var obj_off_back = obj.transform.position.z >= top_right.z;
+    //     var move_increment = direction * step_amount;
 
-    //     return obj_off_left || obj_off_right || obj_off_front || obj_off_back;
-    // }// hit_edge_of_screen
+    //     // print("before: " + move_increment);
+    //     RaycastHit hit_info;
+    //     var hit = kinematic_rigidbody.SweepTest(
+    //         move_increment, out hit_info,
+    //         move_increment.magnitude + skin_width);
+    //     if (hit)
+    //     {
+    //         // print("hit");
+    //         move_increment = move_increment.normalized * Mathf.Max(
+    //             hit_info.distance - skin_width, 0);
+    //     }
+
+    //     transform.position += move_increment;
+
+    //     return hit;
+    // }// step_axis_direction
 
     //--------------------------------------------------------------------------
 
@@ -358,17 +350,18 @@ public class Player_character : Actor
 
     public virtual void jump()
     {
-        if (!on_ground && time_in_air > max_time_in_air)
+        if (!is_grounded && time_in_air > max_time_in_air)
         {
+            // print(cc.isGrounded);
             return;
         }
 
-        velocity.y = jump_speed;
+        velocity_.y = jump_speed;
         // is_jumping = true;
         on_ground = false;
-        // Vector3 new_speed = GetComponent<Rigidbody>().velocity;
+        // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
         // new_speed.y = jump_speed;
-        // GetComponent<Rigidbody>().velocity = new_speed;
+        // GetComponent<Rigidbody>().velocity_ = new_speed;
 
     }// jump
 
@@ -386,9 +379,17 @@ public class Player_character : Actor
         print(player_characters.Count);
         foreach (var player_char in player_characters)
         {
-            player_char.GetComponent<Player_character>().teamed_up = true;
+            var pc = player_char.GetComponent<Player_character>();
+            pc.teamed_up = true;
+            pc.on_team_up_engage();
         }
     }// team_up_engage
+
+    //--------------------------------------------------------------------------
+
+    protected virtual void on_team_up_engage()
+    {
+    }// on_team_up_engage
 
     //--------------------------------------------------------------------------
 
@@ -396,9 +397,17 @@ public class Player_character : Actor
     {
         foreach (var player_char in player_characters)
         {
-            player_char.GetComponent<Player_character>().teamed_up = false;
+            var pc = player_char.GetComponent<Player_character>();
+            pc.teamed_up = false;
+            pc.on_team_up_disengage();
         }
     }// team_up_disengage
+
+    //--------------------------------------------------------------------------
+
+    protected virtual void on_team_up_disengage()
+    {
+    }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
 

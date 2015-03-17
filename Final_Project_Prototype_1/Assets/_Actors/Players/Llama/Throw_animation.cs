@@ -45,12 +45,12 @@ public class Throw_animation : MonoBehaviour
 
         if (Llama.get().is_teamed_up)
         {
-            print("teamed up: " + transform.up);
+            // print("teamed up: " + transform.up);
             Llama.get().team_up_disengage();
             print(transform.up + transform.forward);
             // Ninja.get().on_thrown();
             Ninja.get().apply_momentum(
-                (transform.up * 1.25f + transform.forward) * throw_speed);
+                (transform.up * 1f + transform.forward) * throw_speed);
 
             // re-enable ninja controls
         }

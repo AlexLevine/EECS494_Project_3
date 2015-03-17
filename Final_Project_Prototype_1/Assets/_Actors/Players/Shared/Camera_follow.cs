@@ -50,14 +50,14 @@ public class Camera_follow : MonoBehaviour
     //--------------------------------------------------------------------------
 
     public static bool point_step_would_leave_viewport(
-        Vector3 point, Vector3 direction, float step)
+        Vector3 point, Vector3 delta_position)
     {
-        if (direction.y != 0)
-        {
-            return false;
-        }
+        // if (delta_position.y != 0)
+        // {
+        //     return false;
+        // }
 
-        var desired_position = point + (step * direction);
+        var desired_position = point + delta_position;
         var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
 
         // print("direction: " + direction);
@@ -65,10 +65,10 @@ public class Camera_follow : MonoBehaviour
         // print("desired_position: " + desired_position);
         // print("viewport_pos: " + viewport_pos);
 
-        var leave_z_far_edge = direction.z > 0 && viewport_pos.y > 0.9f;
-        var leave_z_near_edge = direction.z < 0 && viewport_pos.y < 0.1f;
-        var leave_x_left_edge = direction.x < 0 && viewport_pos.x < 0.1f;
-        var leave_x_right_edge = direction.x > 0 && viewport_pos.x > 0.9f;
+        var leave_z_far_edge = delta_position.z > 0 && viewport_pos.y > 1f;
+        var leave_z_near_edge = delta_position.z < 0 && viewport_pos.y < 0f;
+        var leave_x_left_edge = delta_position.x < 0 && viewport_pos.x < 0f;
+        var leave_x_right_edge = delta_position.x > 0 && viewport_pos.x > 1f;
 
         return leave_z_far_edge || leave_z_near_edge ||
                leave_x_left_edge || leave_x_right_edge;

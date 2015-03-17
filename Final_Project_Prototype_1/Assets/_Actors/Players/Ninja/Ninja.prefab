@@ -10,11 +10,11 @@ GameObject:
   - 4: {fileID: 477290}
   - 33: {fileID: 3367398}
   - 23: {fileID: 2395442}
-  - 54: {fileID: 5474104}
   - 114: {fileID: 11441846}
   - 114: {fileID: 11410758}
   - 114: {fileID: 11491198}
-  - 114: {fileID: 11428350}
+  - 143: {fileID: 14392956}
+  - 114: {fileID: 11408552}
   m_Layer: 0
   m_Name: Ninja
   m_TagString: Player
@@ -37,7 +37,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &123472
 GameObject:
   m_ObjectHideFlags: 1
@@ -101,7 +101,7 @@ GameObject:
   - 136: {fileID: 13647992}
   m_Layer: 8
   m_Name: hitbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.0999999, y: -.0900000036, z: -38.9000015}
+  m_LocalPosition: {x: 4.0999999, y: 3.1500001, z: -38.9000015}
   m_LocalScale: {x: .75, y: 1.25, z: .75}
   m_Children:
   - {fileID: 491956}
@@ -339,21 +339,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196572}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5474104
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101724}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 2
 --- !u!65 &6524746
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -401,6 +386,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc9503d848240879cc9e0a82b2ac63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11408552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646b6831ed6ce4625a0fda80b11a2e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_id: 1
 --- !u!114 &11410758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -413,18 +410,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_playing: 0
---- !u!114 &11428350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646b6831ed6ce4625a0fda80b11a2e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player_id: 1
 --- !u!114 &11441846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -438,7 +423,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_move_distance: .00999999978
   skin_width: .100000001
-  velocity: {x: 0, y: 0, z: 0}
   team_up_point: {fileID: 0}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 135138}
@@ -480,7 +464,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193578}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: .5
   m_Height: 2
@@ -498,6 +482,23 @@ CapsuleCollider:
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &14392956
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101724}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: .5
+  m_SlopeLimit: 45
+  m_StepOffset: .100000001
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
