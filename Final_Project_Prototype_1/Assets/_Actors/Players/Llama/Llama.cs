@@ -36,6 +36,11 @@ public class Llama : Player_character
     {
         base.Update();
 
+        if (is_teamed_up)
+        {
+            print(is_grounded);
+        }
+
         if (!is_charging)
         {
             return;
@@ -60,6 +65,8 @@ public class Llama : Player_character
             return;
         }
 
+        // cc.Move(delta_position);
+        // update_rotation(delta_position);
     	base.move(delta_position);
     }// move
 

@@ -148,15 +148,17 @@ public class Ninja : Player_character
 
     public override void move(Vector3 delta_position)
     {
-        if (GetComponent<Sword_swing>().is_swinging)
+        if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
         {
             return;
         }
 
-        if (is_teamed_up)
-        {
-            delta_position.y = 0;
-        }
+        // if (is_teamed_up)
+        // {
+        //     // stop();
+        //     // delta_position.y = 0;
+        //     return;
+        // }
 
         base.move(delta_position);
     }// move
@@ -183,7 +185,7 @@ public class Ninja : Player_character
             return;
         }
 
-        print("teaming up");
+        // print("teaming up");
         team_up_engage();
         sword_obj.SetActive(false);
 
