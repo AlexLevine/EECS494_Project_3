@@ -25,7 +25,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    private static List<GameObject> player_characters = new List<GameObject>();
+    public static List<GameObject> player_characters = new List<GameObject>();
 
     //--------------------------------------------------------------------------
 
@@ -35,7 +35,6 @@ public class Player_character : Actor
     protected bool on_ground;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
-    // private bool is_jumping = false; // TODO: adjust aerial control
     private bool teamed_up = false;
 
     private GameObject lock_on_target = null;
@@ -270,6 +269,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    // Returns true if a collision would have occurred.
     private bool step_axis_direction(Vector3 direction, float step_amount)
     {
         if (Mathf.Abs(step_amount) < min_move_distance)
@@ -279,6 +279,26 @@ public class Player_character : Actor
         }
 
         var move_increment = direction * step_amount;
+
+        // var desired_position = transform.position + move_increment;
+        // var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
+        // if (!point_inside_viewport(viewport_pos))
+        // {
+        //     return true;
+        // }
+
+        var this_player_would_be_off_camera =
+                Camera_follow.point_step_would_leave_viewport(
+                    transform.position, move_increment, step_amount);
+        var other_player_would_be_off_camera =
+                Camera_follow.point_step_would_leave_viewport(
+                    get_other_player().transform.position, move_increment * -1,
+                    step_amount);
+        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
+        {
+            return true;
+        }
+
         // print("before: " + move_increment);
         RaycastHit hit_info;
         var hit = kr.SweepTest(
@@ -368,4 +388,27 @@ public class Player_character : Actor
             player_char.GetComponent<Player_character>().teamed_up = false;
         }
     }// team_up_disengage
+
+    //--------------------------------------------------------------------------
+
+    public GameObject get_other_player()
+    {
+        foreach (var pc in player_characters)
+        {
+            if (pc != gameObject)
+            {
+                return pc;
+            }
+        }
+        print("COULDN'T FIND OTHER PLAYER");
+        return null;
+    }
+
+    // //--------------------------------------------------------------------------
+
+    // private static bool point_inside_viewport(Vector3 point)
+    // {
+    //     return point.x < 0.9f && point.x > 0.1f &&
+    //            point.y < 0.9f && point.y > 0.1f;
+    // }// point_inside_viewport
 }

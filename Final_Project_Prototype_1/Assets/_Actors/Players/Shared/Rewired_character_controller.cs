@@ -60,6 +60,7 @@ public class Rewired_character_controller : MonoBehaviour
         Vector3 tilt = Vector3.zero;
         tilt.x = player.GetAxis("move_x"); // left and right
         tilt.z = player.GetAxis("move_z"); // forward and backward
+        tilt = tilt.normalized;
 
         pc.adjust_jousting_pole(tilt.z, tilt.x);
 
