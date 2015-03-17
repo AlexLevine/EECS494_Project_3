@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Switch : MonoBehaviour {
     public GameObject switchee;
+    private int count =0;
     // Use this for initialization
     void Start () {
     
@@ -10,15 +11,16 @@ public class Switch : MonoBehaviour {
     
     // Update is called once per frame
     void FixedUpdate () {
-        Renderer r = this.GetComponent<Renderer>();
+        /*Renderer r = this.GetComponent<Renderer>();
         Switchee sw = switchee.GetComponent<Switchee>();
         if (sw.on) r.material = sw.switch_on_material;
-        else r.material = sw.switch_off_material;
+        else r.material = sw.switch_off_material;*/
     
     }
     
     void OnTriggerEnter(Collider other){
         Switchee sw = switchee.GetComponent<Switchee>();
-        sw.toggle();
+        if (count==0) sw.toggle();
+        count++;
     }
 }
