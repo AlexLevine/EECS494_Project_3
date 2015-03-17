@@ -414,12 +414,4 @@ public class Player_character : Actor
         print("COULDN'T FIND OTHER PLAYER");
         return null;
     }
-
-    // //--------------------------------------------------------------------------
-
-    // private static bool point_inside_viewport(Vector3 point)
-    // {
-    //     return point.x < 0.9f && point.x > 0.1f &&
-    //            point.y < 0.9f && point.y > 0.1f;
-    // }// point_inside_viewport
 }
