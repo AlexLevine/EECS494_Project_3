@@ -58,29 +58,15 @@ public class Ninja : Player_character
             return;
         }
 
-        on_ground = true;
-        velocity.y = 0;
+        // on_ground = true;
+        // velocity.y = 0;
         transform.position = team_up_point.transform.position;
 
-        if (Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
+        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
         {
-            return;
+            transform.rotation = team_up_point.transform.parent.rotation;
         }
-
-        transform.rotation = team_up_point.transform.parent.rotation;
     }// Update
-
-    //--------------------------------------------------------------------------
-
-    // public override void projectile_attack()
-    // {
-    //     GameObject projectile = Instantiate(
-    //         projectile_prefab, transform.position,
-    //         transform.rotation) as GameObject;
-    //     projectile.GetComponent<Rigidbody>().velocity = transform.forward * 12;
-
-
-    // }// projectile_attack
 
     //--------------------------------------------------------------------------
 
@@ -205,10 +191,10 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public void on_thrown()
-    {
-        on_ground = false;
-    }// on_thrown
+    // public void on_thrown()
+    // {
+    //     on_ground = false;
+    // }// on_thrown
 
     //--------------------------------------------------------------------------
 

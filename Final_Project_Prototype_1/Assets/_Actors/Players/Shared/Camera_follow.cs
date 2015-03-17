@@ -4,7 +4,7 @@ using System.Collections;
 public class Camera_follow : MonoBehaviour
 {
     public static float min_camera_distance = 5f;
-    public static float max_camera_distance = 5f;
+    public static float max_camera_distance = 12f;
     // public static float camera_y_distance = 4f;
 
     // Use this for initialization
@@ -60,10 +60,10 @@ public class Camera_follow : MonoBehaviour
         var desired_position = point + (step * direction);
         var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
 
-        print("direction: " + direction);
-        print("step: " + step);
-        print("desired_position: " + desired_position);
-        print("viewport_pos: " + viewport_pos);
+        // print("direction: " + direction);
+        // print("step: " + step);
+        // print("desired_position: " + desired_position);
+        // print("viewport_pos: " + viewport_pos);
 
         var leave_z_far_edge = direction.z > 0 && viewport_pos.y > 0.9f;
         var leave_z_near_edge = direction.z < 0 && viewport_pos.y < 0.1f;
