@@ -1,0 +1,20 @@
+Requirements:
+-------------
+Rewired requires Unity 4.3+ free or pro. You can download the latest version of Unity free at http://www.unity3d.com.
+
+Installation:
+-------------
+1. If you are upgrading from an older version of Rewired, ALWAYS backup your entire Unity project first.
+2. Extract the Rewired1.x.unitypackage file to a directory on your hard disk.
+3. Create a new project in Unity or open an existing project into which you wish to install Rewired.
+4. In Unity, under the "Assets" menu, select "Import Package", and then "Custom Package".
+5. Choose the Rewired1.x.unitypackage file from the location on your hard disk where you extracted it in step 1.
+6. Follow the prompts to complete installation.
+
+Quick Start:
+------------
+Rewired will automatically run an installer after the package is extracted. If it does not, you can run the installer manually from the menu: Window/Rewired/Setup/Run Installer
+
+Documentation:
+--------------
+For help on how to use Rewired, see the Rewired/Documentation/Html/Documentation.html file. You can also find the latest docs on the web at http://www.guavaman.com/projects/rewired/docs

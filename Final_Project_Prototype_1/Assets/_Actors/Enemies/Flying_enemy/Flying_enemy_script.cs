@@ -4,16 +4,16 @@ using System;
 
 public class Flying_enemy_script : Enemy {
 
-	public GameObject enemy_prefab;
+	public GameObject projectile_prefab;
 	public float spawn_distance;
-	
+
 	public int num_to_spawn;
 	public float time_between_spawns;
-	
+
 	public bool _______________________________________;
-	
+
 	public bool is_spawning = false;
-	
+
 	//--------------------------------------------------------------------------
 
 
@@ -24,7 +24,7 @@ public class Flying_enemy_script : Enemy {
 			return 0;
 		}
 	}
-	
+
 	public override int max_health
 	{
 		get
@@ -32,27 +32,26 @@ public class Flying_enemy_script : Enemy {
 			return 3;
 		}
 	}
-	
+
 	// Use this for initialization
-	void Start()
+	public override void Start()
 	{
-		if (enemy_prefab.GetComponent<Enemy>() == null)
-		{
-			throw new Exception("Only enemies can be attached to span points");
-		}
+		base.Start ();
 	}// Start
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	// Update is called once per frame
-	void Update()
+	public override void Update()
 	{
-		var llama_pos = GameObject.Find("Llama").transform.position;
-		var ninja_pos = GameObject.Find("Ninja").transform.position;
-		
+		base.Update();
+
+		var llama_pos = Llama.get().transform.position;
+		var ninja_pos = Ninja.get().transform.position;
+
 		var llama_distance = Vector3.Distance(llama_pos, transform.position);
 		var ninja_distance = Vector3.Distance(ninja_pos, transform.position);
-		
+
 		if (llama_distance <= spawn_distance ||
 		    ninja_distance <= spawn_distance)
 		{
@@ -60,22 +59,24 @@ public class Flying_enemy_script : Enemy {
 			{
 				return;
 			}
-			
+
 			is_spawning = true;
-			
-			print("spawn!");
+
+			//print("spawn!");
 			StartCoroutine(spawn());
 		}
 	}// Update
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	private IEnumerator spawn()
 	{
 		while (num_to_spawn > 0)
 		{
 			--num_to_spawn;
-			Instantiate(enemy_prefab, transform.position, Quaternion.identity);
+			Vector3 spawn_point = transform.position;
+			spawn_point.y -= 1f;
+			Instantiate(projectile_prefab, spawn_point, Quaternion.identity);
 			yield return new WaitForSeconds(time_between_spawns);
 		}
 	}// spawn

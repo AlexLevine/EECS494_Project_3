@@ -6,7 +6,7 @@ public class Fire_enemy : Enemy {
 
 	public int destination_index = 0;
 
-	// Points that the platform should move between.
+	// Points that the enemy should move between.
 	public GameObject[] path_nodes;
 
 	public bool is_moving;
@@ -50,6 +50,7 @@ public class Fire_enemy : Enemy {
 
 	void FixedUpdate()
 	{
+		base.Update ();
 			transform.position = Vector3.MoveTowards (
 				transform.position,
 				path_nodes [destination_index].transform.position,
