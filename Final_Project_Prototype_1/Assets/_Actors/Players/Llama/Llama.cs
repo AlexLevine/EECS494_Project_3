@@ -67,6 +67,11 @@ public class Llama : Player_character
 
         // cc.Move(delta_position);
         // update_rotation(delta_position);
+        // if (is_teamed_up)// && delta_position.y > 0)
+        // {
+        //     Ninja.get().move(delta_position);//.y * Vector3.up);
+        // }
+
     	base.move(delta_position);
         // print(delta_position.y);
         // print(cc.isGrounded);
@@ -135,32 +140,32 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override float run_speed
-    {
-        get
-        {
-            return 5;
-        }
-    }// run_speed
+    // public override float run_speed
+    // {
+    //     get
+    //     {
+    //         return 5;
+    //     }
+    // }// run_speed
+
+    // //--------------------------------------------------------------------------
+
+    // public override float sprint_speed
+    // {
+    //     get
+    //     {
+    //         return 10;
+    //     }
+    // }// sprint_speed
 
     //--------------------------------------------------------------------------
 
-    public override float sprint_speed
-    {
-        get
-        {
-            return 10;
-        }
-    }// sprint_speed
-
-    //--------------------------------------------------------------------------
-
-    public override float jump_speed
-    {
-        get
-        {
-            return 15;
-        }
-    }// jump_speed
+    // public override float jump_speed
+    // {
+    //     get
+    //     {
+    //         return 15;
+    //     }
+    // }// jump_speed
 }
 

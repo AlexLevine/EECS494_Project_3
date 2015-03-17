@@ -22,7 +22,7 @@ public class Player_character : Actor
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
-    public virtual float jump_speed { get { return 10f; } }
+    public virtual float jump_speed { get { return 15f; } }
     public virtual float run_speed { get { return 5f; } }
     public virtual float sprint_speed { get { return run_speed * 2f; } }
     public virtual float acceleration { get { return 20f; } }
@@ -381,7 +381,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected void team_up_engage()
+    protected virtual void team_up_engage()
     {
         print(player_characters.Count);
         foreach (var player_char in player_characters)
@@ -392,7 +392,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void team_up_disengage()
+    public virtual void team_up_disengage()
     {
         foreach (var player_char in player_characters)
         {

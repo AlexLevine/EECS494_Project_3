@@ -192,6 +192,7 @@ public class Ninja : Player_character
 
         // print("teaming up");
         team_up_engage();
+        // transform.position = team_up_point.transform.position;
         sword_obj.SetActive(false);
         jousting_pole.SetActive(true);
 
@@ -203,6 +204,22 @@ public class Ninja : Player_character
     // {
     //     on_ground = false;
     // }// on_thrown
+
+    //--------------------------------------------------------------------------
+
+    protected override void team_up_engage()
+    {
+        cc.enabled = false;
+        base.team_up_engage();
+    }// team_up_engage
+
+    //--------------------------------------------------------------------------
+
+    public override void team_up_disengage()
+    {
+        cc.enabled = true;
+        base.team_up_disengage();
+    }// team_up_disengage
 
     //--------------------------------------------------------------------------
 
