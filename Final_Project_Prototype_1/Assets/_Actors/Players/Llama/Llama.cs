@@ -12,7 +12,9 @@ public class Llama : Player_character
 
     private static float charge_duration = 1f;
     private float time_spent_charging = 0;
-    private bool is_charging_; // TODO: script animation instead
+    private bool is_charging_;
+    private float charge_speed { get { return run_speed * 3; } }
+    // private float pre_charge_speed;
 
     //--------------------------------------------------------------------------
 
@@ -79,6 +81,26 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
+    public override void update_movement_velocity(Vector3 target_velocity)
+    {
+        if (!is_charging)
+        {
+            base.update_movement_velocity(target_velocity);
+            return;
+        }
+
+        var angle = Vector3.Angle(transform.forward, target_velocity);
+        if (angle > 20)
+        {
+            return;
+        }
+
+        target_velocity = target_velocity.normalized * charge_speed;
+        base.update_movement_velocity(target_velocity);
+    }// update_movement_velocity
+
+    //--------------------------------------------------------------------------
+
     public override void team_up_engage_or_throw()
     {
         gameObject.GetComponent<Throw_animation>().start_animation();
@@ -113,7 +135,10 @@ public class Llama : Player_character
             toggle_lock_on();
         }
 
+        // pre_charge_speed = velocity.magnitude;
+        // pre_charge_speed.y = 0;
         is_charging_ = true;
+        apply_momentum(transform.forward * charge_speed);
     }// charge
 
     //--------------------------------------------------------------------------
@@ -137,35 +162,5 @@ public class Llama : Player_character
             return 100;
         }
     }// max_health
-
-    //--------------------------------------------------------------------------
-
-    // public override float run_speed
-    // {
-    //     get
-    //     {
-    //         return 5;
-    //     }
-    // }// run_speed
-
-    // //--------------------------------------------------------------------------
-
-    // public override float sprint_speed
-    // {
-    //     get
-    //     {
-    //         return 10;
-    //     }
-    // }// sprint_speed
-
-    //--------------------------------------------------------------------------
-
-    // public override float jump_speed
-    // {
-    //     get
-    //     {
-    //         return 15;
-    //     }
-    // }// jump_speed
 }
 

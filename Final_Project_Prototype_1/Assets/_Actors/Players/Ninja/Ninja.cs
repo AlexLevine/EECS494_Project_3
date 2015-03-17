@@ -207,18 +207,16 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override void team_up_engage()
+    protected override void on_team_up_engage()
     {
         cc.enabled = false;
-        base.team_up_engage();
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
-    public override void team_up_disengage()
+    protected override void on_team_up_disengage()
     {
         cc.enabled = true;
-        base.team_up_disengage();
     }// team_up_disengage
 
     //--------------------------------------------------------------------------

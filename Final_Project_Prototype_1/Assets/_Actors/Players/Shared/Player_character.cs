@@ -10,23 +10,16 @@ public class Player_character : Actor
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
 
-    public virtual bool is_grounded
-    {
-        get
-        {
-            return on_ground;
-            // return cc.isGrounded;
-        }
-    }
-    public virtual float gravity { get { return -25f; } }
+    public bool is_grounded { get { return on_ground; } }
+    public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
-    public virtual float jump_speed { get { return 15f; } }
-    public virtual float run_speed { get { return 5f; } }
-    public virtual float sprint_speed { get { return run_speed * 2f; } }
-    public virtual float acceleration { get { return 20f; } }
+    public float jump_speed { get { return 15f; } }
+    public float run_speed { get { return 5f; } }
+    public float acceleration { get { return 20f; } }
 
+    public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
 
     //--------------------------------------------------------------------------
@@ -38,7 +31,7 @@ public class Player_character : Actor
     // private Player rewired_player;
     // private Rigidbody kinematic_rigidbody;
     protected CharacterController cc;
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity_ = Vector3.zero;
 
     private bool on_ground = false;
     private float time_in_air = 0;
@@ -78,7 +71,7 @@ public class Player_character : Actor
 
         if (is_grounded)
         {
-            // velocity.y = 0;
+            // velocity_.y = 0;
             time_in_air = 0;
         }
         else
@@ -86,10 +79,10 @@ public class Player_character : Actor
             time_in_air += Time.deltaTime;
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity_.y += gravity * Time.deltaTime;
 
         // process_input();
-        move(velocity * Time.deltaTime);
+        move(velocity_ * Time.deltaTime);
 
         if (is_locked_on)
         {
@@ -100,7 +93,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // Given a target velocity, updates the player's x and z velocities as
+    // Given a target velocity_, updates the player's x and z velocities as
     // appropriate.
     // For example, the player should change direction more slowly while in
     // the air.
@@ -108,34 +101,34 @@ public class Player_character : Actor
     {
         if (is_grounded)
         {
-            target_velocity.y = velocity.y;
-            velocity = target_velocity;
+            target_velocity.y = velocity_.y;
+            velocity_ = target_velocity;
             return;
         }
 
         // target_velocity *= Time.deltaTime;
-        if (opposite_sign(target_velocity.x, velocity.x) ||
-            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity.x))
+        if (opposite_sign(target_velocity.x, velocity_.x) ||
+            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
         {
             var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.x < velocity.x)
+            if (target_velocity.x < velocity_.x)
             {
                 velocity_step *= -1;
             }
 
-            velocity.x += velocity_step;
+            velocity_.x += velocity_step;
         }
 
-        if (opposite_sign(target_velocity.z, velocity.z) ||
-            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity.z))
+        if (opposite_sign(target_velocity.z, velocity_.z) ||
+            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
         {
             var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.z < velocity.z)
+            if (target_velocity.z < velocity_.z)
             {
                 velocity_step *= -1;
             }
 
-            velocity.z += velocity_step;
+            velocity_.z += velocity_step;
         }
     }// update_movement_velocity
 
@@ -148,7 +141,7 @@ public class Player_character : Actor
 
     public virtual void apply_momentum(Vector3 new_velocity)
     {
-        velocity = new_velocity;
+        velocity_ = new_velocity;
         if (new_velocity.y > 0)
         {
             on_ground = false;
@@ -253,7 +246,7 @@ public class Player_character : Actor
 
     public void stop()
     {
-        velocity = Vector3.zero;
+        velocity_ = Vector3.zero;
     }// stop
 
     //--------------------------------------------------------------------------
@@ -272,7 +265,7 @@ public class Player_character : Actor
         //     on_ground = y_collision;
         //     if (is_grounded)
         //     {
-        //         velocity.y = 0;
+        //         velocity_.y = 0;
         //     }
         // }
 
@@ -291,7 +284,7 @@ public class Player_character : Actor
         on_ground = delta_position.y < 0 && cc.isGrounded;
         if (is_grounded)
         {
-            velocity.y = 0;
+            velocity_.y = 0;
         }
 
         update_rotation(delta_position);
@@ -363,12 +356,12 @@ public class Player_character : Actor
             return;
         }
 
-        velocity.y = jump_speed;
+        velocity_.y = jump_speed;
         // is_jumping = true;
         on_ground = false;
-        // Vector3 new_speed = GetComponent<Rigidbody>().velocity;
+        // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
         // new_speed.y = jump_speed;
-        // GetComponent<Rigidbody>().velocity = new_speed;
+        // GetComponent<Rigidbody>().velocity_ = new_speed;
 
     }// jump
 
@@ -381,24 +374,40 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected virtual void team_up_engage()
+    protected void team_up_engage()
     {
         print(player_characters.Count);
         foreach (var player_char in player_characters)
         {
-            player_char.GetComponent<Player_character>().teamed_up = true;
+            var pc = player_char.GetComponent<Player_character>();
+            pc.teamed_up = true;
+            pc.on_team_up_engage();
         }
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
-    public virtual void team_up_disengage()
+    protected virtual void on_team_up_engage()
+    {
+    }// on_team_up_engage
+
+    //--------------------------------------------------------------------------
+
+    public void team_up_disengage()
     {
         foreach (var player_char in player_characters)
         {
-            player_char.GetComponent<Player_character>().teamed_up = false;
+            var pc = player_char.GetComponent<Player_character>();
+            pc.teamed_up = false;
+            pc.on_team_up_disengage();
         }
     }// team_up_disengage
+
+    //--------------------------------------------------------------------------
+
+    protected virtual void on_team_up_disengage()
+    {
+    }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
 
