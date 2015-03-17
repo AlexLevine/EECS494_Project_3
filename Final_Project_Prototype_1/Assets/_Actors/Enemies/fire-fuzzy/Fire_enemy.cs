@@ -51,22 +51,24 @@ public class Fire_enemy : Enemy {
 	void FixedUpdate()
 	{
 		base.Update ();
-			transform.position = Vector3.MoveTowards (
-				transform.position,
-				path_nodes [destination_index].transform.position,
-				speed * Time.fixedDeltaTime);
-
-			var distance_to_dest = Vector3.Distance (
-				transform.position,
-				path_nodes [destination_index].transform.position);
-			var reached_destination = Mathf.Approximately (distance_to_dest, 0);
-
-			if (!reached_destination) {
-				return;
-			}
-
-			++destination_index;
-			destination_index %= path_nodes.Length;
+			if (!this.GetComponent<knock_back>().is_hit) {
+					transform.position = Vector3.MoveTowards (
+					transform.position,
+					path_nodes [destination_index].transform.position,
+					speed * Time.fixedDeltaTime);
+				
+						var distance_to_dest = Vector3.Distance (
+					transform.position,
+					path_nodes [destination_index].transform.position);
+						var reached_destination = Mathf.Approximately (distance_to_dest, 0);
+				
+						if (!reached_destination) {
+								return;
+						}
+				
+						++destination_index;
+						destination_index %= path_nodes.Length;
+		}
 
 
 	}// Update
@@ -98,6 +100,7 @@ public class Fire_enemy : Enemy {
 				on_fire = false;
 			}
 		}
+		this.GetComponent<knock_back> ().on_hit (transform.forward);
 
 
 	}// on_hit_spit
