@@ -48,9 +48,9 @@ public class Throw_animation : MonoBehaviour
             print("teamed up: " + transform.up);
             Llama.get().team_up_disengage();
             print(transform.up + transform.forward);
-            Ninja.get().on_thrown();
-            Ninja.get().velocity = (
-                transform.up * 1.25f + transform.forward) * throw_speed;
+            // Ninja.get().on_thrown();
+            Ninja.get().apply_momentum(
+                (transform.up * 1.25f + transform.forward) * throw_speed);
 
             // re-enable ninja controls
         }

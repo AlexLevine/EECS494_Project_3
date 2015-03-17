@@ -7,8 +7,7 @@ public class Ninja_jousting_pole : MonoBehaviour
     {
         get
         {
-            var power = (int) (Llama.get().velocity.magnitude);
-            return power;
+            return (Llama.get().is_charging ? 10 : 0);
         }
     }// attack_power
 

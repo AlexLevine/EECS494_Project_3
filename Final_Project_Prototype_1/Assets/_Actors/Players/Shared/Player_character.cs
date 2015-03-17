@@ -9,7 +9,6 @@ public class Player_character : Actor
     // public int player_id = 0;
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
-    public Vector3 velocity = Vector3.zero;
 
     public bool is_grounded { get { return on_ground; } }
     public virtual float gravity { get { return -25f; } }
@@ -30,9 +29,10 @@ public class Player_character : Actor
     //--------------------------------------------------------------------------
 
     // private Player rewired_player;
-    private Rigidbody kr;
+    private Rigidbody kinematic_rigidbody;
+    private Vector3 velocity = Vector3.zero;
 
-    protected bool on_ground;
+    private bool on_ground;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
@@ -56,7 +56,7 @@ public class Player_character : Actor
     public override void Start()
     {
         base.Start();
-        kr = gameObject.GetComponent<Rigidbody>();
+        kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
     }// Start
 
     //--------------------------------------------------------------------------
@@ -90,48 +90,59 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // private void process_input()
-    // {
-    //     if (rewired_player.GetButtonDown("jump"))
-    //     {
-    //         jump();
-    //     }
+    // Given a target velocity, updates the player's x and z velocities as
+    // appropriate.
+    // For example, the player should change direction more slowly while in
+    // the air.
+    public virtual void update_movement_velocity(Vector3 target_velocity)
+    {
+        if (is_grounded)
+        {
+            velocity = target_velocity;
+            return;
+        }
 
-    //     if (rewired_player.GetButtonDown("team_up"))
-    //     {
-    //         team_up_engage_or_throw();
-    //     }
+        // target_velocity *= Time.deltaTime;
+        if (opposite_sign(target_velocity.x, velocity.x) ||
+            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity.x))
+        {
+            var velocity_step = acceleration * Time.deltaTime;
+            if (target_velocity.x < velocity.x)
+            {
+                velocity_step *= -1;
+            }
 
-    //     if (rewired_player.GetButtonDown("attack"))
-    //     {
-    //         attack();
-    //     }
+            velocity.x += velocity_step;
+        }
 
-    //     if(rewired_player.GetButtonDown("lock_on") ||
-    //        rewired_player.GetButtonUp("lock_on"))
-    //     {
-    //         toggle_lock_on();
-    //     }
+        if (opposite_sign(target_velocity.z, velocity.z) ||
+            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity.z))
+        {
+            var velocity_step = acceleration * Time.deltaTime;
+            if (target_velocity.z < velocity.z)
+            {
+                velocity_step *= -1;
+            }
 
-    //     Vector3 tilt = Vector3.zero;
-    //     tilt.x = rewired_player.GetAxis("move_x"); // left and right
-    //     tilt.z = rewired_player.GetAxis("move_z"); // forward and backward
+            velocity.z += velocity_step;
+        }
+    }// update_movement_velocity
 
-    //     var sprint = rewired_player.GetButton("sprint");
+    private bool opposite_sign(float first, float second)
+    {
+        return first < 0 && second > 0 || first > 0 && second < 0;
+    }// opposite_sign
 
-    //     var target_velocity = tilt * (sprint ? sprint_speed : run_speed);
-    //     // if (!on_ground)
-    //     // {
-    //     //     target_velocity.x =
-    //     // }
+    //--------------------------------------------------------------------------
 
-    //     target_velocity.y = velocity.y;
-    //     // target_velocity *= Time.deltaTime;
-
-    //     velocity = target_velocity;
-
-    //     // move(delta_position);
-    // }// process_input
+    public virtual void apply_momentum(Vector3 new_velocity)
+    {
+        velocity = new_velocity;
+        if (new_velocity.y > 0)
+        {
+            on_ground = false;
+        }
+    }// apply_momentum
 
     //--------------------------------------------------------------------------
 
@@ -301,7 +312,7 @@ public class Player_character : Actor
 
         // print("before: " + move_increment);
         RaycastHit hit_info;
-        var hit = kr.SweepTest(
+        var hit = kinematic_rigidbody.SweepTest(
             move_increment, out hit_info,
             move_increment.magnitude + skin_width);
         if (hit)
@@ -338,10 +349,10 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void sprint()
+    public virtual void charge()
     {
 
-    }// sprint
+    }// charge
 
     //--------------------------------------------------------------------------
 
@@ -403,12 +414,4 @@ public class Player_character : Actor
         print("COULDN'T FIND OTHER PLAYER");
         return null;
     }
-
-    // //--------------------------------------------------------------------------
-
-    // private static bool point_inside_viewport(Vector3 point)
-    // {
-    //     return point.x < 0.9f && point.x > 0.1f &&
-    //            point.y < 0.9f && point.y > 0.1f;
-    // }// point_inside_viewport
 }
