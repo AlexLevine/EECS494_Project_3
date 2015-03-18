@@ -57,7 +57,16 @@ public class Actor : MonoBehaviour
         var new_forward = Vector3.RotateTowards(
             transform.forward, direction, step, 0f);
 
-        transform.rotation = Quaternion.LookRotation(new_forward);
+        var rb = gameObject.GetComponent<Rigidbody>();
+        var new_rotation = Quaternion.LookRotation(new_forward);
+        if (rb == null)
+        {
+            transform.rotation = new_rotation;
+            return;
+        }
+
+        print("spam");
+        rb.MoveRotation(new_rotation);
     }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------

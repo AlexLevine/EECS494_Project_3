@@ -19,6 +19,8 @@ public class Sword_swing : MonoBehaviour
 
     public float angle_distance_swung = 0;
 
+    private float swing_speed = 540;
+
     void Start ()
     {
         sword_neutral_pos = sword.transform.localPosition;
@@ -53,7 +55,7 @@ public class Sword_swing : MonoBehaviour
             // }
 
             sword.transform.RotateAround(
-                transform.position, Vector3.up, -360f * Time.deltaTime);
+                transform.position, Vector3.up, -swing_speed * Time.deltaTime);
 
             var distance = Vector3.Angle(
                 sword.transform.localPosition, sword_neutral_pos);

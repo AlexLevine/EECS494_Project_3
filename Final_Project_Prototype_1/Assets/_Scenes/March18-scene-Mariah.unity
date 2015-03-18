@@ -6663,8 +6663,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 1
-  switch_on_material: {fileID: 0}
-  switch_off_material: {fileID: 0}
 --- !u!1001 &1864240401
 Prefab:
   m_ObjectHideFlags: 0
@@ -6778,7 +6776,6 @@ MonoBehaviour:
   look_thresh: 20
   attack_thresh: 10
   max_pause_time: 3
-  speed: 5
 --- !u!54 &1879024145
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -73,13 +73,13 @@ public class Fire_enemy : Enemy {
 
     }// Update
 
-    public override void on_hit_charge(int damage) {
-        if (on_fire) {
-            // burns llama - and takes no damge if still on fire
-            var llama = GameObject.Find ("Llama");
-            llama.GetComponent<Llama> ().receive_hit (damage);
-        }
-    }// on_hit_charge
+    // public override void on_hit_charge(int damage) {
+    //     if (on_fire) {
+    //         // burns llama - and takes no damge if still on fire
+    //         var llama = GameObject.Find ("Llama");
+    //         llama.GetComponent<Llama> ().receive_hit (damage);
+    //     }
+    // }// on_hit_charge
 
     public override void on_hit_spit(int damage)
     {

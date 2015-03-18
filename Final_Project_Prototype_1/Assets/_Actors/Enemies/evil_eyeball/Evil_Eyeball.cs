@@ -131,10 +131,10 @@ public class Evil_Eyeball : Enemy {
 		
 	}// on_hit_spit
 
-	public override void on_hit_charge(int damage)
-	{
-		// immune to charge - possibly do something to Llama here
-	}// on_hit_charge
+//	public override void on_hit_charge(int damage)
+//	{
+//		// immune to charge - possibly do something to Llama here
+//	}// on_hit_charge
 
 	public override void on_hit_by_jousting_pole(int damage) {
 		// immune to pole
