@@ -3,13 +3,16 @@ using System.Collections;
 
 public class Llama_spit : MonoBehaviour
 {
+    public int attack_power { get { return 5; } }
+
     void OnTriggerEnter(Collider other)
     {
         // print("blaaaah");
         var enemy = other.gameObject.GetComponent<Enemy>();
         if(enemy != null)
         {
-            enemy.on_hit_spit(1);
+            enemy.on_hit_spit(
+                attack_power, Vector3.zero);
             Timer.num_enemies_killed_by_llama++;
         }
 

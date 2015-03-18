@@ -5,6 +5,9 @@ public class Health_gui : MonoBehaviour {
 
 	Ninja ninja;
 	Llama llama;
+	
+	public int num_lives;
+	
 
 	void Awake(){
 		Time.timeScale=1;
@@ -34,7 +37,7 @@ public class Health_gui : MonoBehaviour {
 		var nin = GameObject.Find ("Ninja");
 		var ll = GameObject.Find ("Llama");
 		if (GUILayout.Button ("Restart")){
-			Destroy (nin); Destroy (ll);
+			//Destroy (nin); Destroy (ll);
 			Application.LoadLevel (Application.loadedLevel);
 		}
 	}

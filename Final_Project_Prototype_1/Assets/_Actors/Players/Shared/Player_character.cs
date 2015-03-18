@@ -69,6 +69,12 @@ public class Player_character : Actor
     {
         base.Update();
 
+        if (being_knocked_back)
+        {
+            stop();
+            return;
+        }
+
         if (is_grounded)
         {
             // velocity_.y = 0;
@@ -82,7 +88,7 @@ public class Player_character : Actor
         velocity_.y += gravity * Time.deltaTime;
 
         // process_input();
-        move(velocity_ * Time.deltaTime);
+        move(velocity_ * Time.deltaTime, true);
 
         if (is_locked_on)
         {
@@ -101,7 +107,7 @@ public class Player_character : Actor
     {
         // if (is_teamed_up)
         // {
-        //     target_velocity = target_velocity.magnitude * 
+        //     target_velocity = target_velocity.magnitude *
         //                       Camera.main.transform.forward;
         // }
 
@@ -113,7 +119,7 @@ public class Player_character : Actor
         }
 
         // target_velocity *= Time.deltaTime;
-        if (opposite_sign(target_velocity.x, velocity_.x) ||
+        if (have_opposite_signs(target_velocity.x, velocity_.x) ||
             Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
         {
             var velocity_step = acceleration * Time.deltaTime;
@@ -125,7 +131,7 @@ public class Player_character : Actor
             velocity_.x += velocity_step;
         }
 
-        if (opposite_sign(target_velocity.z, velocity_.z) ||
+        if (have_opposite_signs(target_velocity.z, velocity_.z) ||
             Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
         {
             var velocity_step = acceleration * Time.deltaTime;
@@ -138,10 +144,10 @@ public class Player_character : Actor
         }
     }// update_movement_velocity
 
-    private bool opposite_sign(float first, float second)
+    private bool have_opposite_signs(float first, float second)
     {
         return first < 0 && second > 0 || first > 0 && second < 0;
-    }// opposite_sign
+    }// have_opposite_signs
 
     //--------------------------------------------------------------------------
 
@@ -257,7 +263,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void move(Vector3 delta_position)
+    public override void move(Vector3 delta_position, bool apply_rotation)
     {
         // // print(amount);
         // step_axis_direction(Vector3.right, delta_position.x);
@@ -293,7 +299,10 @@ public class Player_character : Actor
             velocity_.y = 0;
         }
 
-        update_rotation(delta_position);
+        if (apply_rotation)
+        {
+            update_rotation(delta_position);
+        }
     }// move
 
     //--------------------------------------------------------------------------

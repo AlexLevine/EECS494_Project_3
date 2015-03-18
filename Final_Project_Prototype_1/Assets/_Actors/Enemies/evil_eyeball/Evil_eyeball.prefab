@@ -13,6 +13,8 @@ GameObject:
   - 23: {fileID: 2340460}
   - 54: {fileID: 5487680}
   - 114: {fileID: 11438234}
+  - 114: {fileID: 11440164}
+  - 114: {fileID: 11478362}
   m_Layer: 0
   m_Name: Evil_eyeball
   m_TagString: Untagged
@@ -89,12 +91,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6433d98999ca49488a0cef8931ba5b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   player_name1: Llama
   player_name2: Ninja
   start_location: {fileID: 0}
   is_moving: 0
   start: {x: 0, y: 0, z: 0}
+--- !u!114 &11440164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c687e9866613ffb44a6c17e22a3a6a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11478362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_playing: 0
 --- !u!135 &13510860
 SphereCollider:
   m_ObjectHideFlags: 1

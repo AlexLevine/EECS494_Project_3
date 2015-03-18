@@ -28,7 +28,8 @@ public class Ninja_sword : MonoBehaviour
             return;
         }
 
-        enemy.on_hit_sword(attack_power);
+        var knockback_velocity = Ninja.get().transform.forward * attack_power;
+        enemy.on_hit_sword(attack_power, knockback_velocity);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------

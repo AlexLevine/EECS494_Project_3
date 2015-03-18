@@ -6,6 +6,9 @@ public class Llama : Player_character
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
+    public bool is_cooling_down = false; 
+    public float max_cooldown_time, cur_cooldown_time; 
+
     public bool is_charging { get { return is_charging_; } }
 
     private static Llama instance;
@@ -43,6 +46,17 @@ public class Llama : Player_character
         //     print(is_grounded);
         // }
 
+        if(is_cooling_down)
+        {
+            cur_cooldown_time += Time.deltaTime;
+            if(cur_cooldown_time >= max_cooldown_time)
+            {
+                print("cooldown ended");
+                cur_cooldown_time = 0;
+                is_cooling_down = false; 
+            }
+        }
+
         if (!is_charging)
         {
             return;
@@ -55,12 +69,13 @@ public class Llama : Player_character
             return;
         }
 
+
         time_spent_charging += Time.deltaTime;
     }// Update
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position)
+    public override void move(Vector3 delta_position, bool apply_rotation)
     {
         if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
@@ -74,7 +89,7 @@ public class Llama : Player_character
         //     Ninja.get().move(delta_position);//.y * Vector3.up);
         // }
 
-        base.move(delta_position);
+        base.move(delta_position, apply_rotation);
         // print(delta_position.y);
         // print(cc.isGrounded);
     }// move
@@ -110,6 +125,11 @@ public class Llama : Player_character
 
     public override void attack()
     {
+        if(is_cooling_down)
+        {
+            return; 
+        }
+
         GameObject spit = Instantiate(
             spit_prefab, spit_spawn_point.transform.position,
             transform.rotation) as GameObject;
@@ -119,6 +139,7 @@ public class Llama : Player_character
         print(direction);
 
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
+        is_cooling_down = true; 
     }// projectile_attack
 
     //--------------------------------------------------------------------------
