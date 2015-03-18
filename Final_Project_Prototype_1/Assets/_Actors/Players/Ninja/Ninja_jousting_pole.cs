@@ -15,8 +15,23 @@ public class Ninja_jousting_pole : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        print("thing");
+        if (!Llama.get().is_charging)
+        {
+            return;
+        }
+
+        // print("spam");
+        // print(other.gameObject);
+        // var breakable_wall = other.gameObject.GetComponent<Breakable_wall>();
+        // if (breakable_wall != null)
+        // {
+        //     breakable_wall.break_wall();
+        //     return;
+        // }
+
         var enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy == null || !Llama.get().is_charging)
+        if (enemy == null)
         {
             return;
         }
