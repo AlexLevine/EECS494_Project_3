@@ -12,8 +12,7 @@ public class Llama_spit : MonoBehaviour
         if(enemy != null)
         {
             enemy.on_hit_spit(
-                attack_power,
-                gameObject.GetComponent<Rigidbody>().velocity * attack_power);
+                attack_power, Vector3.zero);
             Timer.num_enemies_killed_by_llama++;
         }
 

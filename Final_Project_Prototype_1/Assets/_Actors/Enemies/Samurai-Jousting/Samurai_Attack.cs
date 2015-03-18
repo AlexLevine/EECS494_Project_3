@@ -19,12 +19,14 @@ public class Samurai_Attack : Enemy {
     public bool is_charging {
         get { return cur_state == Samurai_state_e.ATTACKING; } }
 
-    public float max_pause_time;
+    public static float max_pause_time = 2f;
     private float cur_pause_time;
 
     private float speed;
 
     private static Samurai_Attack instance;
+
+    private CharacterController cc;
 
     //--------------------------------------------------------------------------
 
@@ -46,6 +48,9 @@ public class Samurai_Attack : Enemy {
     public override void Start ()
     {
         base.Start();
+
+        cc = gameObject.GetComponent<CharacterController>();
+
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
         cur_pause_time = 0f;
@@ -65,6 +70,11 @@ public class Samurai_Attack : Enemy {
     void FixedUpdate ()
     {
         // base.Update();
+
+        if (being_knocked_back)
+        {
+            return;
+        }
 
         var closest_player = look_for_player();
         float dist_to_closest_player = Vector3.Distance(
@@ -103,25 +113,32 @@ public class Samurai_Attack : Enemy {
                     // }
                 // }
 
-                if(dist_to_closest_player > attack_thresh)
-                {
-                    break;
-                }
+                // if(dist_to_closest_player > attack_thresh)
+                // {
+                //     break;
+                // }
 
-
-                RaycastHit hit_info;
-                var hit = Physics.Raycast(
-                    transform.position, transform.forward, out hit_info);
-                if (!hit)
+                cur_pause_time += Time.deltaTime;
+                if(cur_pause_time >= max_pause_time / 2)
                 {
-                    break;
-                }
-
-                if(hit_info.collider.gameObject.tag == "Player")
-                {
+                    cur_pause_time = 0;
                     cur_state = Samurai_state_e.ATTACKING;
                 }
                 break;
+
+                // RaycastHit hit_info;
+                // var hit = Physics.Raycast(
+                //     transform.position, transform.forward, out hit_info);
+                // if (!hit)
+                // {
+                //     break;
+                // }
+
+                // if(hit_info.collider.gameObject.tag == "Player")
+                // {
+                //     cur_state = Samurai_state_e.ATTACKING;
+                // }
+                // break;
 
             case Samurai_state_e.ATTACKING:
                 move(transform.forward * speed * Time.fixedDeltaTime, true);
@@ -178,10 +195,21 @@ public class Samurai_Attack : Enemy {
     void OnControllerColliderHit(ControllerColliderHit c)
     {
         var player = c.gameObject.GetComponent<Player_character>();
-        if (player == null)
+
+        bool hit_wall = (cc.collisionFlags & CollisionFlags.Sides) != 0;
+        if (hit_wall)
         {
             cur_state = Samurai_state_e.LOOKING;
+            return;
         }
+
+        if (player == null)
+        {
+            return;
+        }
+
+        cur_state = Samurai_state_e.LOOKING;
+        player.receive_hit(attack_power, transform.forward * attack_power);
     }
 
 
