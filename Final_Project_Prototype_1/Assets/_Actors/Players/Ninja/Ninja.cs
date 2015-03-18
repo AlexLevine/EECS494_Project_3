@@ -49,11 +49,11 @@ public class Ninja : Player_character
             jousting_pole.SetActive(false);
             sword_obj.SetActive(true);
 
-			//out_of_range
-			// print(o_o_r);
-			if (o_o_r++==1){
-				GetComponent<Renderer>().material = normal;
-			}
+            //out_of_range
+            // print(o_o_r);
+            if (o_o_r++==1){
+                GetComponent<Renderer>().material = normal;
+            }
 
             return;
         }
@@ -176,17 +176,19 @@ public class Ninja : Player_character
 
         RaycastHit hit_info;
         var hit = Physics.Raycast(
-            transform.position, transform.position - llama_pos, out hit_info,
+            transform.position, llama_pos - transform.position, out hit_info,
             distance);
+
+        Debug.DrawRay(transform.position, llama_pos - transform.position, Color.blue, 4f);
 
         var blocked = hit && hit_info.collider.gameObject.tag != "Player";
 
-        if (distance > 16f || blocked)
+        if (distance > 10f || blocked)
         {
             print("out of range");
-			normal = GetComponent<Renderer>().material;
-           	GetComponent<Renderer>().material = out_of_range;
-           	o_o_r = 0;
+            normal = GetComponent<Renderer>().material;
+            GetComponent<Renderer>().material = out_of_range;
+            o_o_r = 0;
             return;
         }
 

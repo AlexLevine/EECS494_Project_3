@@ -9,16 +9,21 @@ public class Switch : MonoBehaviour {
     }
     
     // Update is called once per frame
-    void FixedUpdate () {
-        Renderer r = this.GetComponent<Renderer>();
-        Switchee sw = switchee.GetComponent<Switchee>();
-        if (sw.on) r.material = sw.switch_on_material;
-        else r.material = sw.switch_off_material;
+    // void FixedUpdate () {
+    //     Renderer r = this.GetComponent<Renderer>();
+    //     Switchee sw = switchee.GetComponent<Switchee>();
+    //     if (sw.on) r.material = sw.switch_on_material;
+    //     else r.material = sw.switch_off_material;
     
-    }
+    // }
     
     void OnTriggerEnter(Collider other){
         Switchee sw = switchee.GetComponent<Switchee>();
-        sw.toggle();
+        sw.activate();
+    }
+
+    void OnTriggerStay(Collider other){
+        Switchee sw = switchee.GetComponent<Switchee>();
+        sw.activate();
     }
 }
