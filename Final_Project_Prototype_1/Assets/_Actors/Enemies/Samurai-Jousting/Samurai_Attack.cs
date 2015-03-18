@@ -17,11 +17,12 @@ public class Samurai_Attack : Enemy {
     public float max_pause_time;
     private float cur_pause_time;
 
-    public float speed;
+    private float speed;
 
     // Use this for initialization
     public override void Start () {
         base.Start();
+        speed = Llama.get().charge_speed;
         cur_state = samurai_states_e.WAITING;
         cur_pause_time = 0f;
 
@@ -37,13 +38,18 @@ public class Samurai_Attack : Enemy {
     }
 
     // Update is called once per frame
-    public override void Update ()
+    void FixedUpdate ()
     {
-        base.Update();
+        // base.Update();
 
         Vector3 closest_player = look_for_player();
         float dist_to_closest_player = Vector3.Distance(closest_player,
                                                         transform.position);
+
+        var new_rot = transform.rotation.eulerAngles;
+        new_rot.x = 0;
+        new_rot.z = 0;
+        gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(new_rot));
 
         switch(cur_state){
             case samurai_states_e.WAITING:
@@ -88,10 +94,13 @@ public class Samurai_Attack : Enemy {
                 break;
 
             case samurai_states_e.ATTACKING:
-                GetComponent<Rigidbody>().velocity = transform.forward * speed;
+                var new_velocity = transform.forward * speed;
+                new_velocity.y = 0;
+                GetComponent<Rigidbody>().velocity = new_velocity;
                 break;
 
             case samurai_states_e.PAUSING:
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
                 cur_pause_time += Time.deltaTime;
                 if(cur_pause_time >= max_pause_time)
                 {
@@ -107,12 +116,19 @@ public class Samurai_Attack : Enemy {
     }
 
 
-    // void OnCollisionEnter(Collision collision){
-    //     cur_state = samurai_states_e.PAUSING;
-    // }
-    // void OnCollisionStay(Collision collision){
-    //     cur_state = samurai_states_e.PAUSING;
-    // }
+    void OnCollisionEnter(Collision collision){
+        if(cur_state != samurai_states_e.ATTACKING)
+        {
+            return;
+        }
+        if(collision.gameObject.name.Contains("Arena Wall"))
+        {
+            cur_state = samurai_states_e.PAUSING;
+        }
+    }
+    void OnCollisionStay(Collision collision){
+        OnCollisionEnter(collision);
+    }
 
 
     // returns the position of the nearest player to the enemy
@@ -147,8 +163,21 @@ public class Samurai_Attack : Enemy {
     {
         get
         {
-            return 3;
+            return 20;
         }
     }
 
+    public override void on_hit_spit(int damage)
+    {
+        // default behavior
+        // receive_hit (damage);
+    }// on_hit_spit
+
+    //--------------------------------------------------------------------------
+
+    public override void on_hit_sword(int damage)
+    {
+        // default behavior
+        // receive_hit (damage);
+    }// on_hit_sword
 }

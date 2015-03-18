@@ -13,7 +13,7 @@ public class Llama : Player_character
     private static float charge_duration = 1f;
     private float time_spent_charging = 0;
     private bool is_charging_;
-    private float charge_speed { get { return run_speed * 3; } }
+    public float charge_speed { get { return run_speed * 3; } }
     // private float pre_charge_speed;
 
     //--------------------------------------------------------------------------
@@ -60,9 +60,9 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-	public override void move(Vector3 delta_position)
+    public override void move(Vector3 delta_position)
     {
-    	if (gameObject.GetComponent<Throw_animation>().is_playing)
+        if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
             return;
         }
@@ -74,7 +74,7 @@ public class Llama : Player_character
         //     Ninja.get().move(delta_position);//.y * Vector3.up);
         // }
 
-    	base.move(delta_position);
+        base.move(delta_position);
         // print(delta_position.y);
         // print(cc.isGrounded);
     }// move

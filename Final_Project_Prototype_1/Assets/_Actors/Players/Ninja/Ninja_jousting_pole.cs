@@ -7,7 +7,7 @@ public class Ninja_jousting_pole : MonoBehaviour
     {
         get
         {
-            return (Llama.get().is_charging ? 10 : 0);
+            return 10;
         }
     }// attack_power
 
@@ -16,7 +16,7 @@ public class Ninja_jousting_pole : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         var enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy == null)
+        if (enemy == null || !Llama.get().is_charging)
         {
             return;
         }

@@ -14,6 +14,12 @@ public class Input_reader : MonoBehaviour
     private Player_character pc;
     private bool controls_enabled = true;
 
+    private static UnityInputDevice[] keyboard_profiles =
+        new UnityInputDevice[] {
+            new UnityInputDevice(new Keyboard_controls.Keyboard_layout()),
+            new UnityInputDevice(new Keyboard_controls.Keyboard_layout2())
+        };
+
     void Awake()
     {
         // player = ReInput.players.GetPlayer(player_id);
@@ -29,7 +35,10 @@ public class Input_reader : MonoBehaviour
 
         if (input_device == null)
         {
-            print("player " + player_id + " doesn't have a controller!!!");
+            print("player " + player_id +
+                  " doesn't have a controller, assigning keyboard");
+            input_device = keyboard_profiles[player_id];
+            InputManager.AttachDevice(input_device);
         }
 
         pc = Player_character.player_characters[

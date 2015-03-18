@@ -102,27 +102,27 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-	public virtual void on_hit_spit(int damage)
+    public virtual void on_hit_spit(int damage)
     {
-		// default behavior
-		receive_hit (damage);
-	}// on_hit_spit
+        // default behavior
+        receive_hit (damage);
+    }// on_hit_spit
 
     //--------------------------------------------------------------------------
 
-	public virtual void on_hit_sword(int damage)
+    public virtual void on_hit_sword(int damage)
     {
-		// default behavior
-		receive_hit (damage);
-	}// on_hit_sword
+        // default behavior
+        receive_hit (damage);
+    }// on_hit_sword
 
     //--------------------------------------------------------------------------
 
-	public virtual void on_hit_charge(int damage)
-	{
-		// default behavior
-		receive_hit (damage);
-	}// on_hit_charge
+    // public virtual void on_hit_charge(int damage)
+    // {
+    //  // default behavior
+    //  receive_hit (damage);
+    // }// on_hit_charge
 
     //--------------------------------------------------------------------------
 
@@ -131,9 +131,9 @@ public class Enemy : Actor
         receive_hit(damage);
     }// on_hit_by_jousting_pole
 
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
-	public override void on_death()
+    public override void on_death()
     {
         Destroy(gameObject);
     }// on_death
