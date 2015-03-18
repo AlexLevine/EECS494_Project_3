@@ -7420,7 +7420,7 @@ Prefab:
       objectReference: {fileID: 1302190211}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 188.5
+      value: -47.4000015
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.x
@@ -9156,7 +9156,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 190.5
+      value: -45.4000015
       objectReference: {fileID: 0}
     - target: {fileID: 11457380, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: max_cooldown_time
@@ -9591,7 +9591,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
