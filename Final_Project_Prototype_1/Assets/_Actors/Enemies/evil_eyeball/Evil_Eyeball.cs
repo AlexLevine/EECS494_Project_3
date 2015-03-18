@@ -59,7 +59,7 @@ public class Evil_Eyeball : Enemy {
 	
 	//--------------------------------------------------------------------------
 	
-	void Update()
+	public override void Update()
 	{
 		base.Update ();
 		if (!stunned) {
