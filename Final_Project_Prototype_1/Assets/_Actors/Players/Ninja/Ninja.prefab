@@ -71,7 +71,22 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!1 &178892
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 424018}
+  m_Layer: 8
+  m_Name: rotation_point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &184028
 GameObject:
   m_ObjectHideFlags: 1
@@ -133,8 +148,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 184028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.29999995}
-  m_LocalScale: {x: .5, y: .5, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 2.55999994}
+  m_LocalScale: {x: .5, y: .5, z: 5}
   m_Children: []
   m_Father: {fileID: 484636}
   m_RootOrder: 1
@@ -150,6 +165,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 477290}
   m_RootOrder: 3
+--- !u!4 &424018
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -.389999986}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 484636}
+  m_RootOrder: 2
 --- !u!4 &467104
 Transform:
   m_ObjectHideFlags: 1
@@ -169,7 +196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.0999999, y: 3.1500001, z: -38.9000015}
+  m_LocalPosition: {x: 5, y: 3, z: -23.1000004}
   m_LocalScale: {x: .75, y: 1.25, z: .75}
   m_Children:
   - {fileID: 491956}
@@ -190,6 +217,7 @@ Transform:
   m_Children:
   - {fileID: 467104}
   - {fileID: 400476}
+  - {fileID: 424018}
   m_Father: {fileID: 477290}
   m_RootOrder: 1
 --- !u!4 &487306
@@ -211,8 +239,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196572}
   m_LocalRotation: {x: 0, y: .0871557519, z: 0, w: .99619472}
-  m_LocalPosition: {x: .850000024, y: 0, z: 1.62}
-  m_LocalScale: {x: .25, y: .25, z: 2}
+  m_LocalPosition: {x: .920000017, y: 0, z: 2.00999999}
+  m_LocalScale: {x: .25, y: .25, z: 3}
   m_Children: []
   m_Father: {fileID: 477290}
   m_RootOrder: 0
@@ -425,6 +453,7 @@ MonoBehaviour:
   min_move_distance: .00999999978
   skin_width: .100000001
   team_up_point: {fileID: 0}
+  pole_rotation_point: {fileID: 178892}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 135138}
   sword_obj: {fileID: 196572}

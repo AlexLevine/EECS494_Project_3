@@ -36,7 +36,23 @@ public class Actor : MonoBehaviour
 
     public virtual void move(Vector3 delta_position, bool apply_rotation)
     {
+        var cc = gameObject.GetComponent<CharacterController>();
+        if (cc != null)
+        {
+            cc.Move(delta_position);
+            if (apply_rotation)
+            {
+                collision_safe_rotate_towards(delta_position);
+            }
+            return;
+        }
 
+        // HACK
+        transform.position += delta_position;
+        if (apply_rotation)
+        {
+            collision_safe_rotate_towards(delta_position);
+        }
     }// move
 
     //--------------------------------------------------------------------------
@@ -68,23 +84,23 @@ public class Actor : MonoBehaviour
     //--------------------------------------------------------------------------
 
     public virtual void collision_safe_rotate_towards(
-        Vector3 direction, float step)
+        Vector3 direction, float step=10f)
     {
         direction.y = transform.forward.y;
 
         var new_forward = Vector3.RotateTowards(
             transform.forward, direction, step, 0f);
 
-        var rb = gameObject.GetComponent<Rigidbody>();
+        // var rb = gameObject.GetComponent<Rigidbody>();
         var new_rotation = Quaternion.LookRotation(new_forward);
-        if (rb == null)
-        {
-            transform.rotation = new_rotation;
-            return;
-        }
+        // if (rb == null)
+        // {
+        transform.rotation = new_rotation;
+        //     return;
+        // }
 
         // print("spam");
-        rb.MoveRotation(new_rotation);
+        // rb.MoveRotation(new_rotation);
     }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------

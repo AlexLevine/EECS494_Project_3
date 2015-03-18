@@ -49,7 +49,6 @@ public class Electric_enemy : Enemy
 
     void FixedUpdate()
     {
-        base.Update();
         transform.position = Vector3.MoveTowards(
             transform.position,
             path_nodes [destination_index].transform.position,

@@ -57,13 +57,13 @@ public class Fire_enemy : Enemy {
         }
 
         transform.position = Vector3.MoveTowards (
-        transform.position,
-        path_nodes [destination_index].transform.position,
-        speed * Time.fixedDeltaTime);
+            transform.position,
+            path_nodes [destination_index].transform.position,
+            speed * Time.fixedDeltaTime);
 
         var distance_to_dest = Vector3.Distance (
-        transform.position,
-        path_nodes [destination_index].transform.position);
+            transform.position,
+            path_nodes [destination_index].transform.position);
         var reached_destination = Mathf.Approximately (distance_to_dest, 0);
 
         if (!reached_destination) {

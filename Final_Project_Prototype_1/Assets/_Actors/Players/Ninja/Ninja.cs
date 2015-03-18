@@ -5,12 +5,17 @@ public class Ninja : Player_character
 {
     public GameObject team_up_point;
 
+    public GameObject pole_rotation_point;
+
     public GameObject projectile_prefab;
     public GameObject jousting_pole;
     public GameObject sword_obj;
     public Material out_of_range;
     private Material normal;
     private float o_o_r=2;
+
+    private Quaternion pole_start_rotation;
+    private Vector3 pole_start_pos;
 
     //--------------------------------------------------------------------------
 
@@ -28,6 +33,9 @@ public class Ninja : Player_character
     public override void Awake()
     {
         base.Awake();
+
+        pole_start_rotation = jousting_pole.transform.localRotation;
+        pole_start_pos = jousting_pole.transform.localPosition;
 
         instance = this;
     }// Awake
@@ -103,17 +111,17 @@ public class Ninja : Player_character
             return;
         }
 
-        float adjusted_vert = vertical_tilt * -10;   // some float from -1 to 1,
+        float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
         float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
 
-        jousting_pole.transform.position = transform.position;
-        jousting_pole.transform.rotation = transform.rotation;
+        jousting_pole.transform.localPosition = pole_start_pos;
+        jousting_pole.transform.localRotation = pole_start_rotation;
 
         jousting_pole.transform.RotateAround(
-            transform.position, transform.up, adjusted_horz);
+            pole_rotation_point.transform.position, transform.up, adjusted_horz);
         jousting_pole.transform.RotateAround(
-            transform.position, transform.right, adjusted_vert);
+            pole_rotation_point.transform.position, transform.right, adjusted_vert);
 
     }// adjust_jousting_pole
 
