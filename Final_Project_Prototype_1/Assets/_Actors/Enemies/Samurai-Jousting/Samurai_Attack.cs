@@ -163,8 +163,21 @@ public class Samurai_Attack : Enemy {
     {
         get
         {
-            return 3;
+            return 20;
         }
     }
 
+    public override void on_hit_spit(int damage)
+    {
+        // default behavior
+        // receive_hit (damage);
+    }// on_hit_spit
+
+    //--------------------------------------------------------------------------
+
+    public override void on_hit_sword(int damage)
+    {
+        // default behavior
+        // receive_hit (damage);
+    }// on_hit_sword
 }
