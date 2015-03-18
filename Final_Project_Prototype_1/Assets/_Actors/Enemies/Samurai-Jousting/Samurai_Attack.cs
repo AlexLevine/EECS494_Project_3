@@ -38,13 +38,18 @@ public class Samurai_Attack : Enemy {
     }
 
     // Update is called once per frame
-    public override void Update ()
+    void FixedUpdate ()
     {
-        base.Update();
+        // base.Update();
 
         Vector3 closest_player = look_for_player();
         float dist_to_closest_player = Vector3.Distance(closest_player,
                                                         transform.position);
+
+        var new_rot = transform.rotation.eulerAngles;
+        new_rot.x = 0;
+        new_rot.z = 0;
+        gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(new_rot));
 
         switch(cur_state){
             case samurai_states_e.WAITING:
@@ -89,10 +94,13 @@ public class Samurai_Attack : Enemy {
                 break;
 
             case samurai_states_e.ATTACKING:
-                GetComponent<Rigidbody>().velocity = transform.forward * speed;
+                var new_velocity = transform.forward * speed;
+                new_velocity.y = 0;
+                GetComponent<Rigidbody>().velocity = new_velocity;
                 break;
 
             case samurai_states_e.PAUSING:
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
                 cur_pause_time += Time.deltaTime;
                 if(cur_pause_time >= max_pause_time)
                 {
