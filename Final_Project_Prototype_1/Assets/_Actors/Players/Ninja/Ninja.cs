@@ -181,7 +181,7 @@ public class Ninja : Player_character
 
         var blocked = hit && hit_info.collider.gameObject.tag != "Player";
 
-        if (distance > 4f || blocked)
+        if (distance > 16f || blocked)
         {
             print("out of range");
 			normal = GetComponent<Renderer>().material;

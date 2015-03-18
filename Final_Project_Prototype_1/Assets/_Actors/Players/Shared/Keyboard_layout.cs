@@ -35,28 +35,35 @@ namespace Keyboard_controls
                 {
                     Handle = "Jump",
                     Target = InputControlType.Action1,
-                    Source = KeyCodeButton( KeyCode.Period )
+                    Source = KeyCodeButton( KeyCode.Alpha1 )
                 },
 
                 new InputControlMapping
                 {
-                    Handle = "Projectile",
-                    Target = InputControlType.Action2,
-                    Source = KeyCodeButton( KeyCode.Comma )
-                },
-
-                new InputControlMapping
-                {
-                    Handle = "Team up",
+                    Handle = "Attack",
                     Target = InputControlType.Action3,
-                    Source = KeyCodeButton( KeyCode.M )
+                    Source = KeyCodeButton( KeyCode.Alpha2 )
                 },
 
                 new InputControlMapping
                 {
-                    Handle = "Throw",
-                    Target = InputControlType.Action4,
-                    Source = KeyCodeButton( KeyCode.N )
+                    Handle = "Team up or throw",
+                    Target = InputControlType.Action2,
+                    Source = KeyCodeButton( KeyCode.Alpha3 )
+                },
+
+                new InputControlMapping
+                {
+                    Handle = "Charge",
+                    Target = InputControlType.RightBumper,
+                    Source = KeyCodeButton( KeyCode.Alpha4 )
+                },
+
+                new InputControlMapping
+                {
+                    Handle = "Lock on",
+                    Target = InputControlType.LeftBumper,
+                    Source = KeyCodeButton( KeyCode.LeftShift )
                 }
             };
 
@@ -76,30 +83,6 @@ namespace Keyboard_controls
                     // Notes that up is positive in Unity, therefore the order of KeyCodes is down, up.
                     Source = KeyCodeAxis( KeyCode.S, KeyCode.W )
                 }
-                // new InputControlMapping
-                // {
-                //  Handle = "Look X",
-                //  Target = InputControlType.RightStickX,
-                //  Source = MouseXAxis,
-                //  Raw    = true,
-                //  Scale  = 0.1f
-                // },
-                // new InputControlMapping
-                // {
-                //  Handle = "Look Y",
-                //  Target = InputControlType.RightStickY,
-                //  Source = MouseYAxis,
-                //  Raw    = true,
-                //  Scale  = 0.1f
-                // },
-                // new InputControlMapping
-                // {
-                //  Handle = "Look Z",
-                //  Target = InputControlType.ScrollWheel,
-                //  Source = MouseScrollWheel,
-                //  Raw    = true,
-                //  Scale  = 0.1f
-                // }
             };
         }
     }

@@ -33,44 +33,51 @@ namespace Keyboard_controls
             {
                 new InputControlMapping
                 {
-                    Handle = "AltJump",
+                    Handle = "Jump",
                     Target = InputControlType.Action1,
-                    Source = KeyCodeButton( KeyCode.X )
+                    Source = KeyCodeButton( KeyCode.Alpha7 )
                 },
 
                 new InputControlMapping
                 {
-                    Handle = "AltProjectile",
-                    Target = InputControlType.Action2,
-                    Source = KeyCodeButton( KeyCode.Z )
-                },
-
-                new InputControlMapping
-                {
-                    Handle = "Alt Team up",
+                    Handle = "Attack",
                     Target = InputControlType.Action3,
-                    Source = KeyCodeButton( KeyCode.C )
+                    Source = KeyCodeButton( KeyCode.Alpha8 )
                 },
 
                 new InputControlMapping
                 {
-                    Handle = "Alt Throw",
-                    Target = InputControlType.Action4,
-                    Source = KeyCodeButton( KeyCode.V )
+                    Handle = "Team up or throw",
+                    Target = InputControlType.Action2,
+                    Source = KeyCodeButton( KeyCode.Alpha9 )
+                },
+
+                new InputControlMapping
+                {
+                    Handle = "Charge",
+                    Target = InputControlType.RightBumper,
+                    Source = KeyCodeButton( KeyCode.Alpha0 )
+                },
+
+                new InputControlMapping
+                {
+                    Handle = "Lock on",
+                    Target = InputControlType.LeftBumper,
+                    Source = KeyCodeButton( KeyCode.Space )
                 }
             };
 
             AnalogMappings = new[]
             {
                 new InputControlMapping {
-                    Handle = "Move X Alternate",
+                    Handle = "Move X",
                     Target = InputControlType.LeftStickX,
-                    Source = KeyCodeAxis( KeyCode.LeftArrow, KeyCode.RightArrow )
+                    Source = KeyCodeAxis( KeyCode.J, KeyCode.L )
                 },
                 new InputControlMapping {
-                    Handle = "Move Y Alternate",
+                    Handle = "Move Y",
                     Target = InputControlType.LeftStickY,
-                    Source = KeyCodeAxis( KeyCode.DownArrow, KeyCode.UpArrow )
+                    Source = KeyCodeAxis( KeyCode.K, KeyCode.I )
                 }//,
             };
         }
