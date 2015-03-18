@@ -13,6 +13,8 @@ public class Flying_enemy_script : Enemy {
 	public bool _______________________________________;
 
 	public bool is_spawning = false;
+	
+	private float speed = 5f;
 
 	//--------------------------------------------------------------------------
 
@@ -51,6 +53,7 @@ public class Flying_enemy_script : Enemy {
 
 		var llama_distance = Vector3.Distance(llama_pos, transform.position);
 		var ninja_distance = Vector3.Distance(ninja_pos, transform.position);
+		
 
 		if (llama_distance <= spawn_distance ||
 		    ninja_distance <= spawn_distance)
@@ -64,9 +67,25 @@ public class Flying_enemy_script : Enemy {
 
 			//print("spawn!");
 			StartCoroutine(spawn());
+		} else if (llama_pos.z > this.transform.position.z && 
+					ninja_pos.z > this.transform.position.z) { 
+				// move towards the players if they have passes the flying enemy
+			Vector3 dest = new Vector3(0, 0, 0);
+			if (llama_distance < ninja_distance) { // move towards llama
+				dest = llama_pos;
+			} else { // move towards ninja
+				dest = ninja_pos;
+			}
+			dest.x = this.transform.position.x;
+			dest.y = this.transform.position.y;
+			this.transform.position = Vector3.MoveTowards (
+				this.transform.position,
+				dest,
+				speed * Time.fixedDeltaTime);
+			
 		}
 	}// Update
-
+	
 	//--------------------------------------------------------------------------
 
 	private IEnumerator spawn()
