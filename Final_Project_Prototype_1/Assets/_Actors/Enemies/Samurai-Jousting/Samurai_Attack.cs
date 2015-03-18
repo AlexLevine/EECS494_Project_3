@@ -17,11 +17,12 @@ public class Samurai_Attack : Enemy {
     public float max_pause_time;
     private float cur_pause_time;
 
-    public float speed;
+    private float speed;
 
     // Use this for initialization
     public override void Start () {
         base.Start();
+        speed = Llama.get().charge_speed;
         cur_state = samurai_states_e.WAITING;
         cur_pause_time = 0f;
 
@@ -107,12 +108,19 @@ public class Samurai_Attack : Enemy {
     }
 
 
-    // void OnCollisionEnter(Collision collision){
-    //     cur_state = samurai_states_e.PAUSING;
-    // }
-    // void OnCollisionStay(Collision collision){
-    //     cur_state = samurai_states_e.PAUSING;
-    // }
+    void OnCollisionEnter(Collision collision){
+        if(cur_state != samurai_states_e.ATTACKING)
+        {
+            return;
+        }
+        if(collision.gameObject.name.Contains("Arena Wall"))
+        {
+            cur_state = samurai_states_e.PAUSING;
+        }
+    }
+    void OnCollisionStay(Collision collision){
+        OnCollisionEnter(collision);
+    }
 
 
     // returns the position of the nearest player to the enemy

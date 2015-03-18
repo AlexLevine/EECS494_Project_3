@@ -99,6 +99,12 @@ public class Player_character : Actor
     // the air.
     public virtual void update_movement_velocity(Vector3 target_velocity)
     {
+        // if (is_teamed_up)
+        // {
+        //     target_velocity = target_velocity.magnitude * 
+        //                       Camera.main.transform.forward;
+        // }
+
         if (is_grounded)
         {
             target_velocity.y = velocity_.y;

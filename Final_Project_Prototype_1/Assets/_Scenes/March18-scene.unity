@@ -1153,7 +1153,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 68721f828bc294e6dadc4a3f5bbdf958, type: 2}
+  - {fileID: 2100000, guid: c7779d7e520d9bf4ca7094f5dcffd0b4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2019,7 +2019,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 68721f828bc294e6dadc4a3f5bbdf958, type: 2}
+  - {fileID: 2100000, guid: c7779d7e520d9bf4ca7094f5dcffd0b4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3166,7 +3166,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 68721f828bc294e6dadc4a3f5bbdf958, type: 2}
+  - {fileID: 2100000, guid: c7779d7e520d9bf4ca7094f5dcffd0b4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3264,7 +3264,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.20000005
+      value: -6.80000019
       objectReference: {fileID: 0}
     - target: {fileID: 11441846, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: team_up_point
@@ -3272,7 +3272,7 @@ Prefab:
       objectReference: {fileID: 1302190211}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 127.699997
+      value: 261.799988
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.x
@@ -3409,7 +3409,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 68721f828bc294e6dadc4a3f5bbdf958, type: 2}
+  - {fileID: 2100000, guid: c7779d7e520d9bf4ca7094f5dcffd0b4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4155,7 +4155,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.5999999
+      value: -7.4000001
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_RootOrder
@@ -4167,7 +4167,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 130.199997
+      value: 264.299988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
@@ -5525,6 +5525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc5bfd0493de468d839ccf18c7f474a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  in_boss_arena: 1
 --- !u!1001 &1501582853
 Prefab:
   m_ObjectHideFlags: 0
@@ -6510,7 +6511,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1784257331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.38000011, z: 292.540009}
+  m_LocalPosition: {x: 0, y: -9.39999962, z: 353.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 91012211}
@@ -6775,8 +6776,8 @@ Transform:
   m_PrefabParentObject: {fileID: 419844, guid: e29e04d887b11ee409acb1524a2f45a4, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1879024141}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.9399996, y: -13.0100002, z: 268.850006}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
+  m_LocalPosition: {x: 3.1099999, y: -13.8999996, z: 293.109985}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 432292707}
@@ -6808,10 +6809,9 @@ MonoBehaviour:
   llama: {fileID: 0}
   ninja: {fileID: 0}
   cur_state: 0
-  look_thresh: 20
-  attack_thresh: 10
-  max_pause_time: 3
-  speed: 5
+  look_thresh: 50
+  attack_thresh: 50
+  max_pause_time: 1
 --- !u!54 &1879024145
 Rigidbody:
   m_ObjectHideFlags: 0

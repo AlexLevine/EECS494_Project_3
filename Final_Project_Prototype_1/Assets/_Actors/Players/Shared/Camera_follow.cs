@@ -7,6 +7,8 @@ public class Camera_follow : MonoBehaviour
     public static float max_camera_distance = 12f;
     // public static float camera_y_distance = 4f;
 
+    public bool in_boss_arena = true;
+
     // Use this for initialization
     void Start()
     {
@@ -33,8 +35,17 @@ public class Camera_follow : MonoBehaviour
         var midpoint = Vector3.Lerp(
             llama.transform.position, ninja.transform.position, 0.5f);
 
+        if (in_boss_arena)
+        {
+            var new_rotation = transform.rotation.eulerAngles;
+            new_rotation.x = 90f;
+            transform.rotation = Quaternion.Euler(new_rotation);
+            camera_distance = max_camera_distance * 3;
+            // return;
+        }
+
         var new_camera_pos = midpoint;
-        new_camera_pos.z -= camera_distance;
+        // new_camera_pos.z -= camera_distance;
         new_camera_pos.y += camera_distance;
 
         transform.position = new_camera_pos;
