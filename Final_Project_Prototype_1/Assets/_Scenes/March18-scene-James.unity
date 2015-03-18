@@ -5702,9 +5702,7 @@ MonoBehaviour:
   enableXInput: 0
   useFixedUpdate: 0
   dontDestroyOnLoad: 0
-  customProfiles:
-  - Keyboard_controls.Keyboard_layout
-  - Keyboard_controls.Keyboard_layout2
+  customProfiles: []
 --- !u!4 &1913730732
 Transform:
   m_ObjectHideFlags: 0
