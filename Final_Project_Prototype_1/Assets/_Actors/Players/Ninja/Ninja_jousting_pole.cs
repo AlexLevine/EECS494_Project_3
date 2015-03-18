@@ -21,7 +21,8 @@ public class Ninja_jousting_pole : MonoBehaviour
             return;
         }
 
-        enemy.on_hit_by_jousting_pole(attack_power);
+        var knockback = transform.forward * attack_power;
+        enemy.on_hit_by_jousting_pole(attack_power, knockback);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------

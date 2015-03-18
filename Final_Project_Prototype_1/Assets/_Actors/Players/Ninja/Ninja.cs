@@ -145,7 +145,7 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position)
+    public override void move(Vector3 delta_position, bool apply_rotation)
     {
         // if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
         if (is_teamed_up)
@@ -161,7 +161,7 @@ public class Ninja : Player_character
         //     return;
         // }
 
-        base.move(delta_position);
+        base.move(delta_position, apply_rotation);
     }// move
 
     //--------------------------------------------------------------------------

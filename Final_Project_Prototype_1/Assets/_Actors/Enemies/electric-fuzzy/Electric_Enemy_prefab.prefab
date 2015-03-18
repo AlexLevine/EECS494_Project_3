@@ -63,6 +63,8 @@ GameObject:
   - 54: {fileID: 5447674}
   - 114: {fileID: 11447674}
   - 135: {fileID: 13547674}
+  - 114: {fileID: 11478006}
+  - 114: {fileID: 11400778}
   m_Layer: 0
   m_Name: prefab Electric_enemy
   m_TagString: Untagged
@@ -330,6 +332,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11400778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_playing: 0
 --- !u!114 &11447674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,6 +361,17 @@ MonoBehaviour:
   - {fileID: 147672}
   is_moving: 1
   speed: 2
+--- !u!114 &11478006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c687e9866613ffb44a6c17e22a3a6a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13547674
 SphereCollider:
   m_ObjectHideFlags: 1

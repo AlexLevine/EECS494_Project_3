@@ -60,7 +60,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position)
+    public override void move(Vector3 delta_position, bool apply_rotation)
     {
         if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
@@ -74,7 +74,7 @@ public class Llama : Player_character
         //     Ninja.get().move(delta_position);//.y * Vector3.up);
         // }
 
-        base.move(delta_position);
+        base.move(delta_position, apply_rotation);
         // print(delta_position.y);
         // print(cc.isGrounded);
     }// move

@@ -20,7 +20,8 @@ public class Samurai_Attack : Enemy {
     private float speed;
 
     // Use this for initialization
-    public override void Start () {
+    public override void Start ()
+    {
         base.Start();
         speed = Llama.get().charge_speed;
         cur_state = samurai_states_e.WAITING;
@@ -116,7 +117,8 @@ public class Samurai_Attack : Enemy {
     }
 
 
-    void OnCollisionEnter(Collision collision){
+    void OnCollisionEnter(Collision collision)
+    {
         if(cur_state != samurai_states_e.ATTACKING)
         {
             return;
@@ -126,9 +128,16 @@ public class Samurai_Attack : Enemy {
             cur_state = samurai_states_e.PAUSING;
         }
     }
-    void OnCollisionStay(Collision collision){
+
+    void OnCollisionStay(Collision collision)
+    {
         OnCollisionEnter(collision);
     }
+
+    // void OnControllerColliderHit()
+    // {
+
+    // }
 
 
     // returns the position of the nearest player to the enemy
@@ -155,7 +164,7 @@ public class Samurai_Attack : Enemy {
     {
         get
         {
-            return 1;
+            return 5;
         }
     }
 
@@ -167,7 +176,7 @@ public class Samurai_Attack : Enemy {
         }
     }
 
-    public override void on_hit_spit(int damage)
+    public override void on_hit_spit(int damage, Vector3 knockback_velocity)
     {
         // default behavior
         // receive_hit (damage);
@@ -175,7 +184,7 @@ public class Samurai_Attack : Enemy {
 
     //--------------------------------------------------------------------------
 
-    public override void on_hit_sword(int damage)
+    public override void on_hit_sword(int damage, Vector3 knockback_velocity)
     {
         // default behavior
         // receive_hit (damage);

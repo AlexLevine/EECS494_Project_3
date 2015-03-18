@@ -50,25 +50,28 @@ public class Fire_enemy : Enemy {
 
     void FixedUpdate()
     {
-        base.Update ();
-        if (!this.GetComponent<knock_back>().is_hit) {
-            transform.position = Vector3.MoveTowards (
-            transform.position,
-            path_nodes [destination_index].transform.position,
-            speed * Time.fixedDeltaTime);
-
-            var distance_to_dest = Vector3.Distance (
-            transform.position,
-            path_nodes [destination_index].transform.position);
-            var reached_destination = Mathf.Approximately (distance_to_dest, 0);
-
-            if (!reached_destination) {
-                    return;
-            }
-
-            ++destination_index;
-            destination_index %= path_nodes.Length;
+        // base.Update ();
+        if (being_knocked_back)
+        {
+            return;
         }
+
+        transform.position = Vector3.MoveTowards (
+        transform.position,
+        path_nodes [destination_index].transform.position,
+        speed * Time.fixedDeltaTime);
+
+        var distance_to_dest = Vector3.Distance (
+        transform.position,
+        path_nodes [destination_index].transform.position);
+        var reached_destination = Mathf.Approximately (distance_to_dest, 0);
+
+        if (!reached_destination) {
+                return;
+        }
+
+        ++destination_index;
+        destination_index %= path_nodes.Length;
 
 
     }// Update
@@ -81,19 +84,20 @@ public class Fire_enemy : Enemy {
     //     }
     // }// on_hit_charge
 
-    public override void on_hit_spit(int damage)
+    public override void on_hit_spit(int damage, Vector3 knockback_velocity)
     {
-        base.on_hit_spit (damage);
+        base.on_hit_spit(damage, knockback_velocity);
 
         // put out fire:
         foreach (Transform t in transform)
         {
-            if(t.name == "Fire_origin") {
+            if(t.name == "Fire_origin")
+            {
                 t.GetComponentInChildren<ParticleSystem>().enableEmission = false;
                 on_fire = false;
             }
         }
-        this.GetComponent<knock_back> ().on_hit (transform.forward);
+        // this.GetComponent<knock_back> ().on_hit (transform.forward);
 
 
     }// on_hit_spit

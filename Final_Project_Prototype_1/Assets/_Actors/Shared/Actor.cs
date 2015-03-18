@@ -2,16 +2,27 @@
 using System.Collections;
 using System;
 
+[RequireComponent(typeof(Flash_animation)),
+ RequireComponent(typeof(Knockback_animation))]
 public class Actor : MonoBehaviour
 {
     public int health { get { return health_; } }
+    public bool being_knocked_back {
+        get { return knockback_animation.is_playing; } }
+
     private int health_;
+
+    private Flash_animation invincibility_animation;
+    private Knockback_animation knockback_animation;
 
     //--------------------------------------------------------------------------
 
     public virtual void Start()
     {
         health_ = max_health;
+
+        invincibility_animation = GetComponent<Flash_animation>();
+        knockback_animation = GetComponent<Knockback_animation>();
     }// Start()
 
     //--------------------------------------------------------------------------
@@ -20,6 +31,13 @@ public class Actor : MonoBehaviour
     {
 
     }// Update()
+
+    //--------------------------------------------------------------------------
+
+    public virtual void move(Vector3 delta_position, bool apply_rotation)
+    {
+
+    }// move
 
     //--------------------------------------------------------------------------
 
@@ -65,32 +83,29 @@ public class Actor : MonoBehaviour
             return;
         }
 
-        print("spam");
+        // print("spam");
         rb.MoveRotation(new_rotation);
     }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------
 
-    public virtual void receive_hit(int damage, GameObject attacker=null)
+    public virtual void receive_hit(int damage, Vector3 knockback_velocity)
     {
-        var invincibility_animation = GetComponent<Flash_animation>();
-        if (invincibility_animation != null
-            && invincibility_animation.is_playing)
+        if (invincibility_animation.is_playing)
         {
             return;
         }
 
         health_ -= damage;
 
-        if (health_ <= 0)
-        {
-            on_death();
-        }
+        bool should_die = health_ <= 0;
 
-        if (invincibility_animation != null)
-        {
-            invincibility_animation.start_animation();
-        }
+        invincibility_animation.start_animation();
+
+        // HACK
+        knockback_velocity = knockback_velocity.normalized * 10;
+
+        knockback_animation.apply_knockback(knockback_velocity, should_die);
     }// receive_hit
 
     //--------------------------------------------------------------------------
@@ -99,11 +114,6 @@ public class Actor : MonoBehaviour
     {
 
     }// on_death
-
-    public virtual void special_ability()
-    {
-
-    }
 
     //--------------------------------------------------------------------------
 
