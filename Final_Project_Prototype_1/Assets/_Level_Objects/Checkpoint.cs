@@ -16,6 +16,22 @@ public class Checkpoint : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (ll.transform.position.z >= current_ckpt.z) current_ckpt = checkpoints[current_index];
+		
+	}
+	
+	void FixedUpdate(){
+		if (ll.transform.position.z>= checkpoints[current_index+1].z && 
+		    nin.transform.position.z>= checkpoints[current_index+1].z){
+			current_index++;
+			current_ckpt = checkpoints[current_index];
+		}
+		print(current_ckpt);
+		
+		//if fallen off stage
+		if (ll.transform.position.y<=-20 || nin.transform.position.y<=-20){
+			ll.transform.position = current_ckpt + new Vector3(2,0,0);
+			nin.transform.position = current_ckpt - new Vector3(2,0,0);
+		}
+		
 	}
 }
