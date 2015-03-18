@@ -968,7 +968,6 @@ MonoBehaviour:
   cur_state: 0
   look_thresh: 50
   attack_thresh: 50
-  max_pause_time: 1
 --- !u!114 &11422634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1011,7 +1010,7 @@ SphereCollider:
   m_GameObject: {fileID: 103466}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1023,7 +1022,7 @@ SphereCollider:
   m_GameObject: {fileID: 115064}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1035,7 +1034,7 @@ SphereCollider:
   m_GameObject: {fileID: 103372}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1047,7 +1046,7 @@ SphereCollider:
   m_GameObject: {fileID: 154832}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1059,7 +1058,7 @@ SphereCollider:
   m_GameObject: {fileID: 113162}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1071,7 +1070,7 @@ SphereCollider:
   m_GameObject: {fileID: 139940}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1083,7 +1082,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 188114}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1096,7 +1095,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 118968}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1109,7 +1108,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 112578}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1122,7 +1121,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 181576}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1135,7 +1134,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 125474}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1148,7 +1147,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 143472}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .5
   m_Height: 2
   m_Direction: 1
@@ -1163,13 +1162,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 2.20000005
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: .00100000005
-  m_Center: {x: 2.02999997, y: 1.28999996, z: -1.79999995}
+  m_Height: 7.9000001
+  m_Radius: 2.50999999
+  m_SlopeLimit: 10
+  m_StepOffset: .00999999978
+  m_SkinWidth: .25
+  m_MinMoveDistance: 0
+  m_Center: {x: 2.02999997, y: .409999996, z: -2.18000007}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
