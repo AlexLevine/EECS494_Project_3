@@ -5,7 +5,7 @@ using System;
 public class Evil_Eyeball : Enemy {
 
     private float speed = 2f;
-    
+
     //the 2 players that the sword targets
     public string player_name1 = "Llama";
     public string player_name2 = "Ninja";
@@ -14,7 +14,7 @@ public class Evil_Eyeball : Enemy {
 
     private int locate_timer;
     const int full_locate_timer = 300;
-    
+
     public bool is_moving;
     private bool stunned;
     private int stunned_timer;
@@ -24,9 +24,9 @@ public class Evil_Eyeball : Enemy {
     private Vector3 dest;
 
 
-    
+
     //--------------------------------------------------------------------------
-    
+
     public override int attack_power
     {
         get
@@ -34,7 +34,7 @@ public class Evil_Eyeball : Enemy {
             return 1;
         }
     }
-    
+
     public override int max_health
     {
         get
@@ -42,9 +42,9 @@ public class Evil_Eyeball : Enemy {
             return 3;
         }
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     public override void Start()
     {
         base.Start();
@@ -56,19 +56,19 @@ public class Evil_Eyeball : Enemy {
         stunned = false;
         locate_timer = 0;
     }// Start
-    
+
     //--------------------------------------------------------------------------
-    
+
     void Update()
     {
         base.Update ();
         if (!stunned) {
             //Basic Movement
             Vector3 pos = this.transform.position;
-            
+
             Vector3 player1_pos = pos;
             Vector3 player2_pos = pos;
-            
+
             // if the objects exist, find their postions
             if (GameObject.Find(player_name1))
             {
@@ -78,7 +78,7 @@ public class Evil_Eyeball : Enemy {
             {
                 player2_pos = GameObject.Find(player_name2).transform.position;
             }
-            
+
             if (locate_timer <= 0) {
                 locate_timer = full_locate_timer;
                 // set destination point
@@ -97,12 +97,12 @@ public class Evil_Eyeball : Enemy {
                     dest = player2_pos;
                 }
             } else --locate_timer;
-            
+
             Vector3 angle = dest - pos;
             angle.Normalize ();
-            
+
             this.GetComponent<Rigidbody>().velocity = angle * speed;
-            
+
             if (this.GetComponent<Rigidbody>().velocity != Vector3.zero)
             {
                 transform.rotation = Quaternion.Slerp(
@@ -116,21 +116,21 @@ public class Evil_Eyeball : Enemy {
                 stunned = false;
             } else --stunned_timer;
         }
-        
-        
+
+
     }// Update
-    
+
     // public override void on_hit_sword(int damage) {
     //  // immune to sword - do nothing
 
     // }// on_hit_sword
-    
-    public override void on_hit_spit(int damage)
-    {
-        stunned = true;
-        base.on_hit_spit(damage);
 
-    }// on_hit_spit
+    // public override void on_hit_spit(int damage)
+    // {
+    //     stunned = true;
+    //     base.on_hit_spit(damage);
+
+    // }// on_hit_spit
 
     // public override void on_hit_charge(int damage)
     // {

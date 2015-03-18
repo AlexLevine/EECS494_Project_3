@@ -80,14 +80,28 @@ public class Enemy : Actor
 
     void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.tag == "Player")
+        if (c.gameObject.tag != "Player" || being_knocked_back)
         {
-            var parent = c.gameObject.transform.parent;
-            (parent != null ? parent.gameObject :
-                c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
-            // c.gameObject.GetComponent<Actor>().receive_hit(attack_power);
-            on_player_hit();
+            return;
         }
+        // var parent = c.gameObject.transform.parent;
+        // (parent != null ? parent.gameObject :
+        //     c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
+
+        var actor = c.gameObject.GetComponent<Actor>();
+        // print(actor);
+        if (actor == null)
+        {
+            return;
+        }
+
+        var knockback_direction = (
+            c.gameObject.transform.position - transform.position).normalized;
+        var knockback_velocity = knockback_direction * 5;
+
+        actor.receive_hit(attack_power, knockback_velocity);
+
+        on_player_hit();
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
@@ -102,18 +116,18 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void on_hit_spit(int damage)
+    public virtual void on_hit_spit(int damage, Vector3 knockback_velocity)
     {
         // default behavior
-        receive_hit (damage);
+        receive_hit (damage, knockback_velocity);
     }// on_hit_spit
 
     //--------------------------------------------------------------------------
 
-    public virtual void on_hit_sword(int damage)
+    public virtual void on_hit_sword(int damage, Vector3 knockback_velocity)
     {
         // default behavior
-        receive_hit (damage);
+        receive_hit (damage, knockback_velocity);
     }// on_hit_sword
 
     //--------------------------------------------------------------------------
@@ -126,9 +140,10 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void on_hit_by_jousting_pole(int damage)
+    public virtual void on_hit_by_jousting_pole(
+        int damage, Vector3 knockback_velocity)
     {
-        receive_hit(damage);
+        receive_hit(damage, knockback_velocity);
     }// on_hit_by_jousting_pole
 
     //--------------------------------------------------------------------------

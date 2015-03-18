@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Ninja_jousting_pole : MonoBehaviour
+public class Samurai_jousting_pole : MonoBehaviour
 {
     public int attack_power
     {
@@ -15,14 +15,15 @@ public class Ninja_jousting_pole : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        var enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy == null || !Llama.get().is_charging)
+        var player = other.gameObject.GetComponent<Player_character>();
+        if (player == null || !Samurai_Attack.get().is_charging)
         {
             return;
         }
 
-        var knockback = transform.forward * attack_power;
-        enemy.on_hit_by_jousting_pole(attack_power, knockback);
+        var knockback = Samurai_Attack.get(
+            ).gameObject.transform.forward * attack_power;
+        player.receive_hit(attack_power, knockback);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
