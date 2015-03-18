@@ -147,7 +147,9 @@ public class Ninja : Player_character
 
     public override void move(Vector3 delta_position)
     {
-        if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
+        // if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
+        if (is_teamed_up)
+
         {
             return;
         }
@@ -199,6 +201,15 @@ public class Ninja : Player_character
         jousting_pole.SetActive(true);
 
     }// team_up_engage_or_throw
+
+    public override void collision_safe_rotate_towards(
+        Vector3 direction, float step)
+    {
+        if (!GetComponent<Sword_swing>().is_swinging)
+        {
+            base.collision_safe_rotate_towards(direction, step);
+        }
+    }
 
     //--------------------------------------------------------------------------
 
