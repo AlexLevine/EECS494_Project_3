@@ -14,7 +14,6 @@ public class Switch : MonoBehaviour {
     //     Switchee sw = switchee.GetComponent<Switchee>();
     //     if (sw.on) r.material = sw.switch_on_material;
     //     else r.material = sw.switch_off_material;
-    
     // }
     
     void OnTriggerEnter(Collider other){
