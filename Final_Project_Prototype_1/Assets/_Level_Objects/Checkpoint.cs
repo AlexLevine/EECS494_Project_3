@@ -25,7 +25,7 @@ public class Checkpoint : MonoBehaviour {
 			current_index++;
 			current_ckpt = checkpoints[current_index];
 		}
-		print(current_ckpt);
+		//print(current_ckpt);
 		
 		//if fallen off stage
 		if (ll.transform.position.y<=-20 || nin.transform.position.y<=-20){
