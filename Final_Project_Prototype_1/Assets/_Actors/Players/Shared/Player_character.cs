@@ -3,14 +3,14 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(CharacterController))]
+// [RequireComponent(typeof(CharacterController))]
 public class Player_character : Actor
 {
     // public int player_id = 0;
-    public float min_move_distance = 0.001f;
-    public float skin_width = 0.01f;
+    // public float min_move_distance = 0.001f;
+    // public float skin_width = 0.01f;
 
-    public bool is_grounded { get { return on_ground; } }
+    // public bool is_grounded { get { return on_ground; } }
     public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
@@ -19,7 +19,7 @@ public class Player_character : Actor
     public float run_speed { get { return 5f; } }
     public float acceleration { get { return 20f; } }
 
-    public Vector3 velocity { get { return velocity_; } }
+    // public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
 
     //--------------------------------------------------------------------------
@@ -30,10 +30,10 @@ public class Player_character : Actor
 
     // private Player rewired_player;
     // private Rigidbody kinematic_rigidbody;
-    protected CharacterController cc;
-    private Vector3 velocity_ = Vector3.zero;
+    // protected CharacterController cc;
+    // private Vector3 velocity_ = Vector3.zero;
 
-    private bool on_ground = false;
+    // private bool on_ground = false;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
@@ -58,7 +58,7 @@ public class Player_character : Actor
     public override void Start()
     {
         base.Start();
-        cc = gameObject.GetComponent<CharacterController>();
+        // cc = gameObject.GetComponent<CharacterController>();
         // kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
     }// Start
 
@@ -131,17 +131,17 @@ public class Player_character : Actor
             velocity_.x += velocity_step;
         }
 
-        if (have_opposite_signs(target_velocity.z, velocity_.z) ||
-            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
-        {
-            var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.z < velocity_.z)
-            {
-                velocity_step *= -1;
-            }
+        // if (have_opposite_signs(target_velocity.z, velocity_.z) ||
+        //     Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
+        // {
+        //     var velocity_step = acceleration * Time.deltaTime;
+        //     if (target_velocity.z < velocity_.z)
+        //     {
+        //         velocity_step *= -1;
+        //     }
 
-            velocity_.z += velocity_step;
-        }
+        //     velocity_.z += velocity_step;
+        // }
     }// update_movement_velocity
 
     private bool have_opposite_signs(float first, float second)
@@ -151,14 +151,14 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void apply_momentum(Vector3 new_velocity)
-    {
-        velocity_ = new_velocity;
-        if (new_velocity.y > 0)
-        {
-            on_ground = false;
-        }
-    }// apply_momentum
+    // public virtual void apply_momentum(Vector3 new_velocity)
+    // {
+    //     velocity_ = new_velocity;
+    //     if (new_velocity.y > 0)
+    //     {
+    //         on_ground = false;
+    //     }
+    // }// apply_momentum
 
     //--------------------------------------------------------------------------
 
@@ -263,67 +263,67 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
-    {
-        // // print(amount);
-        // step_axis_direction(Vector3.right, delta_position.x);
-        // // print("delta_position.y: " + delta_position.y);
-        // var y_collision = step_axis_direction(Vector3.up, delta_position.y);
-        // step_axis_direction(Vector3.forward, delta_position.z);
+//     public override void move(Vector3 delta_position, bool apply_rotation)
+//     {
+//         // // print(amount);
+//         // step_axis_direction(Vector3.right, delta_position.x);
+//         // // print("delta_position.y: " + delta_position.y);
+//         // var y_collision = step_axis_direction(Vector3.up, delta_position.y);
+//         // step_axis_direction(Vector3.forward, delta_position.z);
 
-        // if (delta_position.y < 0)
-        // {
-        //     // is_jumping = false;
-        //     on_ground = y_collision;
-        //     if (is_grounded)
-        //     {
-        //         velocity_.y = 0;
-        //     }
-        // }
+//         // if (delta_position.y < 0)
+//         // {
+//         //     // is_jumping = false;
+//         //     on_ground = y_collision;
+//         //     if (is_grounded)
+//         //     {
+//         //         velocity_.y = 0;
+//         //     }
+//         // }
 
-//        var this_player_would_be_off_camera =
-//                Camera_follow.point_step_would_leave_viewport(
-//                    transform.position, delta_position);
-//        var other_player_would_be_off_camera =
-//                Camera_follow.point_step_would_leave_viewport(
-//                    get_other_player().transform.position, delta_position * -1);
-//        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
-//        {
-//            return;
-//        }
-		
+// //        var this_player_would_be_off_camera =
+// //                Camera_follow.point_step_would_leave_viewport(
+// //                    transform.position, delta_position);
+// //        var other_player_would_be_off_camera =
+// //                Camera_follow.point_step_would_leave_viewport(
+// //                    get_other_player().transform.position, delta_position * -1);
+// //        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
+// //        {
+// //            return;
+// //        }
 
-        cc.Move(delta_position);
-        on_ground = delta_position.y < 0 && cc.isGrounded;
-        if (is_grounded)
-        {
-            velocity_.y = 0;
-        }
 
-        if (apply_rotation)
-        {
-            update_rotation(delta_position);
-        }
-    }// move
+//         cc.Move(delta_position);
+//         on_ground = delta_position.y < 0 && cc.isGrounded;
+//         if (is_grounded)
+//         {
+//             velocity_.y = 0;
+//         }
+
+//         if (apply_rotation)
+//         {
+//             update_rotation(delta_position);
+//         }
+//     }// move
 
     //--------------------------------------------------------------------------
 
-    public virtual void update_rotation(Vector3 delta_position)
-    {
-        if (is_locked_on)
-        {
-            look_toward(lock_on_target);
-            return;
-        }
+    // public virtual void update_rotation(Vector3 delta_position)
+    // {
+    //     if (is_locked_on)
+    //     {
+    //         look_toward(lock_on_target);
+    //         return;
+    //     }
 
-        if (delta_position.x == 0 && delta_position.z == 0)
-        {
-            return;
-        }
+    //     if (delta_position.x == 0 && delta_position.z == 0)
+    //     {
+    //         return;
+    //     }
 
-        collision_safe_rotate_towards(
-            delta_position, 10 * Time.deltaTime);
-    }// update_rotation
+    //     collision_safe_rotate_towards(
+    //         delta_position, 10 * Time.deltaTime);
+    // }// update_rotation
 
     //--------------------------------------------------------------------------
 

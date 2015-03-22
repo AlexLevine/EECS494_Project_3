@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
-    public GameObject team_up_point;
-
     public GameObject pole_rotation_point;
 
     public GameObject projectile_prefab;
@@ -16,6 +14,8 @@ public class Ninja : Player_character
 
     private Quaternion pole_start_rotation;
     private Vector3 pole_start_pos;
+
+    private GameObject team_up_point;
 
     //--------------------------------------------------------------------------
 
@@ -39,11 +39,13 @@ public class Ninja : Player_character
 
         instance = this;
     }// Awake
-    // // Use this for initialization
-    // public override void Start()
-    // {
-    //     base.Start();
-    // }// Start
+
+    // Use this for initialization
+    public override void Start()
+    {
+        base.Start();
+        team_up_point = Llama.get().get_team_up_point();
+    }// Start
 
     //--------------------------------------------------------------------------
 
@@ -111,15 +113,15 @@ public class Ninja : Player_character
             return;
         }
 
-        float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
-        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+        float adjusted_vert = vertical_tilt * -20;   // some float from -1 to 1,
+        // float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
 
         jousting_pole.transform.localPosition = pole_start_pos;
         jousting_pole.transform.localRotation = pole_start_rotation;
 
-        jousting_pole.transform.RotateAround(
-            pole_rotation_point.transform.position, transform.up, adjusted_horz);
+        // jousting_pole.transform.RotateAround(
+        //     pole_rotation_point.transform.position, transform.up, adjusted_horz);
         jousting_pole.transform.RotateAround(
             pole_rotation_point.transform.position, transform.right, adjusted_vert);
 
@@ -230,14 +232,14 @@ public class Ninja : Player_character
 
     protected override void on_team_up_engage()
     {
-        cc.enabled = false;
+        // cc.enabled = false;
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
     protected override void on_team_up_disengage()
     {
-        cc.enabled = true;
+        // cc.enabled = true;
     }// team_up_disengage
 
     //--------------------------------------------------------------------------

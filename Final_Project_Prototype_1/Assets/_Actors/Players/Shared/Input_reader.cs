@@ -83,12 +83,12 @@ public class Input_reader : MonoBehaviour
             pc.attack();
         }
 
-        if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
-           input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
-           pc.is_locked_on)
-        {
-            pc.toggle_lock_on();
-        }
+        // if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
+        //    input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
+        //    pc.is_locked_on)
+        // {
+        //     pc.toggle_lock_on();
+        // }
 
         if (input_device.GetControl(InputControlType.RightBumper).WasPressed)
         {
@@ -100,7 +100,7 @@ public class Input_reader : MonoBehaviour
         tilt.y = input_device.GetControl(InputControlType.LeftStickY).Value;
         // tilt = tilt.normalized;
 
-        pc.adjust_jousting_pole(tilt.z, tilt.x);
+        pc.adjust_jousting_pole(tilt.y, tilt.x);
 
         // var sprint = player.GetButton("sprint");
 
