@@ -153,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101724}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 5, y: 3, z: -31.7000008}
+  m_LocalPosition: {x: 5, y: 3, z: 0}
   m_LocalScale: {x: .75, y: 1.25, z: .75}
   m_Children:
   - {fileID: 491956}
@@ -422,7 +422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_move_distance: .00999999978
   skin_width: .100000001
-  team_up_point: {fileID: 140202, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
   pole_rotation_point: {fileID: 178892}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 135138}
@@ -440,9 +439,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sword: {fileID: 196572}
-  sword_swing_end: {fileID: 0}
   sword_neutral_pos: {x: 0, y: 0, z: 0}
   sword_neutral_rotation: {x: 0, y: 0, z: 0}
+  swing_start_pos: {x: 0, y: 0, z: 0}
+  swing_start_rotation: {x: 0, y: 0, z: 0}
   state: 0
   angle_distance_swung: 0
 --- !u!114 &11495020

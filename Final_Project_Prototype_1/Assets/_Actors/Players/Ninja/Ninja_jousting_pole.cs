@@ -15,7 +15,7 @@ public class Ninja_jousting_pole : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print("thing");
+        // print("thing");
         if (!Llama.get().is_charging)
         {
             return;

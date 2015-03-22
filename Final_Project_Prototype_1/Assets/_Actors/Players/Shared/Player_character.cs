@@ -144,10 +144,10 @@ public class Player_character : Actor
         // }
     }// update_movement_velocity
 
-    private bool have_opposite_signs(float first, float second)
-    {
-        return first < 0 && second > 0 || first > 0 && second < 0;
-    }// have_opposite_signs
+    // private bool have_opposite_signs(float first, float second)
+    // {
+    //     return first < 0 && second > 0 || first > 0 && second < 0;
+    // }// have_opposite_signs
 
     //--------------------------------------------------------------------------
 

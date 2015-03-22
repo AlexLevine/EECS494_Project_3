@@ -64,6 +64,11 @@ public class Actor : MonoBehaviour
             }
         }
 
+        if (delta_position.y > 0 && y_collision)
+        {
+            velocity_.y = 0;
+        }
+
     //     var cc = gameObject.GetComponent<CharacterController>();
     //     if (cc != null)
     //     {
@@ -172,22 +177,34 @@ public class Actor : MonoBehaviour
     public virtual void collision_safe_rotate_towards(
         Vector3 direction, float step=360f)
     {
-        direction.y = transform.forward.y;
+        if (Vector3.Angle(direction, transform.forward) > 90f)
+        {
+            var new_rotation = transform.rotation.eulerAngles;
+            new_rotation.y += 180;
+            transform.rotation = Quaternion.Euler(new_rotation);
+        }
 
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, direction, step, 0f);
+        // direction.y = transform.forward.y;
 
-        // var rb = gameObject.GetComponent<Rigidbody>();
-        var new_rotation = Quaternion.LookRotation(new_forward);
-        // if (rb == null)
-        // {
-        transform.rotation = new_rotation;
-        //     return;
-        // }
+        // var new_forward = Vector3.RotateTowards(
+        //     transform.forward, direction, step, 0f);
 
-        // print("spam");
-        // rb.MoveRotation(new_rotation);
+        // // var rb = gameObject.GetComponent<Rigidbody>();
+        // var new_rotation = Quaternion.LookRotation(new_forward);
+        // // if (rb == null)
+        // // {
+        // transform.rotation = new_rotation;
+        // //     return;
+        // // }
+
+        // // print("spam");
+        // // rb.MoveRotation(new_rotation);
     }// collision_safe_rotate_towards
+
+    protected bool have_opposite_signs(float first, float second)
+    {
+        return first < 0 && second > 0 || first > 0 && second < 0;
+    }// have_opposite_signs
 
     //--------------------------------------------------------------------------
 
