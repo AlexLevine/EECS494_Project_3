@@ -172,6 +172,22 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
+    public override void on_vertical_collision(
+        Vector3 delta_position, RaycastHit? hit_info)
+    {
+        base.on_vertical_collision(delta_position, hit_info);
+
+        var hit_ninja = (
+            (RaycastHit) hit_info).transform.gameObject == Ninja.get().gameObject;
+        if (hit_ninja && delta_position.y < 0)
+        {
+            Ninja.get().toggle_shrunk();
+            jump();
+        }
+    }// on_vertical_collision
+
+    //--------------------------------------------------------------------------
+
     public override void toggle_lock_on()
     {
         if (is_charging && !is_locked_on)

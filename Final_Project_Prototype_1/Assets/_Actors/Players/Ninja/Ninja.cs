@@ -17,6 +17,13 @@ public class Ninja : Player_character
 
     private GameObject team_up_point;
 
+    private bool is_shrunk = false;
+    private Vector3 original_scale;
+    private Vector3 shrunk_scale;
+
+    private int num_jumps_used;
+    private static int max_num_jumps = 2;
+
     //--------------------------------------------------------------------------
 
     private static Ninja instance;
@@ -45,6 +52,10 @@ public class Ninja : Player_character
     {
         base.Start();
         team_up_point = Llama.get().get_team_up_point();
+
+        original_scale = transform.localScale;
+        shrunk_scale = original_scale;
+        shrunk_scale.y /= 2f;
     }// Start
 
     //--------------------------------------------------------------------------
@@ -223,6 +234,22 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
+    public void toggle_shrunk()
+    {
+        is_shrunk = !is_shrunk;
+        // var old_center = GetComponent<Collider>().bounds.center;
+        transform.localScale = is_shrunk ? shrunk_scale : original_scale;
+
+        if (!is_shrunk)
+        {
+            var adjusted_pos = transform.position;
+            adjusted_pos.y += GetComponent<Collider>().bounds.extents.y;
+            transform.position = adjusted_pos;
+        }
+    }// toggle_shrunk
+
+    //--------------------------------------------------------------------------
+
     // public void on_thrown()
     // {
     //     on_ground = false;
@@ -248,12 +275,38 @@ public class Ninja : Player_character
     {
         base.jump();
 
+        ++num_jumps_used;
+
         if (is_teamed_up)
         {
             team_up_disengage();
         }
     }// jump
 
+    //--------------------------------------------------------------------------
+
+    public override bool can_jump()
+    {
+        if (num_jumps_used < max_num_jumps)
+        {
+            return true;
+        }
+
+        return base.can_jump();
+    }// can_jump
+
+    //--------------------------------------------------------------------------
+
+    public override void on_vertical_collision(
+        Vector3 delta_position, RaycastHit? hit_info)
+    {
+        base.on_vertical_collision(delta_position, hit_info);
+
+        if (is_grounded)
+        {
+            num_jumps_used = 0;
+        }
+    }// on_vertical_collision
 
     //--------------------------------------------------------------------------
 

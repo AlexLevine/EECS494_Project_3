@@ -49,25 +49,35 @@ public class Actor : MonoBehaviour
     public virtual void move(Vector3 delta_position, bool apply_rotation)
     {
         // print(amount);
-        step_axis_direction(Vector3.right, delta_position.x);
+        var x_collision = step_axis_direction(Vector3.right, delta_position.x);
         // print("delta_position.y: " + delta_position.y);
         var y_collision = step_axis_direction(Vector3.up, delta_position.y);
         // step_axis_direction(Vector3.forward, delta_position.z);
 
-        if (delta_position.y < 0)
+        if (x_collision != null)
         {
-            // is_jumping = false;
-            on_ground = y_collision;
-            if (is_grounded)
-            {
-                velocity_.y = 0;
-            }
+            on_horizontal_collision(delta_position, x_collision);
         }
 
-        if (delta_position.y > 0 && y_collision)
+        if (y_collision != null)
         {
-            velocity_.y = 0;
+            on_vertical_collision(delta_position, y_collision);
         }
+
+        // if (delta_position.y < 0)
+        // {
+        //     // is_jumping = false;
+        //     on_ground = y_collision != null;
+        //     if (is_grounded)
+        //     {
+        //         velocity_.y = 0;
+        //     }
+        // }
+
+        // if (delta_position.y > 0 && y_collision != null)
+        // {
+        //     velocity_.y = 0;
+        // }
 
     //     var cc = gameObject.GetComponent<CharacterController>();
     //     if (cc != null)
@@ -87,10 +97,10 @@ public class Actor : MonoBehaviour
     //         collision_safe_rotate_towards(delta_position);
     //     }
 
-        if (is_grounded)
-        {
-            velocity_.y = 0;
-        }
+        // if (is_grounded)
+        // {
+        //     velocity_.y = 0;
+        // }
 
         if (apply_rotation)
         {
@@ -100,13 +110,39 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    // Returns true if a collision would have occurred.
-    private bool step_axis_direction(Vector3 direction, float step_amount)
+    public virtual void on_vertical_collision(
+        Vector3 delta_position, RaycastHit? hit_info)
+    {
+        // if (hit_info = null)
+        // {
+        //     return;
+        // }
+        // print("on_vertical_collision");
+        velocity_.y = 0;
+
+        if (delta_position.y < 0)
+        {
+            on_ground = true;
+        }
+    }// on_vertical_collision
+
+    //--------------------------------------------------------------------------
+
+    public virtual void on_horizontal_collision(
+        Vector3 delta_position, RaycastHit? hit_info)
+    {
+
+    }// on_horizontal_collision
+
+    //--------------------------------------------------------------------------
+
+    // Returns the RaycastHit information if a collision would have occurred.
+    private RaycastHit? step_axis_direction(Vector3 direction, float step_amount)
     {
         if (Mathf.Abs(step_amount) < min_move_distance)
         {
             // print("too slow! " + Mathf.Abs(step_amount));
-            return false;
+            return null;
         }
 
         var move_increment = direction * step_amount;
@@ -125,7 +161,7 @@ public class Actor : MonoBehaviour
 
         transform.position += move_increment;
 
-        return hit;
+        return hit ? (RaycastHit?) hit_info : null;
     }// step_axis_direction
 
     //--------------------------------------------------------------------------
