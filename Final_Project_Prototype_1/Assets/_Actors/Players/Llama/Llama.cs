@@ -7,8 +7,9 @@ public class Llama : Player_character
     public GameObject spit_spawn_point;
     public GameObject team_up_point;
 
-    public bool is_cooling_down = false;
-    public float max_cooldown_time, cur_cooldown_time;
+    private bool is_cooling_down = false;
+    private static float max_spit_cooldown_time = 1f;
+    private float cur_cooldown_time = 0;
 
     public bool is_charging { get { return is_charging_; } }
 
@@ -56,13 +57,13 @@ public class Llama : Player_character
 
         if(is_cooling_down)
         {
-            cur_cooldown_time += Time.deltaTime;
-            if(cur_cooldown_time >= max_cooldown_time)
+            if(cur_cooldown_time >= max_spit_cooldown_time)
             {
-                print("cooldown ended");
+                // print("cooldown ended");
                 cur_cooldown_time = 0;
                 is_cooling_down = false;
             }
+            cur_cooldown_time += Time.deltaTime;
         }
 
         if (!is_charging)
@@ -144,9 +145,10 @@ public class Llama : Player_character
         var direction = (is_locked_on ?
             (lock_on_target_pos - spit.transform.position).normalized :
             transform.forward);
-        print(direction);
+        // print(direction);
 
-        spit.GetComponent<Rigidbody>().velocity = direction * 14f;
+        spit.GetComponent<Rigidbody>().velocity =
+                direction * (Mathf.Abs(velocity.x) + 10f);
         is_cooling_down = true;
     }// projectile_attack
 

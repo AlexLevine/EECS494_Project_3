@@ -224,7 +224,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143196}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -9.05000019, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417470}
@@ -270,7 +270,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 132596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.26999998, z: 1.25999999}
+  m_LocalPosition: {x: -0, y: 1.26999998, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 427470}
@@ -630,9 +630,6 @@ MonoBehaviour:
   spit_prefab: {fileID: 146830, guid: 4fc7ad1c9f1ac462f8dd85d13f8a39ff, type: 2}
   spit_spawn_point: {fileID: 132596}
   team_up_point: {fileID: 140202}
-  is_cooling_down: 0
-  max_cooldown_time: 0
-  cur_cooldown_time: 0
 --- !u!114 &11480470
 MonoBehaviour:
   m_ObjectHideFlags: 1
