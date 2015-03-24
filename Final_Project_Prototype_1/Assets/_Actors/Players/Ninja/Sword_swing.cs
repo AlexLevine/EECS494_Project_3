@@ -10,21 +10,32 @@ public enum Sword_state_e
 public class Sword_swing : MonoBehaviour
 {
     public GameObject sword;
-    public GameObject sword_swing_end;
+    // public GameObject sword_swing_end;
 
     public Vector3 sword_neutral_pos;
     public Vector3 sword_neutral_rotation;
 
+    public Vector3 swing_start_pos;
+    public Vector3 swing_start_rotation;
+
     public Sword_state_e state;
 
-    public float angle_distance_swung = 0;
+    private float angle_distance_swung = 0;
 
-    private float swing_speed = 540;
+    private float swing_speed = 300;
 
     void Start ()
     {
         sword_neutral_pos = sword.transform.localPosition;
         sword_neutral_rotation = sword.transform.localEulerAngles;
+
+        swing_start_pos = sword.transform.localPosition;
+        swing_start_pos.y = 0.8f;
+        swing_start_rotation = sword.transform.localEulerAngles;
+        swing_start_rotation.x = -30f;
+
+        // swing_start_pos = sword.transform.localPosition;
+        // swing_start_rotation = sword.transform.localEulerAngles;
     }
 
     void Update ()
@@ -54,12 +65,18 @@ public class Sword_swing : MonoBehaviour
             //     return;
             // }
 
-            sword.transform.RotateAround(
-                transform.position, Vector3.up, -swing_speed * Time.deltaTime);
+            // var rotation_pos =
 
-            var distance = Vector3.Angle(
-                sword.transform.localPosition, sword_neutral_pos);
-            if (distance < max_swing_angle_distance)
+            var rotation_step = swing_speed * Time.deltaTime;
+
+            sword.transform.RotateAround(
+                transform.position, transform.right, rotation_step);
+
+            angle_distance_swung += rotation_step;
+
+            // var distance = Vector3.Angle(
+            //     sword.transform.localPosition, sword_neutral_pos);
+            if (angle_distance_swung < max_swing_angle_distance)
             {
                 return;
             }
@@ -68,6 +85,7 @@ public class Sword_swing : MonoBehaviour
             sword.transform.localEulerAngles = sword_neutral_rotation;
             state = Sword_state_e.IDLE;
             sword.GetComponent<Ninja_sword>().is_swinging = false;
+            angle_distance_swung = 0;
             break;
         }
     }
@@ -80,8 +98,8 @@ public class Sword_swing : MonoBehaviour
         }
 
         // HACK: calculate the swing start distance instead of hardcoding
-        sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
-        sword.transform.localEulerAngles = new Vector3(0, 45f, 0);
+        sword.transform.localPosition = swing_start_pos;
+        sword.transform.localEulerAngles = swing_start_rotation;
         state = Sword_state_e.SWINGING;
         sword.GetComponent<Ninja_sword>().is_swinging = true;
     }
@@ -90,7 +108,7 @@ public class Sword_swing : MonoBehaviour
     {
         get
         {
-            return 90f;
+            return 70f;
         }
     }
 

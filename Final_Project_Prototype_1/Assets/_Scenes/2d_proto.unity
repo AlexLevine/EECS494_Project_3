@@ -98,7 +98,7 @@ GameObject:
   - 33: {fileID: 158772094}
   - 65: {fileID: 158772093}
   - 23: {fileID: 158772092}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -9.05000019
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -199,10 +199,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11457380, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
-      propertyPath: team_up_point
-      value: 
-      objectReference: {fileID: 939269630}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
   m_IsPrefabParent: 0
@@ -210,10 +206,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
   m_PrefabInternal: {fileID: 1537209122}
---- !u!1 &939269630
-GameObject:
-  m_PrefabParentObject: {fileID: 140202, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
-  m_PrefabInternal: {fileID: 868093758}
 --- !u!1 &1075301774
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +217,7 @@ GameObject:
   - 33: {fileID: 1075301777}
   - 65: {fileID: 1075301776}
   - 23: {fileID: 1075301775}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +294,7 @@ GameObject:
   - 33: {fileID: 1451775102}
   - 65: {fileID: 1451775101}
   - 23: {fileID: 1451775100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +367,7 @@ GameObject:
   - 33: {fileID: 1504764887}
   - 65: {fileID: 1504764886}
   - 23: {fileID: 1504764885}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +438,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 5.76999998
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.y
@@ -454,7 +446,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 477290, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalRotation.x
@@ -618,7 +610,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2012445800}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Level_Structure
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -74,7 +74,7 @@ public class Input_reader : MonoBehaviour
 
         if (input_device.GetControl(InputControlType.Action2).WasPressed)
         {
-            print("team up");
+            // print("team up");
             pc.team_up_engage_or_throw();
         }
 

@@ -16,7 +16,7 @@ public class Player_character : Actor
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
     public float jump_speed { get { return 15f; } }
-    public float run_speed { get { return 5f; } }
+    public float run_speed { get { return 7f; } }
     public float acceleration { get { return 20f; } }
 
     // public Vector3 velocity { get { return velocity_; } }
@@ -144,10 +144,10 @@ public class Player_character : Actor
         // }
     }// update_movement_velocity
 
-    private bool have_opposite_signs(float first, float second)
-    {
-        return first < 0 && second > 0 || first > 0 && second < 0;
-    }// have_opposite_signs
+    // private bool have_opposite_signs(float first, float second)
+    // {
+    //     return first < 0 && second > 0 || first > 0 && second < 0;
+    // }// have_opposite_signs
 
     //--------------------------------------------------------------------------
 
@@ -366,7 +366,7 @@ public class Player_character : Actor
 
     public virtual void jump()
     {
-        if (!is_grounded && time_in_air > max_time_in_air)
+        if (!can_jump())
         {
             // print(cc.isGrounded);
             return;
@@ -380,6 +380,13 @@ public class Player_character : Actor
         // GetComponent<Rigidbody>().velocity_ = new_speed;
 
     }// jump
+
+    //--------------------------------------------------------------------------
+
+    public virtual bool can_jump()
+    {
+        return is_grounded || time_in_air <= max_time_in_air;
+    }// can_jump
 
     //--------------------------------------------------------------------------
 
