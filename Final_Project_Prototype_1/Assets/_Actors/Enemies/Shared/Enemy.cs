@@ -150,8 +150,23 @@ public class Enemy : Actor
 
     public override void on_death()
     {
-        Destroy(gameObject);
+//		GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));//Instantiate(Effect, transform.position, transform.rotation);
+//		boom.transform.position = transform.position;
+//		Destroy(gameObject);
+		StartCoroutine(destroy_particles());
+		//Destroy(boom);
+		//Destroy (boom.gameObject, 10);
     }// on_death
+    
+	public IEnumerator destroy_particles() {
+		GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
+		boom.transform.position = transform.position;
+		Destroy(gameObject);
+		print ("BEFOREDESTROY");
+		yield return new WaitForSeconds(5f);
+		print ("DESTROY!");
+		Destroy(boom);
+	}
 
     //--------------------------------------------------------------------------
 
