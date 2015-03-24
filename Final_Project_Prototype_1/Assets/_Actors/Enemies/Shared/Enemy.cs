@@ -150,8 +150,11 @@ public class Enemy : Actor
 
     public override void on_death()
     {
-        Destroy(gameObject);
+		GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
+		boom.transform.position = transform.position;
+		Destroy(gameObject);
     }// on_death
+    
 
     //--------------------------------------------------------------------------
 

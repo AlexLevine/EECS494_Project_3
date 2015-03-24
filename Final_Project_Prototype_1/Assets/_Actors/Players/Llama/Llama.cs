@@ -51,7 +51,7 @@ public class Llama : Player_character
             cur_cooldown_time += Time.deltaTime;
             if(cur_cooldown_time >= max_cooldown_time)
             {
-                print("cooldown ended");
+//                print("cooldown ended");
                 cur_cooldown_time = 0;
                 is_cooling_down = false; 
             }
@@ -136,7 +136,7 @@ public class Llama : Player_character
         var direction = (is_locked_on ?
             (lock_on_target_pos - spit.transform.position).normalized :
             transform.forward);
-        print(direction);
+//        print(direction);
 
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
         is_cooling_down = true; 
