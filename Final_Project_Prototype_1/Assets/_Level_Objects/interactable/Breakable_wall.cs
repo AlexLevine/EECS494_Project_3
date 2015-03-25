@@ -19,7 +19,7 @@ public class Breakable_wall : MonoBehaviour {
     // public void break_wall()
     void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.tag);
+        // print(other.gameObject.tag);
         if (other.gameObject.tag != "Player" || !Llama.get().is_charging)
         {
             return;
