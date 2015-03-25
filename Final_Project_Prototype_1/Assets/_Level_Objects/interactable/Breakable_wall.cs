@@ -17,6 +17,25 @@ public class Breakable_wall : MonoBehaviour {
     }
 
     // public void break_wall()
+    // void OnCollisionEnter(Collision other)
+    // {
+    //     // print(other.gameObject.tag);
+    //     if (other.gameObject.tag != "Player" || !Llama.get().is_charging)
+    //     {
+    //         return;
+    //     }
+    //     print("Before Loop");
+    //     foreach(var child in GetComponentsInChildren<Rigidbody>())
+    //     {
+    //         print("In Loop");
+    //         child.isKinematic = false;
+    //         child.useGravity = true;
+    //         child.AddForce(Vector3.one * Random.Range(-10.0F, 10.0F) * 150f);
+    //         // child.TriggerDestruction(new Vector3(0,0,0), 11f);
+    //     }
+    //     is_dead = true;
+    // }
+
     void OnTriggerEnter(Collider other)
     {
         // print(other.gameObject.tag);
@@ -24,10 +43,10 @@ public class Breakable_wall : MonoBehaviour {
         {
             return;
         }
-        print("Before Loop");
+        // print("Before Loop");
         foreach(var child in GetComponentsInChildren<Rigidbody>())
         {
-            print("In Loop");
+            // print("In Loop");
             child.isKinematic = false;
             child.useGravity = true;
             child.AddForce(Vector3.one * Random.Range(-10.0F, 10.0F) * 150f);

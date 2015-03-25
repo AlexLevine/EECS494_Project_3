@@ -45,7 +45,7 @@ public class Camera_follow : MonoBehaviour
         // }
 
         var new_camera_pos = midpoint;
-        new_camera_pos.z -= (in_boss_arena ? 0 : camera_distance);
+        new_camera_pos.z -= camera_distance;
         new_camera_pos.y += camera_distance;
 
         transform.position = new_camera_pos;
