@@ -19,13 +19,15 @@ public class Breakable_wall : MonoBehaviour {
     // public void break_wall()
     void OnTriggerEnter(Collider other)
     {
-        print("boom");
+        print(other.gameObject.tag);
         if (other.gameObject.tag != "Player" || !Llama.get().is_charging)
         {
             return;
         }
+        print("Before Loop");
         foreach(var child in GetComponentsInChildren<Rigidbody>())
         {
+            print("In Loop");
             child.isKinematic = false;
             child.useGravity = true;
             child.AddForce(Vector3.one * Random.Range(-10.0F, 10.0F) * 150f);

@@ -7,5 +7,4 @@ public class Fire_wall : Switchee {
     {
         gameObject.SetActive(false);
     }    
- 
 }
