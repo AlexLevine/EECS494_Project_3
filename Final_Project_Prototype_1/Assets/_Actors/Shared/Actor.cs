@@ -71,7 +71,6 @@ public class Actor : MonoBehaviour
 
         collision_safe_rotate_towards(target_direction, step);
 
-
         // var new_forward = Vector3.RotateTowards(
         //     transform.forward, target_direction, step, 0f);
         // // only allow rotation around y axis
