@@ -64,7 +64,7 @@ public class Fire_enemy : Enemy {
         var distance_to_dest = Vector3.Distance (
             transform.position,
             path_nodes [destination_index].transform.position);
-        var reached_destination = Mathf.Approximately (distance_to_dest, 0);
+        var reached_destination = distance_to_dest < 0.1f; // Mathf.Approximately (distance_to_dest, 0);
 
         if (!reached_destination) {
                 return;

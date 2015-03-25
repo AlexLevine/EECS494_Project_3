@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Halo : MonoBehaviour {
+public class Lock_on_indicator : MonoBehaviour {
 	public float dist_to_ground;
-	
+
 	// Use this for initialization
 	void Start () {
-	
+
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		var sphere = transform.parent.Find ("Sphere");
