@@ -90,10 +90,10 @@ public class Input_reader : MonoBehaviour
             pc.toggle_lock_on();
         }
 
-        if (input_device.GetControl(InputControlType.RightBumper).WasPressed)
-        {
-            pc.charge();
-        }
+        // if (input_device.GetControl(InputControlType.RightBumper).WasPressed)
+        // {
+        //     pc.charge();
+        // }
 
         Vector3 tilt = Vector3.zero;
         tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;

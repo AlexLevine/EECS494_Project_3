@@ -76,11 +76,11 @@ public class Electric_enemy : Enemy
 
     }// Update
 
-    public override void on_hit_sword(int damage, Vector3 knockback_velocity)
-    {
-        // immune to sword - electricute Ninja
-        Ninja.get().receive_hit(attack_power, -knockback_velocity);
-    }// on_hit_sword
+    // public override void on_hit_sword(int damage, Vector3 knockback_velocity)
+    // {
+    //     // immune to sword - electricute Ninja
+    //     Ninja.get().receive_hit(attack_power, -knockback_velocity);
+    // }// on_hit_sword
 
     // public override void on_hit_by_jousting_pole(
     //     int damage, Vector3 knockback_velocity)

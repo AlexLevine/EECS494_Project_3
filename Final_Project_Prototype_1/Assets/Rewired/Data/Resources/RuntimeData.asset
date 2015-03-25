@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: RuntimeData
   m_EditorClassIdentifier: 
   platform: 9
-  webplayerPlatform: 1
-  editorPlatform: 2
+  webplayerPlatform: 2
+  editorPlatform: 1
   libraries: []

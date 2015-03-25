@@ -92,14 +92,12 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        // if(is_teamed_up)
-        // {
-        //     toggle_jousting_pole();
-        // }
-        // else
-        // {
-            GetComponent<Sword_swing>().swing();
-        // }
+        if(is_teamed_up)
+        {
+            Llama.get().charge();
+            return;
+        }
+        GetComponent<Sword_swing>().swing();
     }// physical_attack
 
     //--------------------------------------------------------------------------
