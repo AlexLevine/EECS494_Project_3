@@ -196,8 +196,10 @@ public class Player_character : Actor
         if (is_locked_on)
         {
 			//turn off halo for lock_on_target
-			// if (lock_on_target.transform.Find("Cylinder"))
-			// 	lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
+			if (lock_on_target.transform.Find("Cylinder"))
+            {
+				lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
+            }
             lock_on_target = null;
             return;
         }
@@ -219,8 +221,10 @@ public class Player_character : Actor
         // }
 
         lock_on_target = closest_enemy;
-		// if (lock_on_target.transform.Find("Cylinder"))
-		// 	lock_on_target.transform.Find("Cylinder").gameObject.SetActive(true);
+		if (lock_on_target.transform.Find("Cylinder"))
+        {
+			lock_on_target.transform.Find("Cylinder").gameObject.SetActive(true);
+        }
         look_toward(lock_on_target);
     }// toggle_lock_on
 
@@ -246,6 +250,10 @@ public class Player_character : Actor
     {
         if (enemy == lock_on_target)
         {
+            if (lock_on_target.transform.Find("Cylinder"))
+            {
+                lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
+            }
             lock_on_target = null;
         }
     }// on_enemy_gone

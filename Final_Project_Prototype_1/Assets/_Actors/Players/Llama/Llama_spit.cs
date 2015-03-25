@@ -5,6 +5,18 @@ public class Llama_spit : MonoBehaviour
 {
     public int attack_power { get { return 5; } }
 
+    public float time_left = 0.7f;
+
+    void Update()
+    {
+        time_left -= Time.deltaTime;
+
+        if (time_left < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         // print("blaaaah");
