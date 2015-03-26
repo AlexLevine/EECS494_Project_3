@@ -11,7 +11,7 @@ public class Change_to_arena_cam : MonoBehaviour
             return;
         }
 
-        Camera_follow.in_boss_arena = true;
+        // Camera_follow.in_boss_arena = true;
         Samurai_Attack.get().notify_players_in_arena();
     }
 

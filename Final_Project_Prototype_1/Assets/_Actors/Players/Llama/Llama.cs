@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Llama : Player_character
 {
+    public GameObject team_up_point;
+
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
-    public bool is_cooling_down = false; 
-    public float max_cooldown_time, cur_cooldown_time; 
+    public bool is_cooling_down = false;
+    public float max_cooldown_time, cur_cooldown_time;
 
     public bool is_charging { get { return is_charging_; } }
 
@@ -25,6 +27,13 @@ public class Llama : Player_character
     {
         return instance;
     }// get
+
+    //--------------------------------------------------------------------------
+
+    public GameObject get_team_up_point()
+    {
+        return team_up_point;
+    }// get_team_up_point
 
     //--------------------------------------------------------------------------
 
@@ -53,7 +62,7 @@ public class Llama : Player_character
             {
 //                print("cooldown ended");
                 cur_cooldown_time = 0;
-                is_cooling_down = false; 
+                is_cooling_down = false;
             }
         }
 
@@ -127,7 +136,7 @@ public class Llama : Player_character
     {
         if(is_cooling_down)
         {
-            return; 
+            return;
         }
 
         GameObject spit = Instantiate(
@@ -139,7 +148,7 @@ public class Llama : Player_character
 //        print(direction);
 
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
-        is_cooling_down = true; 
+        is_cooling_down = true;
     }// projectile_attack
 
     //--------------------------------------------------------------------------
@@ -173,6 +182,23 @@ public class Llama : Player_character
 
         base.toggle_lock_on();
     }// toggle_lock_on
+
+    //--------------------------------------------------------------------------
+
+    void OnControllerColliderHit(ControllerColliderHit c)
+    {
+        var ninja = c.gameObject.GetComponent<Ninja>();
+        if (ninja == null)
+        {
+            return;
+        }
+
+        if (c.moveDirection.y < 0)
+        {
+            ninja.toggle_shrunk();
+            bounce = true;
+        }
+    }
 
     //--------------------------------------------------------------------------
 

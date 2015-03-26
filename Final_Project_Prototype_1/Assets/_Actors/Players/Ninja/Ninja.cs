@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
-    public GameObject team_up_point;
-
     public GameObject pole_rotation_point;
 
     public GameObject projectile_prefab;
@@ -16,6 +14,12 @@ public class Ninja : Player_character
 
     private Quaternion pole_start_rotation;
     private Vector3 pole_start_pos;
+
+    private GameObject team_up_point;
+
+    private bool is_shrunk = false;
+    private Vector3 original_scale;
+    private Vector3 shrunk_scale;
 
     //--------------------------------------------------------------------------
 
@@ -39,11 +43,19 @@ public class Ninja : Player_character
 
         instance = this;
     }// Awake
-    // // Use this for initialization
-    // public override void Start()
-    // {
-    //     base.Start();
-    // }// Start
+
+    //--------------------------------------------------------------------------
+
+    // Use this for initialization
+    public override void Start()
+    {
+        base.Start();
+        team_up_point = Llama.get().get_team_up_point();
+
+        original_scale = transform.localScale;
+        shrunk_scale = original_scale;
+        shrunk_scale.y /= 2f;
+    }// Start
 
     //--------------------------------------------------------------------------
 
@@ -80,14 +92,12 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        // if(is_teamed_up)
-        // {
-        //     toggle_jousting_pole();
-        // }
-        // else
-        // {
-            GetComponent<Sword_swing>().swing();
-        // }
+        if(is_teamed_up)
+        {
+            Llama.get().charge();
+            return;
+        }
+        GetComponent<Sword_swing>().swing();
     }// physical_attack
 
     //--------------------------------------------------------------------------
@@ -218,6 +228,22 @@ public class Ninja : Player_character
             base.collision_safe_rotate_towards(direction, step);
         }
     }
+
+    //--------------------------------------------------------------------------
+
+    public void toggle_shrunk()
+    {
+        is_shrunk = !is_shrunk;
+        // var old_center = GetComponent<Collider>().bounds.center;
+        transform.localScale = is_shrunk ? shrunk_scale : original_scale;
+
+        if (!is_shrunk)
+        {
+            var adjusted_pos = transform.position;
+            adjusted_pos.y += GetComponent<Collider>().bounds.extents.y;
+            transform.position = adjusted_pos;
+        }
+    }// toggle_shrunk
 
     //--------------------------------------------------------------------------
 

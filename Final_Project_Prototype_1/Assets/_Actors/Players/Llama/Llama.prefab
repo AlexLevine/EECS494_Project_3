@@ -267,7 +267,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -28.7000008}
+  m_LocalPosition: {x: 64.5, y: 3, z: 207.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417470}
@@ -657,8 +657,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_move_distance: 0
   skin_width: .00999999978
+  team_up_point: {fileID: 140202}
   spit_prefab: {fileID: 146830, guid: 4fc7ad1c9f1ac462f8dd85d13f8a39ff, type: 2}
   spit_spawn_point: {fileID: 132596}
+  is_cooling_down: 0
+  max_cooldown_time: .400000006
+  cur_cooldown_time: 0
 --- !u!114 &11480470
 MonoBehaviour:
   m_ObjectHideFlags: 1

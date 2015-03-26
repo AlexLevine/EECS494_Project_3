@@ -16,8 +16,8 @@ public class Player_character : Actor
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
     public float jump_speed { get { return 15f; } }
-    public float run_speed { get { return 5f; } }
-    public float acceleration { get { return 20f; } }
+    public float run_speed { get { return 7f; } }
+    public float acceleration { get { return 30f; } }
 
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
@@ -32,6 +32,9 @@ public class Player_character : Actor
     // private Rigidbody kinematic_rigidbody;
     protected CharacterController cc;
     private Vector3 velocity_ = Vector3.zero;
+
+    // HACK
+    protected bool bounce = false;
 
     private bool on_ground = false;
     private float time_in_air = 0;
@@ -194,7 +197,9 @@ public class Player_character : Actor
         {
 			//turn off halo for lock_on_target
 			if (lock_on_target.transform.Find("Cylinder"))
-				lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false); 
+            {
+				lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
+            }
             lock_on_target = null;
             return;
         }
@@ -210,14 +215,16 @@ public class Player_character : Actor
         var distance = Vector3.Distance(
             transform.position, closest_enemy.transform.position);
         // print("distance: " + distance);
-        if (distance > 10f)
-        {
-            return;
-        }
+        // if (distance > 10f)
+        // {
+        //     return;
+        // }
 
         lock_on_target = closest_enemy;
 		if (lock_on_target.transform.Find("Cylinder"))
+        {
 			lock_on_target.transform.Find("Cylinder").gameObject.SetActive(true);
+        }
         look_toward(lock_on_target);
     }// toggle_lock_on
 
@@ -243,6 +250,10 @@ public class Player_character : Actor
     {
         if (enemy == lock_on_target)
         {
+            if (lock_on_target.transform.Find("Cylinder"))
+            {
+                lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
+            }
             lock_on_target = null;
         }
     }// on_enemy_gone
@@ -299,6 +310,11 @@ public class Player_character : Actor
 
         cc.Move(delta_position);
         on_ground = delta_position.y < 0 && cc.isGrounded;
+        if (bounce)
+        {
+            jump();
+            bounce = false;
+        }
         if (is_grounded)
         {
             velocity_.y = 0;
