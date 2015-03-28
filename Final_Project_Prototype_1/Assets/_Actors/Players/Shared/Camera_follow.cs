@@ -11,6 +11,8 @@ public class Camera_follow : MonoBehaviour
 
     public float camera_follow_distance = 15f;
     public float camera_hover_height = 15f;
+
+    public float y_rotation = 0;
     // public static float camera_y_distance = 4f;
 
     // static public bool in_boss_arena = false;
@@ -30,7 +32,11 @@ public class Camera_follow : MonoBehaviour
     void LateUpdate()
     {
         // var new_midpoint = calculate_player_midpoint();
-        snap_camera_to_position();
+        // var desired_rotation = transform.rotation.eulerAngles;
+        // desired_rotation.y = y_rotation;
+        // transform.rotation = Quaternion.Euler(desired_rotation);
+
+        lerp_camera_to_position();
 
         var look_direction = calculate_player_midpoint() - transform.position;
         var new_forward = Vector3.RotateTowards(
@@ -96,14 +102,20 @@ public class Camera_follow : MonoBehaviour
         transform.position = calculate_player_midpoint() + camera_offset;
     }// snap_camera_to_position
 
-    // void lerp_camera_to_position()
-    // {
-    //     var new_camera_pos = players_midpoint_marker.transform.position;
-    //     new_camera_pos.z -= camera_distance;
-    //     new_camera_pos.y += camera_distance;
-    //     transform.position = Vector3.Lerp(
-    //         transform.position, new_camera_pos, 2f * Time.deltaTime);
-    // }
+    void lerp_camera_to_position()
+    {
+        var wanted_forward = Quaternion.AngleAxis(y_rotation, Vector3.up);
+        var camera_offset = -(wanted_forward * Vector3.forward);
+        camera_offset.y = 0;
+        camera_offset = camera_offset.normalized;
+        camera_offset *= camera_follow_distance;
+
+        camera_offset.y += camera_hover_height;
+
+        transform.position = Vector3.Lerp(
+            transform.position, calculate_player_midpoint() + camera_offset,
+            5f * Time.deltaTime);
+    }
 
     //--------------------------------------------------------------------------
 
