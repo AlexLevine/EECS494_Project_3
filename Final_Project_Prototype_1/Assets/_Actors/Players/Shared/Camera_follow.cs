@@ -7,7 +7,7 @@ public class Camera_follow : MonoBehaviour
     public static float max_camera_distance = 15f;
     // public static float camera_y_distance = 4f;
 
-    static public bool in_boss_arena = false;
+    // static public bool in_boss_arena = false;
 
     // Use this for initialization
     void Start()
@@ -48,6 +48,7 @@ public class Camera_follow : MonoBehaviour
         new_camera_pos.z -= camera_distance;
         new_camera_pos.y += camera_distance;
 
+        // transform.position = Vector3.Lerp(transform.position, new_camera_pos, 1f * Time.deltaTime);
         transform.position = new_camera_pos;
     }
 

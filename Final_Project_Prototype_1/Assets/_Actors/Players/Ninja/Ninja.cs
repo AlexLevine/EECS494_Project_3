@@ -64,6 +64,8 @@ public class Ninja : Player_character
     {
         base.Update();
 
+        // print(velocity.magnitude);
+
         if (!is_teamed_up)
         {
             jousting_pole.SetActive(false);
