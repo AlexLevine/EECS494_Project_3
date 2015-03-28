@@ -281,10 +281,30 @@ public class Samurai_Attack : Enemy {
         }
 
         cur_state = Samurai_state_e.RETREATING;
-        var index = Random.Range(0, retreat_points.Count - 1);
-        // print(index);
-        retreat_destination = retreat_points[index];
+
+        choose_retreat_point();
     }// resolve_collision_with_player
+
+    //--------------------------------------------------------------------------
+
+    void choose_retreat_point()
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            var index = Random.Range(0, retreat_points.Count);
+            // print(index);
+            retreat_destination = retreat_points[index];
+            var something_in_way = Physics.Raycast(
+                transform.position, retreat_destination,
+                Vector3.Distance(transform.position, retreat_destination));
+
+            if (!something_in_way)
+            {
+                return;
+            }
+
+        }
+    }// choose_retreat_point
 
     //--------------------------------------------------------------------------
 

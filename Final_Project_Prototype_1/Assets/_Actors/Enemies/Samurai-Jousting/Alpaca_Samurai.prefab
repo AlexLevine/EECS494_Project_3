@@ -105,6 +105,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &116952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 467562}
+  m_Layer: 0
+  m_Name: retreat_point3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &118968
 GameObject:
   m_ObjectHideFlags: 1
@@ -173,6 +188,21 @@ GameObject:
   m_Layer: 0
   m_Name: Pole
   m_TagString: weapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &128960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 437262}
+  m_Layer: 0
+  m_Name: retreat_point4
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,6 +414,8 @@ Transform:
   - {fileID: 453890}
   - {fileID: 472986}
   - {fileID: 465068}
+  - {fileID: 467562}
+  - {fileID: 437262}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &421910
@@ -434,6 +466,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453890}
   m_RootOrder: 7
+--- !u!4 &437262
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.7999992, y: 0, z: 64.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419844}
+  m_RootOrder: 4
 --- !u!4 &448172
 Transform:
   m_ObjectHideFlags: 1
@@ -531,6 +575,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453890}
   m_RootOrder: 8
+--- !u!4 &467562
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30.8999996, y: -0, z: 61.9000015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419844}
+  m_RootOrder: 3
 --- !u!4 &470386
 Transform:
   m_ObjectHideFlags: 1
@@ -1063,6 +1119,8 @@ MonoBehaviour:
   retreat_point_markers:
   - {fileID: 193044}
   - {fileID: 112406}
+  - {fileID: 116952}
+  - {fileID: 128960}
   cur_state: 0
   look_thresh: 50
   attack_thresh: 50
