@@ -11,6 +11,10 @@ public class Fire_enemy : Enemy {
 
     public bool is_moving;
     public bool on_fire;
+    
+    private int puff_timer;
+    const int full_puff_timer = 200;
+    public bool puffing = false;
     // private bool stunned;
 //  private int stunned_timer;
 //  const int init_stunned_timer = 200;
@@ -44,12 +48,21 @@ public class Fire_enemy : Enemy {
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
         on_fire = true;
+        puff_timer = full_puff_timer;
     }// Start
 
     //--------------------------------------------------------------------------
 
     void FixedUpdate()
     {
+    	if (!puffing) {
+    		if (puff_timer <= 0) {
+    			puff_timer = full_puff_timer;
+    			puffing = true;
+    			StartCoroutine( puff());
+    		} else -- puff_timer;
+    	}
+    	
         // base.Update ();
         if (being_knocked_back)
         {
@@ -75,4 +88,19 @@ public class Fire_enemy : Enemy {
 
 
     }// Update
+    
+    private IEnumerator puff () {
+		CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
+		ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
+    	float radius = collider.radius;
+    	float particleSize = particles.startSize;
+    	for (int i = 0; i < 25; ++i) {
+    		collider.radius *= 1.05f;
+			particles.startSize *= 1.05f;
+			yield return new WaitForSeconds(.1f);
+    	}
+    	collider.radius = radius;
+    	particles.startSize = particleSize;
+    	puffing = false;
+    }
 }
