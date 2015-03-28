@@ -3,8 +3,14 @@ using System.Collections;
 
 public class Camera_follow : MonoBehaviour
 {
-    public static float min_camera_distance = 15f;
-    public static float max_camera_distance = 15f;
+    // public static float min_camera_distance = 15f;
+    // public static float max_camera_distance = 15f;
+
+
+    // public GameObject players_midpoint_marker;
+
+    public float camera_follow_distance = 15f;
+    public float camera_hover_height = 15f;
     // public static float camera_y_distance = 4f;
 
     // static public bool in_boss_arena = false;
@@ -12,7 +18,10 @@ public class Camera_follow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // calculate_player_midpoint();
+        // snap_camera_to_position();
 
+        // transform.LookAt(players_midpoint_marker.transform);
     }
 
     //--------------------------------------------------------------------------
@@ -20,20 +29,32 @@ public class Camera_follow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var llama = Llama.get().gameObject;
-        var ninja = Ninja.get().gameObject;
+        // var new_midpoint = calculate_player_midpoint();
+        snap_camera_to_position();
 
-        var distance = llama.transform.position - ninja.transform.position;
+        var look_direction = calculate_player_midpoint() - transform.position;
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, look_direction, 10f * Time.deltaTime, 0f);
 
-        var camera_distance = Mathf.Max(new float[] {
-            Mathf.Abs(distance.x), Mathf.Abs(distance.y), Mathf.Abs(distance.z)
-        });
+        var new_rotation = Quaternion.LookRotation(new_forward);
+        transform.rotation = new_rotation;
 
-        camera_distance = Mathf.Max(min_camera_distance, camera_distance);
-        camera_distance = Mathf.Min(max_camera_distance, camera_distance);
+        // transform.LookAt(players_midpoint_marker.transform);
 
-        var midpoint = Vector3.Lerp(
-            llama.transform.position, ninja.transform.position, 0.5f);
+        // var llama = Llama.get().gameObject;
+        // var ninja = Ninja.get().gameObject;
+
+        // var distance = llama.transform.position - ninja.transform.position;
+
+        // var camera_distance = Mathf.Max(new float[] {
+        //     Mathf.Abs(distance.x), Mathf.Abs(distance.y), Mathf.Abs(distance.z)
+        // });
+
+        // camera_distance = Mathf.Max(min_camera_distance, camera_distance);
+        // camera_distance = Mathf.Min(max_camera_distance, camera_distance);
+
+        // var midpoint = Vector3.Lerp(
+        //     llama.transform.position, ninja.transform.position, 0.5f);
 
         // if (in_boss_arena)
         // {
@@ -44,13 +65,45 @@ public class Camera_follow : MonoBehaviour
         //     // return;
         // }
 
-        var new_camera_pos = midpoint;
-        new_camera_pos.z -= camera_distance;
-        new_camera_pos.y += camera_distance;
+        // var new_camera_pos = midpoint;
+        // new_camera_pos.z -= camera_distance;
+        // new_camera_pos.y += camera_distance;
 
         // transform.position = Vector3.Lerp(transform.position, new_camera_pos, 1f * Time.deltaTime);
-        transform.position = new_camera_pos;
+        // transform.position = new_camera_pos;
     }
+
+    Vector3 calculate_player_midpoint()
+    {
+        var llama = Llama.get().gameObject;
+        var ninja = Ninja.get().gameObject;
+
+        var midpoint = Vector3.Lerp(
+            llama.transform.position, ninja.transform.position, 0.5f);
+        return midpoint;
+        // players_midpoint_marker.transform.position = midpoint;
+    }// calculate_player_midpoint
+
+    void snap_camera_to_position()
+    {
+        var camera_offset = -transform.forward;
+        camera_offset.y = 0;
+        camera_offset = camera_offset.normalized;
+        camera_offset *= camera_follow_distance;
+
+        camera_offset.y += camera_hover_height;
+
+        transform.position = calculate_player_midpoint() + camera_offset;
+    }// snap_camera_to_position
+
+    // void lerp_camera_to_position()
+    // {
+    //     var new_camera_pos = players_midpoint_marker.transform.position;
+    //     new_camera_pos.z -= camera_distance;
+    //     new_camera_pos.y += camera_distance;
+    //     transform.position = Vector3.Lerp(
+    //         transform.position, new_camera_pos, 2f * Time.deltaTime);
+    // }
 
     //--------------------------------------------------------------------------
 
