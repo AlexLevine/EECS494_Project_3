@@ -273,7 +273,7 @@ public class Samurai_Attack : Enemy {
     void resolve_collision_with_player(Player_character pc)
     {
         // print(cur_state);
-        pc.receive_hit(attack_power, transform.forward * attack_power);
+        pc.receive_hit(attack_power, transform.forward * attack_power, gameObject);
 
         if (cur_state == Samurai_state_e.RETREATING)
         {
@@ -346,7 +346,7 @@ public class Samurai_Attack : Enemy {
     {
         get
         {
-            return 5;
+            return 1;
         }
     }
 
@@ -357,17 +357,21 @@ public class Samurai_Attack : Enemy {
             return 20;
         }
     }
+    
+    // -------------------------------------------------------------------------
 
-    public override void on_hit_spit(int damage, Vector3 knockback_velocity)
+    public override void receive_hit(int damage, Vector3 knockback_velocity, GameObject attacker)
     {
-        // default behavior
-        // receive_hit (damage);
-    }// on_hit_spit
+        if(attacker.name.Contains("llama_spit"))
+        {
+            return; 
+        }
+        if(attacker.name.Contains("ninja_sword"))
+        {
+            Ninja.get().receive_hit(0, transform.forward * attack_power, attacker);
+            return; 
+        }
 
-    //--------------------------------------------------------------------------
-
-    public override void on_hit_sword(int damage, Vector3 knockback_velocity)
-    {
-        Ninja.get().receive_hit(0, transform.forward * attack_power);
-    }// on_hit_sword
+        base.receive_hit(damage, knockback_velocity, attacker);
+    }
 }

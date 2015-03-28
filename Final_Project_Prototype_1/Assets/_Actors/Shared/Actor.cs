@@ -121,7 +121,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void receive_hit(int damage, Vector3 knockback_velocity)
+    public virtual void receive_hit(int damage, Vector3 knockback_velocity, GameObject attacker)
     {
         if (invincibility_animation.is_playing)
         {

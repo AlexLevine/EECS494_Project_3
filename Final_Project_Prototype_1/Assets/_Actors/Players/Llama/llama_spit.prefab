@@ -14,7 +14,7 @@ GameObject:
   - 54: {fileID: 5448584}
   - 114: {fileID: 11437398}
   m_Layer: 0
-  m_Name: prefab llama spit
+  m_Name: llama_spit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd6e5ed8216d43bba56bf3f624ab1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time_left: .699999988
 --- !u!135 &13546830
 SphereCollider:
   m_ObjectHideFlags: 1

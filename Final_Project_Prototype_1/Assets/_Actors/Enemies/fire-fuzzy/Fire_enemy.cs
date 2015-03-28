@@ -75,33 +75,4 @@ public class Fire_enemy : Enemy {
 
 
     }// Update
-
-    // public override void on_hit_charge(int damage) {
-    //     if (on_fire) {
-    //         // burns llama - and takes no damge if still on fire
-    //         var llama = GameObject.Find ("Llama");
-    //         llama.GetComponent<Llama> ().receive_hit (damage);
-    //     }
-    // }// on_hit_charge
-
-    public override void on_hit_spit(int damage, Vector3 knockback_velocity)
-    {
-        base.on_hit_spit(damage, knockback_velocity);
-
-        // put out fire:
-        foreach (Transform t in transform)
-        {
-            if(t.name == "Fire_origin")
-            {
-                t.GetComponentInChildren<ParticleSystem>().enableEmission = false;
-                on_fire = false;
-            }
-        }
-        // this.GetComponent<knock_back> ().on_hit (transform.forward);
-
-
-    }// on_hit_spit
-
-
-
 }
