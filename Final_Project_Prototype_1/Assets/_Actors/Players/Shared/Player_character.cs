@@ -412,7 +412,7 @@ public class Player_character : Actor
 
     protected void team_up_engage()
     {
-        print(player_characters.Count);
+        // print(player_characters.Count);
         foreach (var player_char in player_characters)
         {
             var pc = player_char.GetComponent<Player_character>();

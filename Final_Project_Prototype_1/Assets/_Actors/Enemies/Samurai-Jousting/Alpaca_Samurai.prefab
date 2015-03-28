@@ -36,6 +36,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &112406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 465068}
+  m_Layer: 0
+  m_Name: retreat_point2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &112578
 GameObject:
   m_ObjectHideFlags: 1
@@ -303,6 +318,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &193044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472986}
+  m_Layer: 0
+  m_Name: retreat_point1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &402110
 Transform:
   m_ObjectHideFlags: 1
@@ -352,6 +382,8 @@ Transform:
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 453890}
+  - {fileID: 472986}
+  - {fileID: 465068}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &421910
@@ -475,6 +507,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 410740}
   m_RootOrder: 0
+--- !u!4 &465068
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30.8999996, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419844}
+  m_RootOrder: 2
 --- !u!4 &466728
 Transform:
   m_ObjectHideFlags: 1
@@ -499,6 +543,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453890}
   m_RootOrder: 5
+--- !u!4 &472986
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.7000008, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419844}
+  m_RootOrder: 1
 --- !u!4 &478772
 Transform:
   m_ObjectHideFlags: 1
@@ -1004,9 +1060,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea023ec8778bea4fbfa03c007f3fd67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  retreat_points: []
-  llama: {fileID: 0}
-  ninja: {fileID: 0}
+  retreat_point_markers:
+  - {fileID: 193044}
+  - {fileID: 112406}
   cur_state: 0
   look_thresh: 50
   attack_thresh: 50

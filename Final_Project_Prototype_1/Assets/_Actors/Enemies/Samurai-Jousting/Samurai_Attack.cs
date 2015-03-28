@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class Samurai_Attack : Enemy {
@@ -12,10 +13,10 @@ public class Samurai_Attack : Enemy {
         RETREATING
     }
 
-    public GameObject[] retreat_points;
+    public GameObject[] retreat_point_markers;
 
-    public GameObject llama;
-    public GameObject ninja;
+    private GameObject llama;
+    private GameObject ninja;
     public Samurai_state_e cur_state;
     public float look_thresh;
     public float attack_thresh;
@@ -31,7 +32,8 @@ public class Samurai_Attack : Enemy {
 
     private CharacterController cc;
 
-    private GameObject retreat_destination;
+    private List<Vector3> retreat_points = new List<Vector3>();
+    private Vector3 retreat_destination;
 
     //--------------------------------------------------------------------------
 
@@ -57,6 +59,11 @@ public class Samurai_Attack : Enemy {
 
         cc = gameObject.GetComponent<CharacterController>();
 
+        foreach (var obj in retreat_point_markers)
+        {
+            retreat_points.Add(obj.transform.position);
+        }
+
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
         cur_pause_time = 0f;
@@ -64,12 +71,12 @@ public class Samurai_Attack : Enemy {
         llama = Llama.get().gameObject;
         ninja = Ninja.get().gameObject;
 
-        if(llama == null || ninja == null)
-        {
-            print("Could not find llama or ninja!!!!!");
-            print("OH NOOOOOOOOOOO");
-            Destroy(gameObject);
-        }
+        // if(llama == null || ninja == null)
+        // {
+        //     print("Could not find llama or ninja!!!!!");
+        //     print("OH NOOOOOOOOOOO");
+        //     Destroy(gameObject);
+        // }
 
         snap_to_ground();
     }
@@ -130,7 +137,7 @@ public class Samurai_Attack : Enemy {
                 {
                     cur_pause_time = 0;
                     cur_state = Samurai_state_e.ATTACKING;
-                    print("attack!");
+                    // print("attack!");
                 }
 
                 snap_to_ground();
@@ -152,7 +159,6 @@ public class Samurai_Attack : Enemy {
 
             case Samurai_state_e.ATTACKING:
                 var delta_pos = transform.forward * speed;
-                // delta_pos.y = -20f;
                 delta_pos *= Time.fixedDeltaTime;
 
                 move(delta_pos, true);
@@ -179,16 +185,21 @@ public class Samurai_Attack : Enemy {
                      false);
 
                 var distance_to_dest = Vector3.Distance(
-                    transform.position, retreat_destination.transform.position);
-                if (distance_to_dest < 0.2f)
+                    transform.position, retreat_destination);
+                // print(distance_to_dest);
+                if (distance_to_dest < 3f)
                 {
                     cur_state = Samurai_state_e.LOOKING;
                 }
+
                 break;
+
             default:
                 print("Oh no!");
                 break;
         }
+
+        fix_rotation();
     }
 
     //--------------------------------------------------------------------------
@@ -244,7 +255,7 @@ public class Samurai_Attack : Enemy {
         if (hit_wall)
         {
             cur_state = Samurai_state_e.LOOKING;
-            print("hit wall");
+            // print("hit wall");
             return;
         }
 
@@ -261,7 +272,7 @@ public class Samurai_Attack : Enemy {
 
     void resolve_collision_with_player(Player_character pc)
     {
-        print(cur_state);
+        // print(cur_state);
         pc.receive_hit(attack_power, transform.forward * attack_power);
 
         if (cur_state == Samurai_state_e.RETREATING)
@@ -270,8 +281,9 @@ public class Samurai_Attack : Enemy {
         }
 
         cur_state = Samurai_state_e.RETREATING;
-        retreat_destination = retreat_points[(int) Random.Range(
-            0, retreat_points.Length)];
+        var index = Random.Range(0, retreat_points.Count - 1);
+        // print(index);
+        retreat_destination = retreat_points[index];
     }// resolve_collision_with_player
 
     //--------------------------------------------------------------------------
@@ -299,6 +311,16 @@ public class Samurai_Attack : Enemy {
     {
         cc.Move(Vector3.down);
     }// snap_to_ground
+
+    void fix_rotation()
+    {
+        var fixed_rotation = transform.rotation.eulerAngles;
+
+        fixed_rotation.x = 0;
+        fixed_rotation.z = 0;
+
+        transform.rotation = Quaternion.Euler(fixed_rotation);
+    }// fix_rotation
 
     public override int attack_power
     {
