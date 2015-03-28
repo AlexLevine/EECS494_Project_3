@@ -78,9 +78,10 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    void OnTriggerEnter(Collider c)
+    public virtual void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.tag != "Player" || being_knocked_back)
+        var player = c.gameObject.GetComponent<Player_character>();
+        if (player == null || being_knocked_back)
         {
             return;
         }
@@ -88,21 +89,31 @@ public class Enemy : Actor
         // (parent != null ? parent.gameObject :
         //     c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
 
-        var actor = c.gameObject.GetComponent<Actor>();
-        // print(actor);
-        if (actor == null)
-        {
-            return;
-        }
+        // var actor = c.gameObject.GetComponent<Actor>();
+        // // print(actor);
+        // if (actor == null)
+        // {
+        //     return;
+        // }
 
         var knockback_direction = (
             c.gameObject.transform.position - transform.position).normalized;
         var knockback_velocity = knockback_direction * 5;
 
-        actor.receive_hit(attack_power, knockback_velocity);
+        player.receive_hit(attack_power, knockback_velocity);
 
         on_player_hit();
     }// OnTriggerEnter
+
+    void OnTriggerStay(Collider c)
+    {
+        OnTriggerEnter(c);
+    }
+
+    // void OnCollisionEnter(Collision c)
+    // {
+    //     OnTriggerEnter(c.collider);
+    // }
 
     //--------------------------------------------------------------------------
 
@@ -154,7 +165,7 @@ public class Enemy : Actor
 		boom.transform.position = transform.position;
 		Destroy(gameObject);
     }// on_death
-    
+
 
     //--------------------------------------------------------------------------
 

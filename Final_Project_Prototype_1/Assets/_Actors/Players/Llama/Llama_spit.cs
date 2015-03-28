@@ -29,10 +29,15 @@ public class Llama_spit : MonoBehaviour
         }
 
         // print(other.gameObject.tag);
-        if(other.gameObject.tag == "Player" || other.gameObject.tag == "weapon")
+        var hit_player = other.gameObject.tag == "Player";
+        var hit_weapon = other.gameObject.tag == "weapon";
+        var hit_trigger = other.isTrigger;
+        if(hit_player || hit_weapon || hit_trigger)
         {
             return;
         }
+
+        print(other);
 
         Destroy(gameObject);
     }

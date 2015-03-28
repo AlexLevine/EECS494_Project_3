@@ -12,7 +12,7 @@ public class Player_character : Actor
     public int collectable_count=0;
 
     public bool is_grounded { get { return on_ground; } }
-    public float gravity { get { return -25f; } }
+    // public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
@@ -22,6 +22,7 @@ public class Player_character : Actor
 
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
+    public bool is_jumping { get { return jumping; } }
 
     //--------------------------------------------------------------------------
 
@@ -32,11 +33,13 @@ public class Player_character : Actor
     // private Player rewired_player;
     // private Rigidbody kinematic_rigidbody;
     protected CharacterController cc;
+
     private Vector3 velocity_ = Vector3.zero;
 
     // HACK
     protected bool bounce = false;
 
+    private bool jumping = false;
     private bool on_ground = false;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
@@ -122,7 +125,7 @@ public class Player_character : Actor
         //                       Camera.main.transform.forward;
         // }
 
-        if (is_grounded)
+        if (is_grounded || is_jumping)
         {
             target_velocity.y = velocity_.y;
             velocity_ = target_velocity;
@@ -239,8 +242,8 @@ public class Player_character : Actor
             return;
         }
 
-        var distance = Vector3.Distance(
-            transform.position, closest_enemy.transform.position);
+        // var distance = Vector3.Distance(
+        //     transform.position, closest_enemy.transform.position);
         // print("distance: " + distance);
         // if (distance > 10f)
         // {
@@ -345,6 +348,7 @@ public class Player_character : Actor
         if (is_grounded)
         {
             velocity_.y = 0;
+            jumping = false;
         }
 
         if (apply_rotation)
@@ -422,6 +426,7 @@ public class Player_character : Actor
         velocity_.y = jump_speed;
         // is_jumping = true;
         on_ground = false;
+        jumping = true;
         // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
         // new_speed.y = jump_speed;
         // GetComponent<Rigidbody>().velocity_ = new_speed;
@@ -439,7 +444,7 @@ public class Player_character : Actor
 
     protected void team_up_engage()
     {
-        print(player_characters.Count);
+        // print(player_characters.Count);
         foreach (var player_char in player_characters)
         {
             var pc = player_char.GetComponent<Player_character>();
@@ -472,6 +477,12 @@ public class Player_character : Actor
     {
     }// on_team_up_disengage
 
+    //--------------------------------------------------------------------------
+
+    protected void notify_on_ground()
+    {
+        on_ground = true;
+    }// notify_on_ground
     //--------------------------------------------------------------------------
 
     public GameObject get_other_player()

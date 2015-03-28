@@ -50,6 +50,7 @@ public class Llama : Player_character
     {
         base.Update();
 
+        // print(velocity.magnitude);
         // if (is_teamed_up)
         // {
         //     print(is_grounded);

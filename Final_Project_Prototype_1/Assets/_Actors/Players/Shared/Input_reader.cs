@@ -98,7 +98,7 @@ public class Input_reader : MonoBehaviour
         //     pc.charge();
         // }
 
-        Vector3 tilt = Vector3.zero;
+        var tilt = Vector3.zero;
         tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;
         tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
         // tilt = tilt.normalized;
@@ -107,7 +107,32 @@ public class Input_reader : MonoBehaviour
 
         // var sprint = player.GetButton("sprint");
 
-        var target_velocity = tilt * pc.run_speed;
+        // var relative_move_dir = tilt;
+
+        var cam_right = Camera.main.transform.right;
+        cam_right.y = 0;
+        cam_right = cam_right.normalized;
+        cam_right *= tilt.x;
+
+        var cam_forward = Camera.main.transform.forward;
+        cam_forward.y = 0;
+        cam_forward = cam_forward.normalized;
+        cam_forward *= tilt.z;
+
+        var relative_move_dir = cam_right + cam_forward;
+        //         Camera.main.transform.forward +
+        //         Camera.main.transform.right;
+        // relative_move_dir.y = 0;
+        // print(relative_move_dir);
+        // print(cam_forward);
+        // print(cam_right);
+        // relative_move_dir *= 10;
+        // relative_move_dir = relative_move_dir.normalized;
+
+        // relative_move_dir.x *= tilt.x;
+        // relative_move_dir.z *= tilt.z;
+
+        var target_velocity = relative_move_dir * pc.run_speed;
         pc.update_movement_velocity(target_velocity);
 
         // move(delta_position);

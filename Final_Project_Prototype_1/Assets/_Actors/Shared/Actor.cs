@@ -10,6 +10,8 @@ public class Actor : MonoBehaviour
     public bool being_knocked_back {
         get { return knockback_animation.is_playing; } }
 
+    public virtual float gravity { get { return -25f; } }
+
     private int health_;
 
     private Flash_animation invincibility_animation;
@@ -64,12 +66,14 @@ public class Actor : MonoBehaviour
             return;
         }
 
-        step *= Time.deltaTime;
+        look_toward(obj.transform.position, step);
 
-        var target_direction =
-                obj.transform.position - transform.position;
+        // step *= Time.deltaTime;
 
-        collision_safe_rotate_towards(target_direction, step);
+        // var target_direction =
+        //         obj.transform.position - transform.position;
+
+        // collision_safe_rotate_towards(target_direction, step);
 
         // var new_forward = Vector3.RotateTowards(
         //     transform.forward, target_direction, step, 0f);
@@ -79,6 +83,19 @@ public class Actor : MonoBehaviour
 
         // transform.rotation = Quaternion.LookRotation(new_forward);
     }// look_toward
+
+    //--------------------------------------------------------------------------
+
+    public void look_toward(Vector3 point, float step=10f)
+    {
+        step *= Time.deltaTime;
+
+        var target_direction =
+                point - transform.position;
+
+        collision_safe_rotate_towards(target_direction, step);
+
+    }
 
     //--------------------------------------------------------------------------
 
@@ -115,7 +132,11 @@ public class Actor : MonoBehaviour
 
         bool should_die = health_ <= 0;
 
-        invincibility_animation.start_animation();
+        // HACK: this lets you use this function for damageless knockback
+        if (damage != 0)
+        {
+            invincibility_animation.start_animation();
+        }
 
         // HACK
         knockback_velocity = knockback_velocity.normalized * 10;

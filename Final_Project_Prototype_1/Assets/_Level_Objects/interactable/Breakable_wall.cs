@@ -55,6 +55,11 @@ public class Breakable_wall : MonoBehaviour {
         is_dead = true;
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        OnTriggerEnter(other);
+    }
+
 
     void Update()
     {
