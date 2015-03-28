@@ -23,7 +23,7 @@ public class Samurai_jousting_pole : MonoBehaviour
 
         var knockback = Samurai_Attack.get(
             ).gameObject.transform.forward * attack_power;
-        player.receive_hit(attack_power, knockback);
+        player.receive_hit(attack_power, knockback, gameObject);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------

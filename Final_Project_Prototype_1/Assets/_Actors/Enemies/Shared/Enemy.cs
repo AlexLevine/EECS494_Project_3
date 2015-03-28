@@ -100,7 +100,7 @@ public class Enemy : Actor
             c.gameObject.transform.position - transform.position).normalized;
         var knockback_velocity = knockback_direction * 5;
 
-        player.receive_hit(attack_power, knockback_velocity);
+        player.receive_hit(attack_power, knockback_velocity, gameObject);
 
         on_player_hit();
     }// OnTriggerEnter
@@ -125,45 +125,11 @@ public class Enemy : Actor
         }
     }// attack_power
 
-    //--------------------------------------------------------------------------
-
-    public virtual void on_hit_spit(int damage, Vector3 knockback_velocity)
-    {
-        // default behavior
-        receive_hit (damage, knockback_velocity);
-    }// on_hit_spit
-
-    //--------------------------------------------------------------------------
-
-    public virtual void on_hit_sword(int damage, Vector3 knockback_velocity)
-    {
-        // default behavior
-        receive_hit (damage, knockback_velocity);
-    }// on_hit_sword
-
-    //--------------------------------------------------------------------------
-
-    // public virtual void on_hit_charge(int damage)
-    // {
-    //  // default behavior
-    //  receive_hit (damage);
-    // }// on_hit_charge
-
-    //--------------------------------------------------------------------------
-
-    public virtual void on_hit_by_jousting_pole(
-        int damage, Vector3 knockback_velocity)
-    {
-        receive_hit(damage, knockback_velocity);
-    }// on_hit_by_jousting_pole
-
-    //--------------------------------------------------------------------------
-
     public override void on_death()
     {
-		GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
-		boom.transform.position = transform.position;
-		Destroy(gameObject);
+        GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
+        boom.transform.position = transform.position;
+        Destroy(gameObject);
     }// on_death
 
 

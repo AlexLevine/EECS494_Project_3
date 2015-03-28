@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Knockback_animation : MonoBehaviour
 {
-    public bool is_playing { get { return is_playing_; } }
+    public bool is_playing { get { return is_playing_ || die_when_finished_; } }
 
     private bool is_playing_;
     private float time_elapsed;
