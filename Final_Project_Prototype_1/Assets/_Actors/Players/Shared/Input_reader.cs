@@ -82,6 +82,9 @@ public class Input_reader : MonoBehaviour
         {
             pc.attack();
         }
+        if (input_device.GetControl (InputControlType.Action4).WasPressed){
+        	pc.aerial_attack();
+        }
 
         if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
            input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
