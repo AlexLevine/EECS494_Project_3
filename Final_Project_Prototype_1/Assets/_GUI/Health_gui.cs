@@ -44,8 +44,8 @@ public class Health_gui : MonoBehaviour {
         float cur_llama_health = (float)llama.health / (float)llama.max_health; 
         float cur_ninja_health = (float)ninja.health / (float)ninja.max_health; 
 
-        print(cur_ninja_health);
-        print(cur_llama_health);
+        // print(cur_ninja_health);
+        // print(cur_llama_health);
 
         llama_health.normalizedValue = cur_llama_health; 
         ninja_health.normalizedValue = cur_ninja_health; 
