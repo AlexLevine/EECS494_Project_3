@@ -36,6 +36,12 @@ public class Flash_animation : MonoBehaviour
         renderers.AddRange(
             new List<MeshRenderer>(GetComponents<MeshRenderer>()));
 
+        var main_renderer = GetComponent<MeshRenderer>();
+        if (main_renderer != null)
+        {
+            renderers.Add(main_renderer);
+        }
+
         for (int i = 0; i < 10; ++i)
         {
             foreach(var renderer in renderers)
