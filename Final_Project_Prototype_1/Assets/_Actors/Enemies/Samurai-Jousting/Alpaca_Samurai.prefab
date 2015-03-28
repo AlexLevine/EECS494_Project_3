@@ -228,6 +228,7 @@ GameObject:
   - 114: {fileID: 11467760}
   - 114: {fileID: 11431268}
   - 143: {fileID: 14317610}
+  - 65: {fileID: 6563132}
   m_Layer: 0
   m_Name: Alpaca_Samurai
   m_TagString: Untagged
@@ -347,7 +348,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168714}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -1.5, y: -.200000003, z: -28.8999996}
+  m_LocalPosition: {x: -1.5, y: .270000011, z: -28.8999996}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 453890}
@@ -432,7 +433,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 192628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -0, z: 2.00999999}
+  m_LocalPosition: {x: -2, y: 0, z: 2.33999991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 402110}
@@ -968,6 +969,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6563132
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168714}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.19999981, y: 7.55999994, z: 5.34000015}
+  m_Center: {x: 0, y: .970000029, z: .50999999}
 --- !u!65 &6596110
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -991,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea023ec8778bea4fbfa03c007f3fd67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  retreat_points: []
   llama: {fileID: 0}
   ninja: {fileID: 0}
   cur_state: 0
@@ -1190,13 +1204,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 7.9000001
+  m_Height: 7.26000023
   m_Radius: 2.50999999
   m_SlopeLimit: 10
-  m_StepOffset: .00999999978
+  m_StepOffset: .00100000005
   m_SkinWidth: .25
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .409999996, z: 0}
+  m_Center: {x: 0, y: 1.01999998, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

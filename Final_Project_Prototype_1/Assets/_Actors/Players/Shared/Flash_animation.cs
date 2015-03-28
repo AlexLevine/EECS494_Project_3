@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Flash_animation : MonoBehaviour
 {
@@ -27,19 +28,33 @@ public class Flash_animation : MonoBehaviour
 
     private IEnumerator flashSprite()
     {
-        yield return new WaitForSeconds(1f);
+        // yield return new WaitForSeconds(0.5f);
+        // is_playing = false;
+
+        var renderers = new List<MeshRenderer>(
+            GetComponentsInChildren<MeshRenderer>());
+        renderers.AddRange(
+            new List<MeshRenderer>(GetComponents<MeshRenderer>()));
+
+        for (int i = 0; i < 10; ++i)
+        {
+            foreach(var renderer in renderers)
+            {
+                renderer.enabled = !renderer.enabled;
+                // var original_color = renderer.material.color;
+                // renderer.material.color = Color.red;
+                // yield return new WaitForSeconds(.05f);
+                // renderer.material.color = original_color;
+                // yield return new WaitForSeconds(.05f);
+            }
+            yield return new WaitForSeconds(0.05f);
+            // GetComponent<Renderer>().enabled = true;
+            // yield return new WaitForSeconds(0.1f);
+            // renderer.material.color = original_color;
+            // break;
+        }
+
         is_playing = false;
-        // foreach(var renderer in GetComponentsInChildren<MeshRenderer>())
-        // {
-        //     for (int i = 0; i < 5; ++i)
-        //     {
-        //         renderer.material.color = Color.red;
-        //         yield return new WaitForSeconds(.1f);
-        //         renderer.material.color = originalColor;
-        //         yield return new WaitForSeconds(.1f);
-        //     }
-        //     renderer.material.color = originalColor;
-        //     // break;
-        // }
+
     }
 }

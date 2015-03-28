@@ -92,4 +92,12 @@ public class Camera_follow : MonoBehaviour
         // return point.x < 0.9f && point.x > 0.1f &&
         //        point.y < 0.9f && point.y > 0.1f;
     }// point_step_would_leave_viewport
+
+    //--------------------------------------------------------------------------
+
+    public static bool point_in_viewport(Vector3 point)
+    {
+        // TODO
+        return false;
+    }// point_in_viewport
 }

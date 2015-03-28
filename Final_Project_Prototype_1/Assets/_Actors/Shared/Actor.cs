@@ -10,6 +10,8 @@ public class Actor : MonoBehaviour
     public bool being_knocked_back {
         get { return knockback_animation.is_playing; } }
 
+    public virtual float gravity { get { return -25f; } }
+
     private int health_;
 
     private Flash_animation invincibility_animation;
@@ -115,7 +117,11 @@ public class Actor : MonoBehaviour
 
         bool should_die = health_ <= 0;
 
-        invincibility_animation.start_animation();
+        // HACK: this lets you use this function for damageless knockback
+        if (damage != 0)
+        {
+            invincibility_animation.start_animation();
+        }
 
         // HACK
         knockback_velocity = knockback_velocity.normalized * 10;

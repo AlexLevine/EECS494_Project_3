@@ -11,7 +11,7 @@ public class Player_character : Actor
     public float skin_width = 0.01f;
 
     public bool is_grounded { get { return on_ground; } }
-    public float gravity { get { return -25f; } }
+    // public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
@@ -212,8 +212,8 @@ public class Player_character : Actor
             return;
         }
 
-        var distance = Vector3.Distance(
-            transform.position, closest_enemy.transform.position);
+        // var distance = Vector3.Distance(
+        //     transform.position, closest_enemy.transform.position);
         // print("distance: " + distance);
         // if (distance > 10f)
         // {
