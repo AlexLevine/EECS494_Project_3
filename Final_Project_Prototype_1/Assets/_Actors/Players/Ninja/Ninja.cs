@@ -256,6 +256,7 @@ public class Ninja : Player_character
 
     protected override void on_team_up_engage()
     {
+        notify_on_ground();
         cc.enabled = false;
     }// team_up_engage
 
