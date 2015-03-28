@@ -17,6 +17,9 @@ public class Camera_follow : MonoBehaviour
 
     // static public bool in_boss_arena = false;
 
+    private float lerp_speed = 5f;
+    private Vector3 player_midpoint;
+
     // Use this for initialization
     void Start()
     {
@@ -31,19 +34,14 @@ public class Camera_follow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        // var new_midpoint = calculate_player_midpoint();
+        player_midpoint = calculate_player_midpoint();
         // var desired_rotation = transform.rotation.eulerAngles;
         // desired_rotation.y = y_rotation;
         // transform.rotation = Quaternion.Euler(desired_rotation);
 
-        lerp_camera_to_position();
+        update_position();
 
-        var look_direction = calculate_player_midpoint() - transform.position;
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, look_direction, 10f * Time.deltaTime, 0f);
-
-        var new_rotation = Quaternion.LookRotation(new_forward);
-        transform.rotation = new_rotation;
+        update_rotation();
 
         // transform.LookAt(players_midpoint_marker.transform);
 
@@ -90,19 +88,22 @@ public class Camera_follow : MonoBehaviour
         // players_midpoint_marker.transform.position = midpoint;
     }// calculate_player_midpoint
 
-    void snap_camera_to_position()
-    {
-        var camera_offset = -transform.forward;
-        camera_offset.y = 0;
-        camera_offset = camera_offset.normalized;
-        camera_offset *= camera_follow_distance;
+    //--------------------------------------------------------------------------
 
-        camera_offset.y += camera_hover_height;
+    // void snap_camera_to_position()
+    // {
+    //     var wanted_forward = Quaternion.AngleAxis(y_rotation, Vector3.up);
+    //     var camera_offset = -(wanted_forward * Vector3.forward);
+    //     camera_offset.y = 0;
+    //     camera_offset = camera_offset.normalized;
+    //     camera_offset *= camera_follow_distance;
 
-        transform.position = calculate_player_midpoint() + camera_offset;
-    }// snap_camera_to_position
+    //     camera_offset.y += camera_hover_height;
 
-    void lerp_camera_to_position()
+    //     transform.position = player_midpoint + camera_offset;
+    // }// snap_camera_to_position
+
+    void update_position()
     {
         var wanted_forward = Quaternion.AngleAxis(y_rotation, Vector3.up);
         var camera_offset = -(wanted_forward * Vector3.forward);
@@ -114,8 +115,21 @@ public class Camera_follow : MonoBehaviour
 
         transform.position = Vector3.Lerp(
             transform.position, calculate_player_midpoint() + camera_offset,
-            5f * Time.deltaTime);
-    }
+            lerp_speed * Time.deltaTime);
+    }// update_position
+
+    //--------------------------------------------------------------------------
+
+    void update_rotation()
+    {
+        var look_direction = player_midpoint - transform.position;
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, look_direction, 360f, 0f);
+
+        var new_rotation = Quaternion.LookRotation(new_forward);
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation, new_rotation, lerp_speed * Time.deltaTime);
+    }// update_rotation
 
     //--------------------------------------------------------------------------
 
