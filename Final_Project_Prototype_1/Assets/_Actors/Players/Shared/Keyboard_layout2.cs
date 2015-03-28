@@ -31,6 +31,13 @@ namespace Keyboard_controls
 
             ButtonMappings = new[]
             {
+				new InputControlMapping
+				{
+					Handle = "Aerial",
+					Target = InputControlType.Action4,
+					Source = KeyCodeButton( KeyCode.Alpha6 )
+				},
+                
                 new InputControlMapping
                 {
                     Handle = "Jump",

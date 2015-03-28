@@ -70,7 +70,6 @@ public class Ninja : Player_character
             sword_obj.SetActive(true);
 
             //out_of_range
-            // print(o_o_r);
             if (o_o_r++==1){
                 GetComponent<Renderer>().material = normal;
             }
@@ -99,6 +98,12 @@ public class Ninja : Player_character
         }
         GetComponent<Sword_swing>().swing();
     }// physical_attack
+    
+	public override void aerial_attack()
+	{
+		base.aerial_attack();
+	}// aerial_attack
+    
 
     //--------------------------------------------------------------------------
 
