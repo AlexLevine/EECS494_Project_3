@@ -286,7 +286,7 @@ public class Ninja : Player_character
     {
         get
         {
-            return 100;
+            return 10;
         }
     }// max_health
 
