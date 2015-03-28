@@ -119,7 +119,8 @@ public class Llama : Player_character
         {
             return;
         }
-
+        
+		print(angle);
         target_velocity = target_velocity.normalized * charge_speed;
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity
@@ -151,6 +152,8 @@ public class Llama : Player_character
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
         is_cooling_down = true;
     }// projectile_attack
+    
+    
 
     //--------------------------------------------------------------------------
 
@@ -207,7 +210,7 @@ public class Llama : Player_character
     {
         get
         {
-            return 100;
+            return 10;
         }
     }// max_health
 }

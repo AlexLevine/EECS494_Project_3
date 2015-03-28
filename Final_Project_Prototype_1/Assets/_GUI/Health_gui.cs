@@ -1,24 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class Health_gui : MonoBehaviour {
 
     Ninja ninja;
     Llama llama;
     
-    public int num_lives;
-    
-
-    void Awake(){
-        Time.timeScale=1;
-    }
-
-    // Use this for initialization
-    void Start () {
-        //ninja = GameObject.Find ("Ninja").GetComponent<Ninja> ();
-        //llama = GameObject.Find ("Llama").GetComponent<Llama> ();
-    }
-
+    public Slider llama_health, ninja_health;     
 
     void OnGUI(){
         const int windowWidth = 200;
@@ -51,9 +41,17 @@ public class Health_gui : MonoBehaviour {
             return;
         }
 
-        GUIText gt = this.GetComponent<GUIText> ();
+        float cur_llama_health = (float)llama.health / (float)llama.max_health; 
+        float cur_ninja_health = (float)ninja.health / (float)ninja.max_health; 
 
-        gt.text = "Ninja Health: " + ninja.health + "\nLlama Health: " + llama.health;
+        // print(cur_ninja_health);
+        // print(cur_llama_health);
 
+        llama_health.normalizedValue = cur_llama_health; 
+        ninja_health.normalizedValue = cur_ninja_health; 
+
+
+        // GUIText gt = this.GetComponent<GUIText> ();
+        // gt.text = "Ninja Health: " + ninja.health + "\nLlama Health: " + llama.health;
     }
 }
