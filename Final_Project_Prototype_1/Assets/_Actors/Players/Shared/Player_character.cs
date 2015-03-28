@@ -97,7 +97,7 @@ public class Player_character : Actor
         velocity_.y += gravity * Time.deltaTime;
 
 		if (is_aerial){
-			aerial();	
+			aerial();
 		}
 
         // process_input();
@@ -108,7 +108,7 @@ public class Player_character : Actor
             look_toward(lock_on_target);
             return;
         }
-        
+
     }// Update
 
     //--------------------------------------------------------------------------
@@ -187,10 +187,10 @@ public class Player_character : Actor
     // {
     //     // throw new Exception("Derived classes must override this method");
     // }// projectile_attack
-    
+
     private void aerial()
     {
-    	if (aerial_step<.3f){ 
+    	if (aerial_step<.3f){
     		velocity_ = Vector3.zero;
     		aerial_step+=Time.deltaTime;
     	}
@@ -200,11 +200,11 @@ public class Player_character : Actor
     		is_aerial = false;
     	}
     }
-    
+
     public virtual void aerial_attack()
     {
 		if (!is_grounded) is_aerial=true;
-		
+
     } //aerial_attack
 
     //--------------------------------------------------------------------------
@@ -236,8 +236,9 @@ public class Player_character : Actor
 
         var closest_enemy = Enemy.get_closest_potential_lock_on_target(
             gameObject);
-
-        if (closest_enemy == null)
+        var enemy_on_screen = Camera_follow.point_in_viewport(
+            closest_enemy.transform.position);
+        if (closest_enemy == null || !enemy_on_screen)
         {
             return;
         }

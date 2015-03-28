@@ -238,7 +238,10 @@ public class Camera_follow : MonoBehaviour
 
     public static bool point_in_viewport(Vector3 point)
     {
-        // TODO
-        return false;
+        var viewport_pos = Camera.main.WorldToViewportPoint(point);
+
+        return viewport_pos.y > 0 && viewport_pos.y < 1f &&
+               viewport_pos.x > 0f && viewport_pos.x < 1f;
+
     }// point_in_viewport
 }
