@@ -23,6 +23,7 @@ public class Player_character : Actor
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
+    public bool is_aerial { get { return aerial; } }
 
     //--------------------------------------------------------------------------
 
@@ -44,8 +45,8 @@ public class Player_character : Actor
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
-	private bool is_aerial = false;
-	private float aerial_step=0;
+    public bool aerial = false;
+	
     // private bool is_jumping = false;
 
     private GameObject lock_on_target = null;
@@ -88,17 +89,14 @@ public class Player_character : Actor
         {
             // velocity_.y = 0;
             time_in_air = 0;
+            aerial = false;
         }
         else
         {
             time_in_air += Time.deltaTime;
         }
-
-        velocity_.y += gravity * Time.deltaTime;
-
-		if (is_aerial){
-			aerial();
-		}
+        
+        if (!is_aerial) velocity_.y += gravity * Time.deltaTime;
 
         // process_input();
         move(velocity_ * Time.deltaTime, true);
@@ -187,25 +185,6 @@ public class Player_character : Actor
     // {
     //     // throw new Exception("Derived classes must override this method");
     // }// projectile_attack
-
-    private void aerial()
-    {
-    	if (aerial_step<.3f){
-    		velocity_ = Vector3.zero;
-    		aerial_step+=Time.deltaTime;
-    	}
-    	else{
-    		velocity_.y = -100f;
-    		aerial_step=0;
-    		is_aerial = false;
-    	}
-    }
-
-    public virtual void aerial_attack()
-    {
-		if (!is_grounded) is_aerial=true;
-
-    } //aerial_attack
 
     //--------------------------------------------------------------------------
 
