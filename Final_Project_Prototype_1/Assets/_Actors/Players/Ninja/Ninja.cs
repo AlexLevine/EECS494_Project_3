@@ -98,13 +98,12 @@ public class Ninja : Player_character
             Llama.get().charge();
             return;
         }
+        if (!is_grounded){
+        	aerial=true;
+        	return;
+        }
         GetComponent<Sword_swing>().swing();
     }// physical_attack
-    
-	public override void aerial_attack()
-	{
-		base.aerial_attack();
-	}// aerial_attack
     
 
     //--------------------------------------------------------------------------
