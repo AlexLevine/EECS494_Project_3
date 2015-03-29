@@ -19,6 +19,8 @@ public class Sword_swing : MonoBehaviour
 
     public float angle_distance_swung = 0;
 
+    public GameObject swing_sound_player;
+
     private float swing_speed = 540;
 
     void Start ()
@@ -78,6 +80,8 @@ public class Sword_swing : MonoBehaviour
         {
             return;
         }
+
+        swing_sound_player.GetComponent<AudioSource>().Play();
 
         // HACK: calculate the swing start distance instead of hardcoding
         sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
