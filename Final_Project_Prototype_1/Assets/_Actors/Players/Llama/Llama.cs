@@ -120,7 +120,7 @@ public class Llama : Player_character
             return;
         }
 
-		print(angle);
+		// print(angle);
         target_velocity = target_velocity.normalized * charge_speed;
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity

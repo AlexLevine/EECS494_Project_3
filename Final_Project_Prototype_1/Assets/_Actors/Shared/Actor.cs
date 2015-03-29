@@ -121,11 +121,13 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void receive_hit(int damage, Vector3 knockback_velocity, GameObject attacker)
+    // returns true if the hit is fatal
+    public virtual bool receive_hit(
+        int damage, Vector3 knockback_velocity, GameObject attacker)
     {
         if (invincibility_animation.is_playing)
         {
-            return;
+            return false;
         }
 
         health_ -= damage;
@@ -142,6 +144,8 @@ public class Actor : MonoBehaviour
         knockback_velocity = knockback_velocity.normalized * 10;
 
         knockback_animation.apply_knockback(knockback_velocity, should_die);
+
+        return should_die;
     }// receive_hit
 
     //--------------------------------------------------------------------------

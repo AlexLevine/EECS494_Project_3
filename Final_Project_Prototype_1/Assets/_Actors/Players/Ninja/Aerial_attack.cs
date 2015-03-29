@@ -19,6 +19,8 @@ public class Aerial_attack : MonoBehaviour
     public GameObject sword_neutral_position;
     public GameObject sword_attack_position;
 
+    public GameObject shockwave;
+
     private Aerial_attack_state_e state;
 
     private GameObject sword;
@@ -93,10 +95,14 @@ public class Aerial_attack : MonoBehaviour
 
     public void notify_dive_landed()
     {
-        if (state == Aerial_attack_state_e.DIVING)
+        if (state != Aerial_attack_state_e.DIVING)
         {
-            state = Aerial_attack_state_e.COOLING_DOWN;
+            return;
         }
+
+        state = Aerial_attack_state_e.COOLING_DOWN;
+        shockwave.SetActive(true);
+        shockwave.GetComponent<Shockwave>().start_shockwave();
     }// notify_dive_landed
 
     //--------------------------------------------------------------------------

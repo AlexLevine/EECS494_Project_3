@@ -23235,29 +23235,29 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 415782, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+    - target: {fileID: 429394, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: .00999999978
       objectReference: {fileID: 0}
-    - target: {fileID: 415782, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+    - target: {fileID: 429394, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: .00999999978
       objectReference: {fileID: 0}
-    - target: {fileID: 415782, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+    - target: {fileID: 429394, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
       propertyPath: m_LocalScale.z
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 13541432, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 406342, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 406342, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 406342, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
+    - target: {fileID: 2399860, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5cecb92bf3ccb4ec0b97c5882e00f3ad, type: 2}
+    - target: {fileID: 126280, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}

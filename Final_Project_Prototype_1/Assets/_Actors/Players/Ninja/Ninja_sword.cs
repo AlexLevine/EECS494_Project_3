@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Ninja_sword : MonoBehaviour
 {
+    public static string global_name = "ninja_sword";
+
     public GameObject hit_sound_player;
 
     public bool is_swinging = false;
@@ -14,6 +16,13 @@ public class Ninja_sword : MonoBehaviour
             return 5;
         }
     }// attack_power
+
+    //--------------------------------------------------------------------------
+
+    void Awake()
+    {
+        name = global_name;
+    }
 
     //--------------------------------------------------------------------------
 

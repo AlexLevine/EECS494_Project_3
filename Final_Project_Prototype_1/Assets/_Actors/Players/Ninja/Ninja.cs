@@ -34,6 +34,13 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
+    public static Ninja_sword get_sword()
+    {
+        return instance.sword_obj.GetComponent<Ninja_sword>();
+    }// get_sword
+
+    //--------------------------------------------------------------------------
+
     public override void Awake()
     {
         base.Awake();
