@@ -9,9 +9,6 @@ public enum Sword_state_e
 
 public class Sword_swing : MonoBehaviour
 {
-    public GameObject sword;
-    public GameObject sword_swing_end;
-
     public Vector3 sword_neutral_pos;
     public Vector3 sword_neutral_rotation;
 
@@ -21,41 +18,24 @@ public class Sword_swing : MonoBehaviour
 
     public GameObject swing_sound_player;
 
+    private GameObject sword;
     private float swing_speed = 540;
 
-    void Start ()
+    void Start()
     {
+        sword = Ninja.get().sword_obj;
+
         sword_neutral_pos = sword.transform.localPosition;
         sword_neutral_rotation = sword.transform.localEulerAngles;
     }
 
-    void Update ()
+    void Update()
     {
         switch(state)
         {
         case Sword_state_e.IDLE:
             break;
         case Sword_state_e.SWINGING:
-            // sword.transform.localPosition = Vector3.Lerp(
-            //     sword.transform.localPosition,
-            //     sword_swing_end.transform.localPosition,
-            //     0.05f);
-
-            // sword.transform.localEulerAngles = Vector3.RotateTowards(
-            //     sword.transform.localEulerAngles,
-            //     sword_swing_end.transform.localEulerAngles,
-            //     0.5f, 0f);
-
-
-            // var distance_to_end = Vector3.Distance(
-            //     sword.transform.localPosition,
-            //     sword_swing_end.transform.localPosition);
-            // // print(distance_to_end);
-            // if (distance_to_end >= 0.1f)
-            // {
-            //     return;
-            // }
-
             sword.transform.RotateAround(
                 transform.position, Vector3.up, -swing_speed * Time.deltaTime);
 

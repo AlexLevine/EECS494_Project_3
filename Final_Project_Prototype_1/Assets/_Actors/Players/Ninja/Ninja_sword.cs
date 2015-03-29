@@ -33,7 +33,7 @@ public class Ninja_sword : MonoBehaviour
         var knockback_velocity = Ninja.get().transform.forward * attack_power;
         enemy.receive_hit(attack_power, knockback_velocity, gameObject);
 
-        hit_sound_player.GetComponent<AudioSource>().Play();
+        // hit_sound_player.GetComponent<AudioSource>().Play();
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------
