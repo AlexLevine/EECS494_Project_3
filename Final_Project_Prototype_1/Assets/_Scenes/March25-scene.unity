@@ -7460,6 +7460,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2118324779}
   m_RootOrder: 10
+--- !u!1 &451544837
+GameObject:
+  m_PrefabParentObject: {fileID: 196572, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+  m_PrefabInternal: {fileID: 864617100}
 --- !u!1001 &452289853
 Prefab:
   m_ObjectHideFlags: 0
@@ -14667,6 +14671,10 @@ Prefab:
       propertyPath: lock_on_bar
       value: 
       objectReference: {fileID: 2066663192}
+    - target: {fileID: 11491198, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+      propertyPath: swing_sound_player
+      value: 
+      objectReference: {fileID: 451544837}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
   m_IsPrefabParent: 0

@@ -872,9 +872,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d185c93f3a82f4aa5f91add70dcb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sword_neutral_position: {fileID: 0}
-  sword_attack_position: {fileID: 0}
-  shockwave: {fileID: 0}
+  sword_neutral_position: {fileID: 124522}
+  sword_attack_position: {fileID: 186690}
+  shockwave: {fileID: 126280}
 --- !u!114 &11491198
 MonoBehaviour:
   m_ObjectHideFlags: 1

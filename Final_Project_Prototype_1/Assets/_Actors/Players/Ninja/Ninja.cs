@@ -81,7 +81,7 @@ public class Ninja : Player_character
 
             //out_of_range
             if (o_o_r++==1){
-                GetComponent<Renderer>().material = normal;
+                body.GetComponent<Renderer>().material = normal;
             }
 
             return;
@@ -109,7 +109,7 @@ public class Ninja : Player_character
         if (!is_grounded)
         {
             GetComponent<Aerial_attack>().start_attack();
-        	return;
+            return;
         }
         GetComponent<Sword_swing>().swing();
     }// physical_attack
