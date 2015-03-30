@@ -114,13 +114,19 @@ public class Llama : Player_character
             return;
         }
 
-        var angle = Vector3.Angle(transform.forward, target_velocity);
+        //var angle = Vector3.Angle(transform.forward, target_velocity);
+        
+        //SCIENCE!
+        var dot_product = transform.forward.x*target_velocity.x + transform.forward.z*target_velocity.z;
+        var determinant = transform.forward.x*target_velocity.z - transform.forward.z*target_velocity.x;
+        var angle = Mathf.Atan2(determinant,dot_product); //gives an angle in (-180,180]
+        
         if (angle > 20)
         {
             return;
         }
-        
-		print(angle);
+
+		// print(angle);
         target_velocity = target_velocity.normalized * charge_speed;
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity
@@ -152,8 +158,8 @@ public class Llama : Player_character
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
         is_cooling_down = true;
     }// projectile_attack
-    
-    
+
+
 
     //--------------------------------------------------------------------------
 
@@ -203,15 +209,5 @@ public class Llama : Player_character
             bounce = true;
         }
     }
-
-    //--------------------------------------------------------------------------
-
-    public override int max_health
-    {
-        get
-        {
-            return 10;
-        }
-    }// max_health
 }
 

@@ -3,9 +3,16 @@ using System.Collections;
 
 public class Llama_spit : MonoBehaviour
 {
+    public static string global_name = "llama_spit";
+
     public int attack_power { get { return 5; } }
 
     public float time_left = 0.7f;
+
+    void Awake()
+    {
+        name = global_name;
+    }
 
     void Update()
     {

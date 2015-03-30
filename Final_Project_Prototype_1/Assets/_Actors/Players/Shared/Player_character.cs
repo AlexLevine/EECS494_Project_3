@@ -11,6 +11,8 @@ public class Player_character : Actor
     public float skin_width = 0.01f;
     public int collectable_count=0;
 
+
+    public override int max_health { get { return 10; } }
     public bool is_grounded { get { return on_ground; } }
     // public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
@@ -23,7 +25,6 @@ public class Player_character : Actor
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
-    public bool is_aerial { get { return aerial; } }
 
     //--------------------------------------------------------------------------
 
@@ -45,8 +46,7 @@ public class Player_character : Actor
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
-    public bool aerial = false;
-    
+
     // private bool is_jumping = false;
 
     public GameObject  lock_on_bar = null; 
@@ -90,14 +90,11 @@ public class Player_character : Actor
         {
             // velocity_.y = 0;
             time_in_air = 0;
-            aerial = false;
         }
         else
         {
             time_in_air += Time.deltaTime;
         }
-        
-        if (!is_aerial) velocity_.y += gravity * Time.deltaTime;
 
         // process_input();
         move(velocity_ * Time.deltaTime, true);
@@ -116,6 +113,7 @@ public class Player_character : Actor
     // appropriate.
     // For example, the player should change direction more slowly while in
     // the air.
+    // Also applies gravity.
     public virtual void update_movement_velocity(Vector3 target_velocity)
     {
         // if (is_teamed_up)
@@ -123,6 +121,7 @@ public class Player_character : Actor
         //     target_velocity = target_velocity.magnitude *
         //                       Camera.main.transform.forward;
         // }
+        velocity_.y += gravity * Time.deltaTime;
 
         if (is_grounded || is_jumping)
         {

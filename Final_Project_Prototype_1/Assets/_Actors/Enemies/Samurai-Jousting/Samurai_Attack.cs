@@ -357,21 +357,27 @@ public class Samurai_Attack : Enemy {
             return 20;
         }
     }
-    
+
     // -------------------------------------------------------------------------
 
-    public override void receive_hit(int damage, Vector3 knockback_velocity, GameObject attacker)
+    public override bool receive_hit(
+        int damage, Vector3 knockback_velocity, GameObject attacker)
     {
-        if(attacker.name.Contains("llama_spit"))
-        {
-            return; 
-        }
-        if(attacker.name.Contains("ninja_sword"))
+        // if(attacker.name.Contains("llama_spit"))
+        // {
+        //     return;
+        // }
+        if(attacker.name.Contains(Ninja_sword.global_name))
         {
             Ninja.get().receive_hit(0, transform.forward * attack_power, attacker);
-            return; 
+            return false;
         }
 
-        base.receive_hit(damage, knockback_velocity, attacker);
+        if (!attacker.name.Contains(Ninja_jousting_pole.global_name))
+        {
+            return false;
+        }
+
+        return base.receive_hit(damage, knockback_velocity, attacker);
     }
 }
