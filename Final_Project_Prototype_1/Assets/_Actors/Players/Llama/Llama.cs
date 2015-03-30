@@ -115,19 +115,30 @@ public class Llama : Player_character
         }
 
         //var angle = Vector3.Angle(transform.forward, target_velocity);
-        
+
         //SCIENCE!
-        var dot_product = transform.forward.x*target_velocity.x + transform.forward.z*target_velocity.z;
-        var determinant = transform.forward.x*target_velocity.z - transform.forward.z*target_velocity.x;
-        var angle = Mathf.Atan2(determinant,dot_product); //gives an angle in (-180,180]
-        
-        if (angle > 20)
+        var dot_product = transform.forward.x * target_velocity.x +
+                          transform.forward.z * target_velocity.z;
+        var determinant = transform.forward.x * target_velocity.z -
+                          transform.forward.z * target_velocity.x;
+        //gives an angle in (-180,180]
+        var angle = Mathf.Rad2Deg * Mathf.Atan2(determinant, dot_product);
+        // print(angle);
+
+        var charge_direction = transform.forward;
+
+        print(angle);
+        print(target_velocity.magnitude);
+        if (Mathf.Abs(angle) > 20 && target_velocity.magnitude > 1f)
         {
-            return;
+            var rotate_amount = Quaternion.AngleAxis(
+                angle < 0 ? 1f : -1f, Vector3.up);
+            print(rotate_amount);
+            charge_direction = rotate_amount * charge_direction;
         }
 
 		// print(angle);
-        target_velocity = target_velocity.normalized * charge_speed;
+        target_velocity = charge_direction.normalized * charge_speed;
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity
 
