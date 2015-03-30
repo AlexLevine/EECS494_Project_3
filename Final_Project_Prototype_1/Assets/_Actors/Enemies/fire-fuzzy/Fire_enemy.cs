@@ -36,7 +36,7 @@ public class Fire_enemy : Enemy {
     {
         get
         {
-            return 5;
+            return 10;
         }
     }
 
@@ -49,7 +49,7 @@ public class Fire_enemy : Enemy {
         ++destination_index;
         on_fire = true;
         
-		int rand = Random.Range (0, 10);
+        int rand = Random.Range (0, 10);
         puff_timer = base_puff_timer * rand;
     }// Start
 
@@ -57,15 +57,16 @@ public class Fire_enemy : Enemy {
 
     void FixedUpdate()
     {
-    	if (!puffing) {
-    		if (puff_timer <= 0) {
-				int rand = Random.Range (0, 10);
-    			puff_timer = base_puff_timer * rand;
-    			puffing = true;
-    			StartCoroutine( puff());
-    		} else -- puff_timer;
-    	}
-    	
+
+        if (!puffing) {
+            if (puff_timer <= 0) {
+                int rand = Random.Range (0, 10);
+                puff_timer = base_puff_timer * rand;
+                puffing = true;
+                StartCoroutine( puff());
+            } else -- puff_timer;
+        }
+        
         // base.Update ();
         if (being_knocked_back)
         {
@@ -93,17 +94,17 @@ public class Fire_enemy : Enemy {
     }// Update
     
     private IEnumerator puff () {
-		CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
-		ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
-    	float radius = collider.radius;
-    	float particleSize = particles.startSize;
-    	for (int i = 0; i < 25; ++i) {
-    		collider.radius *= 1.05f;
-			particles.startSize *= 1.05f;
-			yield return new WaitForSeconds(.02f);
-    	}
-    	collider.radius = radius;
-    	particles.startSize = particleSize;
-    	puffing = false;
+        CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
+        ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
+        float radius = collider.radius;
+        float particleSize = particles.startSize;
+        for (int i = 0; i < 25; ++i) {
+            collider.radius *= 1.05f;
+            particles.startSize *= 1.05f;
+            yield return new WaitForSeconds(.1f);
+        }
+        collider.radius = radius;
+        particles.startSize = particleSize;
+        puffing = false;
     }
 }
