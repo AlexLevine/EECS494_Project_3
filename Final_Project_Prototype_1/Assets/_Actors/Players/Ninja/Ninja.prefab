@@ -890,7 +890,7 @@ MonoBehaviour:
   sword_neutral_rotation: {x: 0, y: 0, z: 0}
   state: 0
   angle_distance_swung: 0
-  swing_sound_player: {fileID: 0}
+  swing_sound_player: {fileID: 196572}
 --- !u!114 &11495020
 MonoBehaviour:
   m_ObjectHideFlags: 1
