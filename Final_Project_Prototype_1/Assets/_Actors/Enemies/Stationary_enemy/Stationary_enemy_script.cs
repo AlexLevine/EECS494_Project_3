@@ -6,8 +6,7 @@ public class Stationary_enemy_script : Enemy {
 
 	public GameObject projectile_prefab;
 	public float spawn_distance;
-	
-	public int num_to_spawn;
+
 	public int time_between_spawns;
 	private int timer;
 	

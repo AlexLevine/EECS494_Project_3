@@ -25,6 +25,23 @@ public class projectile2_script : Enemy {
 
 	// Use this for initialization
 	void Start () {
+		var llama_pos = Llama.get().transform.position;
+		var ninja_pos = Ninja.get().transform.position;
+		
+		var llama_distance = Vector3.Distance(llama_pos, transform.position);
+		var ninja_distance = Vector3.Distance(ninja_pos, transform.position);
+		
+		if (llama_distance < ninja_distance) {
+			// attack llama:
+			angle = llama_pos - this.transform.position;
+		} else {
+			// attack ninja
+			angle = ninja_pos - this.transform.position;
+		}
+		
+		angle.Normalize ();
+		
+	
 		this.GetComponent<Rigidbody>().velocity = angle * speed;
 	}
 	
