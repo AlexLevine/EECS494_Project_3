@@ -7,6 +7,8 @@ public class Enemy : Actor
 {
     public static List<GameObject> enemies = new List<GameObject>();
 
+    public virtual int score_when_killed { get { return 1; } }
+
     public virtual void Awake()
     {
         enemies.Add(gameObject);
@@ -71,6 +73,37 @@ public class Enemy : Actor
         //     (GameObject obj) => Vector3.Distance(
         //         transform.position, obj.transform.position));
     }// get_closest_potential_lock_on_target
+
+    //--------------------------------------------------------------------------
+
+    public override bool receive_hit(
+        int damage, Vector3 knockback_velocity, GameObject attacker)
+    {
+        var will_die = base.receive_hit(damage, knockback_velocity, attacker);
+        if (!will_die)
+        {
+            return false;
+        }
+
+        if (attacker.name == Ninja_sword.global_name)
+        {
+            Timer.num_enemies_killed_by_ninja += score_when_killed;
+        }
+
+        if (attacker.name == Llama_spit.global_name)
+        {
+            Timer.num_enemies_killed_by_llama += score_when_killed;
+        }
+
+        if (attacker.name == Ninja_jousting_pole.global_name)
+        {
+            Timer.num_enemies_killed_by_ninja += score_when_killed;
+            Timer.num_enemies_killed_by_llama += score_when_killed;
+        }
+
+        return true;
+    }
+
 
     //--------------------------------------------------------------------------
 

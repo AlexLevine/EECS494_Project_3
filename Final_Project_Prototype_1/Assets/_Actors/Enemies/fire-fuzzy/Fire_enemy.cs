@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+//using System;
 
 public class Fire_enemy : Enemy {
 
@@ -13,7 +13,7 @@ public class Fire_enemy : Enemy {
     public bool on_fire;
     
     private int puff_timer;
-    const int full_puff_timer = 200;
+    const int base_puff_timer = 100;
     public bool puffing = false;
     // private bool stunned;
 //  private int stunned_timer;
@@ -48,7 +48,9 @@ public class Fire_enemy : Enemy {
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
         on_fire = true;
-        puff_timer = full_puff_timer;
+        
+		int rand = Random.Range (0, 10);
+        puff_timer = base_puff_timer * rand;
     }// Start
 
     //--------------------------------------------------------------------------
@@ -57,7 +59,8 @@ public class Fire_enemy : Enemy {
     {
     	if (!puffing) {
     		if (puff_timer <= 0) {
-    			puff_timer = full_puff_timer;
+				int rand = Random.Range (0, 10);
+    			puff_timer = base_puff_timer * rand;
     			puffing = true;
     			StartCoroutine( puff());
     		} else -- puff_timer;
@@ -97,7 +100,7 @@ public class Fire_enemy : Enemy {
     	for (int i = 0; i < 25; ++i) {
     		collider.radius *= 1.05f;
 			particles.startSize *= 1.05f;
-			yield return new WaitForSeconds(.1f);
+			yield return new WaitForSeconds(.02f);
     	}
     	collider.radius = radius;
     	particles.startSize = particleSize;

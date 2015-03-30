@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
+    public GameObject body;
     public GameObject pole_rotation_point;
 
     public GameObject projectile_prefab;
@@ -31,6 +32,13 @@ public class Ninja : Player_character
     {
         return instance;
     }// get
+
+    //--------------------------------------------------------------------------
+
+    public static Ninja_sword get_sword()
+    {
+        return instance.sword_obj.GetComponent<Ninja_sword>();
+    }// get_sword
 
     //--------------------------------------------------------------------------
 
@@ -98,13 +106,14 @@ public class Ninja : Player_character
             Llama.get().charge();
             return;
         }
-        if (!is_grounded){
-        	aerial=true;
+        if (!is_grounded)
+        {
+            GetComponent<Aerial_attack>().start_attack();
         	return;
         }
         GetComponent<Sword_swing>().swing();
     }// physical_attack
-    
+
 
     //--------------------------------------------------------------------------
 
@@ -186,6 +195,11 @@ public class Ninja : Player_character
         // }
 
         base.move(delta_position, apply_rotation);
+
+        if (is_grounded && GetComponent<Aerial_attack>().is_diving)
+        {
+            GetComponent<Aerial_attack>().notify_dive_landed();
+        }
     }// move
 
     //--------------------------------------------------------------------------
@@ -212,8 +226,8 @@ public class Ninja : Player_character
         if (distance > 10f || blocked)
         {
             print("out of range");
-            normal = GetComponent<Renderer>().material;
-            GetComponent<Renderer>().material = out_of_range;
+            normal = body.GetComponent<Renderer>().material;
+            body.GetComponent<Renderer>().material = out_of_range;
             o_o_r = 0;
             return;
         }
@@ -226,6 +240,8 @@ public class Ninja : Player_character
 
     }// team_up_engage_or_throw
 
+    //--------------------------------------------------------------------------
+
     public override void collision_safe_rotate_towards(
         Vector3 direction, float step)
     {
@@ -233,7 +249,20 @@ public class Ninja : Player_character
         {
             base.collision_safe_rotate_towards(direction, step);
         }
-    }
+    }// collision_safe_rotate_towards
+
+    //--------------------------------------------------------------------------
+
+    public override void update_movement_velocity(Vector3 target_velocity)
+    {
+        // Aerial attack takes control of movement.
+        if (GetComponent<Aerial_attack>().is_playing)
+        {
+            return;
+        }
+
+        base.update_movement_velocity(target_velocity);
+    }// update_movement_velocity
 
     //--------------------------------------------------------------------------
 
@@ -289,13 +318,13 @@ public class Ninja : Player_character
     //--------------------------------------------------------------------------
 
 
-    public override int max_health
-    {
-        get
-        {
-            return 10;
-        }
-    }// max_health
+    // public override int max_health
+    // {
+    //     get
+    //     {
+    //         return 10;
+    //     }
+    // }// max_health
 
     //--------------------------------------------------------------------------
 

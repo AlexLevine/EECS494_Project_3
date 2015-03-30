@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Ninja_jousting_pole : MonoBehaviour
 {
+    public static string global_name = "ninja_jousting_pole";
+
     public int attack_power
     {
         get
@@ -10,6 +12,13 @@ public class Ninja_jousting_pole : MonoBehaviour
             return 10;
         }
     }// attack_power
+
+    //--------------------------------------------------------------------------
+
+    void Awake()
+    {
+        name = global_name;
+    }
 
     //--------------------------------------------------------------------------
 
@@ -37,6 +46,8 @@ public class Ninja_jousting_pole : MonoBehaviour
         }
 
         var knockback = transform.forward * attack_power;
+        knockback.y = 0;
+
         enemy.receive_hit(attack_power, knockback, gameObject);
     }// OnTriggerEnter
 
