@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ninja : Player_character
 {
+    public GameObject body;
     public GameObject pole_rotation_point;
 
     public GameObject projectile_prefab;
@@ -225,8 +226,8 @@ public class Ninja : Player_character
         if (distance > 10f || blocked)
         {
             print("out of range");
-            normal = GetComponent<Renderer>().material;
-            GetComponent<Renderer>().material = out_of_range;
+            normal = body.GetComponent<Renderer>().material;
+            body.GetComponent<Renderer>().material = out_of_range;
             o_o_r = 0;
             return;
         }
