@@ -453,6 +453,8 @@ MonoBehaviour:
   min_move_distance: .00999999978
   skin_width: .100000001
   collectable_count: 0
+  aerial: 0
+  lock_on_bar: {fileID: 0}
   pole_rotation_point: {fileID: 178892}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 135138}

@@ -46,9 +46,10 @@ public class Player_character : Actor
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
     public bool aerial = false;
-	
+    
     // private bool is_jumping = false;
 
+    public GameObject  lock_on_bar = null; 
     private GameObject lock_on_target = null;
     // private float y_velocity = 0;
 
@@ -204,37 +205,29 @@ public class Player_character : Actor
 
         if (is_locked_on)
         {
-			//turn off halo for lock_on_target
-			if (lock_on_target.transform.Find("Cylinder"))
-            {
-				lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
-            }
+            lock_on_bar.GetComponent<Lock_on_health_bar>().target = null; 
             lock_on_target = null;
             return;
         }
 
         var closest_enemy = Enemy.get_closest_potential_lock_on_target(
-            gameObject);
+                                                                    gameObject);
+
         var enemy_on_screen = Camera_follow.point_in_viewport(
-            closest_enemy.transform.position);
+                                              closest_enemy.transform.position);
+
+
         if (closest_enemy == null || !enemy_on_screen)
         {
             return;
         }
 
-        // var distance = Vector3.Distance(
-        //     transform.position, closest_enemy.transform.position);
-        // print("distance: " + distance);
-        // if (distance > 10f)
-        // {
-        //     return;
-        // }
-
         lock_on_target = closest_enemy;
-		if (lock_on_target.transform.Find("Cylinder"))
-        {
-			lock_on_target.transform.Find("Cylinder").gameObject.SetActive(true);
-        }
+            
+        lock_on_bar.GetComponent<Lock_on_health_bar>().target = lock_on_target; 
+        lock_on_bar.SetActive(true);
+
+
         look_toward(lock_on_target);
     }// toggle_lock_on
 

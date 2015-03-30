@@ -7,6 +7,13 @@ public class Health_gui : MonoBehaviour {
 
     Ninja ninja;
     Llama llama;
+
+
+    void Start()
+    {
+        ninja = Ninja.get();
+        llama = Llama.get();
+    }
     
     public Slider llama_health, ninja_health;     
 
