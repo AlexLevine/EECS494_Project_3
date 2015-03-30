@@ -14,7 +14,7 @@ public class Collectable : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other){
-		if (other.GetComponent<CharacterController>()){
+		if (other.GetComponent<Player_character>()){
 			Player_character p = other.GetComponent<Player_character>();
 			p.collectable_count++;
 			Destroy(gameObject);

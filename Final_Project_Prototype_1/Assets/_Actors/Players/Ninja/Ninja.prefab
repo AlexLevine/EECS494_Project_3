@@ -16,6 +16,7 @@ GameObject:
   - 143: {fileID: 14392956}
   - 114: {fileID: 11408552}
   - 114: {fileID: 11495020}
+  - 114: {fileID: 11427396}
   m_Layer: 0
   m_Name: Ninja
   m_TagString: Player
@@ -439,6 +440,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_playing: 0
+--- !u!114 &11427396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d185c93f3a82f4aa5f91add70dcb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11441846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -453,6 +465,7 @@ MonoBehaviour:
   min_move_distance: .00999999978
   skin_width: .100000001
   collectable_count: 0
+  aerial: 0
   pole_rotation_point: {fileID: 178892}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   jousting_pole: {fileID: 135138}
