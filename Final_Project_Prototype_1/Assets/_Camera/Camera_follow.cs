@@ -85,7 +85,7 @@ public class Camera_follow : MonoBehaviour
         var reached_rotation = Mathf.Abs(
             Quaternion.Angle(transform.rotation, new_rotation)) < 0.01f;
 
-        if (is_transitioning && reached_pos && reached_rotation)
+        if (is_transitioning && reached_rotation)
         {
             is_transitioning = false;
         }
