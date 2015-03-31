@@ -41,6 +41,7 @@ public class Knockback_animation : MonoBehaviour
 
         if (die_when_finished_)
         {
+            die_when_finished_ = false; 
             actor.on_death();
         }
 

@@ -129,10 +129,10 @@ public class Actor : MonoBehaviour
         {
             return false;
         }
-        if(Llama.get().is_charging)
-        {
-            return false; 
-        }
+        // if(Llama.get().is_charging)
+        // {
+        //     return false; 
+        // }
 
 
         health_ -= damage;
@@ -159,6 +159,11 @@ public class Actor : MonoBehaviour
     {
 
     }// on_death
+
+    protected void reset_health()
+    {
+        health_ = max_health;
+    }
 
     //--------------------------------------------------------------------------
 

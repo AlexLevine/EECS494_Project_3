@@ -176,6 +176,9 @@ public class Player_character : Actor
 
     public override void on_death()
     {
+        reset_health(); 
+        Checkpoint.load_last_checkpoint();
+
         print("you die!");
     }// on_death
 

@@ -114,7 +114,8 @@ public class Enemy : Actor
     public virtual void OnTriggerEnter(Collider c)
     {
         var player = c.gameObject.GetComponent<Player_character>();
-        if (player == null || being_knocked_back)
+        var flash_animation_playing = GetComponent<Flash_animation>().is_playing;
+        if (player == null || being_knocked_back || flash_animation_playing)
         {
             return;
         }

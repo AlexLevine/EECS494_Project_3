@@ -2,36 +2,56 @@
 using System.Collections;
 
 public class Checkpoint : MonoBehaviour {
-	public Vector3[] checkpoints;
-	public GameObject ll;
-	public GameObject nin;
-	public Vector3 current_ckpt;
-	public int current_index;
+    static public GameObject last_checkpoint = null; 
 
-	// Use this for initialization
-	void Start () {
-		current_ckpt = checkpoints[0];
-		current_index = 0;
-	}
 
-	// Update is called once per frame
-	void Update () {
+    private bool ninja_passed_checkpoint = false;
+    private bool llama_passed_checkpoint = false;
 
-	}
+    
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject == Llama.get().gameObject)
+        {
+            llama_passed_checkpoint = true; 
+        }
+        if(other.gameObject == Ninja.get().gameObject)
+        {
+            ninja_passed_checkpoint = true; 
+        }
 
-	void FixedUpdate(){
-		if (ll.transform.position.z>= checkpoints[current_index+1].z &&
-		    nin.transform.position.z>= checkpoints[current_index+1].z){
-			current_index++;
-			current_ckpt = checkpoints[current_index];
-		}
-		//print(current_ckpt);
+        if(!llama_passed_checkpoint || !ninja_passed_checkpoint)
+        {
+            return;
+        }
 
-		//if fallen off stage
-		if (ll.transform.position.y<=-20 || nin.transform.position.y<=-20){
-			ll.transform.position = current_ckpt + new Vector3(2,0,0);
-			nin.transform.position = current_ckpt - new Vector3(2,0,0);
-		}
+        // if(last_checkpoint != null)
+        // {
+        //     print("last_checkpoint:" + last_checkpoint);
+        //     last_checkpoint.GetComponent<Checkpoint>().ninja_passed_checkpoint = false;
+        //     last_checkpoint.GetComponent<Checkpoint>().llama_passed_checkpoint = false;
+        // }
 
-	}
+        last_checkpoint = gameObject; 
+    }
+    
+    public void OnTriggerStay(Collider other)
+    {
+        OnTriggerEnter(other);
+    }
+
+    public static void load_last_checkpoint()
+    {
+        // display prompt
+        // do whatever
+
+        var new_llama_pos = last_checkpoint.transform.position;
+        var new_ninja_pos = new_llama_pos;
+
+        new_ninja_pos.x += 2;
+
+        Ninja.get().gameObject.transform.position = new_ninja_pos;
+        Llama.get().gameObject.transform.position = new_llama_pos;
+    }
+    
 }
