@@ -103,7 +103,6 @@ public class Ninja : Player_character
     {
         if(is_teamed_up)
         {
-            Llama.get().charge();
             return;
         }
         if (!is_grounded)

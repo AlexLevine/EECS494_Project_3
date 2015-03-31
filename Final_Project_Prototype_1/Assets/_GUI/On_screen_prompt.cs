@@ -20,8 +20,6 @@ public class On_screen_prompt : MonoBehaviour {
         cur_time = 0; 
         instantiated = false; 
         // top 25% of the screen, in the middle
-        prompt_location_x = (float)(Screen.width * .5);
-        prompt_location_y = (float)(Screen.height * .9);
     }
 
     // Update is called once per frame
@@ -45,6 +43,9 @@ public class On_screen_prompt : MonoBehaviour {
             return; 
         }
 
+        prompt_location_x = (float)(Screen.width * .5);
+        prompt_location_y = (float)(Screen.height * .9);
+        
         instantiate_object();
         instantiated = true; 
     }

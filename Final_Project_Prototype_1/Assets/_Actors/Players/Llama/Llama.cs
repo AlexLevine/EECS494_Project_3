@@ -137,7 +137,7 @@ public class Llama : Player_character
             charge_direction = rotate_amount * charge_direction;
         }
 
-		// print(angle);
+        // print(angle);
         target_velocity = charge_direction.normalized * charge_speed;
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity
@@ -155,6 +155,12 @@ public class Llama : Player_character
     {
         if(is_cooling_down)
         {
+            return;
+        }
+
+        if (is_teamed_up)
+        {
+            charge(); 
             return;
         }
 

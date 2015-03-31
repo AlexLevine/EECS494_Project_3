@@ -129,6 +129,11 @@ public class Actor : MonoBehaviour
         {
             return false;
         }
+        if(Llama.get().is_charging)
+        {
+            return false; 
+        }
+
 
         health_ -= damage;
 
