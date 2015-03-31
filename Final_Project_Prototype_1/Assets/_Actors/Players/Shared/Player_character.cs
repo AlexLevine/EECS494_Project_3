@@ -19,7 +19,7 @@ public class Player_character : Actor
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
     public float jump_speed { get { return 15f; } }
-    public float run_speed { get { return 7f; } }
+    public float run_speed { get { return 10f; } }
     public float acceleration { get { return 30f; } }
 
     public Vector3 velocity { get { return velocity_; } }
@@ -49,7 +49,7 @@ public class Player_character : Actor
 
     // private bool is_jumping = false;
 
-    public GameObject  lock_on_bar = null; 
+    public GameObject  lock_on_bar = null;
     private GameObject lock_on_target = null;
     // private float y_velocity = 0;
 
@@ -204,7 +204,7 @@ public class Player_character : Actor
 
         if (is_locked_on)
         {
-            lock_on_bar.GetComponent<Lock_on_health_bar>().target = null; 
+            lock_on_bar.GetComponent<Lock_on_health_bar>().target = null;
             lock_on_target = null;
             return;
         }
@@ -222,8 +222,8 @@ public class Player_character : Actor
         }
 
         lock_on_target = closest_enemy;
-            
-        lock_on_bar.GetComponent<Lock_on_health_bar>().target = lock_on_target; 
+
+        lock_on_bar.GetComponent<Lock_on_health_bar>().target = lock_on_target;
         lock_on_bar.SetActive(true);
 
 

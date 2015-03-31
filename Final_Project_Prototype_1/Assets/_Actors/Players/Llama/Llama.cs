@@ -18,7 +18,7 @@ public class Llama : Player_character
     private static float charge_duration = 1f;
     private float time_spent_charging = 0;
     private bool is_charging_;
-    public float charge_speed { get { return run_speed * 3; } }
+    public float charge_speed { get { return run_speed * 2; } }
     // private float pre_charge_speed;
 
     //--------------------------------------------------------------------------

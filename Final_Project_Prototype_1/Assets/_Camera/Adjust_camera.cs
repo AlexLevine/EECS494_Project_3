@@ -50,8 +50,8 @@ public class Adjust_camera : MonoBehaviour
                 camera_follow_distance: camera_follow_distance,
                 camera_hover_height: camera_hover_height);
 
-            set_as_current_camera_angle();
-            // is_current_camera_angle = true;
+            // set_as_current_camera_angle();
+            is_current_camera_angle = true;
         }
     }
 
@@ -65,11 +65,20 @@ public class Adjust_camera : MonoBehaviour
         if (c.gameObject == Llama.get().gameObject)
         {
             llama_inside = false;
+            if (Llama.get().is_teamed_up)
+            {
+                ninja_inside = false;
+            }
         }
 
         if (c.gameObject == Ninja.get().gameObject)
         {
             ninja_inside = false;
+        }
+
+        if (!llama_inside && !ninja_inside)
+        {
+            is_current_camera_angle = false;
         }
     }
 
