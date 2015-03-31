@@ -3751,8 +3751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 0
-  camera_hover_height: 0
+  camera_follow_distance: 12
+  camera_hover_height: 7
 --- !u!1 &283077728
 GameObject:
   m_ObjectHideFlags: 0
