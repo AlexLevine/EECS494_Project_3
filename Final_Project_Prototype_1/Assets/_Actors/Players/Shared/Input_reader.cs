@@ -83,6 +83,16 @@ public class Input_reader : MonoBehaviour
             pc.attack();
         }
 
+        if (input_device.GetControl(InputControlType.Action3).IsPressed)
+        {
+            pc.charge();
+        }
+
+        if (input_device.GetControl(InputControlType.Action3).WasReleased)
+        {
+            pc.stop_charge();
+        }
+
         if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
            input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
            pc.is_locked_on)

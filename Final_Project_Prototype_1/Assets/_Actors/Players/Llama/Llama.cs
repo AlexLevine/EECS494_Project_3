@@ -8,16 +8,26 @@ public class Llama : Player_character
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
-    public bool is_cooling_down = false;
-    public float max_cooldown_time, cur_cooldown_time;
+    public bool spit_is_cooling_down = false;
+    private static float max_spit_cooldown_time = 0.5f;
+    private float cur_spit_cooldown_time = 0;
 
-    public bool is_charging { get { return is_charging_; } }
+    private enum Charge_state_e
+    {
+        NOT_CHARGING,
+        CHARGING,
+        COOLING_DOWN
+    }
+
+    private Charge_state_e charge_state;
+
+    public bool is_charging { get {
+        return charge_state != Charge_state_e.NOT_CHARGING; } }
 
     private static Llama instance;
 
-    private static float charge_duration = 1f;
-    private float time_spent_charging = 0;
-    private bool is_charging_;
+    private static float charge_cooldown_duration = 0.1f;
+    private float time_spent_cooling_down_charge = 0;
     public float charge_speed { get { return run_speed * 2; } }
     // private float pre_charge_speed;
 
@@ -47,7 +57,7 @@ public class Llama : Player_character
     public override void stop()
     {
         base.stop();
-        is_charging_ = false; 
+        charge_state = Charge_state_e.COOLING_DOWN;
     }
 
     //--------------------------------------------------------------------------
@@ -62,31 +72,36 @@ public class Llama : Player_character
         //     print(is_grounded);
         // }
 
-        if(is_cooling_down)
+        if(spit_is_cooling_down)
         {
-            cur_cooldown_time += Time.deltaTime;
-            if(cur_cooldown_time >= max_cooldown_time)
+            cur_spit_cooldown_time += Time.deltaTime;
+            if(cur_spit_cooldown_time >= max_spit_cooldown_time)
             {
 //                print("cooldown ended");
-                cur_cooldown_time = 0;
-                is_cooling_down = false;
+                cur_spit_cooldown_time = 0;
+                spit_is_cooling_down = false;
             }
         }
 
-        if (!is_charging)
+        switch (charge_state)
         {
-            return;
+        case Charge_state_e.NOT_CHARGING:
+            break;
+
+        case Charge_state_e.CHARGING:
+            break;
+
+        case Charge_state_e.COOLING_DOWN:
+            if (time_spent_cooling_down_charge >= charge_cooldown_duration)
+            {
+                charge_state = Charge_state_e.NOT_CHARGING;
+                time_spent_cooling_down_charge = 0;
+                break;
+            }
+
+            time_spent_cooling_down_charge += Time.deltaTime;
+            break;
         }
-
-        if (time_spent_charging >= charge_duration)
-        {
-            is_charging_ = false;
-            time_spent_charging = 0;
-            return;
-        }
-
-
-        time_spent_charging += Time.deltaTime;
     }// Update
 
     //--------------------------------------------------------------------------
@@ -138,7 +153,7 @@ public class Llama : Player_character
         if (Mathf.Abs(angle) > 20 && target_velocity.magnitude > 1f)
         {
             var rotate_amount = Quaternion.AngleAxis(
-                angle < 0 ? 1f : -1f, Vector3.up);
+                angle < 0 ? 2f : -2f, Vector3.up);
             print(rotate_amount);
             charge_direction = rotate_amount * charge_direction;
         }
@@ -159,14 +174,14 @@ public class Llama : Player_character
 
     public override void attack()
     {
-        if(is_cooling_down)
+        if(spit_is_cooling_down)
         {
             return;
         }
 
         if (is_teamed_up)
         {
-            charge(); 
+            // Input reader calls charge
             return;
         }
 
@@ -179,7 +194,7 @@ public class Llama : Player_character
 //        print(direction);
 
         spit.GetComponent<Rigidbody>().velocity = direction * 14f;
-        is_cooling_down = true;
+        spit_is_cooling_down = true;
     }// projectile_attack
 
 
@@ -188,21 +203,26 @@ public class Llama : Player_character
 
     public override void charge()
     {
-        if (!is_teamed_up || is_charging)
+        if (!is_teamed_up)
         {
             return;
         }
 
-        if (is_locked_on)
+        charge_state = Charge_state_e.CHARGING;
+        var new_velocity = transform.forward * charge_speed;
+        new_velocity.y = velocity.y;
+        apply_momentum(new_velocity);
+    }// charge
+
+    public override void stop_charge()
+    {
+        if (!is_charging)
         {
-            toggle_lock_on();
+            return;
         }
 
-        // pre_charge_speed = velocity.magnitude;
-        // pre_charge_speed.y = 0;
-        is_charging_ = true;
-        apply_momentum(transform.forward * charge_speed);
-    }// charge
+        charge_state = Charge_state_e.COOLING_DOWN;
+    }// stop_charge
 
     //--------------------------------------------------------------------------
 
@@ -221,7 +241,7 @@ public class Llama : Player_character
     {
         if(is_teamed_up)
         {
-            damage /= 2; 
+            damage /= 2;
             Ninja.get().receive_hit(damage, Vector3.zero, attacker);
         }
 

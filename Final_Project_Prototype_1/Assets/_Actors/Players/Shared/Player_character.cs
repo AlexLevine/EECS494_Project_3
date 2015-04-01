@@ -174,7 +174,7 @@ public class Player_character : Actor
 
     public override void on_death()
     {
-        reset_health(); 
+        reset_health();
         Checkpoint.load_last_checkpoint();
 
         print("you die!");
@@ -386,6 +386,11 @@ public class Player_character : Actor
     {
 
     }// charge
+
+    public virtual void stop_charge()
+    {
+
+    }// stop_charge
 
     //--------------------------------------------------------------------------
 
