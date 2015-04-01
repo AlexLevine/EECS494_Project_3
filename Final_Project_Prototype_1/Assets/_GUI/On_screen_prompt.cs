@@ -81,7 +81,9 @@ public class On_screen_prompt : MonoBehaviour {
         if(cur_time >= max_time_on_screen)
         {
             Destroy(instantiated_prompt);
-            Destroy(gameObject);
+            instantiated_prompt = null; 
+            instantiated = false; 
+            cur_time = 0; 
         }
     }
 }
