@@ -13,6 +13,11 @@ public class Checkpoint : MonoBehaviour {
     {
         if(other.gameObject == Llama.get().gameObject)
         {
+            if(Llama.get().is_teamed_up)
+            {
+                ninja_passed_checkpoint = true; 
+            }
+            
             llama_passed_checkpoint = true; 
         }
         if(other.gameObject == Ninja.get().gameObject)
@@ -52,6 +57,8 @@ public class Checkpoint : MonoBehaviour {
 
         Ninja.get().gameObject.transform.position = new_ninja_pos;
         Llama.get().gameObject.transform.position = new_llama_pos;
+
+        Samurai_Attack.get().notify_checkpoint_load();
     }
     
 }

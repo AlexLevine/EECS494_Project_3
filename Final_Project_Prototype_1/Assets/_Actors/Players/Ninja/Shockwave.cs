@@ -17,7 +17,7 @@ public class Shockwave : MonoBehaviour
     {
         while (transform.localScale.x < 3)
         {
-            transform.localScale += Vector3.one * 0.2f;
+            transform.localScale += Vector3.one * 0.4f;
             yield return new WaitForSeconds(0.001f);
         }
 

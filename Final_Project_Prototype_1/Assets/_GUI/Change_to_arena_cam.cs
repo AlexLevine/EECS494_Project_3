@@ -19,9 +19,7 @@ public class Change_to_arena_cam : MonoBehaviour
         // var arena_camera_script = Camera.main.GetComponent<Arena_camera>();
         // arena_camera_script.arena_center = arena_center;
         // arena_camera_script.enabled = true;
-
-        Destroy(gameObject);
-    }
+}
 
     void OnTriggerStay(Collider other)
     {
