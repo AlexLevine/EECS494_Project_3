@@ -270,7 +270,7 @@ public class Samurai_Attack : Enemy {
     {
         get
         {
-            return 20;
+            return 50;
         }
     }
 
