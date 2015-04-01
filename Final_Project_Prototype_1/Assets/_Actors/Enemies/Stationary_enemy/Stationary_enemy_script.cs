@@ -4,72 +4,92 @@ using System;
 
 public class Stationary_enemy_script : Enemy {
 
-	public GameObject projectile_prefab;
-	public float spawn_distance;
+    public GameObject projectile_prefab;
+    public GameObject projectile_spawn_point; 
+    private GameObject closest_player; 
+    public float spawn_distance; // radius an enemy must be in to start attacking
 
-	public int time_between_spawns;
-	private int timer;
-	
-	public bool _______________________________________;
-	
-	public bool is_spawning = false;
-	
-	//--------------------------------------------------------------------------
-	
-	
-	public override int attack_power
-	{
-		get
-		{
-			return 0;
-		}
-	}
-	
-	public override int max_health
-	{
-		get
-		{
-			return 5;
-		}
-	}
-	
-	// Use this for initialization
-	public override void Start()
-	{
-		base.Start ();
-		timer = time_between_spawns;
-	}// Start
-	
-	//--------------------------------------------------------------------------
-	
-	// Update is called once per frame
-	public override void Update()
-	{
-		base.Update();
-		
-		var llama_pos = Llama.get().transform.position;
-		var ninja_pos = Ninja.get().transform.position;
-		
-		var llama_distance = Vector3.Distance(llama_pos, transform.position);
-		var ninja_distance = Vector3.Distance(ninja_pos, transform.position);
-		
-		
-		if (llama_distance <= spawn_distance ||
-		    ninja_distance <= spawn_distance)
-		{
-			if (!is_spawning)
-			{
-				Vector3 spawn_point = transform.position;
-				spawn_point.y -= 1f;
-				Instantiate(projectile_prefab, spawn_point, Quaternion.identity);
-				is_spawning = true;
-				timer = time_between_spawns;
-			} else {
-				--timer;
-				if (timer <= 0) is_spawning = false;
-			}
-			
-		}
-	}// Update
-	
+    public float time_between_spawns;
+    private float timer;
+            
+    
+    public override int attack_power
+    {
+        get
+        {
+            return 0;
+        }
+    }
+    
+    public override int max_health
+    {
+        get
+        {
+            return 20;
+        }
+    }
+    
+    // Use this for initialization
+    public override void Start()
+    {
+        base.Start();
+    }// Start
+    
+    //--------------------------------------------------------------------------
+    
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+        timer += Time.deltaTime; 
+
+        get_closest_player();
+        look_toward(closest_player);
+
+        if(timer >= time_between_spawns)
+        {
+            shoot_projectile();
+        }
+
+    }// Update
+
+    //--------------------------------------------------------------------------
+    
+    private void shoot_projectile()
+    {
+
+        if(Vector3.Distance(closest_player.transform.position, transform.position) 
+            >= spawn_distance)
+        {
+            return; 
+        }
+
+
+        var bullet = Instantiate(
+                projectile_prefab, projectile_spawn_point.transform.position,
+                transform.localRotation) as GameObject;
+        
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * 10; 
+        timer = 0; 
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    private void get_closest_player()
+    {
+        // Get closest player
+        Vector3 llama_pos = Llama.get().gameObject.transform.position; 
+        Vector3 ninja_pos = Ninja.get().gameObject.transform.position;
+
+        if(Vector3.Distance(llama_pos, transform.position) <= 
+           Vector3.Distance(ninja_pos, transform.position))
+        {
+            closest_player = Llama.get().gameObject;
+        }
+        else
+        {
+            closest_player = Ninja.get().gameObject;
+        }
+    }
 }

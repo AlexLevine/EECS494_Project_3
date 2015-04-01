@@ -9,8 +9,6 @@ public class Player_character : Actor
     // public int player_id = 0;
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
-    public int collectable_count=0;
-
 
     public override int max_health { get { return 10; } }
     public bool is_grounded { get { return on_ground; } }

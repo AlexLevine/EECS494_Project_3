@@ -67,21 +67,6 @@ public class Actor : MonoBehaviour
         }
 
         look_toward(obj.transform.position, step);
-
-        // step *= Time.deltaTime;
-
-        // var target_direction =
-        //         obj.transform.position - transform.position;
-
-        // collision_safe_rotate_towards(target_direction, step);
-
-        // var new_forward = Vector3.RotateTowards(
-        //     transform.forward, target_direction, step, 0f);
-        // // only allow rotation around y axis
-        // // new_forward.x = obj.transform.eulerAngles.x;
-        // // new_forward.z = obj.transform.eulerAngles.z;
-
-        // transform.rotation = Quaternion.LookRotation(new_forward);
     }// look_toward
 
     //--------------------------------------------------------------------------
@@ -94,7 +79,6 @@ public class Actor : MonoBehaviour
                 point - transform.position;
 
         collision_safe_rotate_towards(target_direction, step);
-
     }
 
     //--------------------------------------------------------------------------
@@ -163,6 +147,14 @@ public class Actor : MonoBehaviour
     protected void reset_health()
     {
         health_ = max_health;
+    }
+    public void add_health(int hp)
+    {
+        health_ += hp; 
+        if(health_ > max_health)
+        {
+            health_ = max_health; 
+        }
     }
 
     //--------------------------------------------------------------------------

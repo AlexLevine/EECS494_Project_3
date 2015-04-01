@@ -11386,7 +11386,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676154742}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
@@ -11446,7 +11446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026af6031dc234fd6a7947bf94b912a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawn_point: {fileID: 1494258653}
 --- !u!1001 &677127494
 Prefab:
   m_ObjectHideFlags: 0
