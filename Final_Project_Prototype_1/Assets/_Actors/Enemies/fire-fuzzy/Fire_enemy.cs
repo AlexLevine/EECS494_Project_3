@@ -24,7 +24,7 @@ public class Fire_enemy : Enemy {
 
     //--------------------------------------------------------------------------
 
-    public override int attack_power
+    public override float attack_power
     {
         get
         {
@@ -32,7 +32,7 @@ public class Fire_enemy : Enemy {
         }
     }
 
-    public override int max_health
+    public override float max_health
     {
         get
         {

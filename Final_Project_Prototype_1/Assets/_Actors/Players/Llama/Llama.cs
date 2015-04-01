@@ -44,6 +44,12 @@ public class Llama : Player_character
         instance = this;
     }// Awake
 
+    public override void stop()
+    {
+        base.stop();
+        is_charging_ = false; 
+    }
+
     //--------------------------------------------------------------------------
 
     public override void Update()
@@ -209,6 +215,19 @@ public class Llama : Player_character
 
         base.toggle_lock_on();
     }// toggle_lock_on
+
+    public override bool receive_hit(
+            float damage, Vector3 knockback_velocity, GameObject attacker)
+    {
+        if(is_teamed_up)
+        {
+            damage /= 2; 
+            Ninja.get().receive_hit(damage, Vector3.zero, attacker);
+        }
+
+        return base.receive_hit(damage, knockback_velocity, attacker);
+
+    }
 
     //--------------------------------------------------------------------------
 

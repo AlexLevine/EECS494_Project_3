@@ -15,9 +15,9 @@ public class Shockwave : MonoBehaviour
 
     private IEnumerator expand()
     {
-        while (transform.localScale.x < 3)
+        while (transform.localScale.x < 6)
         {
-            transform.localScale += Vector3.one * 0.4f;
+            transform.localScale += Vector3.one * 0.7f;
             yield return new WaitForSeconds(0.001f);
         }
 

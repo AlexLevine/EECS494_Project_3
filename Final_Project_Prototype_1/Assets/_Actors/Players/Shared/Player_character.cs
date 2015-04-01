@@ -10,7 +10,7 @@ public class Player_character : Actor
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
 
-    public override int max_health { get { return 10; } }
+    public override float max_health { get { return 10; } }
     public bool is_grounded { get { return on_ground; } }
     // public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
@@ -225,6 +225,7 @@ public class Player_character : Actor
         lock_on_target = closest_enemy;
 
         lock_on_bar.GetComponent<Lock_on_health_bar>().target = lock_on_target;
+        lock_on_bar.GetComponent<Lock_on_health_bar>().update_position();
         lock_on_bar.SetActive(true);
 
 
@@ -275,7 +276,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public void stop()
+    public virtual void stop()
     {
         velocity_ = Vector3.zero;
     }// stop

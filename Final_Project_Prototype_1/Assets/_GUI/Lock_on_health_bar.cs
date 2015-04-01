@@ -26,7 +26,7 @@ public class Lock_on_health_bar : MonoBehaviour {
     }
 
 
-    void update_position()
+    public void update_position()
     {
         Vector3 screen_point = Camera.main.WorldToViewportPoint(target.transform.position);
 

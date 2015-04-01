@@ -49,6 +49,8 @@ public class Ninja_jousting_pole : MonoBehaviour
         knockback.y = 0;
 
         enemy.receive_hit(attack_power, knockback, gameObject);
+
+        Llama.get().stop(); 
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------

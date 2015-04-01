@@ -528,7 +528,8 @@ MonoBehaviour:
   - {fileID: 193604}
   is_moving: 1
   on_fire: 0
-  speed: 2
+  puffing: 0
+  speed: 4
 --- !u!114 &11499680
 MonoBehaviour:
   m_ObjectHideFlags: 1

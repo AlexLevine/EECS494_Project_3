@@ -77,7 +77,7 @@ public class Enemy : Actor
     //--------------------------------------------------------------------------
 
     public override bool receive_hit(
-        int damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker)
     {
         var will_die = base.receive_hit(damage, knockback_velocity, attacker);
         if (!will_die)
@@ -151,7 +151,7 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual int attack_power
+    public virtual float attack_power
     {
         get
         {

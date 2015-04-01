@@ -6,13 +6,13 @@ using System;
  RequireComponent(typeof(Knockback_animation))]
 public class Actor : MonoBehaviour
 {
-    public int health { get { return health_; } }
+    public float health { get { return health_; } }
     public bool being_knocked_back {
         get { return knockback_animation.is_playing; } }
 
     public virtual float gravity { get { return -25f; } }
 
-    private int health_;
+    private float health_;
 
     private Flash_animation invincibility_animation;
     private Knockback_animation knockback_animation;
@@ -107,7 +107,7 @@ public class Actor : MonoBehaviour
 
     // returns true if the hit is fatal
     public virtual bool receive_hit(
-        int damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker)
     {
         if (invincibility_animation.is_playing)
         {
@@ -159,7 +159,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual int max_health
+    public virtual float max_health
     {
         get
         {

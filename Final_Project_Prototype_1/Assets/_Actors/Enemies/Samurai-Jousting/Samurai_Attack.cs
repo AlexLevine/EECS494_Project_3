@@ -258,7 +258,7 @@ public class Samurai_Attack : Enemy {
         transform.rotation = Quaternion.Euler(fixed_rotation);
     }// fix_rotation
 
-    public override int attack_power
+    public override float attack_power
     {
         get
         {
@@ -266,7 +266,7 @@ public class Samurai_Attack : Enemy {
         }
     }
 
-    public override int max_health
+    public override float max_health
     {
         get
         {
@@ -277,7 +277,7 @@ public class Samurai_Attack : Enemy {
     // -------------------------------------------------------------------------
 
     public override bool receive_hit(
-        int damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker)
     {
 
         if(attacker.name.Contains(Ninja_sword.global_name))

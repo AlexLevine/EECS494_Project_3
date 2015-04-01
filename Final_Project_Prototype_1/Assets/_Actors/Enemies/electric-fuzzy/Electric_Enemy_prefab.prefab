@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 147670}
   - {fileID: 147672}
   is_moving: 1
-  speed: 2
+  speed: 6
 --- !u!114 &11485712
 MonoBehaviour:
   m_ObjectHideFlags: 1

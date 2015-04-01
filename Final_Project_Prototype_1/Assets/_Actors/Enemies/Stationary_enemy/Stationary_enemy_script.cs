@@ -13,7 +13,7 @@ public class Stationary_enemy_script : Enemy {
     private float timer;
             
     
-    public override int attack_power
+    public override float attack_power
     {
         get
         {
@@ -21,7 +21,7 @@ public class Stationary_enemy_script : Enemy {
         }
     }
     
-    public override int max_health
+    public override float max_health
     {
         get
         {
