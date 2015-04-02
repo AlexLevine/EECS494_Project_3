@@ -222,15 +222,19 @@ public class Player_character : Actor
             return;
         }
 
-        lock_on_target = closest_enemy;
+        lock_on_to_enemy(closest_enemy);
+
+        look_toward(lock_on_target);
+    }// toggle_lock_on
+
+    private void lock_on_to_enemy(GameObject enemy)
+    {
+        lock_on_target = enemy;
 
         lock_on_bar.GetComponent<Lock_on_health_bar>().target = lock_on_target;
         lock_on_bar.GetComponent<Lock_on_health_bar>().update_position();
         lock_on_bar.SetActive(true);
-
-
-        look_toward(lock_on_target);
-    }// toggle_lock_on
+    }// lock_on_to_enemy
 
     //--------------------------------------------------------------------------
 
@@ -254,11 +258,8 @@ public class Player_character : Actor
     {
         if (enemy == lock_on_target)
         {
-            if (lock_on_target.transform.Find("Cylinder"))
-            {
-                lock_on_target.transform.Find("Cylinder").gameObject.SetActive(false);
-            }
-            lock_on_target = null;
+            lock_on_to_enemy(
+                Enemy.get_closest_potential_lock_on_target(gameObject));
         }
     }// on_enemy_gone
 
