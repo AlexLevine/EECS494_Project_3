@@ -28,7 +28,17 @@ public class Knockback_animation : MonoBehaviour
             return;
         }
 
-        actor.move(knockback_velocity_ * Time.fixedDeltaTime, false);
+        var pc = GetComponent<Player_character>();
+        if (pc != null)
+        {
+            pc.stop();
+        }
+
+        if (knockback_velocity_.magnitude != 0)
+        {
+            actor.move(knockback_velocity_ * Time.fixedDeltaTime, false);
+        }
+
         time_elapsed += Time.fixedDeltaTime;
 
         if (time_elapsed <= max_knockback_duration)
@@ -41,7 +51,7 @@ public class Knockback_animation : MonoBehaviour
 
         if (die_when_finished_)
         {
-            die_when_finished_ = false; 
+            die_when_finished_ = false;
             actor.on_death();
         }
 

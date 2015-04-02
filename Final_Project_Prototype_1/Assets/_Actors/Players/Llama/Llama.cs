@@ -57,7 +57,11 @@ public class Llama : Player_character
     public override void stop()
     {
         base.stop();
-        charge_state = Charge_state_e.COOLING_DOWN;
+
+        if (is_charging)
+        {
+            charge_state = Charge_state_e.COOLING_DOWN;
+        }
     }
 
     //--------------------------------------------------------------------------

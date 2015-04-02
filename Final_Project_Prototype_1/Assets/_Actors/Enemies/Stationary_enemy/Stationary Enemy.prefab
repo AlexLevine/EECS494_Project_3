@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.370000005, y: 1.83000004, z: .790000021}
+  m_LocalPosition: {x: -.370000005, y: .860000014, z: .790000021}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
   m_Father: {fileID: 444066}
@@ -138,7 +138,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167780}
   m_LocalRotation: {x: 0, y: .923143148, z: 0, w: .384456336}
-  m_LocalPosition: {x: 42.2000008, y: .319999993, z: -6.9000001}
+  m_LocalPosition: {x: -11.7200003, y: -36.3499985, z: 8.21000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 403758}
@@ -155,7 +155,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103848}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 1.04999995, z: .319999993}
+  m_LocalPosition: {x: 0, y: .0799999982, z: .319999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444066}
@@ -167,7 +167,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .100000001, y: 1.09000003, z: 2.13000011}
+  m_LocalPosition: {x: .100000001, y: .119999997, z: 2.13000011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444066}
@@ -179,7 +179,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .409999996, y: 1.83000004, z: .790000021}
+  m_LocalPosition: {x: .409999996, y: .860000014, z: .790000021}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
   m_Father: {fileID: 444066}
@@ -373,7 +373,6 @@ MonoBehaviour:
   projectile_prefab: {fileID: 124692, guid: 359d39c2875b7d948af7acfc5f21041a, type: 2}
   projectile_spawn_point: {fileID: 131422}
   spawn_distance: 10
-  time_between_spawns: 1
 --- !u!114 &11473900
 MonoBehaviour:
   m_ObjectHideFlags: 1
