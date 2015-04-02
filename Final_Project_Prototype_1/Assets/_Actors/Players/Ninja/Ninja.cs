@@ -135,12 +135,20 @@ public class Ninja : Player_character
             return;
         }
 
+
         float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
         float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
         // Adjust the tilt that the jousting pole is pointing
 
         jousting_pole.transform.localPosition = pole_start_pos;
         jousting_pole.transform.localRotation = pole_start_rotation;
+
+        if(!Llama.get().is_charging)
+        {
+            jousting_pole.transform.RotateAround(
+                pole_rotation_point.transform.position, transform.right, -70f);
+            return;
+        }
 
         jousting_pole.transform.RotateAround(
             pole_rotation_point.transform.position, transform.up, adjusted_horz);
