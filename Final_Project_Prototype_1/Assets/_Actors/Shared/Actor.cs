@@ -17,6 +17,8 @@ public class Actor : MonoBehaviour
     private Flash_animation invincibility_animation;
     private Knockback_animation knockback_animation;
 
+    public static bool actors_paused = false;
+
     //--------------------------------------------------------------------------
 
     public virtual void Start()
@@ -29,10 +31,20 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void Update()
+    void Update()
+    {
+        if (actors_paused)
+        {
+            return;
+        }
+
+        update_impl();
+    }// Update()
+
+    protected virtual void update_impl()
     {
 
-    }// Update()
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
@@ -115,7 +127,7 @@ public class Actor : MonoBehaviour
         }
         // if(Llama.get().is_charging)
         // {
-        //     return false; 
+        //     return false;
         // }
 
 
@@ -150,10 +162,10 @@ public class Actor : MonoBehaviour
     }
     public void add_health(int hp)
     {
-        health_ += hp; 
+        health_ += hp;
         if(health_ > max_health)
         {
-            health_ = max_health; 
+            health_ = max_health;
         }
     }
 

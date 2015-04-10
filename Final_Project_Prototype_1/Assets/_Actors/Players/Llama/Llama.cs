@@ -66,9 +66,9 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
 
         // print(velocity.magnitude);
         // if (is_teamed_up)
@@ -106,7 +106,7 @@ public class Llama : Player_character
             time_spent_cooling_down_charge += Time.deltaTime;
             break;
         }
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 

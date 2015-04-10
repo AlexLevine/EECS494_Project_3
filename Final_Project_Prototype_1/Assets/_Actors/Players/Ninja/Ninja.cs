@@ -67,10 +67,9 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
 
         // print(velocity.magnitude);
 
@@ -95,7 +94,7 @@ public class Ninja : Player_character
         {
             transform.rotation = team_up_point.transform.parent.rotation;
         }
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 

@@ -129,7 +129,7 @@ public class Camera_follow : MonoBehaviour
         Vector3? new_point_of_interest=null,
         float? y_rotation=null, float? camera_follow_distance=null,
         float? camera_hover_height=null,
-        float transition_duration=1f,
+        float transition_duration=1.5f,
         Camera_callback callback=null)
     {
         print("adjust_main_camera");

@@ -73,10 +73,9 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
 
         if (being_knocked_back)
         {
@@ -103,7 +102,7 @@ public class Player_character : Actor
             return;
         }
 
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
