@@ -255,6 +255,17 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
+    // protected override void on_enemy_gone(GameObject enemy)
+    // {
+    //     if (enemy == lock_on_target)
+    //     {
+
+    //         lock_on_target = null;
+    //     }
+    // }// on_enemy_gone
+
+    //--------------------------------------------------------------------------
+
     void OnControllerColliderHit(ControllerColliderHit c)
     {
         var ninja = c.gameObject.GetComponent<Ninja>();

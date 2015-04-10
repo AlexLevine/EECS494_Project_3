@@ -47,7 +47,7 @@ public class Player_character : Actor
 
     // private bool is_jumping = false;
 
-    public GameObject  lock_on_bar = null;
+    public GameObject lock_on_bar = null;
     private GameObject lock_on_target = null;
     // private float y_velocity = 0;
 
@@ -254,7 +254,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    private void on_enemy_gone(GameObject enemy)
+    protected virtual void on_enemy_gone(GameObject enemy)
     {
         if (enemy == lock_on_target)
         {
