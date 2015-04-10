@@ -5,10 +5,18 @@ public class Camera_follow : MonoBehaviour
 {
     public delegate void Camera_callback();
 
+    public Vector3 point_of_interest { get { return point_of_interest_; } }
+    public float camera_follow_distance { get { return camera_follow_distance_; } }
+    public float camera_hover_height { get { return camera_hover_height_; } }
+    public float y_rotation { get { return y_rotation_; } }
+
     // public static float min_camera_distance = 15f;
+
     // public static float max_camera_distance = 15f;
 
+
     // public GameObject players_midpoint_marker;
+
     private Vector3 point_of_interest_;
 
     private float camera_follow_distance_ = 15f;
