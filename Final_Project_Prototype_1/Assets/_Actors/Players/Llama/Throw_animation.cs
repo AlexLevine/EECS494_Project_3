@@ -13,6 +13,8 @@ public enum Throw_animation_state_e
 
 public class Throw_animation : MonoBehaviour
 {
+    public GameObject throw_vocals;
+
     public GameObject rotation_axis_pos;
     public bool is_playing {
         get { return state != Throw_animation_state_e.NOT_PLAYING; } }
@@ -37,6 +39,8 @@ public class Throw_animation : MonoBehaviour
         {
             return;
         }
+
+        throw_vocals.GetComponent<Sound_effect_randomizer>().play();
 
         // disable controls
 

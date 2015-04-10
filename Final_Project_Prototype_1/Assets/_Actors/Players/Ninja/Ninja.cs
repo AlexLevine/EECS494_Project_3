@@ -230,7 +230,8 @@ public class Ninja : Player_character
 
         Debug.DrawRay(transform.position, llama_pos - transform.position, Color.blue, 4f);
 
-        var blocked = hit && hit_info.collider.gameObject.tag != "Player";
+        var blocked = hit && hit_info.collider.gameObject.tag != "Player" &&
+                      !hit_info.collider.isTrigger;
 
         if (distance > 10f)
         {
@@ -243,7 +244,7 @@ public class Ninja : Player_character
 
         if (blocked)
         {
-            print("blocked by: " + hit_info);
+            print("blocked by: " + hit_info.collider.gameObject.name);
             return;
         }
 
