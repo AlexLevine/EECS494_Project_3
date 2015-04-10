@@ -21,6 +21,7 @@ public class Camera_follow : MonoBehaviour
 
     // private float lerp_speed = 5;
 
+    private Vector3 velocity = Vector3.zero;
     private bool following_player_ = true;
     private bool is_transitioning_ = false;
 
@@ -62,7 +63,7 @@ public class Camera_follow : MonoBehaviour
                     transition_time_elapsed / current_transition_duration;
             lerp_percent =
                 Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
-            print(lerp_percent);
+            // print(lerp_percent);
             if (lerp_percent >= 1)
             {
                 lerp_percent = 1;
@@ -93,12 +94,11 @@ public class Camera_follow : MonoBehaviour
         // var target_rotation = calculate_target_camera_rotation(
         //     target_position);
 
-        if (Vector3.Distance(transform.position, target_position) > 1f)
-        {
-            transform.position = Vector3.Lerp(
-                transform.position, target_position,
-                2f * Time.deltaTime);
-        }
+        // if (Vector3.Distance(transform.position, target_position) > 1f)
+        // {
+        transform.position = Vector3.SmoothDamp(
+            transform.position, target_position, ref velocity, 0.5f);
+        // }
     }// LateUpdate
 
     //--------------------------------------------------------------------------
