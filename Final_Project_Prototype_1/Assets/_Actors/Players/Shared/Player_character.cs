@@ -3,7 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController)),
+ RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
     // public int player_id = 0;

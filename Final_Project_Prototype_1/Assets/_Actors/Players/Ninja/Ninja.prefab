@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11408552}
   - 114: {fileID: 11495020}
   - 114: {fileID: 11488294}
+  - 114: {fileID: 11446132}
   m_Layer: 0
   m_Name: Ninja
   m_TagString: Player
@@ -807,7 +808,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_move_distance: .00999999978
   skin_width: .100000001
-  collectable_count: 0
   lock_on_bar: {fileID: 0}
   body: {fileID: 193578}
   pole_rotation_point: {fileID: 178892}
@@ -815,6 +815,17 @@ MonoBehaviour:
   jousting_pole: {fileID: 135138}
   sword_obj: {fileID: 106070}
   out_of_range: {fileID: 2100000, guid: 2805ebebbee61f74d9924d8d23c4fbd0, type: 2}
+--- !u!114 &11446132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd05ad81a2ff24ce9a5e5aec48267cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11488294
 MonoBehaviour:
   m_ObjectHideFlags: 1

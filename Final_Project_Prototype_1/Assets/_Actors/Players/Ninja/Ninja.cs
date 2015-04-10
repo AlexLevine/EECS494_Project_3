@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Sword_swing)),
+ RequireComponent(typeof(Aerial_attack)),
+ RequireComponent(typeof(Team_up_animation))]
 public class Ninja : Player_character
 {
     public GameObject body;
@@ -229,7 +232,7 @@ public class Ninja : Player_character
 
         var blocked = hit && hit_info.collider.gameObject.tag != "Player";
 
-        if (distance > 10f || blocked)
+        if (distance > 10f)
         {
             print("out of range");
             normal = body.GetComponent<Renderer>().material;
@@ -238,11 +241,19 @@ public class Ninja : Player_character
             return;
         }
 
+        if (blocked)
+        {
+            print("blocked by: " + hit_info);
+            return;
+        }
+
         // print("teaming up");
         team_up_engage();
         // transform.position = team_up_point.transform.position;
         sword_obj.SetActive(false);
         jousting_pole.SetActive(true);
+
+        GetComponent<Team_up_animation>().start_animation();
 
     }// team_up_engage_or_throw
 
