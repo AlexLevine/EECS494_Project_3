@@ -5,6 +5,8 @@ public class Llama : Player_character
 {
     public GameObject team_up_point;
 
+    public GameObject damage_vocals;
+
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
@@ -250,8 +252,14 @@ public class Llama : Player_character
         }
 
         return base.receive_hit(damage, knockback_velocity, attacker);
-
     }
+
+    //--------------------------------------------------------------------------
+
+    protected override void play_damage_vocals()
+    {
+        damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }// play_damage_vocals
 
     //--------------------------------------------------------------------------
 

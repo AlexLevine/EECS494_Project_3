@@ -9,6 +9,8 @@ public class Ninja : Player_character
     public GameObject body;
     public GameObject pole_rotation_point;
 
+    public GameObject damage_vocals;
+
     public GameObject projectile_prefab;
     public GameObject jousting_pole;
     public GameObject sword_obj;
@@ -332,6 +334,12 @@ public class Ninja : Player_character
         }
     }// jump
 
+    //--------------------------------------------------------------------------
+
+    protected override void play_damage_vocals()
+    {
+        damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }// play_damage_vocals
 
     //--------------------------------------------------------------------------
 
