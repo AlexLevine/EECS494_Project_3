@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Switch : MonoBehaviour {
     public GameObject switchee;
+    public GameObject cut_scene;
     // Use this for initialization
     void Start () {
 
@@ -17,15 +18,23 @@ public class Switch : MonoBehaviour {
     // }
 
     void OnTriggerEnter(Collider other){
-        Switchee sw = switchee.GetComponent<Switchee>();
-        sw.activate();
+		if (cut_scene!=null){
+			Cut_scene cs = cut_scene.GetComponent<Cut_scene>();
+			cs.activate();
+		}
+		else{
+			Switchee sw = switchee.GetComponent<Switchee>();
+			sw.activate();
+		}
 
         Destroy(gameObject);
     }
 
     void OnTriggerStay(Collider other){
-        Switchee sw = switchee.GetComponent<Switchee>();
-        sw.activate();
+        if (cut_scene==null){
+			Switchee sw = switchee.GetComponent<Switchee>();
+			sw.activate();
+        }
 
         Destroy(gameObject);
     }
