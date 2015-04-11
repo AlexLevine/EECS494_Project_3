@@ -63,7 +63,7 @@ public class Sword_swing : MonoBehaviour
         }
 
         basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
-        // swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
+        swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
 
         // HACK: calculate the swing start distance instead of hardcoding
         sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
