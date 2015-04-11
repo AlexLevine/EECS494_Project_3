@@ -316,17 +316,19 @@ public class Ninja : Player_character
 
     public override void jump()
     {
+        print("jump");
         if (force_team_up)
         {
+            print("team up being forced");
             return;
         }
-
-        base.jump();
 
         if (is_teamed_up)
         {
             team_up_disengage();
         }
+
+        base.jump();
     }// jump
 
     //--------------------------------------------------------------------------
