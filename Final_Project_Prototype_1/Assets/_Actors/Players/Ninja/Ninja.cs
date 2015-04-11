@@ -7,19 +7,14 @@ using System.Collections;
 public class Ninja : Player_character
 {
     public GameObject body;
-    public GameObject pole_rotation_point;
 
     public GameObject damage_vocals;
 
     public GameObject projectile_prefab;
-    public GameObject jousting_pole;
     public GameObject sword_obj;
     public Material out_of_range;
     private Material normal;
     private float o_o_r=2;
-
-    private Quaternion pole_start_rotation;
-    private Vector3 pole_start_pos;
 
     private GameObject team_up_point;
 
@@ -51,9 +46,6 @@ public class Ninja : Player_character
     {
         base.Awake();
 
-        pole_start_rotation = jousting_pole.transform.localRotation;
-        pole_start_pos = jousting_pole.transform.localPosition;
-
         instance = this;
     }// Awake
 
@@ -80,9 +72,6 @@ public class Ninja : Player_character
 
         if (!is_teamed_up)
         {
-            jousting_pole.SetActive(false);
-            sword_obj.SetActive(true);
-
             //out_of_range
             if (o_o_r++==1){
                 body.GetComponent<Renderer>().material = normal;
@@ -196,7 +185,7 @@ public class Ninja : Player_character
 
         {
 			if (apply_rotation) update_rotation(delta_position);
-			return;	
+			return;
         }
 
         // if (is_teamed_up)
