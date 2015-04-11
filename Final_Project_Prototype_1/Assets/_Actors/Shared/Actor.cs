@@ -132,6 +132,7 @@ public class Actor : MonoBehaviour
 
 
         health_ -= damage;
+        play_damage_vocals();
 
         bool should_die = health_ <= 0;
 
@@ -148,6 +149,10 @@ public class Actor : MonoBehaviour
 
         return should_die;
     }// receive_hit
+
+    protected virtual void play_damage_vocals()
+    {
+    }
 
     //--------------------------------------------------------------------------
 

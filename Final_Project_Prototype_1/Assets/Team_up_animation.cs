@@ -15,7 +15,7 @@ public class Team_up_animation : MonoBehaviour
     private Team_up_animation_state_e state;
 
     // float time_since_start = 0;
-    float duration = 0.2f;
+    float duration = 0.1f;
 
     private float horizontal_speed = 30f;
 
