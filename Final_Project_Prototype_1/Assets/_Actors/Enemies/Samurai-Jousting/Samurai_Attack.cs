@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
-public class Samurai_Attack : Enemy {
+public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
+{
     public enum Samurai_state_e
     {
         WAITING,
@@ -15,6 +16,8 @@ public class Samurai_Attack : Enemy {
 
     public override float attack_power { get { return 1; } }
     public override float max_health { get { return 50; } }
+    public bool ready_to_charge {
+        get { return cur_state == Samurai_state_e.WAITING; } }
 
     public bool is_charging {
         get { return cur_state == Samurai_state_e.ATTACKING; } }
@@ -25,7 +28,7 @@ public class Samurai_Attack : Enemy {
 
     private CharacterController cc;
 
-    private Vector3 retreat_destination;
+    public Vector3 retreat_destination;
     private Vector3 starting_location;
     private Quaternion starting_rotation;
 
@@ -51,11 +54,12 @@ public class Samurai_Attack : Enemy {
     {
         base.Start();
 
+        Checkpoint.subscribe(this);
+
         cc = gameObject.GetComponent<CharacterController>();
 
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
-        cur_pause_time = 0f;
 
         starting_rotation = transform.rotation;
         starting_location = transform.position;
@@ -67,14 +71,10 @@ public class Samurai_Attack : Enemy {
 
     protected override void update_impl()
     {
-        // base.Update();
         if (being_knocked_back)
         {
             return;
         }
-
-        var closest_player = look_for_player();
-
 
         switch(cur_state){
             case Samurai_state_e.WAITING:
@@ -82,23 +82,24 @@ public class Samurai_Attack : Enemy {
                 break;
 
             case Samurai_state_e.ATTACKING:
-                look_toward(Llama.get().gameObject);
+                look_toward(Llama.get().gameObject, 360f);
                 var delta_pos = transform.forward * speed * Time.deltaTime;
                 move(delta_pos, false);
                 break;
 
             case Samurai_state_e.RETREATING:
-                // look_toward(retreat_destination);
-                // move(transform.forward * speed * 0.65f * Time.deltaTime,
-                //      false);
+                look_toward(retreat_destination);
+                var pos_step = speed * 0.65f * Time.deltaTime;
 
-                // var distance_to_dest = Vector3.Distance(
-                //     transform.position, retreat_destination);
-                // // print(distance_to_dest);
-                // if (distance_to_dest < 3f)
-                // {
-                //     cur_state = Samurai_state_e.LOOKING;
-                // }
+                transform.position = Vector3.MoveTowards(
+                    transform.position, retreat_destination, pos_step);
+
+                var reached_retreat_point = Vector3.Distance(
+                    transform.position, retreat_destination) < 0.1f;
+                if (reached_retreat_point)
+                {
+                    cur_state = Samurai_state_e.WAITING;
+                }
 
                 break;
 
@@ -108,17 +109,30 @@ public class Samurai_Attack : Enemy {
         }
 
         fix_rotation();
-    }
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
-    public void notify_players_in_arena()
+    public void start_charge()
     {
-        if (cur_state == Samurai_state_e.WAITING)
-        {
-            cur_state = Samurai_state_e.LOOKING;
-        }
-    }// notify_players_in_arena
+        cur_state = Samurai_state_e.ATTACKING;
+    }// start_charge
+
+    //--------------------------------------------------------------------------
+
+    public void retreat(Vector3 destination)
+    {
+        snap_to_ground();
+        destination.y = transform.position.y;
+        retreat_destination = destination;
+        cur_state = Samurai_state_e.RETREATING;
+    }// retreat
+
+    //--------------------------------------------------------------------------
+
+    // public void notify_players_in_arena()
+    // {
+    // }// notify_players_in_arena
 
     //--------------------------------------------------------------------------
 
@@ -156,45 +170,10 @@ public class Samurai_Attack : Enemy {
             return;
         }
 
-        cur_state = Samurai_state_e.RETREATING;
-
-        choose_retreat_point();
+        Boss_fight_controller.get().notify_fighters_passed();
     }// resolve_collision_with_player
 
     //--------------------------------------------------------------------------
-
-    void choose_retreat_point()
-    {
-        for (int i = 0; i < 10; ++i)
-        {
-            var index = Random.Range(0, retreat_points.Count);
-            // print(index);
-            retreat_destination = retreat_points[index];
-            var something_in_way = Physics.Raycast(
-                transform.position, retreat_destination,
-                Vector3.Distance(transform.position, retreat_destination));
-
-            if (!something_in_way)
-            {
-                return;
-            }
-
-        }
-    }// choose_retreat_point
-
-    //--------------------------------------------------------------------------
-
-    // returns the position of the nearest player to the enemy
-    private GameObject look_for_player()
-    {
-        Vector3 llama_pos = llama.transform.position;
-        Vector3 ninja_pos = ninja.transform.position;
-
-        float llama_dist = Vector3.Distance(llama_pos, transform.position);
-        float ninja_dist = Vector3.Distance(ninja_pos, transform.position);
-
-        return (llama_dist < ninja_dist) ? llama : ninja;
-    }
 
     void snap_to_ground()
     {
@@ -221,6 +200,7 @@ public class Samurai_Attack : Enemy {
             return false;
         }
 
+        Boss_fight_controller.get().notify_fighters_passed();
         return base.receive_hit(damage, knockback_velocity, attacker);
     }// receive_hit
 
