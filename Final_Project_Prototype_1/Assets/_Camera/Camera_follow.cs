@@ -72,7 +72,7 @@ public class Camera_follow : MonoBehaviour
             lerp_percent =
                 Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
             // print(lerp_percent);
-            if (lerp_percent >= 1)
+            if (lerp_percent >= .90) //HACK
             {
                 lerp_percent = 1;
                 is_transitioning_ = false;
@@ -135,6 +135,8 @@ public class Camera_follow : MonoBehaviour
         print("adjust_main_camera");
         var camera_follow =
                 Camera.main.gameObject.GetComponent<Camera_follow>();
+                
+       camera_follow.current_transition_callback = callback;
 
         camera_follow.start_transition(
             new_point_of_interest: new_point_of_interest,

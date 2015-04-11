@@ -95,20 +95,20 @@ public class Ninja : Player_character
         // velocity.y = 0;
         transform.position = team_up_point.transform.position;
 
-        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
-        {
-            transform.rotation = team_up_point.transform.parent.rotation;
-        }
+//        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
+//        {
+//            transform.rotation = team_up_point.transform.parent.rotation;
+//        }
     }// update_impl
 
     //--------------------------------------------------------------------------
 
     public override void attack()
     {
-        if(is_teamed_up)
-        {
-            return;
-        }
+//        if(is_teamed_up)
+//        {
+//            return;
+//        }
         if (!is_grounded)
         {
             GetComponent<Aerial_attack>().start_attack();
@@ -120,72 +120,72 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void adjust_jousting_pole(
-        float vertical_tilt, float horizontal_tilt)
-    {
-        if(jousting_pole == null)
-        {
-            print("Ninja_Jousting_Pole does not exist for some reason");
-            return;
-        }
-
-        if(!jousting_pole.activeSelf)
-        {
-            return;
-        }
-
-        if(!is_teamed_up)
-        {
-            return;
-        }
-
-
-        float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
-        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
-        // Adjust the tilt that the jousting pole is pointing
-
-        jousting_pole.transform.localPosition = pole_start_pos;
-        jousting_pole.transform.localRotation = pole_start_rotation;
-
-        if(!Llama.get().is_charging)
-        {
-            jousting_pole.transform.RotateAround(
-                pole_rotation_point.transform.position, transform.right, -70f);
-            return;
-        }
-
-        jousting_pole.transform.RotateAround(
-            pole_rotation_point.transform.position, transform.up, adjusted_horz);
-        jousting_pole.transform.RotateAround(
-            pole_rotation_point.transform.position, transform.right, adjusted_vert);
-
-    }// adjust_jousting_pole
-
-    //--------------------------------------------------------------------------
-
-    private void toggle_jousting_pole()
-    {
-        if(!is_teamed_up)
-        {
-            return;
-        }
-
-        if(!jousting_pole.activeSelf)
-        {
-            sword_obj.SetActive(false);
-            jousting_pole.SetActive(true);
-            return;
-        }
-
-        if (!is_teamed_up)
-        {
-            sword_obj.SetActive(true);
-        }
-
-        jousting_pole.SetActive(false);
-
-
-    }// toggle_jousting_pole
+//    public override void adjust_jousting_pole(
+//        float vertical_tilt, float horizontal_tilt)
+//    {
+//        if(jousting_pole == null)
+//        {
+//            print("Ninja_Jousting_Pole does not exist for some reason");
+//            return;
+//        }
+//
+//        if(!jousting_pole.activeSelf)
+//        {
+//            return;
+//        }
+//
+//        if(!is_teamed_up)
+//        {
+//            return;
+//        }
+//
+//
+//        float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
+//        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
+//        // Adjust the tilt that the jousting pole is pointing
+//
+//        jousting_pole.transform.localPosition = pole_start_pos;
+//        jousting_pole.transform.localRotation = pole_start_rotation;
+//
+//        if(!Llama.get().is_charging)
+//        {
+//            jousting_pole.transform.RotateAround(
+//                pole_rotation_point.transform.position, transform.right, -70f);
+//            return;
+//        }
+//
+//        jousting_pole.transform.RotateAround(
+//            pole_rotation_point.transform.position, transform.up, adjusted_horz);
+//        jousting_pole.transform.RotateAround(
+//            pole_rotation_point.transform.position, transform.right, adjusted_vert);
+//
+//    }// adjust_jousting_pole
+//
+//    //--------------------------------------------------------------------------
+//
+//    private void toggle_jousting_pole()
+//    {
+//        if(!is_teamed_up)
+//        {
+//            return;
+//        }
+//
+//        if(!jousting_pole.activeSelf)
+//        {
+//            sword_obj.SetActive(false);
+//            jousting_pole.SetActive(true);
+//            return;
+//        }
+//
+//        if (!is_teamed_up)
+//        {
+//            sword_obj.SetActive(true);
+//        }
+//
+//        jousting_pole.SetActive(false);
+//
+//
+//    }// toggle_jousting_pole
 
     //--------------------------------------------------------------------------
 
@@ -195,7 +195,8 @@ public class Ninja : Player_character
         if (is_teamed_up)
 
         {
-            return;
+			if (apply_rotation) update_rotation(delta_position);
+			return;	
         }
 
         // if (is_teamed_up)
@@ -253,8 +254,8 @@ public class Ninja : Player_character
         // print("teaming up");
         team_up_engage();
         // transform.position = team_up_point.transform.position;
-        sword_obj.SetActive(false);
-        jousting_pole.SetActive(true);
+//        sword_obj.SetActive(false);
+//        jousting_pole.SetActive(true);
 
         GetComponent<Team_up_animation>().start_animation();
 
