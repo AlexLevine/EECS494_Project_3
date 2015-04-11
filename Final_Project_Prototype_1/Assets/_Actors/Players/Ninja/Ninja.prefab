@@ -987,6 +987,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b256f65ed4614b7d95dd299c032539a, type: 3}
   - {fileID: 8300000, guid: 74564cfca62cc4648b4417f3a43ba234, type: 3}
   - {fileID: 8300000, guid: 05942914af2814d4e80e06a87950ea24, type: 3}
+  allow_overlap: 0
 --- !u!114 &11410758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1025,6 +1026,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7d550ee6ec1940e2a270f0d77849c5d, type: 3}
   - {fileID: 8300000, guid: 0761cce1f10c04954a6b0653ca86b36d, type: 3}
   - {fileID: 8300000, guid: 27da341c072644b9fb0d03b7dbba7623, type: 3}
+  allow_overlap: 1
 --- !u!114 &11441846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1071,6 +1073,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: e82f22035feaa47318f396f139cd4ffc, type: 3}
   - {fileID: 8300000, guid: 93ed3bb1074ac480a9431d2bbb322b9e, type: 3}
+  allow_overlap: 1
 --- !u!114 &11470568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1086,6 +1089,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6c4c1103437fa49c69854612ce0770cf, type: 3}
   - {fileID: 8300000, guid: f2d31920f44244959add8e987521097c, type: 3}
   - {fileID: 8300000, guid: 5e4e0c35232b74ba39db6cab27ba7ea6, type: 3}
+  allow_overlap: 1
 --- !u!114 &11488294
 MonoBehaviour:
   m_ObjectHideFlags: 1

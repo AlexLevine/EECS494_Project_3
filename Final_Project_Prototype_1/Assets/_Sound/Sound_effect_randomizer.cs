@@ -5,6 +5,7 @@ using System.Collections;
 public class Sound_effect_randomizer : MonoBehaviour
 {
     public AudioClip[] clips;
+    public bool allow_overlap = true;
 
     private AudioSource source;
 
@@ -21,7 +22,20 @@ public class Sound_effect_randomizer : MonoBehaviour
             return;
         }
 
-        source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+        if (source.isPlaying)
+        {
+            print("already playing");
+            return;
+        }
+
+        if (allow_overlap)
+        {
+            source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+            return;
+        }
+
+        source.clip = clips[Random.Range(0, clips.Length)];
+        source.Play();
     }
 
 }
