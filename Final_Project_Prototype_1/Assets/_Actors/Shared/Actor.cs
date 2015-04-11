@@ -165,6 +165,7 @@ public class Actor : MonoBehaviour
     {
         health_ = max_health;
     }
+
     public void add_health(int hp)
     {
         health_ += hp;

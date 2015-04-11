@@ -320,12 +320,17 @@ public class Ninja : Player_character
     protected override void on_team_up_disengage()
     {
         cc.enabled = true;
-    }// team_up_disengage
+    }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
 
     public override void jump()
     {
+        if (force_team_up)
+        {
+            return;
+        }
+
         base.jump();
 
         if (is_teamed_up)

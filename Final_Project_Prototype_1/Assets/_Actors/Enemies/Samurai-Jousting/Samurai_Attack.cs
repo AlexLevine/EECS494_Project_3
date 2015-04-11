@@ -7,24 +7,17 @@ public class Samurai_Attack : Enemy {
     public enum Samurai_state_e
     {
         WAITING,
-        LOOKING,
         ATTACKING,
-        PAUSING,
         RETREATING
     }
 
-    public GameObject[] retreat_point_markers;
-
-    private GameObject llama;
-    private GameObject ninja;
     public Samurai_state_e cur_state;
-    public float look_thresh;
-    public float attack_thresh;
+
+    public override float attack_power { get { return 1; } }
+    public override float max_health { get { return 50; } }
+
     public bool is_charging {
         get { return cur_state == Samurai_state_e.ATTACKING; } }
-
-    public static float max_pause_time = 2f;
-    private float cur_pause_time;
 
     private float speed;
 
@@ -32,11 +25,9 @@ public class Samurai_Attack : Enemy {
 
     private CharacterController cc;
 
-    private List<Vector3> retreat_points = new List<Vector3>();
     private Vector3 retreat_destination;
     private Vector3 starting_location;
-    private Quaternion starting_rotation; 
-
+    private Quaternion starting_rotation;
 
     //--------------------------------------------------------------------------
 
@@ -62,26 +53,19 @@ public class Samurai_Attack : Enemy {
 
         cc = gameObject.GetComponent<CharacterController>();
 
-        foreach (var obj in retreat_point_markers)
-        {
-            retreat_points.Add(obj.transform.position);
-        }
-
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
         cur_pause_time = 0f;
 
-        llama = Llama.get().gameObject;
-        ninja = Ninja.get().gameObject;
-
-        starting_rotation = transform.rotation; 
-        starting_location = transform.position; 
+        starting_rotation = transform.rotation;
+        starting_location = transform.position;
 
         snap_to_ground();
-    }
+    }// start
 
-    // Update is called once per frame
-    void FixedUpdate ()
+    //--------------------------------------------------------------------------
+
+    protected override void update_impl()
     {
         // base.Update();
         if (being_knocked_back)
@@ -94,50 +78,27 @@ public class Samurai_Attack : Enemy {
 
         switch(cur_state){
             case Samurai_state_e.WAITING:
-                break;
-
-            case Samurai_state_e.LOOKING:
-                look_toward(closest_player);
-
-                cur_pause_time += Time.fixedDeltaTime;
-                if(cur_pause_time >= max_pause_time / 2)
-                {
-                    cur_pause_time = 0;
-                    cur_state = Samurai_state_e.ATTACKING;
-                    // print("attack!");
-                }
-
                 snap_to_ground();
                 break;
 
             case Samurai_state_e.ATTACKING:
-                var delta_pos = transform.forward * speed;
-                delta_pos *= Time.fixedDeltaTime;
-
-                move(delta_pos, true);
-                break;
-
-            case Samurai_state_e.PAUSING:
-                cur_pause_time += Time.fixedDeltaTime;
-                if(cur_pause_time >= max_pause_time)
-                {
-                    cur_pause_time = 0;
-                    cur_state = Samurai_state_e.LOOKING;
-                }
+                look_toward(Llama.get().gameObject);
+                var delta_pos = transform.forward * speed * Time.deltaTime;
+                move(delta_pos, false);
                 break;
 
             case Samurai_state_e.RETREATING:
-                look_toward(retreat_destination);
-                move(transform.forward * speed * 0.65f * Time.fixedDeltaTime,
-                     false);
+                // look_toward(retreat_destination);
+                // move(transform.forward * speed * 0.65f * Time.deltaTime,
+                //      false);
 
-                var distance_to_dest = Vector3.Distance(
-                    transform.position, retreat_destination);
-                // print(distance_to_dest);
-                if (distance_to_dest < 3f)
-                {
-                    cur_state = Samurai_state_e.LOOKING;
-                }
+                // var distance_to_dest = Vector3.Distance(
+                //     transform.position, retreat_destination);
+                // // print(distance_to_dest);
+                // if (distance_to_dest < 3f)
+                // {
+                //     cur_state = Samurai_state_e.LOOKING;
+                // }
 
                 break;
 
@@ -181,15 +142,7 @@ public class Samurai_Attack : Enemy {
             resolve_collision_with_player(player);
             return;
         }
-
-        bool hit_wall = (cc.collisionFlags & CollisionFlags.Sides) != 0;
-        if (hit_wall)
-        {
-            cur_state = Samurai_state_e.LOOKING;
-            // print("hit wall");
-            return;
-        }
-    }
+    }// OnControllerColliderHit
 
     //--------------------------------------------------------------------------
 
@@ -258,50 +211,27 @@ public class Samurai_Attack : Enemy {
         transform.rotation = Quaternion.Euler(fixed_rotation);
     }// fix_rotation
 
-    public override float attack_power
-    {
-        get
-        {
-            return 1;
-        }
-    }
-
-    public override float max_health
-    {
-        get
-        {
-            return 50;
-        }
-    }
-
     // -------------------------------------------------------------------------
 
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker)
     {
-
-        if(attacker.name.Contains(Ninja_sword.global_name))
-        {
-            Ninja.get().receive_hit(0, transform.forward * attack_power, attacker);
-            return false;
-        }
-
-        if (!attacker.name.Contains(Ninja_jousting_pole.global_name))
+        if (!attacker.name.Contains(Ninja_sword.global_name))
         {
             return false;
         }
 
         return base.receive_hit(damage, knockback_velocity, attacker);
-    }
+    }// receive_hit
+
+    //--------------------------------------------------------------------------
 
     public void notify_checkpoint_load()
     {
-        reset_health(); 
-        transform.position = starting_location; 
+        reset_health();
+        transform.position = starting_location;
         transform.rotation = starting_rotation;
 
-        cur_state = Samurai_state_e.WAITING; 
-
-
-    }
+        cur_state = Samurai_state_e.WAITING;
+    }// notify_checkpoint_load
 }
