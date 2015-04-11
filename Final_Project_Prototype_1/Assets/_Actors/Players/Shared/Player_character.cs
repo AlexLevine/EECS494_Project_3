@@ -7,7 +7,7 @@ using System.Collections.Generic;
  RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
-    public static bool force_team_up = true;
+    public static bool force_team_up = false;
 
     // public int player_id = 0;
     public float min_move_distance = 0.001f;
