@@ -113,7 +113,7 @@ public class Input_reader : MonoBehaviour
         tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
         // tilt = tilt.normalized;
 
-        pc.adjust_jousting_pole(tilt.z, tilt.x);
+     
 
         // var sprint = player.GetButton("sprint");
 

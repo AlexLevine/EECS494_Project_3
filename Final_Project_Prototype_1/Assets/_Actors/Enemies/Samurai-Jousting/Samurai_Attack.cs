@@ -3,28 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
-public class Samurai_Attack : Enemy {
+public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
+{
     public enum Samurai_state_e
     {
         WAITING,
-        LOOKING,
         ATTACKING,
-        PAUSING,
         RETREATING
     }
 
-    public GameObject[] retreat_point_markers;
-
-    private GameObject llama;
-    private GameObject ninja;
     public Samurai_state_e cur_state;
-    public float look_thresh;
-    public float attack_thresh;
+
+    public override float attack_power { get { return 1; } }
+    public override float max_health { get { return 50; } }
+    public bool ready_to_charge {
+        get { return cur_state == Samurai_state_e.WAITING; } }
+
     public bool is_charging {
         get { return cur_state == Samurai_state_e.ATTACKING; } }
-
-    public static float max_pause_time = 2f;
-    private float cur_pause_time;
 
     private float speed;
 
@@ -32,11 +28,9 @@ public class Samurai_Attack : Enemy {
 
     private CharacterController cc;
 
-    private List<Vector3> retreat_points = new List<Vector3>();
-    private Vector3 retreat_destination;
+    public Vector3 retreat_destination;
     private Vector3 starting_location;
-    private Quaternion starting_rotation; 
-
+    private Quaternion starting_rotation;
 
     //--------------------------------------------------------------------------
 
@@ -60,83 +54,51 @@ public class Samurai_Attack : Enemy {
     {
         base.Start();
 
-        cc = gameObject.GetComponent<CharacterController>();
+        Checkpoint.subscribe(this);
 
-        foreach (var obj in retreat_point_markers)
-        {
-            retreat_points.Add(obj.transform.position);
-        }
+        cc = gameObject.GetComponent<CharacterController>();
 
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
-        cur_pause_time = 0f;
 
-        llama = Llama.get().gameObject;
-        ninja = Ninja.get().gameObject;
-
-        starting_rotation = transform.rotation; 
-        starting_location = transform.position; 
+        starting_rotation = transform.rotation;
+        starting_location = transform.position;
 
         snap_to_ground();
-    }
+    }// start
 
-    // Update is called once per frame
-    void FixedUpdate ()
+    //--------------------------------------------------------------------------
+
+    protected override void update_impl()
     {
-        // base.Update();
         if (being_knocked_back)
         {
             return;
         }
 
-        var closest_player = look_for_player();
-
-
         switch(cur_state){
             case Samurai_state_e.WAITING:
-                break;
-
-            case Samurai_state_e.LOOKING:
-                look_toward(closest_player);
-
-                cur_pause_time += Time.fixedDeltaTime;
-                if(cur_pause_time >= max_pause_time / 2)
-                {
-                    cur_pause_time = 0;
-                    cur_state = Samurai_state_e.ATTACKING;
-                    // print("attack!");
-                }
-
                 snap_to_ground();
                 break;
 
             case Samurai_state_e.ATTACKING:
-                var delta_pos = transform.forward * speed;
-                delta_pos *= Time.fixedDeltaTime;
-
-                move(delta_pos, true);
-                break;
-
-            case Samurai_state_e.PAUSING:
-                cur_pause_time += Time.fixedDeltaTime;
-                if(cur_pause_time >= max_pause_time)
-                {
-                    cur_pause_time = 0;
-                    cur_state = Samurai_state_e.LOOKING;
-                }
+                look_toward(Llama.get().gameObject, 360f);
+                var delta_pos = transform.forward * speed * Time.deltaTime;
+                move(delta_pos, false);
                 break;
 
             case Samurai_state_e.RETREATING:
                 look_toward(retreat_destination);
-                move(transform.forward * speed * 0.65f * Time.fixedDeltaTime,
-                     false);
+                var pos_step = speed * 0.65f * Time.deltaTime;
 
-                var distance_to_dest = Vector3.Distance(
-                    transform.position, retreat_destination);
-                // print(distance_to_dest);
-                if (distance_to_dest < 3f)
+                transform.position = Vector3.MoveTowards(
+                    transform.position, retreat_destination, pos_step);
+
+                var reached_retreat_point = Vector3.Distance(
+                    transform.position, retreat_destination) < 0.1f;
+                if (reached_retreat_point)
                 {
-                    cur_state = Samurai_state_e.LOOKING;
+                    cur_state = Samurai_state_e.WAITING;
                 }
 
                 break;
@@ -147,17 +109,30 @@ public class Samurai_Attack : Enemy {
         }
 
         fix_rotation();
-    }
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
-    public void notify_players_in_arena()
+    public void start_charge()
     {
-        if (cur_state == Samurai_state_e.WAITING)
-        {
-            cur_state = Samurai_state_e.LOOKING;
-        }
-    }// notify_players_in_arena
+        cur_state = Samurai_state_e.ATTACKING;
+    }// start_charge
+
+    //--------------------------------------------------------------------------
+
+    public void retreat(Vector3 destination)
+    {
+        snap_to_ground();
+        destination.y = transform.position.y;
+        retreat_destination = destination;
+        cur_state = Samurai_state_e.RETREATING;
+    }// retreat
+
+    //--------------------------------------------------------------------------
+
+    // public void notify_players_in_arena()
+    // {
+    // }// notify_players_in_arena
 
     //--------------------------------------------------------------------------
 
@@ -181,15 +156,7 @@ public class Samurai_Attack : Enemy {
             resolve_collision_with_player(player);
             return;
         }
-
-        bool hit_wall = (cc.collisionFlags & CollisionFlags.Sides) != 0;
-        if (hit_wall)
-        {
-            cur_state = Samurai_state_e.LOOKING;
-            // print("hit wall");
-            return;
-        }
-    }
+    }// OnControllerColliderHit
 
     //--------------------------------------------------------------------------
 
@@ -203,45 +170,10 @@ public class Samurai_Attack : Enemy {
             return;
         }
 
-        cur_state = Samurai_state_e.RETREATING;
-
-        choose_retreat_point();
+        Boss_fight_controller.get().notify_fighters_passed();
     }// resolve_collision_with_player
 
     //--------------------------------------------------------------------------
-
-    void choose_retreat_point()
-    {
-        for (int i = 0; i < 10; ++i)
-        {
-            var index = Random.Range(0, retreat_points.Count);
-            // print(index);
-            retreat_destination = retreat_points[index];
-            var something_in_way = Physics.Raycast(
-                transform.position, retreat_destination,
-                Vector3.Distance(transform.position, retreat_destination));
-
-            if (!something_in_way)
-            {
-                return;
-            }
-
-        }
-    }// choose_retreat_point
-
-    //--------------------------------------------------------------------------
-
-    // returns the position of the nearest player to the enemy
-    private GameObject look_for_player()
-    {
-        Vector3 llama_pos = llama.transform.position;
-        Vector3 ninja_pos = ninja.transform.position;
-
-        float llama_dist = Vector3.Distance(llama_pos, transform.position);
-        float ninja_dist = Vector3.Distance(ninja_pos, transform.position);
-
-        return (llama_dist < ninja_dist) ? llama : ninja;
-    }
 
     void snap_to_ground()
     {
@@ -258,50 +190,28 @@ public class Samurai_Attack : Enemy {
         transform.rotation = Quaternion.Euler(fixed_rotation);
     }// fix_rotation
 
-    public override float attack_power
-    {
-        get
-        {
-            return 1;
-        }
-    }
-
-    public override float max_health
-    {
-        get
-        {
-            return 50;
-        }
-    }
-
     // -------------------------------------------------------------------------
 
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker)
     {
-
-        if(attacker.name.Contains(Ninja_sword.global_name))
-        {
-            Ninja.get().receive_hit(0, transform.forward * attack_power, attacker);
-            return false;
-        }
-
-        if (!attacker.name.Contains(Ninja_jousting_pole.global_name))
+        if (!attacker.name.Contains(Ninja_sword.global_name))
         {
             return false;
         }
 
+        Boss_fight_controller.get().notify_fighters_passed();
         return base.receive_hit(damage, knockback_velocity, attacker);
-    }
+    }// receive_hit
+
+    //--------------------------------------------------------------------------
 
     public void notify_checkpoint_load()
     {
-        reset_health(); 
-        transform.position = starting_location; 
+        reset_health();
+        transform.position = starting_location;
         transform.rotation = starting_rotation;
 
-        cur_state = Samurai_state_e.WAITING; 
-
-
-    }
+        cur_state = Samurai_state_e.WAITING;
+    }// notify_checkpoint_load
 }

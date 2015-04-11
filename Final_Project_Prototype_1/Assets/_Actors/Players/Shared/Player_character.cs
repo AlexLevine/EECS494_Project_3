@@ -7,6 +7,8 @@ using System.Collections.Generic;
  RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
+    public static bool force_team_up = true;
+
     // public int player_id = 0;
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
@@ -443,6 +445,11 @@ public class Player_character : Actor
 
     public void team_up_disengage()
     {
+        if (force_team_up)
+        {
+            return;
+        }
+
         foreach (var player_char in player_characters)
         {
             var pc = player_char.GetComponent<Player_character>();
