@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CS_0 : Cut_scene {
-	int num_transitions=0;
+	int state=0;
 	
 
 	// Use this for initialization
@@ -15,29 +15,27 @@ public class CS_0 : Cut_scene {
 		base.Update();
 		if (!active || transitioning) return;
 		
-		if (num_transitions==0 && timer>=.2f){
-			print ("first transition");
+		if (state==0 && timer>=.2f){
+			//print ("first transition");
 			Camera_follow.adjust_main_camera(cut_scene_object.transform.position,120f,25f,5f,5f,my_callback);
 			transitioning = true;
-			num_transitions++;
+			state++;
 		}
 		
-		else if (num_transitions==1){ 
-			print ("have i printed yet?");
+		else if (state==1){ 
+			//print ("have i printed yet?");
 			Switchee sw = cut_scene_object.GetComponent<Switchee>();
 			sw.activate();
-			num_transitions++;
+			state++;
 		}
 		
-		else if (num_transitions==2){
-			print (rotation);
-			Camera_follow.adjust_main_camera (Camera_follow.calculate_player_midpoint(),rotation,15f,15f,5f,my_callback);
-			transitioning=true;
-			num_transitions++;
+		else if (state==2){
+			return_camera_to_llama_and_ninja();
+			state++;
 		}
-		else if (num_transitions==3){
+		else if (state==3){
 			deactivate();
-			num_transitions++;
+			state++;
 		}
 		
 	}
