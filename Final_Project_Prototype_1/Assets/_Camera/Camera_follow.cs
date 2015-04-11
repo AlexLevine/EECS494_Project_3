@@ -134,7 +134,7 @@ public class Camera_follow : MonoBehaviour
         float transition_duration=1.5f,
         Camera_callback callback=null)
     {
-        print("adjust_main_camera");
+        // print("adjust_main_camera");
         var camera_follow =
                 Camera.main.gameObject.GetComponent<Camera_follow>();
 
@@ -155,7 +155,7 @@ public class Camera_follow : MonoBehaviour
         float? camera_hover_height=null,
         Camera_callback callback=null)
     {
-        print("start_transition");
+        // print("start_transition");
 
         if (new_point_of_interest != null)
         {

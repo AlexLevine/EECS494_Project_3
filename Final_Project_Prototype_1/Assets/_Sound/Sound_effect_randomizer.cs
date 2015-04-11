@@ -24,7 +24,7 @@ public class Sound_effect_randomizer : MonoBehaviour
 
         if (source.isPlaying)
         {
-            print("already playing");
+            // print("already playing");
             return;
         }
 

@@ -49,7 +49,8 @@ public class Adjust_camera : MonoBehaviour
                 new_point_of_interest: Camera_follow.calculate_player_midpoint(),
                 y_rotation: camera_y_rotation,
                 camera_follow_distance: camera_follow_distance,
-                camera_hover_height: camera_hover_height);
+                camera_hover_height: camera_hover_height,
+                transition_duration: 2f);
 
             // set_as_current_camera_angle();
             is_current_camera_angle = true;
