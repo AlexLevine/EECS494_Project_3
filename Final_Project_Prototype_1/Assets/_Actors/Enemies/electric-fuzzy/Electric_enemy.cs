@@ -49,6 +49,12 @@ public class Electric_enemy : Enemy
 
     void FixedUpdate()
     {
+        //HACK
+        if (actors_paused)
+        {
+            return;
+        }
+
         transform.position = Vector3.MoveTowards(
             transform.position,
             path_nodes [destination_index].transform.position,

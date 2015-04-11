@@ -19,6 +19,8 @@ public class Aerial_attack : MonoBehaviour
     public GameObject sword_neutral_position;
     public GameObject sword_attack_position;
 
+    public GameObject attack_vocals;
+
     public GameObject shockwave;
 
     private Aerial_attack_state_e state;
@@ -46,21 +48,23 @@ public class Aerial_attack : MonoBehaviour
         {
         case Aerial_attack_state_e.NOT_ATTACKING:
             break;
+
         case Aerial_attack_state_e.WINDING_UP:
             var reached_target = step_sword_towards(
                 sword_attack_position.transform.position,
                 sword_attack_position.transform.rotation);
-            if (reached_target)
+            if (!reached_target)
             {
-                state = Aerial_attack_state_e.DIVING;
-                sword.GetComponent<Ninja_sword>().is_swinging = true;
+                break;
             }
 
+            state = Aerial_attack_state_e.DIVING;
+            sword.GetComponent<Ninja_sword>().is_swinging = true;
+            attack_vocals.GetComponent<Sound_effect_randomizer>().play();
             break;
 
         case Aerial_attack_state_e.DIVING:
             Ninja.get().move(dive_velocity * Time.deltaTime, false);
-
             break;
 
         case Aerial_attack_state_e.COOLING_DOWN:

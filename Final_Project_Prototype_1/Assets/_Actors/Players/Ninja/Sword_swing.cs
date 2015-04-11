@@ -3,86 +3,106 @@ using System.Collections;
 
 public enum Sword_state_e
 {
-    IDLE,
-    SWINGING
+	IDLE,
+	SWINGING
 }
 
 public class Sword_swing : MonoBehaviour
 {
-    public Vector3 sword_neutral_pos;
-    public Vector3 sword_neutral_rotation;
+	private Vector3 sword_neutral_pos;
+	private Quaternion sword_neutral_rotation;
 
-    public Sword_state_e state;
+	public GameObject sword_neutral;
 
-    public float angle_distance_swung = 0;
+	public Sword_state_e state;
 
-    public GameObject swing_sound_player;
+	public float angle_distance_swung = 0;
 
-    private GameObject sword;
-    private float swing_speed = 540;
+	public GameObject swing_sound_player;
+	public GameObject basic_attack_vocals;
 
-    void Start()
-    {
-        sword = Ninja.get().sword_obj;
+	private GameObject sword;
+	private float swing_speed = 520f;
 
-        sword_neutral_pos = sword.transform.localPosition;
-        sword_neutral_rotation = sword.transform.localEulerAngles;
-    }
+	private Vector3 swing_size;
+	private Vector3 rest_size;
 
-    void Update()
-    {
-        switch(state)
-        {
-        case Sword_state_e.IDLE:
-            break;
-        case Sword_state_e.SWINGING:
-            sword.transform.RotateAround(
-                transform.position, Vector3.up, -swing_speed * Time.deltaTime);
+	void Start()
+	{
+		sword = Ninja.get().sword_obj;
 
-            var distance = Vector3.Angle(
-                sword.transform.localPosition, sword_neutral_pos);
-            if (distance < max_swing_angle_distance)
-            {
-                return;
-            }
+		// swing_size = sword.transform.localScale;
+		// rest_size = swing_size;
+		// rest_size.z = 2f;
 
-            sword.transform.localPosition = sword_neutral_pos;
-            sword.transform.localEulerAngles = sword_neutral_rotation;
-            state = Sword_state_e.IDLE;
-            sword.GetComponent<Ninja_sword>().is_swinging = false;
-            break;
-        }
-    }
 
-    public void swing()
-    {
-        if (is_swinging)
-        {
-            return;
-        }
+		sword_neutral_pos = sword_neutral.transform.position;
+		sword_neutral_rotation = sword_neutral.transform.rotation;
+		// sword.transform.localScale = rest_size;
+		sword.transform.position = sword_neutral_pos;
+		sword.transform.rotation = sword_neutral_rotation;
 
-        // swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
 
-        // HACK: calculate the swing start distance instead of hardcoding
-        sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
-        sword.transform.localEulerAngles = new Vector3(0, 45f, 0);
-        state = Sword_state_e.SWINGING;
-        sword.GetComponent<Ninja_sword>().is_swinging = true;
-    }
+	}
 
-    public float max_swing_angle_distance
-    {
-        get
-        {
-            return 90f;
-        }
-    }
+	void Update()
+	{
+		switch(state)
+		{
+		case Sword_state_e.IDLE:
+			break;
+		case Sword_state_e.SWINGING:
+			sword.transform.RotateAround(
+				transform.position, Vector3.up, -swing_speed * Time.deltaTime);
 
-    public bool is_swinging
-    {
-        get
-        {
-            return state != Sword_state_e.IDLE;
-        }
-    }
+			var distance = Vector3.Angle(
+				sword.transform.localPosition, sword_neutral_pos);
+			if (distance < max_swing_angle_distance)
+			{
+				return;
+			}
+
+			sword.transform.localPosition = sword_neutral_pos;
+			sword.transform.rotation = sword_neutral_rotation;
+			sword.transform.localScale = rest_size;
+			state = Sword_state_e.IDLE;
+			sword.GetComponent<Ninja_sword>().is_swinging = false;
+			break;
+		}
+	}
+
+	public void swing()
+	{
+		if (is_swinging)
+		{
+			return;
+		}
+
+		basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
+		swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
+
+
+		// HACK: calculate the swing start distance instead of hardcoding
+		sword.transform.localScale = swing_size;
+		sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
+		sword.transform.localEulerAngles = new Vector3(0, 45f, 0);
+		state = Sword_state_e.SWINGING;
+		sword.GetComponent<Ninja_sword>().is_swinging = true;
+	}
+
+	public float max_swing_angle_distance
+	{
+		get
+		{
+			return 110f;
+		}
+	}
+
+	public bool is_swinging
+	{
+		get
+		{
+			return state != Sword_state_e.IDLE;
+		}
+	}
 }

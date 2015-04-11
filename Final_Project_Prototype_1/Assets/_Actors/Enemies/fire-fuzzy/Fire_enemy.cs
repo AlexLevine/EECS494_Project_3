@@ -11,7 +11,7 @@ public class Fire_enemy : Enemy {
 
     public bool is_moving;
     public bool on_fire;
-    
+
     private int puff_timer;
     const int base_puff_timer = 100;
     public bool puffing = false;
@@ -48,7 +48,7 @@ public class Fire_enemy : Enemy {
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
         on_fire = true;
-        
+
         int rand = Random.Range (0, 10);
         puff_timer = base_puff_timer * rand;
     }// Start
@@ -57,6 +57,11 @@ public class Fire_enemy : Enemy {
 
     void FixedUpdate()
     {
+        // HACK
+        if (actors_paused)
+        {
+            return;
+        }
 
         if (!puffing) {
             if (puff_timer <= 0) {
@@ -66,7 +71,7 @@ public class Fire_enemy : Enemy {
                 StartCoroutine( puff());
             } else -- puff_timer;
         }
-        
+
         // base.Update ();
         if (being_knocked_back)
         {
@@ -92,7 +97,7 @@ public class Fire_enemy : Enemy {
 
 
     }// Update
-    
+
     private IEnumerator puff () {
         CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
         ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();

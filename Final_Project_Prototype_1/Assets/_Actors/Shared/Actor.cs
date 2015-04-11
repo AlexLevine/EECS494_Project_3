@@ -17,6 +17,8 @@ public class Actor : MonoBehaviour
     private Flash_animation invincibility_animation;
     private Knockback_animation knockback_animation;
 
+    public static bool actors_paused = false;
+
     //--------------------------------------------------------------------------
 
     public virtual void Start()
@@ -29,10 +31,20 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void Update()
+    void Update()
+    {
+        if (actors_paused)
+        {
+            return;
+        }
+
+        update_impl();
+    }// Update()
+
+    protected virtual void update_impl()
     {
 
-    }// Update()
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
@@ -115,11 +127,12 @@ public class Actor : MonoBehaviour
         }
         // if(Llama.get().is_charging)
         // {
-        //     return false; 
+        //     return false;
         // }
 
 
         health_ -= damage;
+        play_damage_vocals();
 
         bool should_die = health_ <= 0;
 
@@ -137,6 +150,10 @@ public class Actor : MonoBehaviour
         return should_die;
     }// receive_hit
 
+    protected virtual void play_damage_vocals()
+    {
+    }
+
     //--------------------------------------------------------------------------
 
     public virtual void on_death()
@@ -146,14 +163,18 @@ public class Actor : MonoBehaviour
 
     protected void reset_health()
     {
-        health_ = max_health;
+    	// reset health for both players:
+    	Llama.get ().reset_health();
+    	Ninja.get ().reset_health();
+        //health_ = max_health;
     }
+
     public void add_health(int hp)
     {
-        health_ += hp; 
+        health_ += hp;
         if(health_ > max_health)
         {
-            health_ = max_health; 
+            health_ = max_health;
         }
     }
 

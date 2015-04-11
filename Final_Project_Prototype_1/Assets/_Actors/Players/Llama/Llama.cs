@@ -5,6 +5,10 @@ public class Llama : Player_character
 {
     public GameObject team_up_point;
 
+    public GameObject damage_vocals;
+    public GameObject charge_vocals;
+    public GameObject spit_sounds;
+
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
@@ -66,9 +70,9 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
 
         // print(velocity.magnitude);
         // if (is_teamed_up)
@@ -106,7 +110,7 @@ public class Llama : Player_character
             time_spent_cooling_down_charge += Time.deltaTime;
             break;
         }
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
@@ -152,8 +156,8 @@ public class Llama : Player_character
 
         var charge_direction = transform.forward;
 
-        print(angle);
-        print(target_velocity.magnitude);
+        // print(angle);
+        // print(target_velocity.magnitude);
         if (Mathf.Abs(angle) > 20 && target_velocity.magnitude > 1f)
         {
             var rotate_amount = Quaternion.AngleAxis(
@@ -189,6 +193,8 @@ public class Llama : Player_character
             return;
         }
 
+        spit_sounds.GetComponent<Sound_effect_randomizer>().play();
+
         GameObject spit = Instantiate(
             spit_prefab, spit_spawn_point.transform.position,
             transform.rotation) as GameObject;
@@ -210,6 +216,11 @@ public class Llama : Player_character
         if (!is_teamed_up)
         {
             return;
+        }
+
+        if (!is_charging)
+        {
+            charge_vocals.GetComponent<Sound_effect_randomizer>().play();
         }
 
         charge_state = Charge_state_e.CHARGING;
@@ -250,8 +261,25 @@ public class Llama : Player_character
         }
 
         return base.receive_hit(damage, knockback_velocity, attacker);
-
     }
+
+    //--------------------------------------------------------------------------
+
+    protected override void play_damage_vocals()
+    {
+        damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }// play_damage_vocals
+
+    //--------------------------------------------------------------------------
+
+    // protected override void on_enemy_gone(GameObject enemy)
+    // {
+    //     if (enemy == lock_on_target)
+    //     {
+
+    //         lock_on_target = null;
+    //     }
+    // }// on_enemy_gone
 
     //--------------------------------------------------------------------------
 

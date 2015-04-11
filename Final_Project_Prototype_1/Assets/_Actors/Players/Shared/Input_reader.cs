@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-// using Rewired;
+using System.Collections.Generic;
 using InControl;
 
 public class Input_reader : MonoBehaviour
 {
     public int player_id = 0;
-    public static GameObject[] players;
+    public static List<Input_reader> input_readers = new List<Input_reader>();
 
     public InputDevice input_device;
 
@@ -22,7 +22,7 @@ public class Input_reader : MonoBehaviour
 
     void Awake()
     {
-        // player = ReInput.players.GetPlayer(player_id);
+        input_readers.Add(this);
     }
 
     //--------------------------------------------------------------------------
@@ -58,9 +58,12 @@ public class Input_reader : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public void toggle_player_controls()
+    public static void toggle_player_controls()
     {
-        controls_enabled = !controls_enabled;
+        foreach (var input_reader in input_readers)
+        {
+            input_reader.controls_enabled = !input_reader.controls_enabled;
+        }
     }// toggle_player_controls
 
     //--------------------------------------------------------------------------
@@ -110,7 +113,7 @@ public class Input_reader : MonoBehaviour
         tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
         // tilt = tilt.normalized;
 
-        pc.adjust_jousting_pole(tilt.z, tilt.x);
+     
 
         // var sprint = player.GetButton("sprint");
 

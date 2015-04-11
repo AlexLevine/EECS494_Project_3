@@ -3,70 +3,52 @@ using System.Collections;
 
 public class Camera_follow : MonoBehaviour
 {
+    public delegate void Camera_callback();
+
+    public Vector3 point_of_interest { get { return point_of_interest_; } }
+    public float camera_follow_distance { get { return camera_follow_distance_; } }
+    public float camera_hover_height { get { return camera_hover_height_; } }
+    public float y_rotation { get { return y_rotation_; } }
+
     // public static float min_camera_distance = 15f;
+
     // public static float max_camera_distance = 15f;
 
 
     // public GameObject players_midpoint_marker;
 
-    public float camera_follow_distance_ = 15f;
-    public float camera_hover_height_ = 15f;
+    private Vector3 point_of_interest_;
 
-    public float y_rotation_ = 0;
+    private float camera_follow_distance_ = 15f;
+    private float camera_hover_height_ = 15f;
+
+    private float y_rotation_ = 0;
     // public static float camera_y_distance = 4f;
 
     // static public bool in_boss_arena = false;
 
-    private float lerp_speed = 5;
-    private Vector3 player_midpoint;
+    // private float lerp_speed = 5;
 
-    private bool is_transitioning = false;
+    private Vector3 velocity = Vector3.zero;
+    private bool following_player_ = true;
+    private bool is_transitioning_ = false;
 
-    //--------------------------------------------------------------------------
-
-    public static void adjust_main_camera(
-        float? y_rotation=null, float? camera_follow_distance=null,
-        float? camera_hover_height=null)
-    {
-        print("adjusting");
-        Camera.main.gameObject.GetComponent<Camera_follow>().adjust(
-            y_rotation: y_rotation,
-            camera_follow_distance: camera_follow_distance,
-            camera_hover_height: camera_hover_height);
-    }// adjust_main_camera
-
-    public void adjust(
-        float? y_rotation=null, float? camera_follow_distance=null,
-        float? camera_hover_height=null)
-    {
-        if (y_rotation != null)
-        {
-            y_rotation_ = (float) y_rotation;
-            is_transitioning = true;
-        }
-
-        if (camera_follow_distance != null)
-        {
-            camera_follow_distance_ = (float) camera_follow_distance;
-            is_transitioning = true;
-        }
-
-        if (camera_hover_height != null)
-        {
-            camera_hover_height_ = (float) camera_hover_height;
-            is_transitioning = true;
-        }
-    }
+    private float transition_time_elapsed = 0;
+    private float current_transition_duration = 1f;
+    private Camera_callback current_transition_callback = null;
 
     //--------------------------------------------------------------------------
 
     // Use this for initialization
     void Start()
     {
-        // calculate_player_midpoint();
-        // snap_camera_to_position();
+        // following_player_ = false;
 
-        // transform.LookAt(players_midpoint_marker.transform);
+        // point_of_interest_ = calculate_player_midpoint();
+
+        // transform.position = calculate_target_camera_position();
+        // transform.rotation = calculate_target_camera_rotation(
+        //     transform.position);
     }
 
     //--------------------------------------------------------------------------
@@ -74,28 +56,147 @@ public class Camera_follow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        player_midpoint = calculate_player_midpoint();
-        // var desired_rotation = transform.rotation.eulerAngles;
-        // desired_rotation.y = y_rotation_;
-        // transform.rotation = Quaternion.Euler(desired_rotation);
-
-        var new_pos = calculate_new_position();
-        var reached_pos = Vector3.Distance(transform.position, new_pos) < 0.1f;
-
-        var new_rotation = update_rotation();
-        var reached_rotation = Mathf.Abs(
-            Quaternion.Angle(transform.rotation, new_rotation)) < 1f;
-
-        if (is_transitioning && reached_rotation && reached_pos)
+        if (following_player_)
         {
-            is_transitioning = false;
+            point_of_interest_ = calculate_player_midpoint();
         }
 
-        transform.position = new_pos;
-        transform.rotation = new_rotation;
-    }
+        var target_position = calculate_target_camera_position();
+        var target_rotation = calculate_target_camera_rotation(
+            target_position);
 
-    Vector3 calculate_player_midpoint()
+        if (is_transitioning_)
+        {
+            var lerp_percent =
+                    transition_time_elapsed / current_transition_duration;
+            lerp_percent =
+                Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
+            // print(lerp_percent);
+            if (lerp_percent >= .90) //HACK
+            {
+                lerp_percent = 1;
+                is_transitioning_ = false;
+                if (current_transition_callback != null)
+                {
+                    current_transition_callback();
+                }
+            }
+
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation, target_rotation, lerp_percent);
+            transform.position = Vector3.Lerp(
+                transform.position, target_position, lerp_percent);
+
+            transition_time_elapsed += Time.deltaTime;
+            return;
+        }
+
+        if (!following_player_)
+        {
+            return;
+        }
+
+        // point_of_interest_ = calculate_player_midpoint();
+
+        // target_position = calculate_target_camera_position();
+        // var target_rotation = calculate_target_camera_rotation(
+        //     target_position);
+
+        // if (Vector3.Distance(transform.position, target_position) > 1f)
+        // {
+        transform.position = Vector3.SmoothDamp(
+            transform.position, target_position, ref velocity, 0.5f);
+        // }
+    }// LateUpdate
+
+    //--------------------------------------------------------------------------
+
+    public static void start_following_player()
+    {
+        Camera.main.GetComponent<Camera_follow>().following_player_ = true;
+    }// start_following_player
+
+    //--------------------------------------------------------------------------
+
+    public static void stop_following_player()
+    {
+        Camera.main.GetComponent<Camera_follow>().following_player_ = false;
+    }// stop_following_player
+
+    //--------------------------------------------------------------------------
+
+    public static void adjust_main_camera(
+        Vector3? new_point_of_interest=null,
+        float? y_rotation=null, float? camera_follow_distance=null,
+        float? camera_hover_height=null,
+        float transition_duration=1.5f,
+        Camera_callback callback=null)
+    {
+        print("adjust_main_camera");
+        var camera_follow =
+                Camera.main.gameObject.GetComponent<Camera_follow>();
+                
+       camera_follow.current_transition_callback = callback;
+
+        camera_follow.start_transition(
+            new_point_of_interest: new_point_of_interest,
+            y_rotation: y_rotation,
+            camera_follow_distance: camera_follow_distance,
+            camera_hover_height: camera_hover_height,
+            transition_duration: transition_duration);
+    }// adjust_main_camera
+
+    void start_transition(
+        float transition_duration,
+        Vector3? new_point_of_interest=null,
+        float? y_rotation=null, float? camera_follow_distance=null,
+        float? camera_hover_height=null,
+        Camera_callback callback=null)
+    {
+        print("start_transition");
+
+        if (new_point_of_interest != null)
+        {
+            point_of_interest_ = (Vector3) new_point_of_interest;
+        }
+
+        if (y_rotation != null)
+        {
+            y_rotation_ = (float) y_rotation;
+        }
+
+        if (camera_follow_distance != null)
+        {
+            camera_follow_distance_ = (float) camera_follow_distance;
+        }
+
+        if (camera_hover_height != null)
+        {
+            camera_hover_height_ = (float) camera_hover_height;
+        }
+
+        // var target_position = calculate_target_camera_position();
+        // var target_rotation = calculate_target_camera_rotation(
+        //     target_position);
+
+        if (is_transitioning_)
+        {
+            print("already transitioning");
+            return;
+        }
+
+        // StartCoroutine(do_camera_transition(
+        //     target_position, target_rotation, transition_duration));
+
+        is_transitioning_ = true;
+        transition_time_elapsed = 0;
+        current_transition_duration = transition_duration;
+
+    }// start_transition
+
+    //--------------------------------------------------------------------------
+
+    public static Vector3 calculate_player_midpoint()
     {
         var llama = Llama.get().gameObject;
         var ninja = Ninja.get().gameObject;
@@ -105,6 +206,108 @@ public class Camera_follow : MonoBehaviour
         return midpoint;
         // players_midpoint_marker.transform.position = midpoint;
     }// calculate_player_midpoint
+
+    //--------------------------------------------------------------------------
+
+    Vector3 calculate_target_camera_position()
+    {
+        var wanted_forward = Quaternion.AngleAxis(y_rotation_, Vector3.up);
+
+        var camera_offset = -(wanted_forward * Vector3.forward);
+        camera_offset.y = 0;
+        camera_offset = camera_offset.normalized;
+        camera_offset *= camera_follow_distance_;
+
+        camera_offset.y += camera_hover_height_;
+
+        return point_of_interest_ + camera_offset;
+        // if (!is_transitioning)
+        // {
+        //     return target_pos;
+        // }
+
+        // return Vector3.Lerp(
+        //     transform.position, target_pos,
+        //     lerp_speed * Time.deltaTime);
+    }// calculate_target_camera_position
+
+    //--------------------------------------------------------------------------
+
+    Quaternion calculate_target_camera_rotation(Vector3 target_position)
+    {
+        var look_direction = point_of_interest_ - target_position;
+        var new_forward = Vector3.RotateTowards(
+            transform.forward, look_direction, 360f, 0f);
+
+        var target_rotation = Quaternion.LookRotation(new_forward);
+
+        return target_rotation;
+    }
+    //--------------------------------------------------------------------------
+
+    // // Returns true if any of the parameters passed to this function are not
+    // // null.
+    // bool update_camera_follow_data(
+    //     Vector3? new_point_of_interest=null,
+    //     float? y_rotation=null, float? camera_follow_distance=null,
+    //     float? camera_hover_height=null)
+    // {
+    //     if (new_point_of_interest != null)
+    //     {
+    //         point_of_interest_ = (Vector3) new_point_of_interest;
+    //     }
+
+    //     if (y_rotation != null)
+    //     {
+    //         y_rotation_ = (float) y_rotation;
+    //     }
+
+    //     if (camera_follow_distance != null)
+    //     {
+    //         camera_follow_distance_ = (float) camera_follow_distance;
+    //     }
+
+    //     if (camera_hover_height != null)
+    //     {
+    //         camera_hover_height_ = (float) camera_hover_height;
+    //     }
+
+    //     return new_point_of_interest != null || y_rotation != null ||
+    //            camera_follow_distance != null || camera_hover_height != null;
+    // }// update_camera_follow_data
+
+    //--------------------------------------------------------------------------
+
+    // IEnumerator do_camera_transition(
+    //     Vector3 target_position, Quaternion target_rotation,
+    //     float transition_duration)
+    // {
+    //     print("do_camera_transition");
+
+    //     is_transitioning_ = true;
+
+    //     for (float time_elapsed = 0; time_elapsed < transition_duration; time_elapsed += Time.deltaTime)
+    //     {
+    //         if (following_player_)
+    //         {
+    //             point_of_interest_ = calculate_player_midpoint();
+
+    //             target_position = calculate_target_camera_position();
+    //         }
+
+    //         var lerp_percent = Mathf.Min(1f, time_elapsed / transition_duration);
+    //         print(lerp_percent);
+    //         transform.rotation = Quaternion.Lerp(
+    //             transform.rotation, target_rotation, lerp_percent / 2f);
+    //         transform.position = Vector3.Lerp(
+    //             transform.position, target_position, lerp_percent);
+    //         yield return null;
+    //     }
+
+    //     is_transitioning_ = false;
+
+    //     print("transition finished");
+    // }// do_camera_transition
 
     //--------------------------------------------------------------------------
 
@@ -121,44 +324,25 @@ public class Camera_follow : MonoBehaviour
     //     transform.position = player_midpoint + camera_offset;
     // }// snap_camera_to_position
 
-    Vector3 calculate_new_position()
-    {
-        var wanted_forward = Quaternion.AngleAxis(y_rotation_, Vector3.up);
-        var camera_offset = -(wanted_forward * Vector3.forward);
-        camera_offset.y = 0;
-        camera_offset = camera_offset.normalized;
-        camera_offset *= camera_follow_distance_;
 
-        camera_offset.y += camera_hover_height_;
-
-        var target_pos = calculate_player_midpoint() + camera_offset;
-        if (!is_transitioning)
-        {
-            return target_pos;
-        }
-
-        return Vector3.Lerp(
-            transform.position, target_pos,
-            lerp_speed * Time.deltaTime);
-    }// calculate_new_position
 
     //--------------------------------------------------------------------------
 
-    Quaternion update_rotation()
-    {
-        var look_direction = player_midpoint - transform.position;
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, look_direction, 360f, 0f);
+    // void update_rotation()
+    // {
+    //     var look_direction = player_midpoint - transform.position;
+    //     var new_forward = Vector3.RotateTowards(
+    //         transform.forward, look_direction, 360f, 0f);
 
-        var target_rotation = Quaternion.LookRotation(new_forward);
-        if (!is_transitioning)
-        {
-            return transform.rotation;
-        }
+    //     var target_rotation = Quaternion.LookRotation(new_forward);
+    //     if (!is_transitioning)
+    //     {
+    //         return transform.rotation;
+    //     }
 
-        return Quaternion.Lerp(
-            transform.rotation, target_rotation, lerp_speed * Time.deltaTime);
-    }// update_rotation
+    //     // return Quaternion.Lerp(
+    //     //     transform.rotation, target_rotation, lerp_speed * Time.deltaTime);
+    // }// update_rotation
 
     //--------------------------------------------------------------------------
 

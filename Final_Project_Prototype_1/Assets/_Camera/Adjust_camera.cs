@@ -46,6 +46,7 @@ public class Adjust_camera : MonoBehaviour
         if (llama_inside && ninja_inside && !is_current_camera_angle)
         {
             Camera_follow.adjust_main_camera(
+                new_point_of_interest: Camera_follow.calculate_player_midpoint(),
                 y_rotation: camera_y_rotation,
                 camera_follow_distance: camera_follow_distance,
                 camera_hover_height: camera_hover_height);

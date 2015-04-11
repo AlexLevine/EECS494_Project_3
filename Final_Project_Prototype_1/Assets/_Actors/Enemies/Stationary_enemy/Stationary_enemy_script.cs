@@ -25,10 +25,9 @@ public class Stationary_enemy_script : Enemy
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
         timer += Time.deltaTime;
 
         get_closest_player();
@@ -39,7 +38,7 @@ public class Stationary_enemy_script : Enemy
             shoot_projectile();
         }
 
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 

@@ -3,9 +3,12 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController)),
+ RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
+    public static bool force_team_up = true;
+
     // public int player_id = 0;
     public float min_move_distance = 0.001f;
     public float skin_width = 0.01f;
@@ -47,7 +50,7 @@ public class Player_character : Actor
 
     // private bool is_jumping = false;
 
-    public GameObject  lock_on_bar = null;
+    public GameObject lock_on_bar = null;
     private GameObject lock_on_target = null;
     // private float y_velocity = 0;
 
@@ -73,10 +76,9 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // Update is called once per frame
-    public override void Update()
+    protected override void update_impl()
     {
-        base.Update();
+        base.update_impl();
 
         if (being_knocked_back)
         {
@@ -103,7 +105,7 @@ public class Player_character : Actor
             return;
         }
 
-    }// Update
+    }// update_impl
 
     //--------------------------------------------------------------------------
 
@@ -254,7 +256,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    private void on_enemy_gone(GameObject enemy)
+    protected virtual void on_enemy_gone(GameObject enemy)
     {
         if (enemy == lock_on_target)
         {
@@ -443,6 +445,11 @@ public class Player_character : Actor
 
     public void team_up_disengage()
     {
+        if (force_team_up)
+        {
+            return;
+        }
+
         foreach (var player_char in player_characters)
         {
             var pc = player_char.GetComponent<Player_character>();
