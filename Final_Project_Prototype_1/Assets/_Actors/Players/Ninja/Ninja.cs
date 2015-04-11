@@ -328,7 +328,12 @@ public class Ninja : Player_character
             team_up_disengage();
         }
     }// jump
-
+    
+	public override void on_death() {
+		Llama.get ().reset_health();
+		base.on_death();
+	}
+		
     //--------------------------------------------------------------------------
 
     protected override void play_damage_vocals()

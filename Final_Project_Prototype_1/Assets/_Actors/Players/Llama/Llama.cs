@@ -262,6 +262,11 @@ public class Llama : Player_character
 
         return base.receive_hit(damage, knockback_velocity, attacker);
     }
+    
+	public override void on_death() {
+		Ninja.get ().reset_health();
+		base.on_death();
+	}
 
     //--------------------------------------------------------------------------
 
