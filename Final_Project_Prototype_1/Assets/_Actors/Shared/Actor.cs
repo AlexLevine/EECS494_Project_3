@@ -161,12 +161,9 @@ public class Actor : MonoBehaviour
 
     }// on_death
 
-    protected void reset_health()
+    public void reset_health()
     {
-    	// reset health for both players:
-    	Llama.get ().reset_health();
-    	Ninja.get ().reset_health();
-        //health_ = max_health;
+        health_ = max_health;
     }
 
     public void add_health(int hp)

@@ -10,12 +10,12 @@ public class Stationary_enemy_script : Enemy
     private GameObject closest_player;
     public float spawn_distance; // radius an enemy must be in to start attacking
 
-    private static float time_between_shots = 1;
+    private static float time_between_shots = 2;
     private float timer;
 
     public override float attack_power { get { return 0; } }
 
-    public override float max_health { get { return 20; } }
+    public override float max_health { get { return 15; } }
 
     // Use this for initialization
     public override void Start()
