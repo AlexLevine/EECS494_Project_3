@@ -131,7 +131,7 @@ public class Aerial_attack : MonoBehaviour
 
         var reached_rotation = Quaternion.Angle(
             sword.transform.rotation,
-            target_rotation) < 1f;
+            target_rotation) < 0.1f;
 
         return reached_rotation && reached_pos;
     }// step_sword_towards
