@@ -26,6 +26,7 @@ public class Player_character : Actor
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
+    public bool is_visible { get { return visible; } }
 
     //--------------------------------------------------------------------------
 
@@ -47,6 +48,7 @@ public class Player_character : Actor
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
+    private bool visible = false;
 
     // private bool is_jumping = false;
 
@@ -304,16 +306,16 @@ public class Player_character : Actor
         //     }
         // }
 
-        var this_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    transform.position, delta_position);
-        var other_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    get_other_player().transform.position, delta_position * -1);
-        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
-        {
-            return;
-        }
+//        var this_player_would_be_off_camera =
+//                Camera_follow.point_step_would_leave_viewport(
+//                    transform.position, delta_position);
+//        var other_player_would_be_off_camera =
+//                Camera_follow.point_step_would_leave_viewport(
+//                    get_other_player().transform.position, delta_position * -1);
+//        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
+//        {
+//            return;
+//        }
 
         cc.Move(delta_position);
         on_ground = delta_position.y < 0 && cc.isGrounded;
@@ -483,5 +485,15 @@ public class Player_character : Actor
         }
         print("COULDN'T FIND OTHER PLAYER");
         return null;
+    }
+    
+    void OnBecameVisible(){
+		print ("visible!");
+    	visible = true;
+    }
+    
+    void OnBecameInvisible(){
+    	print ("invisible!");
+    	visible = false;
     }
 }
