@@ -7,7 +7,7 @@ public class Llama_spit : MonoBehaviour
 
     public int attack_power { get { return 5; } }
 
-    public float time_left = 0.7f;
+    public float time_left = 2f;
 
     void Awake()
     {

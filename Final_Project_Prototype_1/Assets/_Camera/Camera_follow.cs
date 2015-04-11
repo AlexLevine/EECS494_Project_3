@@ -33,6 +33,8 @@ public class Camera_follow : MonoBehaviour
     private bool following_player_ = true;
     private bool is_transitioning_ = false;
 
+    private Vector3 transition_start_position;
+    private Quaternion transition_start_rotation;
     private float transition_time_elapsed = 0;
     private float current_transition_duration = 1f;
     private Camera_callback current_transition_callback = null;
@@ -72,7 +74,7 @@ public class Camera_follow : MonoBehaviour
             lerp_percent =
                 Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
             // print(lerp_percent);
-            if (lerp_percent >= .90) //HACK
+            if (lerp_percent >= 1) //HACK
             {
                 lerp_percent = 1;
                 is_transitioning_ = false;
@@ -83,9 +85,9 @@ public class Camera_follow : MonoBehaviour
             }
 
             transform.rotation = Quaternion.Lerp(
-                transform.rotation, target_rotation, lerp_percent);
+                transition_start_rotation, target_rotation, lerp_percent);
             transform.position = Vector3.Lerp(
-                transform.position, target_position, lerp_percent);
+                transition_start_position, target_position, lerp_percent);
 
             transition_time_elapsed += Time.deltaTime;
             return;
@@ -135,7 +137,7 @@ public class Camera_follow : MonoBehaviour
         print("adjust_main_camera");
         var camera_follow =
                 Camera.main.gameObject.GetComponent<Camera_follow>();
-                
+
        camera_follow.current_transition_callback = callback;
 
         camera_follow.start_transition(
@@ -188,6 +190,8 @@ public class Camera_follow : MonoBehaviour
         // StartCoroutine(do_camera_transition(
         //     target_position, target_rotation, transition_duration));
 
+        transition_start_position = transform.position;
+        transition_start_rotation = transform.rotation;
         is_transitioning_ = true;
         transition_time_elapsed = 0;
         current_transition_duration = transition_duration;
