@@ -44,7 +44,7 @@ public class Breakable_wall : MonoBehaviour {
             return;
         }
         
-        GameObject.Find ("_facade").SetActive(false);
+        GameObject.Find ("_facade_cracked").SetActive(false);
         // print("Before Loop");
         foreach(var child in GetComponentsInChildren<Rigidbody>())
         {

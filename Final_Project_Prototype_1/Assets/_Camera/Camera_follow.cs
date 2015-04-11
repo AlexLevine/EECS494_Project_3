@@ -72,7 +72,7 @@ public class Camera_follow : MonoBehaviour
             lerp_percent =
                 Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
             // print(lerp_percent);
-            if (lerp_percent >= .90) //HACK
+            if (lerp_percent >= 1) //HACK
             {
                 lerp_percent = 1;
                 is_transitioning_ = false;
