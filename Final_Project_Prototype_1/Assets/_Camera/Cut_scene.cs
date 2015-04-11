@@ -3,52 +3,52 @@ using System.Collections;
 
 public class Cut_scene : MonoBehaviour {
 	public bool active = false;
-	public GameObject cut_scene_object;
-	public bool transitioning = false;
+	public bool transitioning = false; //must be true when adjust_main_camera is running
 	public float timer = 0f;
-
 	public float pre_rotation;
 	public float pre_height;
 	public float pre_distance;
-
-	// Use this for initialization
-	void Start () {
+	public Vector3 pre_mdpt;
 	
-	}
-	
-	// Update is called once per frame
 	public void Update () {
 		timer+=Time.deltaTime;
 	}
+	
 			
+	//toggles active boolean, turns on player control, remembers current camera configuration		
 	public void activate()
 	{
 		active = true;
 		timer = 0f;
+		
+		//pause
 		Camera_follow.stop_following_player();
 		Input_reader.toggle_player_controls();
-		//print ("cut scene activated");
-		Transform cam = GameObject.Find ("Main Camera").transform;
-		Vector3 mdpt = Camera_follow.calculate_player_midpoint();
+		Actor.actors_paused = true;
 		
-		//camera values to return to for return_camera_to_llama_and_ninja()
+		//pre cut scene camera values
+		Transform cam = GameObject.Find ("Main Camera").transform;
+		pre_mdpt = Camera_follow.calculate_player_midpoint();
 		pre_rotation = cam.rotation.y;
-		pre_height = cam.position.y - mdpt.y;
-		pre_distance = Mathf.Sqrt(Mathf.Pow(cam.position.x-mdpt.x,2) + Mathf.Pow(cam.position.z-mdpt.z,2));
+		pre_height = cam.position.y - pre_mdpt.y;
+		pre_distance = Mathf.Sqrt(Mathf.Pow(cam.position.x-pre_mdpt.x,2) + Mathf.Pow(cam.position.z-pre_mdpt.z,2));
+		
 	}
 	
+	//toggles active boolean, turns on player control
 	public void deactivate()
 	{
 		active = false;
 		Camera_follow.start_following_player();
 		Input_reader.toggle_player_controls();
+		Actor.actors_paused = false;
 		//print ("cut scene deactivated");
 	}
 	
+	//returns camera to pre cut_scene view
 	public void return_camera_to_llama_and_ninja()
 	{
-		var mdpt = Camera_follow.calculate_player_midpoint(); //HACK players sometimes move after transition starts
-		Camera_follow.adjust_main_camera (mdpt,pre_rotation,pre_distance,pre_height,5f,my_callback);
+		Camera_follow.adjust_main_camera (pre_mdpt,pre_rotation,pre_distance,pre_height,5f,my_callback);
 		transitioning=true;
 	}
 	
