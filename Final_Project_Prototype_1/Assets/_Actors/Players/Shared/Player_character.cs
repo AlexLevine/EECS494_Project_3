@@ -26,7 +26,6 @@ public class Player_character : Actor
     public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
-    public bool is_visible { get { return visible; } }
 
     //--------------------------------------------------------------------------
 
@@ -48,7 +47,6 @@ public class Player_character : Actor
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
-    private bool visible = false;
 
     // private bool is_jumping = false;
 
@@ -487,13 +485,4 @@ public class Player_character : Actor
         return null;
     }
     
-    void OnBecameVisible(){
-		print ("visible!");
-    	visible = true;
-    }
-    
-    void OnBecameInvisible(){
-    	print ("invisible!");
-    	visible = false;
-    }
 }
