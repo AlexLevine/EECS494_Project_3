@@ -1379,7 +1379,7 @@ GameObject:
   - 114: {fileID: 11418710}
   - 23: {fileID: 2376078}
   m_Layer: 0
-  m_Name: breakable-wall
+  m_Name: breakable-wall-old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9871,6 +9871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e742f647219a488acd93678ae60b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragment_cube_prefab: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
