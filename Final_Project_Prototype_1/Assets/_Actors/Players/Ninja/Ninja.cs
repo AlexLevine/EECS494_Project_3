@@ -247,6 +247,11 @@ public class Ninja : Player_character
     public override void jump()
     {
         print("jump");
+        if (sword_obj.GetComponent<Ninja_sword>().is_swinging)
+        {
+            return;
+        }
+
         if (force_team_up)
         {
             print("team up being forced");

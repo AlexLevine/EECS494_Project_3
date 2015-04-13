@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Breakable_wall : MonoBehaviour {
+public class Breakable_wall : MonoBehaviour
+{
+    // public GameObject cracked_mesh;
 
     bool is_dead = false;
     private float time_until_despawn = 2f;
@@ -36,15 +38,13 @@ public class Breakable_wall : MonoBehaviour {
     //     is_dead = true;
     // }
 
-    void OnTriggerEnter(Collider other)
+    public void break_wall()
     {
+        print("boom");
+
         // print(other.gameObject.tag);
-        if (other.gameObject.tag != "Player" || !Llama.get().is_charging)
-        {
-            return;
-        }
-        
-        GameObject.Find ("_facade_cracked").SetActive(false);
+        GetComponent<Collider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
         // print("Before Loop");
         foreach(var child in GetComponentsInChildren<Rigidbody>())
         {
@@ -57,10 +57,10 @@ public class Breakable_wall : MonoBehaviour {
         is_dead = true;
     }
 
-    void OnTriggerStay(Collider other)
-    {
-        OnTriggerEnter(other);
-    }
+    // void OnTriggerStay(Collider other)
+    // {
+    //     OnTriggerEnter(other);
+    // }
 
 
     void Update()
