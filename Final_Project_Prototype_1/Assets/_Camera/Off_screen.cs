@@ -20,6 +20,9 @@ public class Off_screen : MonoBehaviour {
 	
 	private bool active = true;
 	
+	public Texture llama_texture;
+	public Texture ninja_texture;
+	
 	private enum Character_e{
 		LLAMA,
 		NINJA
@@ -41,12 +44,13 @@ public class Off_screen : MonoBehaviour {
 		print(upper_right); print (upper_left); print (lower_left); print (lower_right);
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void OnGUI(){
 		if (llama_mesh==null || ninja_mesh==null) print("need to set llama and ninja meshes correctly");
 		if (!active) return;
 		
+		
 		if (!Camera_follow.point_in_viewport(llama.transform.position)){//&& !llama_renderer.isVisible){
+			return;
 			icon(llama.transform.position,Character_e.LLAMA);
 		}
 		if (!Camera_follow.point_in_viewport(ninja.transform.position)){ //&& !ninja_renderer.isVisible){
@@ -59,27 +63,39 @@ public class Off_screen : MonoBehaviour {
 		var ang = angle(base_vector,screen_pos-center);
 		if (screen_pos.x-center.x == 0){print("ZERO SLOPE"); return;}
 		var slope = (screen_pos.y-center.y)/(screen_pos.x-center.x);
+		print(screen_pos); return;
 		
 		//get location for icon
-		Vector2 icon_location;
+		Vector2 icon_location = Vector2.zero;
 		if (ang<=upper_right && ang>lower_right){
+			print ("right");
 			icon_location.x = icon_ratio*Camera.main.pixelWidth;
 			icon_location.y = solve(slope,icon_location.x,false);	
 		}
 		else if (ang<=upper_left && ang>upper_right){
+			print ("top");
 			icon_location.y = icon_ratio*Camera.main.pixelHeight;
 			icon_location.x = solve (slope,icon_location.y,true);
 			
 		}
 		else if (ang<=lower_left || ang>upper_left){ //due to atan2 implementation
-			icon_location.x = -1*icon_ratio*Camera.main.pixelWidth;
+			print ("left");
+			icon_location.x = 0;
 			icon_location.y = solve(slope,icon_location.x,false);
 		}
 		else if (ang<=lower_right && ang>lower_left){
-			icon_location.y = -1*icon_ratio*Camera.main.pixelHeight;
+			print ("bottom");
+			icon_location.y = 0;
 			icon_location.x = solve (slope,icon_location.y,true);
 		}
+		else{
+			print("GUI ICONS NOT WORKING");
+		}
 		
+		//make gui icon
+		//Vector2 gui_location = GUIUtility.ScreenToGUIPoint(icon_location);
+		Vector2 gui_location = icon_location;
+		GUI.DrawTexture(new Rect(gui_location.x,gui_location.y,30,30),ninja_texture);
 	}
 	
 	//point-slope formula solved for x and y

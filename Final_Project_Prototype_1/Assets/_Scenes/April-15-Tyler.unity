@@ -23596,6 +23596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   llama_mesh: {fileID: 1816350387}
   ninja_mesh: {fileID: 1396362503}
+  icon_ratio: .899999976
 --- !u!1 &1494258653
 GameObject:
   m_ObjectHideFlags: 0
