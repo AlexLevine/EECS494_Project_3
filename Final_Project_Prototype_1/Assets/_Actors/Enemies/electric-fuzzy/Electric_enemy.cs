@@ -82,6 +82,14 @@ public class Electric_enemy : Enemy
 
     }// Update
 
+    public override bool receive_hit(
+        float damage, Vector3 knockback_velocity, GameObject attacker)
+    {
+        return base.receive_hit(damage, Vector3.zero, attacker);
+    }// receive_hit
+
+    //--------------------------------------------------------------------------
+
     // public override void on_hit_sword(int damage, Vector3 knockback_velocity)
     // {
     //     // immune to sword - electricute Ninja

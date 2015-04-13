@@ -130,30 +130,30 @@ public class Player_character : Actor
             return;
         }
 
-        // target_velocity *= Time.deltaTime;
-        if (have_opposite_signs(target_velocity.x, velocity_.x) ||
-            Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
-        {
-            var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.x < velocity_.x)
-            {
-                velocity_step *= -1;
-            }
+        // // target_velocity *= Time.deltaTime;
+        // if (have_opposite_signs(target_velocity.x, velocity_.x) ||
+        //     Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
+        // {
+        //     var velocity_step = acceleration * Time.deltaTime;
+        //     if (target_velocity.x < velocity_.x)
+        //     {
+        //         velocity_step *= -1;
+        //     }
 
-            velocity_.x += velocity_step;
-        }
+        //     velocity_.x += velocity_step;
+        // }
 
-        if (have_opposite_signs(target_velocity.z, velocity_.z) ||
-            Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
-        {
-            var velocity_step = acceleration * Time.deltaTime;
-            if (target_velocity.z < velocity_.z)
-            {
-                velocity_step *= -1;
-            }
+        // if (have_opposite_signs(target_velocity.z, velocity_.z) ||
+        //     Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
+        // {
+        //     var velocity_step = acceleration * Time.deltaTime;
+        //     if (target_velocity.z < velocity_.z)
+        //     {
+        //         velocity_step *= -1;
+        //     }
 
-            velocity_.z += velocity_step;
-        }
+        //     velocity_.z += velocity_step;
+        // }
     }// update_movement_velocity
 
     private bool have_opposite_signs(float first, float second)
@@ -466,7 +466,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected void notify_on_ground()
+    public void notify_on_ground()
     {
         on_ground = true;
     }// notify_on_ground

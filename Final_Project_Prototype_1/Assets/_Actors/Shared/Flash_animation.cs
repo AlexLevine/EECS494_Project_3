@@ -13,7 +13,6 @@ public class Flash_animation : MonoBehaviour
     void Start()
     {
         // originalColor = GetComponent<Renderer>().material.color;
-
     }// Start
 
     //--------------------------------------------------------------------------

@@ -6,6 +6,8 @@ public class Adjust_camera : MonoBehaviour
 {
     public float camera_follow_distance;
     public float camera_hover_height;
+    public bool set_rotation_manually = false;
+    public float y_rotation_override;
 
     private float camera_y_rotation;
 
@@ -23,7 +25,10 @@ public class Adjust_camera : MonoBehaviour
 
     void Start()
     {
-        camera_y_rotation = transform.rotation.eulerAngles.y;
+        camera_y_rotation = (
+            set_rotation_manually) ?
+            y_rotation_override : transform.rotation.eulerAngles.y;
+        GetComponent<Collider>().isTrigger = true;
     }
 
     void OnTriggerEnter(Collider c)

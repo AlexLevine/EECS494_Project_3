@@ -106,76 +106,6 @@ public class Ninja : Player_character
         GetComponent<Sword_swing>().swing();
     }// physical_attack
 
-
-    //--------------------------------------------------------------------------
-
-//    public override void adjust_jousting_pole(
-//        float vertical_tilt, float horizontal_tilt)
-//    {
-//        if(jousting_pole == null)
-//        {
-//            print("Ninja_Jousting_Pole does not exist for some reason");
-//            return;
-//        }
-//
-//        if(!jousting_pole.activeSelf)
-//        {
-//            return;
-//        }
-//
-//        if(!is_teamed_up)
-//        {
-//            return;
-//        }
-//
-//
-//        float adjusted_vert = vertical_tilt * -30;   // some float from -1 to 1,
-//        float adjusted_horz = horizontal_tilt * 45; // max angle is 45 degrees
-//        // Adjust the tilt that the jousting pole is pointing
-//
-//        jousting_pole.transform.localPosition = pole_start_pos;
-//        jousting_pole.transform.localRotation = pole_start_rotation;
-//
-//        if(!Llama.get().is_charging)
-//        {
-//            jousting_pole.transform.RotateAround(
-//                pole_rotation_point.transform.position, transform.right, -70f);
-//            return;
-//        }
-//
-//        jousting_pole.transform.RotateAround(
-//            pole_rotation_point.transform.position, transform.up, adjusted_horz);
-//        jousting_pole.transform.RotateAround(
-//            pole_rotation_point.transform.position, transform.right, adjusted_vert);
-//
-//    }// adjust_jousting_pole
-//
-//    //--------------------------------------------------------------------------
-//
-//    private void toggle_jousting_pole()
-//    {
-//        if(!is_teamed_up)
-//        {
-//            return;
-//        }
-//
-//        if(!jousting_pole.activeSelf)
-//        {
-//            sword_obj.SetActive(false);
-//            jousting_pole.SetActive(true);
-//            return;
-//        }
-//
-//        if (!is_teamed_up)
-//        {
-//            sword_obj.SetActive(true);
-//        }
-//
-//        jousting_pole.SetActive(false);
-//
-//
-//    }// toggle_jousting_pole
-
     //--------------------------------------------------------------------------
 
     public override void move(Vector3 delta_position, bool apply_rotation)
@@ -317,6 +247,11 @@ public class Ninja : Player_character
     public override void jump()
     {
         print("jump");
+        if (sword_obj.GetComponent<Ninja_sword>().is_swinging)
+        {
+            return;
+        }
+
         if (force_team_up)
         {
             print("team up being forced");
@@ -330,12 +265,12 @@ public class Ninja : Player_character
 
         base.jump();
     }// jump
-    
+
 	public override void on_death() {
 		Llama.get ().reset_health();
 		base.on_death();
 	}
-		
+
     //--------------------------------------------------------------------------
 
     protected override void play_damage_vocals()

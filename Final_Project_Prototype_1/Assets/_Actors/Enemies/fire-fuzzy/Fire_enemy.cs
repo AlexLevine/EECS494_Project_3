@@ -98,6 +98,16 @@ public class Fire_enemy : Enemy {
 
     }// Update
 
+    //--------------------------------------------------------------------------
+
+    // public override bool receive_hit(
+    //     float damage, Vector3 knockback_velocity, GameObject attacker)
+    // {
+    //     return base.receive_hit(damage, Vector3.zero, attacker);
+    // }// receive_hit
+
+    //--------------------------------------------------------------------------
+
     private IEnumerator puff () {
         CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
         ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
