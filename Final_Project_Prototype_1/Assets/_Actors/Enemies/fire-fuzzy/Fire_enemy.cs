@@ -2,25 +2,11 @@
 using System.Collections;
 //using System;
 
-public class Fire_enemy : Enemy {
-
-    public int destination_index = 0;
-
-    // Points that the enemy should move between.
-    public GameObject[] path_nodes;
-
-    public bool is_moving;
-    public bool on_fire;
-
+public class Fire_enemy : Point_lerp_enemy
+{
     private int puff_timer;
     const int base_puff_timer = 100;
     public bool puffing = false;
-    // private bool stunned;
-//  private int stunned_timer;
-//  const int init_stunned_timer = 200;
-
-
-    public float speed;
 
     //--------------------------------------------------------------------------
 
@@ -45,9 +31,6 @@ public class Fire_enemy : Enemy {
     public override void Start()
     {
         base.Start();
-        transform.position = path_nodes[destination_index].transform.position;
-        ++destination_index;
-        on_fire = true;
 
         int rand = Random.Range (0, 10);
         puff_timer = base_puff_timer * rand;
@@ -55,16 +38,14 @@ public class Fire_enemy : Enemy {
 
     //--------------------------------------------------------------------------
 
-    void FixedUpdate()
+    protected override void update_impl()
     {
-        // HACK
-        if (actors_paused)
-        {
-            return;
-        }
+        base.update_impl();
 
-        if (!puffing) {
-            if (puff_timer <= 0) {
+        if (!puffing)
+        {
+            if (puff_timer <= 0)
+            {
                 int rand = Random.Range (0, 10);
                 puff_timer = base_puff_timer * rand;
                 puffing = true;
@@ -73,28 +54,10 @@ public class Fire_enemy : Enemy {
         }
 
         // base.Update ();
-        if (being_knocked_back)
-        {
-            return;
-        }
-
-        transform.position = Vector3.MoveTowards (
-            transform.position,
-            path_nodes [destination_index].transform.position,
-            speed * Time.fixedDeltaTime);
-
-        var distance_to_dest = Vector3.Distance (
-            transform.position,
-            path_nodes [destination_index].transform.position);
-        var reached_destination = distance_to_dest < 0.1f; // Mathf.Approximately (distance_to_dest, 0);
-
-        if (!reached_destination) {
-                return;
-        }
-
-        ++destination_index;
-        destination_index %= path_nodes.Length;
-
+        // if (being_knocked_back)
+        // {
+        //     return;
+        // }
 
     }// Update
 
@@ -108,12 +71,14 @@ public class Fire_enemy : Enemy {
 
     //--------------------------------------------------------------------------
 
-    private IEnumerator puff () {
+    private IEnumerator puff ()
+    {
         CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
         ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
         float radius = collider.radius;
         float particleSize = particles.startSize;
-        for (int i = 0; i < 25; ++i) {
+        for (int i = 0; i < 25; ++i)
+        {
             collider.radius *= 1.05f;
             particles.startSize *= 1.05f;
             yield return new WaitForSeconds(.1f);
