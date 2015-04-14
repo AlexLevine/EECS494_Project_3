@@ -1039,8 +1039,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 15
-  camera_hover_height: 7
+  camera_follow_distance: 0
+  camera_hover_height: 0
+  set_rotation_manually: 0
+  y_rotation_override: 0
 --- !u!23 &107851536
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4433,7 +4435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbff9a915e91ad49a27898583b6d4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchee: {fileID: 1818603257}
+  switchee: {fileID: 0}
   cut_scene: {fileID: 0}
 --- !u!23 &304218984
 MeshRenderer:
@@ -5668,6 +5670,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2118324779}
   m_RootOrder: 19
+--- !u!1 &369965186
+GameObject:
+  m_PrefabParentObject: {fileID: 171648, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
+  m_PrefabInternal: {fileID: 1124766169}
 --- !u!1 &372675598
 GameObject:
   m_ObjectHideFlags: 0
@@ -18600,8 +18606,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 15
-  camera_hover_height: 15
+  camera_follow_distance: 0
+  camera_hover_height: 0
+  set_rotation_manually: 0
+  y_rotation_override: 0
 --- !u!1 &1147107792
 GameObject:
   m_ObjectHideFlags: 0
@@ -22276,10 +22284,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1393005474}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1396362503
-GameObject:
-  m_PrefabParentObject: {fileID: 193578, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-  m_PrefabInternal: {fileID: 1161417106}
 --- !u!1 &1396537529
 GameObject:
   m_ObjectHideFlags: 0
@@ -23594,9 +23598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f268e2a6207f2b4a97f97754eb48c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  llama_mesh: {fileID: 1816350387}
-  ninja_mesh: {fileID: 1396362503}
+  llama_mesh: {fileID: 369965186}
+  ninja_mesh: {fileID: 1935287813}
   icon_ratio: .899999976
+  llama_texture: {fileID: 0}
+  ninja_texture: {fileID: 0}
 --- !u!1 &1494258653
 GameObject:
   m_ObjectHideFlags: 0
@@ -24360,6 +24366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e742f647219a488acd93678ae60b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragment_cube_prefab: {fileID: 0}
 --- !u!65 &1533945080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24784,6 +24791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e742f647219a488acd93678ae60b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragment_cube_prefab: {fileID: 0}
 --- !u!65 &1556094847
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29817,10 +29825,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2118324779}
   m_RootOrder: 18
---- !u!1 &1816350387
-GameObject:
-  m_PrefabParentObject: {fileID: 122432, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
-  m_PrefabInternal: {fileID: 1124766169}
 --- !u!1 &1818603257
 GameObject:
   m_ObjectHideFlags: 0
@@ -30777,7 +30781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logDebugInfo: 1
+  logDebugInfo: 0
   invertYAxis: 0
   enableXInput: 0
   useFixedUpdate: 0
@@ -31160,6 +31164,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1931506568}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1935287813
+GameObject:
+  m_PrefabParentObject: {fileID: 104242, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
+  m_PrefabInternal: {fileID: 1161417106}
 --- !u!1001 &1937299436
 Prefab:
   m_ObjectHideFlags: 0
