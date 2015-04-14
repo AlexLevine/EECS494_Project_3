@@ -4,17 +4,11 @@ using System.Collections;
 
 public class Fire_enemy : Point_lerp_enemy
 {
-    private int puff_timer;
-    const int base_puff_timer = 100;
-    public bool puffing = false;
-
-    //--------------------------------------------------------------------------
-
     public override float attack_power
     {
         get
         {
-            return 1;
+            return (is_puffing ? 2 : 1);
         }
     }
 
@@ -28,63 +22,63 @@ public class Fire_enemy : Point_lerp_enemy
 
     //--------------------------------------------------------------------------
 
+    private bool is_puffing = false;
+
+    //--------------------------------------------------------------------------
+
     public override void Start()
     {
         base.Start();
 
-        int rand = Random.Range (0, 10);
-        puff_timer = base_puff_timer * rand;
+        StartCoroutine(puff_coroutine());
     }// Start
 
     //--------------------------------------------------------------------------
 
-    protected override void update_impl()
+    private IEnumerator puff_coroutine()
     {
-        base.update_impl();
+        var puff_frequency = Random.Range(2f, 4f);
+        var time_until_next_puff = puff_frequency;
+        var puff_duration = 0.45f;
 
-        if (!puffing)
+        var hitbox = GetComponent<CapsuleCollider>();
+        var start_radius = hitbox.radius;
+        var end_radius = start_radius * 1.5f;
+
+        var fire_effect = GetComponentInChildren<ParticleSystem>();
+        var start_particle_size = fire_effect.startSize;
+        var end_particle_size = start_particle_size * 3;
+
+        while (true)
         {
-            if (puff_timer <= 0)
+            time_until_next_puff -= Time.deltaTime;
+            if (time_until_next_puff > 0)
             {
-                int rand = Random.Range (0, 10);
-                puff_timer = base_puff_timer * rand;
-                puffing = true;
-                StartCoroutine( puff());
-            } else -- puff_timer;
-        }
+                yield return null;
+                continue;
+            }
 
-        // base.Update ();
-        // if (being_knocked_back)
-        // {
-        //     return;
-        // }
+            is_puffing = true;
+            var puff_time_elapsed = 0f;
+            var lerp_percent = puff_time_elapsed / puff_duration;
+            while (lerp_percent < 1)
+            {
+                hitbox.radius = Mathf.Lerp(
+                    start_radius, end_radius, lerp_percent);
+                fire_effect.startSize = Mathf.Lerp(
+                    start_particle_size, end_particle_size, lerp_percent);
 
-    }// Update
+                puff_time_elapsed += Time.deltaTime;
+                lerp_percent = puff_time_elapsed / puff_duration;
+                yield return null;
+            }// while lerp_percent < 1
 
-    //--------------------------------------------------------------------------
+            is_puffing = false;
+            hitbox.radius = start_radius;
+            fire_effect.startSize = start_particle_size;
+            time_until_next_puff = puff_frequency;
+            yield return null;
+        }// while true
 
-    // public override bool receive_hit(
-    //     float damage, Vector3 knockback_velocity, GameObject attacker)
-    // {
-    //     return base.receive_hit(damage, Vector3.zero, attacker);
-    // }// receive_hit
-
-    //--------------------------------------------------------------------------
-
-    private IEnumerator puff ()
-    {
-        CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
-        ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
-        float radius = collider.radius;
-        float particleSize = particles.startSize;
-        for (int i = 0; i < 25; ++i)
-        {
-            collider.radius *= 1.05f;
-            particles.startSize *= 1.05f;
-            yield return new WaitForSeconds(.1f);
-        }
-        collider.radius = radius;
-        particles.startSize = particleSize;
-        puffing = false;
-    }
+    }// puff_coroutine
 }

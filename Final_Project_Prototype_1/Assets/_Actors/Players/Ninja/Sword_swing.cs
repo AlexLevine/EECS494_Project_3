@@ -27,6 +27,14 @@ public class Sword_swing : MonoBehaviour
 	// private Vector3 swing_size;
 	// private Vector3 rest_size;
 
+	public bool is_playing
+	{
+		get
+		{
+			return state != Sword_state_e.IDLE;
+		}
+	}
+
 	void Start()
 	{
 		sword = Ninja.get().sword_obj;
@@ -64,14 +72,14 @@ public class Sword_swing : MonoBehaviour
 			sword.transform.localRotation = sword_neutral_rotation;
 			// sword.transform.localScale = rest_size;
 			state = Sword_state_e.IDLE;
-			sword.GetComponent<Ninja_sword>().is_swinging = false;
+			// sword.GetComponent<Ninja_sword>().is_swinging = false;
 			break;
 		}
 	}
 
 	public void swing()
 	{
-		if (is_swinging)
+		if (sword.GetComponent<Ninja_sword>().is_attacking)
 		{
 			return;
 		}
@@ -84,7 +92,7 @@ public class Sword_swing : MonoBehaviour
 		sword.transform.localPosition = new Vector3(1.27f, 0f, 1.2f);
 		sword.transform.localEulerAngles = new Vector3(0, 45f, 0);
 		state = Sword_state_e.SWINGING;
-		sword.GetComponent<Ninja_sword>().is_swinging = true;
+		// sword.GetComponent<Ninja_sword>().is_swinging = true;
 	}
 
 	public float max_swing_angle_distance
@@ -95,11 +103,5 @@ public class Sword_swing : MonoBehaviour
 		}
 	}
 
-	public bool is_swinging
-	{
-		get
-		{
-			return state != Sword_state_e.IDLE;
-		}
-	}
+
 }
