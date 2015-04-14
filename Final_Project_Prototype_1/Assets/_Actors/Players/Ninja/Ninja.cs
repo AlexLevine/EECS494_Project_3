@@ -94,10 +94,11 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-//        if(is_teamed_up)
-//        {
-//            return;
-//        }
+        if (get_sword().is_attacking)
+        {
+            return;
+        }
+
         if (!is_grounded)
         {
             GetComponent<Aerial_attack>().start_attack();
@@ -125,12 +126,26 @@ public class Ninja : Player_character
         //     return;
         // }
 
-        base.move(delta_position, apply_rotation);
-
-        if (is_grounded && GetComponent<Aerial_attack>().is_diving)
+        if (GetComponent<Aerial_attack>().is_diving)
         {
-            GetComponent<Aerial_attack>().notify_dive_landed();
+            // HAAAACK
+            base.move(delta_position, false);
+            if (is_grounded)
+            {
+                GetComponent<Aerial_attack>().notify_dive_landed();
+            }
+            return;
         }
+
+        if (!GetComponent<Aerial_attack>().is_playing)
+        {
+            base.move(delta_position, apply_rotation);
+        }
+
+        // if (is_grounded && GetComponent<Aerial_attack>().is_diving)
+        // {
+        //     notify_on_ground();
+        // }
     }// move
 
     //--------------------------------------------------------------------------
@@ -182,14 +197,14 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void collision_safe_rotate_towards(
-        Vector3 direction, float step)
-    {
-        if (!GetComponent<Sword_swing>().is_swinging)
-        {
-            base.collision_safe_rotate_towards(direction, step);
-        }
-    }// collision_safe_rotate_towards
+    // public override void collision_safe_rotate_towards(
+    //     Vector3 direction, float step)
+    // {
+    //     if (!GetComponent<Sword_swing>().is_swinging)
+    //     {
+    //         base.collision_safe_rotate_towards(direction, step);
+    //     }
+    // }// collision_safe_rotate_towards
 
     //--------------------------------------------------------------------------
 
@@ -247,7 +262,7 @@ public class Ninja : Player_character
     public override void jump()
     {
         print("jump");
-        if (sword_obj.GetComponent<Ninja_sword>().is_swinging)
+        if (get_sword().is_attacking)
         {
             return;
         }

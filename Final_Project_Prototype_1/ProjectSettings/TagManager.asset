@@ -8,6 +8,7 @@ TagManager:
   - weapon
   - meltable
   - freezable
+  - breakable_wall
   layers:
   - Default
   - TransparentFX

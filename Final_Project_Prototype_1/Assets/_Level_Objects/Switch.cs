@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Switch : MonoBehaviour {
+public class Switch : MonoBehaviour
+{
     public GameObject switchee;
     public GameObject cut_scene;
     // Use this for initialization
@@ -17,12 +18,15 @@ public class Switch : MonoBehaviour {
     //     else r.material = sw.switch_off_material;
     // }
 
-    void OnTriggerEnter(Collider other){
-		if (cut_scene!=null){
+    void OnTriggerEnter(Collider other)
+    {
+		if (cut_scene!=null)
+        {
 			Cut_scene cs = cut_scene.GetComponent<Cut_scene>();
 			cs.activate();
 		}
-		else{
+		else
+        {
 			Switchee sw = switchee.GetComponent<Switchee>();
 			sw.activate();
 		}
@@ -30,8 +34,10 @@ public class Switch : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    void OnTriggerStay(Collider other){
-        if (cut_scene==null){
+    void OnTriggerStay(Collider other)
+    {
+        if (cut_scene==null)
+        {
 			Switchee sw = switchee.GetComponent<Switchee>();
 			sw.activate();
         }

@@ -2,33 +2,13 @@
 using System.Collections;
 //using System;
 
-public class Fire_enemy : Enemy {
-
-    public int destination_index = 0;
-
-    // Points that the enemy should move between.
-    public GameObject[] path_nodes;
-
-    public bool is_moving;
-    public bool on_fire;
-
-    private int puff_timer;
-    const int base_puff_timer = 100;
-    public bool puffing = false;
-    // private bool stunned;
-//  private int stunned_timer;
-//  const int init_stunned_timer = 200;
-
-
-    public float speed;
-
-    //--------------------------------------------------------------------------
-
+public class Fire_enemy : Point_lerp_enemy
+{
     public override float attack_power
     {
         get
         {
-            return 1;
+            return (is_puffing ? 2 : 1);
         }
     }
 
@@ -42,84 +22,63 @@ public class Fire_enemy : Enemy {
 
     //--------------------------------------------------------------------------
 
+    private bool is_puffing = false;
+
+    //--------------------------------------------------------------------------
+
     public override void Start()
     {
         base.Start();
-        transform.position = path_nodes[destination_index].transform.position;
-        ++destination_index;
-        on_fire = true;
 
-        int rand = Random.Range (0, 10);
-        puff_timer = base_puff_timer * rand;
+        StartCoroutine(puff_coroutine());
     }// Start
 
     //--------------------------------------------------------------------------
 
-    void FixedUpdate()
+    private IEnumerator puff_coroutine()
     {
-        // HACK
-        if (actors_paused)
+        var puff_frequency = Random.Range(2f, 4f);
+        var time_until_next_puff = puff_frequency;
+        var puff_duration = 0.45f;
+
+        var hitbox = GetComponent<CapsuleCollider>();
+        var start_radius = hitbox.radius;
+        var end_radius = start_radius * 1.5f;
+
+        var fire_effect = GetComponentInChildren<ParticleSystem>();
+        var start_particle_size = fire_effect.startSize;
+        var end_particle_size = start_particle_size * 3;
+
+        while (true)
         {
-            return;
-        }
+            time_until_next_puff -= Time.deltaTime;
+            if (time_until_next_puff > 0)
+            {
+                yield return null;
+                continue;
+            }
 
-        if (!puffing) {
-            if (puff_timer <= 0) {
-                int rand = Random.Range (0, 10);
-                puff_timer = base_puff_timer * rand;
-                puffing = true;
-                StartCoroutine( puff());
-            } else -- puff_timer;
-        }
+            is_puffing = true;
+            var puff_time_elapsed = 0f;
+            var lerp_percent = puff_time_elapsed / puff_duration;
+            while (lerp_percent < 1)
+            {
+                hitbox.radius = Mathf.Lerp(
+                    start_radius, end_radius, lerp_percent);
+                fire_effect.startSize = Mathf.Lerp(
+                    start_particle_size, end_particle_size, lerp_percent);
 
-        // base.Update ();
-        if (being_knocked_back)
-        {
-            return;
-        }
+                puff_time_elapsed += Time.deltaTime;
+                lerp_percent = puff_time_elapsed / puff_duration;
+                yield return null;
+            }// while lerp_percent < 1
 
-        transform.position = Vector3.MoveTowards (
-            transform.position,
-            path_nodes [destination_index].transform.position,
-            speed * Time.fixedDeltaTime);
+            is_puffing = false;
+            hitbox.radius = start_radius;
+            fire_effect.startSize = start_particle_size;
+            time_until_next_puff = puff_frequency;
+            yield return null;
+        }// while true
 
-        var distance_to_dest = Vector3.Distance (
-            transform.position,
-            path_nodes [destination_index].transform.position);
-        var reached_destination = distance_to_dest < 0.1f; // Mathf.Approximately (distance_to_dest, 0);
-
-        if (!reached_destination) {
-                return;
-        }
-
-        ++destination_index;
-        destination_index %= path_nodes.Length;
-
-
-    }// Update
-
-    //--------------------------------------------------------------------------
-
-    // public override bool receive_hit(
-    //     float damage, Vector3 knockback_velocity, GameObject attacker)
-    // {
-    //     return base.receive_hit(damage, Vector3.zero, attacker);
-    // }// receive_hit
-
-    //--------------------------------------------------------------------------
-
-    private IEnumerator puff () {
-        CapsuleCollider collider =  this.GetComponent<CapsuleCollider>();
-        ParticleSystem particles = this.GetComponentInChildren<ParticleSystem>();
-        float radius = collider.radius;
-        float particleSize = particles.startSize;
-        for (int i = 0; i < 25; ++i) {
-            collider.radius *= 1.05f;
-            particles.startSize *= 1.05f;
-            yield return new WaitForSeconds(.1f);
-        }
-        collider.radius = radius;
-        particles.startSize = particleSize;
-        puffing = false;
-    }
+    }// puff_coroutine
 }

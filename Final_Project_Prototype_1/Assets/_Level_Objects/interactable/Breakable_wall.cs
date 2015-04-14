@@ -23,9 +23,9 @@ public class Breakable_wall : MonoBehaviour
         var z_end = main_collider.bounds.max.z;
         var z_step = main_collider.bounds.extents.z / 2f;
 
-        print(x_step);
-        print(y_step);
-        print(z_step);
+        // print(x_step);
+        // print(y_step);
+        // print(z_step);
 
         for (var x = x_begin; x <= x_end; x += x_step)
         {
@@ -43,7 +43,8 @@ public class Breakable_wall : MonoBehaviour
                     var rb = block.GetComponent<Rigidbody>();
                     rb.isKinematic = true;
                     rb.useGravity = false;
-                    block.GetComponent<MeshRenderer>().enabled = false;
+                    // block.GetComponent<MeshRenderer>().enabled = false;
+                    block.SetActive(false);
                 }
             }
         }
@@ -78,7 +79,7 @@ public class Breakable_wall : MonoBehaviour
 
     public void break_wall()
     {
-        print("boom");
+        // print("boom");
 
         // print(other.gameObject.tag);
         GetComponent<Collider>().enabled = false;
@@ -86,14 +87,15 @@ public class Breakable_wall : MonoBehaviour
         // GetComponent<Rigidbody>().enabled = false;
 
         // print("Before Loop");
-        foreach(var child in transform.parent.GetComponentsInChildren<Rigidbody>())
+        foreach(var block in transform.parent.GetComponentsInChildren<Rigidbody>())
         {
             print("In Loop");
-            child.gameObject.GetComponent<MeshRenderer>().enabled = true;
-            child.isKinematic = false;
-            child.useGravity = true;
-            // child.velocity = (Vector3.one * Random.Range(-1.0F, 1.0F) * 1f);
-            // child.TriggerDestruction(new Vector3(0,0,0), 11f);
+            block.gameObject.SetActive(true);
+            // block.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            block.isKinematic = false;
+            block.useGravity = true;
+            // block.velocity = (Vector3.one * Random.Range(-1.0F, 1.0F) * 1f);
+            // block.TriggerDestruction(new Vector3(0,0,0), 11f);
         }
         is_dead = true;
     }

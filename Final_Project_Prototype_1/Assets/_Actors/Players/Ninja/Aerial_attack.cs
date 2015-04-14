@@ -59,12 +59,11 @@ public class Aerial_attack : MonoBehaviour
             }
 
             state = Aerial_attack_state_e.DIVING;
-            sword.GetComponent<Ninja_sword>().is_swinging = true;
             attack_vocals.GetComponent<Sound_effect_randomizer>().play();
             break;
 
         case Aerial_attack_state_e.DIVING:
-            Ninja.get().move(dive_velocity * Time.deltaTime, false);
+            Ninja.get().apply_momentum(dive_velocity);
             break;
 
         case Aerial_attack_state_e.COOLING_DOWN:
@@ -74,7 +73,8 @@ public class Aerial_attack : MonoBehaviour
             if (reached_neutral)
             {
                 state = Aerial_attack_state_e.NOT_ATTACKING;
-                sword.GetComponent<Ninja_sword>().is_swinging = false;
+                // HAAAAACK (applies gravity so ninja stays grounded)
+                Ninja.get().update_movement_velocity(Vector3.zero);
             }
 
             break;

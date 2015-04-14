@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fade_away_obstacle : Switchee
+public class Fade_away_obstacle : MonoBehaviour, Switchee
 {
     public float fade_duration = 1.5f;
 
@@ -10,7 +10,7 @@ public class Fade_away_obstacle : Switchee
 
     //--------------------------------------------------------------------------
 
-    public override void activate()
+    public void activate()
     {
         if (activated)
         {

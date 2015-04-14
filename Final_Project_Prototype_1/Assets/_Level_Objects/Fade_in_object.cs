@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fade_in_object : Switchee
+public class Fade_in_object : MonoBehaviour, Switchee
 {
     public GameObject to_fade_in;
     public float fade_duration = 1.5f;
 
     private float time_elapsed = 0;
     private bool activated = false;
-    private Renderer renderer;
+    private Renderer renderer_;
     private Color start_color;
     private Color end_color;
 
@@ -16,18 +16,18 @@ public class Fade_in_object : Switchee
 
     void Start()
     {
-        renderer = to_fade_in.GetComponent<Renderer>();
-        start_color = renderer.material.color;
-        end_color = renderer.material.color;
+        renderer_ = to_fade_in.GetComponent<Renderer>();
+        start_color = renderer_.material.color;
+        end_color = renderer_.material.color;
         start_color.a = 0;
 
-        renderer.material.color = start_color;
+        renderer_.material.color = start_color;
         to_fade_in.SetActive(false);
     }// Start
 
     //--------------------------------------------------------------------------
 
-    public override void activate()
+    public void activate()
     {
         if (activated)
         {
@@ -53,7 +53,7 @@ public class Fade_in_object : Switchee
                 lerp_percent = 1;
             }
 
-            renderer.material.color = Color.Lerp(
+            renderer_.material.color = Color.Lerp(
                 start_color, end_color, lerp_percent);
 
             time_elapsed += Time.deltaTime;

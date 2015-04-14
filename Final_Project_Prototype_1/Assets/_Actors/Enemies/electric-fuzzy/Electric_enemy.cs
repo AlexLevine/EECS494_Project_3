@@ -2,23 +2,8 @@
 using System.Collections;
 using System;
 
-public class Electric_enemy : Enemy
+public class Electric_enemy : Point_lerp_enemy
 {
-    public int destination_index = 0;
-
-    // Points that the enemy should move between.
-    public GameObject[] path_nodes;
-
-    public bool is_moving;
-    // private bool stunned;
-    // private int stunned_timer;
-    // const int init_stunned_timer = 200;
-
-
-    public float speed;
-
-    //--------------------------------------------------------------------------
-
     public override float attack_power
     {
         get
@@ -37,50 +22,50 @@ public class Electric_enemy : Enemy
 
     //--------------------------------------------------------------------------
 
-    public override void Start()
-    {
-        base.Start();
-        transform.position = path_nodes[destination_index].transform.position;
-        ++destination_index;
-        // stunned = false;
-    }// Start
+    // public override void Start()
+    // {
+    //     base.Start();
+    //     transform.position = path_nodes[destination_index].transform.position;
+    //     ++destination_index;
+    //     // stunned = false;
+    // }// Start
 
-    //--------------------------------------------------------------------------
+    // //--------------------------------------------------------------------------
 
-    void FixedUpdate()
-    {
-        //HACK
-        if (actors_paused)
-        {
-            return;
-        }
+    // void FixedUpdate()
+    // {
+    //     //HACK
+    //     if (actors_paused)
+    //     {
+    //         return;
+    //     }
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            path_nodes [destination_index].transform.position,
-            speed * Time.fixedDeltaTime);
+    //     transform.position = Vector3.MoveTowards(
+    //         transform.position,
+    //         path_nodes [destination_index].transform.position,
+    //         speed * Time.fixedDeltaTime);
 
-        var distance_to_dest = Vector3.Distance(
-            transform.position,
-            path_nodes [destination_index].transform.position);
-        var reached_destination = distance_to_dest < 0.1f; Mathf.Approximately (distance_to_dest, 0);
+    //     var distance_to_dest = Vector3.Distance(
+    //         transform.position,
+    //         path_nodes [destination_index].transform.position);
+    //     var reached_destination = distance_to_dest < 0.1f; Mathf.Approximately (distance_to_dest, 0);
 
-        if (!reached_destination)
-        {
-            return;
-        }
+    //     if (!reached_destination)
+    //     {
+    //         return;
+    //     }
 
-        ++destination_index;
-        destination_index %= path_nodes.Length;
-         // } //else {
-        //     if (stunned_timer <= 0) {
-        //         stunned_timer = init_stunned_timer;
-        //         stunned = false;
-        //     } else --stunned_timer;
-        // }
+    //     ++destination_index;
+    //     destination_index %= path_nodes.Length;
+    //      // } //else {
+    //     //     if (stunned_timer <= 0) {
+    //     //         stunned_timer = init_stunned_timer;
+    //     //         stunned = false;
+    //     //     } else --stunned_timer;
+    //     // }
 
 
-    }// Update
+    // }// Update
 
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker)

@@ -7,7 +7,16 @@ public class Ninja_sword : MonoBehaviour
 
     public GameObject hit_sound_player;
 
-    public bool is_swinging = false;
+    public bool is_attacking
+    {
+        get
+        {
+            var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
+            var swing = transform.parent.GetComponent<Sword_swing>();
+
+            return aerial_attack.is_playing || swing.is_playing;
+        }
+    }
 
     public int attack_power
     {
@@ -28,7 +37,7 @@ public class Ninja_sword : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!is_swinging)
+        if (!is_attacking)
         {
             return;
         }
