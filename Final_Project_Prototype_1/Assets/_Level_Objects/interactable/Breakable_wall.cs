@@ -23,9 +23,9 @@ public class Breakable_wall : MonoBehaviour
         var z_end = main_collider.bounds.max.z;
         var z_step = main_collider.bounds.extents.z / 2f;
 
-        print(x_step);
-        print(y_step);
-        print(z_step);
+        // print(x_step);
+        // print(y_step);
+        // print(z_step);
 
         for (var x = x_begin; x <= x_end; x += x_step)
         {
@@ -78,7 +78,7 @@ public class Breakable_wall : MonoBehaviour
 
     public void break_wall()
     {
-        print("boom");
+        // print("boom");
 
         // print(other.gameObject.tag);
         GetComponent<Collider>().enabled = false;

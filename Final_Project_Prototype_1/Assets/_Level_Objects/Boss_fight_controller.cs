@@ -56,7 +56,7 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
 
         boss_retreat_point = second_retreat_point.transform.position;
         player_retreat_point = first_retreat_point.transform.position;
-        Llama.get().move(Vector3.down, false); // snap llama to ground
+        // Llama.get().move(Vector3.down, false); // snap llama to ground
         player_retreat_point.y = Llama.get().transform.position.y;
     }// start_fight
 
@@ -100,10 +100,12 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
 
         case Boss_fight_state_e.FIGHTERS_RETREATING:
             Llama.get().look_toward(player_retreat_point);
-            var pos_step = Llama.get().run_speed * Time.deltaTime;
+            var pos_step = Llama.get().run_speed * 1.5f * Time.deltaTime;
 
-            Llama.get().transform.position = Vector3.MoveTowards(
+            var desired_position = Vector3.MoveTowards(
                 Llama.get().transform.position, player_retreat_point, pos_step);
+            var adjusted_step = desired_position - Llama.get().transform.position;
+            Llama.get().move(adjusted_step, false);
 
             var reached_retreat_point = Vector3.Distance(
                 Llama.get().transform.position, player_retreat_point) < 0.1f;

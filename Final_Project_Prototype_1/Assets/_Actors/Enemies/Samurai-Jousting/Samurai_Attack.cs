@@ -78,11 +78,36 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
         switch(cur_state){
             case Samurai_state_e.WAITING:
+                look_toward(Llama.get().gameObject);
                 snap_to_ground();
                 break;
 
             case Samurai_state_e.ATTACKING:
-                look_toward(Llama.get().gameObject, 360f);
+                var direction_to_player =
+                    Llama.get().transform.position - transform.position;
+                var angle_to_player = Vector3.Angle(
+                    transform.forward, direction_to_player);
+
+                // if (angle_to_player > 90)
+                // {
+                //     look_toward(retreat_destination, 360f);
+                // }
+
+                if (angle_to_player > 120f)
+                {
+                    Boss_fight_controller.get().notify_fighters_passed();
+                    break;
+                }
+
+                var distance_to_player = Vector3.Distance(
+                    transform.position, Llama.get().transform.position);
+
+                if (distance_to_player >= 10f)
+                {
+                    print(angle_to_player);
+                    look_toward(Llama.get().gameObject, 360f);
+                }
+
                 var delta_pos = transform.forward * speed * Time.deltaTime;
                 move(delta_pos, false);
                 break;
@@ -91,8 +116,10 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                 look_toward(retreat_destination);
                 var pos_step = speed * 0.65f * Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(
+                var desired_position = Vector3.MoveTowards(
                     transform.position, retreat_destination, pos_step);
+                var adjusted_step = desired_position - transform.position;
+                move(adjusted_step, false);
 
                 var reached_retreat_point = Vector3.Distance(
                     transform.position, retreat_destination) < 0.1f;
@@ -101,10 +128,6 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                     cur_state = Samurai_state_e.WAITING;
                 }
 
-                break;
-
-            default:
-                print("Oh no!");
                 break;
         }
 
@@ -163,13 +186,12 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
     void resolve_collision_with_player(Player_character pc)
     {
         // print(cur_state);
-        pc.receive_hit(attack_power, transform.forward * attack_power, gameObject);
-
         if (cur_state == Samurai_state_e.RETREATING)
         {
             return;
         }
 
+        pc.receive_hit(attack_power, transform.forward * attack_power, gameObject);
         Boss_fight_controller.get().notify_fighters_passed();
     }// resolve_collision_with_player
 
@@ -177,7 +199,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
     void snap_to_ground()
     {
-        cc.Move(Vector3.down);
+        // cc.Move(Vector3.down);
     }// snap_to_ground
 
     void fix_rotation()
