@@ -93,7 +93,11 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                 //     look_toward(retreat_destination, 360f);
                 // }
 
-                if (angle_to_player > 120f)
+                print(retreat_destination);
+                var distance_to_retreat_point = Vector3.Distance(
+                    transform.position, retreat_destination);
+                // print(distance_to_retreat_point);
+                if (angle_to_player > 120f || distance_to_retreat_point <= 10f)
                 {
                     Boss_fight_controller.get().notify_fighters_passed();
                     break;
@@ -104,7 +108,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
                 if (distance_to_player >= 10f)
                 {
-                    print(angle_to_player);
+                    // print(angle_to_player);
                     look_toward(Llama.get().gameObject, 360f);
                 }
 

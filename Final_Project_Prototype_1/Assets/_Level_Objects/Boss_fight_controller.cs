@@ -55,6 +55,7 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
         state = Boss_fight_state_e.FIGHTERS_CHARGING;
 
         boss_retreat_point = second_retreat_point.transform.position;
+        Samurai_Attack.get().retreat_destination = boss_retreat_point;
         player_retreat_point = first_retreat_point.transform.position;
         // Llama.get().move(Vector3.down, false); // snap llama to ground
         player_retreat_point.y = Llama.get().transform.position.y;
@@ -148,6 +149,8 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
         boss_retreat_point = temp;
 
         player_retreat_point.y = Llama.get().transform.position.y;
+
+        Samurai_Attack.get().retreat_destination = boss_retreat_point;
     }// swap_retreat_points
 
     //--------------------------------------------------------------------------
