@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+// using System;
 
 public class Stationary_enemy_script : Enemy
 {
@@ -8,7 +8,7 @@ public class Stationary_enemy_script : Enemy
     public GameObject projectile_prefab;
     public GameObject projectile_spawn_point;
     private GameObject closest_player;
-    public float spawn_distance; // radius an enemy must be in to start attacking
+    public float attack_radius = 30; // radius an enemy must be in to start attacking
 
     private static float time_between_shots = 2;
     private float timer;
@@ -21,6 +21,8 @@ public class Stationary_enemy_script : Enemy
     public override void Start()
     {
         base.Start();
+
+        time_between_shots += Random.Range(0f, 1f);
     }// Start
 
     //--------------------------------------------------------------------------
@@ -31,7 +33,7 @@ public class Stationary_enemy_script : Enemy
         timer += Time.deltaTime;
 
         get_closest_player();
-        look_toward(closest_player);
+        look_toward(closest_player, 2f);
 
         if(timer >= time_between_shots)
         {
@@ -53,9 +55,10 @@ public class Stationary_enemy_script : Enemy
 
     private void shoot_projectile()
     {
-
-        if(Vector3.Distance(closest_player.transform.position, transform.position)
-            >= spawn_distance)
+        var in_range = Vector3.Distance(
+            closest_player.transform.position,
+            transform.position) <= attack_radius;
+        if(!in_range)
         {
             return;
         }
@@ -64,10 +67,10 @@ public class Stationary_enemy_script : Enemy
                 projectile_prefab, projectile_spawn_point.transform.position,
                 transform.localRotation) as GameObject;
 
-        var direction_to_player =
-                closest_player.transform.position - transform.position;
-        direction_to_player = direction_to_player.normalized;
-        bullet.GetComponent<Rigidbody>().velocity = direction_to_player * 10;
+        // var direction_to_player =
+        //         closest_player.transform.position - transform.position;
+        // direction_to_player = direction_to_player.normalized;
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * 14;
         timer = 0;
     }
 

@@ -64,6 +64,6 @@ public class Fade_in_object : Switchee
         }
 
         do_callback();
-
+        yield break;
     }// fade_in
 }

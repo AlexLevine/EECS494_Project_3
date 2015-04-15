@@ -13,7 +13,7 @@ public class Llama : Player_character
     public GameObject spit_spawn_point;
 
     public bool spit_is_cooling_down = false;
-    private static float max_spit_cooldown_time = 0.5f;
+    private static float max_spit_cooldown_time = 0.65f;
     private float cur_spit_cooldown_time = 0;
 
     private enum Charge_state_e
@@ -203,7 +203,7 @@ public class Llama : Player_character
             transform.forward);
 //        print(direction);
 
-        spit.GetComponent<Rigidbody>().velocity = direction * 14f;
+        spit.GetComponent<Rigidbody>().velocity = direction * 40f;
         spit_is_cooling_down = true;
     }// projectile_attack
 

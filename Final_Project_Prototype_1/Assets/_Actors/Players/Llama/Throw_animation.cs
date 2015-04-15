@@ -25,7 +25,7 @@ public class Throw_animation : MonoBehaviour
     private static float rotation_speed = 180f;
     // private static float starting_rotation_speed = 10;
     private static float max_rotation = 30f;
-    private float throw_speed = 15f;
+    private float throw_speed = 17f;
 
     private static float pause_duration = 0.2f;
     private float pause_time_elapsed = 0f;

@@ -7,7 +7,7 @@ public class Llama_spit : MonoBehaviour
 
     public int attack_power { get { return 5; } }
 
-    public float time_left = 2f;
+    private float time_left = 0.75f;
 
     void Awake()
     {
@@ -18,7 +18,8 @@ public class Llama_spit : MonoBehaviour
     {
         time_left -= Time.deltaTime;
 
-        if (time_left < 0)
+        print(time_left);
+        if (time_left <= 0)
         {
             Destroy(gameObject);
         }

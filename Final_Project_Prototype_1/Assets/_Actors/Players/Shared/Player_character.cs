@@ -56,6 +56,16 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    public static void drop_lock_on_targets()
+    {
+        foreach (var player in player_characters)
+        {
+            player.lock_on_target = null;
+        }
+    }// drop_lock_on_targets
+
+    //--------------------------------------------------------------------------
+
     public virtual void Awake()
     {
         // print("awake");
@@ -484,5 +494,5 @@ public class Player_character : Actor
         print("COULDN'T FIND OTHER PLAYER");
         return null;
     }
-    
+
 }

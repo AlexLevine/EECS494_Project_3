@@ -42,6 +42,7 @@ public class Switchee : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         cb();
+        print("callback called");
         yield break;
     }// delayed_callback
 

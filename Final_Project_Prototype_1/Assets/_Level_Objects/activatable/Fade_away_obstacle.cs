@@ -49,9 +49,12 @@ public class Fade_away_obstacle : Switchee
             yield return null;
         }
 
-        do_callback();
+        renderer.enabled = false;
+        var coll = GetComponent<Collider>();
+        coll.enabled = false;
 
-        gameObject.SetActive(false);
+        do_callback();
+        yield break;
 
     }// fade_away
 

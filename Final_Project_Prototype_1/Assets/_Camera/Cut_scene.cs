@@ -19,6 +19,7 @@ public class Cut_scene : MonoBehaviour
 		Camera_follow.stop_following_player();
 		Input_reader.toggle_player_controls();
 		Actor.actors_paused = true;
+		Player_character.drop_lock_on_targets();
 	}// pause_all
 
     //--------------------------------------------------------------------------
