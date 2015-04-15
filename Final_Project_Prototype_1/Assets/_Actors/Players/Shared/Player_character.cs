@@ -304,16 +304,16 @@ public class Player_character : Actor
         //     }
         // }
 
-        var this_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    transform.position, delta_position);
-        var other_player_would_be_off_camera =
-                Camera_follow.point_step_would_leave_viewport(
-                    get_other_player().transform.position, delta_position * -1);
-        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
-        {
-            return;
-        }
+//        var this_player_would_be_off_camera =
+//                Camera_follow.point_step_would_leave_viewport(
+//                    transform.position, delta_position);
+//        var other_player_would_be_off_camera =
+//                Camera_follow.point_step_would_leave_viewport(
+//                    get_other_player().transform.position, delta_position * -1);
+//        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
+//        {
+//            return;
+//        }
 
         cc.Move(delta_position);
         on_ground = delta_position.y < 0 && cc.isGrounded;
@@ -484,4 +484,5 @@ public class Player_character : Actor
         print("COULDN'T FIND OTHER PLAYER");
         return null;
     }
+    
 }

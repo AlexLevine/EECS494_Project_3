@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11495020}
   - 114: {fileID: 11488294}
   - 114: {fileID: 11446132}
+  - 114: {fileID: 11491572}
   m_Layer: 0
   m_Name: Ninja
   m_TagString: Player
@@ -1319,6 +1320,18 @@ MonoBehaviour:
   angle_distance_swung: 0
   swing_sound_player: {fileID: 107470}
   basic_attack_vocals: {fileID: 114038}
+--- !u!114 &11491572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a463162744f12cb46af950b7df253cc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture: {fileID: 2800000, guid: e70349bd69e80406dbba359d8eb9bf82, type: 3}
 --- !u!114 &11495020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1342,7 +1355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hit_sound_player: {fileID: 0}
-  is_swinging: 0
 --- !u!135 &13521354
 SphereCollider:
   m_ObjectHideFlags: 1
