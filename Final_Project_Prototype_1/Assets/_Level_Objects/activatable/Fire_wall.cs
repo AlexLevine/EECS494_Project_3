@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Fire_wall : Switchee
 {
-    public override void activate(Switchee_callback callback=null)
+    public override void activate(
+        Switchee_callback callback, float? callback_delay)
     {
+        base.activate(callback, callback_delay);
         gameObject.SetActive(false);
-
-        if (callback != null)
-        {
-            callback();
-        }
+        do_callback();
     }
 }

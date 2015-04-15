@@ -24,7 +24,7 @@ public class Switch : MonoBehaviour
 		else
         {
 			Switchee sw = switchee.GetComponent<Switchee>();
-			sw.activate();
+			sw.activate(null, null);
 		}
 
         Destroy(gameObject);

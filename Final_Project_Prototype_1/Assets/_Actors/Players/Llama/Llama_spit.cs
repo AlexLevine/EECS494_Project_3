@@ -42,7 +42,7 @@ public class Llama_spit : MonoBehaviour
             return;
         }
 
-        print(other);
+        // print(other);
 
         Destroy(gameObject);
     }

@@ -12,8 +12,6 @@ public class Fade_in_object : Switchee
     private Color start_color;
     private Color end_color;
 
-    private Switchee_callback callback_;
-
     //--------------------------------------------------------------------------
 
     void Start()
@@ -29,14 +27,16 @@ public class Fade_in_object : Switchee
 
     //--------------------------------------------------------------------------
 
-    public override void activate(Switchee_callback callback=null)
+    public override void activate(
+        Switchee_callback callback, float? callback_delay)
     {
         if (activated)
         {
             return;
         }
 
-        callback_ = callback;
+        base.activate(callback, callback_delay);
+
         activated = true;
         StartCoroutine(fade_in());
     }// activate
@@ -63,9 +63,7 @@ public class Fade_in_object : Switchee
             yield return null;
         }
 
-        if (callback_ != null)
-        {
-            callback_();
-        }
+        do_callback();
+
     }// fade_in
 }

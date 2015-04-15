@@ -8,19 +8,19 @@ public class Fade_away_obstacle : Switchee
     private float time_elapsed = 0;
     private bool activated = false;
 
-    private Switchee_callback callback_;
-
     //--------------------------------------------------------------------------
 
-    public override void activate(Switchee_callback callback=null)
+    public override void activate(
+        Switchee_callback callback, float? callback_delay)
     {
         if (activated)
         {
             return;
         }
 
+        base.activate(callback, callback_delay);
+
         activated = true;
-        callback_ = callback;
         StartCoroutine(fade_away());
     }// activate
 
@@ -49,10 +49,8 @@ public class Fade_away_obstacle : Switchee
             yield return null;
         }
 
-        if (callback_ != null)
-        {
-            callback_();
-        }
+        do_callback();
+
         gameObject.SetActive(false);
 
     }// fade_away

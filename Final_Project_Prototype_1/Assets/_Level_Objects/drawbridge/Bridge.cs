@@ -7,22 +7,25 @@ public class Bridge : Switchee
     bool activated = false;
     string state_to_play = "lower_drawbridge";
 
-    public override void activate(Switchee_callback callback=null)
+    public override void activate(
+        Switchee_callback callback, float? callback_delay)
     {
         if (activated)
         {
             return;
         }
 
+        base.activate(callback, callback_delay);
+
         // print("activate bridge");
         GetComponent<Animator>().Play(state_to_play);
-        StartCoroutine(animation_poll(callback));
+        StartCoroutine(animation_poll());
         activated = true;
     }// activate
 
     //--------------------------------------------------------------------------
 
-    private IEnumerator animation_poll(Switchee_callback callback)
+    private IEnumerator animation_poll()
     {
         var animator = GetComponent<Animator>();
 
@@ -36,11 +39,8 @@ public class Bridge : Switchee
                 continue;
             }
 
-            if (callback != null)
-            {
-                callback();
-                return false;
-            }
+            do_callback();
+            yield break;
         }
     }// animation_poll
 
