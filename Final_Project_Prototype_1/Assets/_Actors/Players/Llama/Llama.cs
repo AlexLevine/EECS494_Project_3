@@ -53,6 +53,13 @@ public class Llama : Player_character
 
     public override void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            print("llama already exists");
+            Destroy(gameObject);
+            return;
+        }
+
         base.Awake();
 
         instance = this;
@@ -263,8 +270,9 @@ public class Llama : Player_character
         return base.receive_hit(damage, knockback_velocity, attacker);
     }
 
-	public override void on_death() {
-		Ninja.get ().reset_health();
+	public override void on_death()
+    {
+		Ninja.get().reset_health();
 		base.on_death();
 	}
 

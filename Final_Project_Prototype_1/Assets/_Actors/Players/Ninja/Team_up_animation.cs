@@ -30,7 +30,7 @@ public class Team_up_animation : MonoBehaviour
         // pause things
         Actor.actors_paused = true;
         // Time.timeScale = 0;
-        Input_reader.toggle_player_controls();
+        Input_reader.toggle_player_controls(false);
 
         var current_pos = transform.position;
         var target_pos = Llama.get().team_up_point.transform.position;
@@ -111,7 +111,7 @@ public class Team_up_animation : MonoBehaviour
 
             Actor.actors_paused = false;
             // Time.timeScale = 1;
-            Input_reader.toggle_player_controls();
+            Input_reader.toggle_player_controls(true);
         }
     }
 

@@ -12,4 +12,9 @@ public class Fall_death : MonoBehaviour
 
         Checkpoint.load_last_checkpoint();
     }
+
+    void OnTriggerStay(Collider c)
+    {
+        OnTriggerEnter(c);
+    }
 }

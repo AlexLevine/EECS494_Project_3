@@ -67,48 +67,41 @@ public class Camera_follow : MonoBehaviour
         var target_rotation = calculate_target_camera_rotation(
             target_position);
 
-        if (is_transitioning_)
+        if (!is_transitioning_)
         {
-            var lerp_percent =
-                    transition_time_elapsed / current_transition_duration;
-            lerp_percent =
-                Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
-            // print(lerp_percent);
-            if (lerp_percent >= 1) //HACK
+            if (!following_player_)
             {
-                lerp_percent = 1;
-                is_transitioning_ = false;
-                if (current_transition_callback != null)
-                {
-                    current_transition_callback();
-                }
+                return;
             }
 
-            transform.rotation = Quaternion.Lerp(
-                transition_start_rotation, target_rotation, lerp_percent);
-            transform.position = Vector3.Lerp(
-                transition_start_position, target_position, lerp_percent);
-
-            transition_time_elapsed += Time.deltaTime;
+            transform.position = Vector3.SmoothDamp(
+                transform.position, target_position, ref velocity, 0.5f);
             return;
         }
 
-        if (!following_player_)
+        var lerp_percent = (
+            current_transition_duration <= 0 ? 1f :
+                transition_time_elapsed / current_transition_duration);
+        // cubic function for ease in and out
+        lerp_percent =
+            Mathf.Pow(lerp_percent, 3) * (lerp_percent * (6f * lerp_percent - 15f) + 10f);
+        // print(lerp_percent);
+        if (lerp_percent >= 1) //HACK
         {
-            return;
+            lerp_percent = 1;
+            is_transitioning_ = false;
+            if (current_transition_callback != null)
+            {
+                current_transition_callback();
+            }
         }
 
-        // point_of_interest_ = calculate_player_midpoint();
+        transform.rotation = Quaternion.Lerp(
+            transition_start_rotation, target_rotation, lerp_percent);
+        transform.position = Vector3.Lerp(
+            transition_start_position, target_position, lerp_percent);
 
-        // target_position = calculate_target_camera_position();
-        // var target_rotation = calculate_target_camera_rotation(
-        //     target_position);
-
-        // if (Vector3.Distance(transform.position, target_position) > 1f)
-        // {
-        transform.position = Vector3.SmoothDamp(
-            transform.position, target_position, ref velocity, 0.5f);
-        // }
+        transition_time_elapsed += Time.deltaTime;
     }// LateUpdate
 
     //--------------------------------------------------------------------------

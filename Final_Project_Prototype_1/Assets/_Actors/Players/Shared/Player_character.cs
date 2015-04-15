@@ -61,7 +61,7 @@ public class Player_character : Actor
         foreach (var player in player_characters)
         {
             var pc = player.GetComponent<Player_character>();
-            pc.lock_on_target = null;
+            pc.release_lock_on();
         }
     }// drop_lock_on_targets
 
@@ -69,9 +69,6 @@ public class Player_character : Actor
 
     public virtual void Awake()
     {
-        // print("awake");
-        // rewired_player = ReInput.players.GetPlayer(player_id);
-        // print(rewired_player);
         player_characters.Add(gameObject);
     }// Awake
 
@@ -218,8 +215,7 @@ public class Player_character : Actor
 
         if (is_locked_on)
         {
-            lock_on_bar.GetComponent<Lock_on_health_bar>().target = null;
-            lock_on_target = null;
+            release_lock_on();
             return;
         }
 
@@ -248,6 +244,12 @@ public class Player_character : Actor
         lock_on_bar.GetComponent<Lock_on_health_bar>().update_position();
         lock_on_bar.SetActive(true);
     }// lock_on_to_enemy
+
+    private void release_lock_on()
+    {
+        lock_on_bar.GetComponent<Lock_on_health_bar>().target = null;
+        lock_on_target = null;
+    }// release_lock_on
 
     //--------------------------------------------------------------------------
 

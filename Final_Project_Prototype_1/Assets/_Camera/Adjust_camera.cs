@@ -9,6 +9,7 @@ public class Adjust_camera : MonoBehaviour
     public float camera_hover_height;
     public bool set_rotation_manually = false;
     public float y_rotation_override;
+    public float transition_duration = 2f;
 
     private float camera_y_rotation;
 
@@ -56,7 +57,7 @@ public class Adjust_camera : MonoBehaviour
                 y_rotation: camera_y_rotation,
                 camera_follow_distance: camera_follow_distance,
                 camera_hover_height: camera_hover_height,
-                transition_duration: 2f);
+                transition_duration: transition_duration);
 
             // set_as_current_camera_angle();
             is_current_camera_angle = true;

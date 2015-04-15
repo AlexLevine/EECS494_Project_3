@@ -91,7 +91,7 @@ public class Breakable_wall : MonoBehaviour
             includeInactive: true);
         foreach(var block in blocks)
         {
-            print("In Loop");
+            // print("In Loop");
             block.gameObject.SetActive(true);
             // block.gameObject.GetComponent<MeshRenderer>().enabled = true;
             block.isKinematic = false;

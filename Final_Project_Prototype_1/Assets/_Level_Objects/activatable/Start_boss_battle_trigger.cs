@@ -20,6 +20,8 @@ public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscrib
         }
 
         fight_started = true;
+
+        // lock_player_in_cutscene.GetComponent<Cut_scene>().activate(
         Boss_fight_controller.get().start_fight();
     }// OnTriggerEnter
 
@@ -38,5 +40,6 @@ public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscrib
     }// notify_checkpoint_load
 
     //--------------------------------------------------------------------------
+
 
 }

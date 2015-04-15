@@ -9,7 +9,8 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
         OPENING_CUTSCENE,
         FIGHTERS_CHARGING,
         FIGHTERS_RETREATING,
-        PREPARING_FOR_NEXT_CHARGE
+        PREPARING_FOR_NEXT_CHARGE,
+        BOSS_DEFEATED
     }
 
     //--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
     private Vector3 player_retreat_point;
     private Vector3 boss_retreat_point;
 
-    private static float pause_duration = 2f;
+    private static float pause_duration = 2.5f;
     private float time_paused = 0;
 
     //--------------------------------------------------------------------------
@@ -55,10 +56,12 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
         state = Boss_fight_state_e.FIGHTERS_CHARGING;
 
         boss_retreat_point = second_retreat_point.transform.position;
+        boss_retreat_point.y = 0;
         Samurai_Attack.get().retreat_destination = boss_retreat_point;
         player_retreat_point = first_retreat_point.transform.position;
+        player_retreat_point.y = 0;
         // Llama.get().move(Vector3.down, false); // snap llama to ground
-        player_retreat_point.y = Llama.get().transform.position.y;
+        // player_retreat_point.y = Llama.get().transform.position.y;
     }// start_fight
 
     //--------------------------------------------------------------------------
@@ -70,7 +73,8 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
         Llama.get().stop();
         Ninja.get().stop();
 
-        Input_reader.toggle_player_controls();
+        Input_reader.toggle_player_controls(false);
+        Player_character.drop_lock_on_targets();
 
         Samurai_Attack.get().retreat(boss_retreat_point);
     }// notify_fighters_passed
@@ -101,15 +105,20 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
 
         case Boss_fight_state_e.FIGHTERS_RETREATING:
             Llama.get().look_toward(player_retreat_point);
-            var pos_step = Llama.get().run_speed * 1.5f * Time.deltaTime;
+            var pos_step = Llama.get().run_speed * 1.75f * Time.deltaTime;
+
+            var cur_pos = Llama.get().transform.position;
+            cur_pos.y = 0;
 
             var desired_position = Vector3.MoveTowards(
-                Llama.get().transform.position, player_retreat_point, pos_step);
-            var adjusted_step = desired_position - Llama.get().transform.position;
+                cur_pos, player_retreat_point, pos_step);
+            var adjusted_step = desired_position - cur_pos;
             Llama.get().move(adjusted_step, false);
 
+            cur_pos = Llama.get().transform.position;
+            cur_pos.y = 0;
             var reached_retreat_point = Vector3.Distance(
-                Llama.get().transform.position, player_retreat_point) < 0.1f;
+                cur_pos, player_retreat_point) < 1f;
             if (reached_retreat_point)
             {
                 state = Boss_fight_state_e.PREPARING_FOR_NEXT_CHARGE;
@@ -118,16 +127,21 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
 
         case Boss_fight_state_e.PREPARING_FOR_NEXT_CHARGE:
             Llama.get().look_toward(Samurai_Attack.get().gameObject);
+            Ninja.get().look_toward(Samurai_Attack.get().gameObject);
             time_paused += Time.deltaTime;
             if (time_paused < pause_duration)
             {
                 return;
             }
 
-            Input_reader.toggle_player_controls();
+            time_paused = 0;
+            Input_reader.toggle_player_controls(true);
             swap_retreat_points();
             state = Boss_fight_state_e.FIGHTERS_CHARGING;
 
+            break;
+
+        case Boss_fight_state_e.BOSS_DEFEATED:
             break;
 
         }
@@ -142,13 +156,23 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
 
     //--------------------------------------------------------------------------
 
+    public void notify_boss_defeated()
+    {
+        print("you're winner!");
+        state = Boss_fight_state_e.BOSS_DEFEATED;
+        Input_reader.toggle_player_controls(true);
+
+    }// notify_boss_defeated
+
+    //--------------------------------------------------------------------------
+
     void swap_retreat_points()
     {
         var temp = player_retreat_point;
         player_retreat_point = boss_retreat_point;
         boss_retreat_point = temp;
 
-        player_retreat_point.y = Llama.get().transform.position.y;
+        // player_retreat_point.y = Llama.get().transform.position.y;
 
         Samurai_Attack.get().retreat_destination = boss_retreat_point;
     }// swap_retreat_points

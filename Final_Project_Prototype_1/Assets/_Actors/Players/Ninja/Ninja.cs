@@ -44,6 +44,13 @@ public class Ninja : Player_character
 
     public override void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            print("ninja already exists");
+            Destroy(gameObject);
+            return;
+        }
+
         base.Awake();
 
         instance = this;

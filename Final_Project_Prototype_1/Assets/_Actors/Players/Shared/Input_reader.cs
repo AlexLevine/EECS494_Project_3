@@ -22,6 +22,11 @@ public class Input_reader : MonoBehaviour
 
     void Awake()
     {
+        if (input_readers.Count > 2)
+        {
+            return;
+        }
+
         input_readers.Add(this);
     }
 
@@ -58,11 +63,11 @@ public class Input_reader : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public static void toggle_player_controls()
+    public static void toggle_player_controls(bool enable)
     {
         foreach (var input_reader in input_readers)
         {
-            input_reader.controls_enabled = !input_reader.controls_enabled;
+            input_reader.controls_enabled = enable;
         }
     }// toggle_player_controls
 
@@ -77,7 +82,7 @@ public class Input_reader : MonoBehaviour
 
         if (input_device.GetControl(InputControlType.Action2).WasPressed)
         {
-            print("team up");
+            // print("team up");
             pc.team_up_engage_or_throw();
         }
 
@@ -113,7 +118,7 @@ public class Input_reader : MonoBehaviour
         tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
         // tilt = tilt.normalized;
 
-     
+
 
         // var sprint = player.GetButton("sprint");
 

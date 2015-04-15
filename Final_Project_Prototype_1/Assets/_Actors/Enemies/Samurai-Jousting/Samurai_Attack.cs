@@ -14,8 +14,8 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
     public Samurai_state_e cur_state;
 
-    public override float attack_power { get { return 1; } }
-    public override float max_health { get { return 50; } }
+    public override float attack_power { get { return 2f; } }
+    public override float max_health { get { return 25; } }
     public bool ready_to_charge {
         get { return cur_state == Samurai_state_e.WAITING; } }
 
@@ -93,7 +93,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                 //     look_toward(retreat_destination, 360f);
                 // }
 
-                print(retreat_destination);
+                // print(retreat_destination);
                 var distance_to_retreat_point = Vector3.Distance(
                     transform.position, retreat_destination);
                 // print(distance_to_retreat_point);
@@ -113,20 +113,26 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                 }
 
                 var delta_pos = transform.forward * speed * Time.deltaTime;
+                delta_pos.y = -0.05f;
                 move(delta_pos, false);
                 break;
 
             case Samurai_state_e.RETREATING:
                 look_toward(retreat_destination);
-                var pos_step = speed * 0.65f * Time.deltaTime;
+                var pos_step = speed * 0.85f * Time.deltaTime;
+
+                var cur_pos = transform.position;
+                cur_pos.y = 0;
 
                 var desired_position = Vector3.MoveTowards(
-                    transform.position, retreat_destination, pos_step);
-                var adjusted_step = desired_position - transform.position;
+                    cur_pos, retreat_destination, pos_step);
+                var adjusted_step = desired_position - cur_pos;
                 move(adjusted_step, false);
 
+                cur_pos = transform.position;
+                cur_pos.y = 0;
                 var reached_retreat_point = Vector3.Distance(
-                    transform.position, retreat_destination) < 0.1f;
+                    cur_pos, retreat_destination) < 1f;
                 if (reached_retreat_point)
                 {
                     cur_state = Samurai_state_e.WAITING;
@@ -150,19 +156,12 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
     public void retreat(Vector3 destination)
     {
         snap_to_ground();
-        destination.y = transform.position.y;
+        destination.y = 0;
         retreat_destination = destination;
         cur_state = Samurai_state_e.RETREATING;
     }// retreat
 
     //--------------------------------------------------------------------------
-
-    // public void notify_players_in_arena()
-    // {
-    // }// notify_players_in_arena
-
-    //--------------------------------------------------------------------------
-
 
     public override void OnTriggerEnter(Collider c)
     {
@@ -229,6 +228,14 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
         Boss_fight_controller.get().notify_fighters_passed();
         return base.receive_hit(damage, knockback_velocity, attacker);
     }// receive_hit
+
+    //--------------------------------------------------------------------------
+
+    public override void on_death()
+    {
+        Boss_fight_controller.get().notify_boss_defeated();
+        base.on_death();
+    }// on_death
 
     //--------------------------------------------------------------------------
 

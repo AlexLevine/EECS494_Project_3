@@ -22,6 +22,10 @@ public class Ninja_sword : MonoBehaviour
     {
         get
         {
+            if (transform.parent.GetComponent<Aerial_attack>().is_playing)
+            {
+                return 10;
+            }
             return 5;
         }
     }// attack_power
