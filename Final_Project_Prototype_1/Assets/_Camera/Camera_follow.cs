@@ -129,7 +129,8 @@ public class Camera_follow : MonoBehaviour
 
     public static void adjust_main_camera(
         Vector3? new_point_of_interest=null,
-        float? y_rotation=null, float? camera_follow_distance=null,
+        float? y_rotation=null,
+        float? camera_follow_distance=null,
         float? camera_hover_height=null,
         float transition_duration=1.5f,
         Camera_callback callback=null)
@@ -357,38 +358,38 @@ public class Camera_follow : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public static bool point_step_would_leave_viewport(
-        Vector3 point, Vector3 delta_position)
-    {
-        // if (delta_position.y != 0)
-        // {
-        //     return false;
-        // }
+    // public static bool point_step_would_leave_viewport(
+    //     Vector3 point, Vector3 delta_position)
+    // {
+    //     // if (delta_position.y != 0)
+    //     // {
+    //     //     return false;
+    //     // }
 
-        var desired_position = point + delta_position;
-        var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
+    //     var desired_position = point + delta_position;
+    //     var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
 
-        // print("direction: " + direction);
-        // print("step: " + step);
-        // print("desired_position: " + desired_position);
-        // print("viewport_pos: " + viewport_pos);
+    //     // print("direction: " + direction);
+    //     // print("step: " + step);
+    //     // print("desired_position: " + desired_position);
+    //     // print("viewport_pos: " + viewport_pos);
 
-        var leave_z_far_edge = delta_position.z > 0 && viewport_pos.y > 1f;
-        var leave_z_near_edge = delta_position.z < 0 && viewport_pos.y < 0f;
-        var leave_x_left_edge = delta_position.x < 0 && viewport_pos.x < 0f;
-        var leave_x_right_edge = delta_position.x > 0 && viewport_pos.x > 1f;
+    //     var leave_z_far_edge = delta_position.z > 0 && viewport_pos.y > 1f;
+    //     var leave_z_near_edge = delta_position.z < 0 && viewport_pos.y < 0f;
+    //     var leave_x_left_edge = delta_position.x < 0 && viewport_pos.x < 0f;
+    //     var leave_x_right_edge = delta_position.x > 0 && viewport_pos.x > 1f;
 
-        return leave_z_far_edge || leave_z_near_edge ||
-               leave_x_left_edge || leave_x_right_edge;
+    //     return leave_z_far_edge || leave_z_near_edge ||
+    //            leave_x_left_edge || leave_x_right_edge;
 
 
-        // if (!point_inside_viewport(viewport_pos))
-        // {
-        //     return true;
-        // }
-        // return point.x < 0.9f && point.x > 0.1f &&
-        //        point.y < 0.9f && point.y > 0.1f;
-    }// point_step_would_leave_viewport
+    //     // if (!point_inside_viewport(viewport_pos))
+    //     // {
+    //     //     return true;
+    //     // }
+    //     // return point.x < 0.9f && point.x > 0.1f &&
+    //     //        point.y < 0.9f && point.y > 0.1f;
+    // }// point_step_would_leave_viewport
 
     //--------------------------------------------------------------------------
 

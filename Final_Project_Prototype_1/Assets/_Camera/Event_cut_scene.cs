@@ -67,6 +67,7 @@ public class Event_cut_scene : Cut_scene
 		Camera_follow.adjust_main_camera(
 			new_point_of_interest: target_object.transform.position,
 			y_rotation: target_rotation,
+			camera_follow_distance: target_follow_distance,
 			camera_hover_height: target_hover_height,
 			transition_duration: camera_transition_duration,
 			callback: trigger_event);
@@ -99,6 +100,7 @@ public class Event_cut_scene : Cut_scene
 			new_point_of_interest: original_point_of_interest,
 			y_rotation: original_rotation,
 			camera_hover_height: original_height,
+			camera_follow_distance: original_distance,
 			transition_duration: camera_transition_duration,
 			callback: finish_and_clean_up);
     }// return_to_start_position

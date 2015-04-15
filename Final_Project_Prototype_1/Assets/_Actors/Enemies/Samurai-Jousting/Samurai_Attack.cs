@@ -26,7 +26,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
     private static Samurai_Attack instance;
 
-    private CharacterController cc;
+    // private CharacterController cc;
 
     public Vector3 retreat_destination;
     private Vector3 starting_location;
@@ -56,7 +56,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
         Checkpoint.subscribe(this);
 
-        cc = gameObject.GetComponent<CharacterController>();
+        // cc = gameObject.GetComponent<CharacterController>();
 
         speed = Llama.get().charge_speed;
         cur_state = Samurai_state_e.WAITING;
