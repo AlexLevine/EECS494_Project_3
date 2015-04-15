@@ -50,11 +50,10 @@ public class Off_screen : MonoBehaviour {
 		
 		
 		if (!Camera_follow.point_in_viewport(llama.transform.position)){//&& !llama_renderer.isVisible){
-			return;
-			//icon(llama.transform.position,Character_e.LLAMA);
+			icon(llama.transform.position,Character_e.LLAMA);
 		}
 		if (!Camera_follow.point_in_viewport(ninja.transform.position)){ //&& !ninja_renderer.isVisible){
-			//icon (ninja.transform.position,Character_e.NINJA);
+			icon (ninja.transform.position,Character_e.NINJA);
 		}
 	}
 	
@@ -65,7 +64,10 @@ public class Off_screen : MonoBehaviour {
 		var slope = (screen_pos.y-center.y)/(screen_pos.x-center.x);
 		//print(screen_pos); return;
 		
-		print(Camera.main.transform.forward);
+		//print(Camera.main.transform.forward);
+		print(llama.transform.position);print(Camera.main.transform.position);
+		
+		return;
 		
 		//get location for icon
 		Vector2 icon_location = Vector2.zero;
@@ -119,3 +121,5 @@ public class Off_screen : MonoBehaviour {
 	
 	
 }
+
+
