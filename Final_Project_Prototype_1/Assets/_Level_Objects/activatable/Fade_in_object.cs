@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fade_in_object : MonoBehaviour, Switchee
+public class Fade_in_object : Switchee
 {
     public GameObject to_fade_in;
     public float fade_duration = 1.5f;
@@ -11,6 +11,8 @@ public class Fade_in_object : MonoBehaviour, Switchee
     private Renderer renderer_;
     private Color start_color;
     private Color end_color;
+
+    private Switchee_callback callback_;
 
     //--------------------------------------------------------------------------
 
@@ -27,13 +29,14 @@ public class Fade_in_object : MonoBehaviour, Switchee
 
     //--------------------------------------------------------------------------
 
-    public void activate()
+    public override void activate(Switchee_callback callback=null)
     {
         if (activated)
         {
             return;
         }
 
+        callback_ = callback;
         activated = true;
         StartCoroutine(fade_in());
     }// activate
@@ -58,6 +61,11 @@ public class Fade_in_object : MonoBehaviour, Switchee
 
             time_elapsed += Time.deltaTime;
             yield return null;
+        }
+
+        if (callback_ != null)
+        {
+            callback_();
         }
     }// fade_in
 }

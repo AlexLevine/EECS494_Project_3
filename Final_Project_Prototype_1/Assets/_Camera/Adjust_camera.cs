@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Collider))]
 public class Adjust_camera : MonoBehaviour
 {
     public float camera_follow_distance;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Collider))]
 public class Checkpoint : MonoBehaviour
 {
     static public GameObject last_checkpoint = null;
@@ -11,6 +12,13 @@ public class Checkpoint : MonoBehaviour
 
     private static List<Checkpoint_load_subscriber> subscribers =
             new List<Checkpoint_load_subscriber>();
+
+    //--------------------------------------------------------------------------
+
+    void Start()
+    {
+        GetComponent<Collider>().isTrigger = true;
+    }// Start
 
     //--------------------------------------------------------------------------
 

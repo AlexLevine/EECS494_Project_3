@@ -27,7 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 497172}
   m_Layer: 0
-  m_Name: Spawn Point
+  m_Name: projectile Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,8 +137,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167780}
-  m_LocalRotation: {x: 0, y: .923143148, z: 0, w: .384456336}
-  m_LocalPosition: {x: -11.7200003, y: -36.3499985, z: 8.21000004}
+  m_LocalRotation: {x: 3.07656656e-08, y: .778852105, z: -1.28128086e-08, w: .627207696}
+  m_LocalPosition: {x: -13, y: .610000014, z: 252.912003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 403758}
