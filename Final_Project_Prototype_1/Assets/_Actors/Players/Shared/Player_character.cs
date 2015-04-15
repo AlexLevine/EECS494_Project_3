@@ -60,7 +60,8 @@ public class Player_character : Actor
     {
         foreach (var player in player_characters)
         {
-            player.lock_on_target = null;
+            var pc = player.GetComponent<Player_character>();
+            pc.lock_on_target = null;
         }
     }// drop_lock_on_targets
 

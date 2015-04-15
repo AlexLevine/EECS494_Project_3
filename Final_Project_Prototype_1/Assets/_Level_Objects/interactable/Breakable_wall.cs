@@ -87,7 +87,9 @@ public class Breakable_wall : MonoBehaviour
         // GetComponent<Rigidbody>().enabled = false;
 
         // print("Before Loop");
-        foreach(var block in transform.parent.GetComponentsInChildren<Rigidbody>())
+        var blocks = transform.parent.GetComponentsInChildren<Rigidbody>(
+            includeInactive: true);
+        foreach(var block in blocks)
         {
             print("In Loop");
             block.gameObject.SetActive(true);
