@@ -16,6 +16,11 @@ public class Switch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag != "Player")
+        {
+            return;
+        }
+
 		if (cut_scene!=null)
         {
 			Cut_scene cs = cut_scene.GetComponent<Cut_scene>();
