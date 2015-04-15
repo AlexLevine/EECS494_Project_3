@@ -13,7 +13,7 @@ public class Llama : Player_character
     public GameObject spit_spawn_point;
 
     public bool spit_is_cooling_down = false;
-    private static float max_spit_cooldown_time = 0.65f;
+    private static float max_spit_cooldown_time = 0.75f;
     private float cur_spit_cooldown_time = 0;
 
     private enum Charge_state_e

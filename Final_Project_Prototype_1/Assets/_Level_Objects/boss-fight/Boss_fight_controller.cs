@@ -152,6 +152,7 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
     public void notify_checkpoint_load()
     {
         state = Boss_fight_state_e.NOT_STARTED;
+        Samurai_Attack.get().transform.position = second_retreat_point.transform.position;
     }// notify_checkpoint_load
 
     //--------------------------------------------------------------------------

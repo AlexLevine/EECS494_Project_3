@@ -14,7 +14,7 @@ public class Ninja_sword : MonoBehaviour
             var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
             var swing = transform.parent.GetComponent<Sword_swing>();
 
-            return aerial_attack.is_playing || swing.is_playing;
+            return aerial_attack.is_diving || swing.is_playing;
         }
     }
 
@@ -22,7 +22,7 @@ public class Ninja_sword : MonoBehaviour
     {
         get
         {
-            if (transform.parent.GetComponent<Aerial_attack>().is_playing)
+            if (transform.parent.GetComponent<Aerial_attack>().is_diving)
             {
                 return 10;
             }
