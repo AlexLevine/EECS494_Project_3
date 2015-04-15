@@ -20,6 +20,13 @@ public class Cut_scene : MonoBehaviour
 		Input_reader.toggle_player_controls(false);
 		Actor.actors_paused = true;
 		Player_character.drop_lock_on_targets();
+		Llama.get().stop();
+		Ninja.get().stop();
+
+		if (Llama.get().is_charging)
+		{
+			Llama.get().stop_charge();
+		}
 	}// pause_all
 
     //--------------------------------------------------------------------------

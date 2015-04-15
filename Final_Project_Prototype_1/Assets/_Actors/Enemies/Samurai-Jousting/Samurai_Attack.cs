@@ -233,6 +233,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
     public override void on_death()
     {
+        Checkpoint.unsubscribe(gameObject);
         Boss_fight_controller.get().notify_boss_defeated();
         base.on_death();
     }// on_death

@@ -159,7 +159,7 @@ public class Ninja : Player_character
 
     public override void team_up_engage_or_throw()
     {
-        if (is_teamed_up)
+        if (is_teamed_up || get_sword().sword_animation_playing)
         {
             return;
         }

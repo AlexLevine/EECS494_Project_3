@@ -84,4 +84,9 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
+    public static void unsubscribe(GameObject obj)
+    {
+        subscribers.Remove(obj.GetComponent<Checkpoint_load_subscriber>());
+    }
+
 }

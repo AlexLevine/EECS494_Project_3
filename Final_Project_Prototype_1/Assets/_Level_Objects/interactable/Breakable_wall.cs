@@ -6,7 +6,7 @@ public class Breakable_wall : MonoBehaviour
     public GameObject fragment_cube_prefab;
 
     bool is_dead = false;
-    private float time_until_despawn = 2f;
+    private float time_until_despawn = 1f;
 
     void Start()
     {

@@ -18,6 +18,17 @@ public class Ninja_sword : MonoBehaviour
         }
     }
 
+    public bool sword_animation_playing
+    {
+        get
+        {
+            var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
+            var swing = transform.parent.GetComponent<Sword_swing>();
+
+            return aerial_attack.is_playing || swing.is_playing;
+        }
+    }
+
     public int attack_power
     {
         get
