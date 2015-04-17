@@ -114,7 +114,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
 
                 var delta_pos = transform.forward * speed * Time.deltaTime;
                 delta_pos.y = -0.05f;
-                move(delta_pos, false);
+                move(delta_pos);
                 break;
 
             case Samurai_state_e.RETREATING:
@@ -127,7 +127,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
                 var desired_position = Vector3.MoveTowards(
                     cur_pos, retreat_destination, pos_step);
                 var adjusted_step = desired_position - cur_pos;
-                move(adjusted_step, false);
+                move(adjusted_step);
 
                 cur_pos = transform.position;
                 cur_pos.y = 0;

@@ -53,12 +53,12 @@ public class Llama : Player_character
 
     public override void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            print("llama already exists");
-            Destroy(gameObject);
-            return;
-        }
+        // if (instance != null && instance != this)
+        // {
+        //     print("llama already exists");
+        //     Destroy(gameObject);
+        //     return;
+        // }
 
         base.Awake();
 
@@ -121,11 +121,12 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
+    public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad)
     {
         if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
-            return;
+            return new Sweep_test_summary();
         }
 
         // cc.Move(delta_position);
@@ -135,7 +136,19 @@ public class Llama : Player_character
         //     Ninja.get().move(delta_position);//.y * Vector3.up);
         // }
 
-        base.move(delta_position, apply_rotation);
+        var summary = base.move(delta_position);
+        if (!summary.hit_y)
+        {
+            return summary;
+        }
+
+        var ninja = summary.hit_info_y.transform.GetComponent<Ninja>();
+        if (ninja != null)
+        {
+            ninja.toggle_shrunk();
+        }
+
+        return summary;
         // print(delta_position.y);
         // print(cc.isGrounded);
     }// move

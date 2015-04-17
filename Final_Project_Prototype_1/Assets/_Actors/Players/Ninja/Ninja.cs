@@ -6,7 +6,7 @@ using System.Collections;
  RequireComponent(typeof(Team_up_animation))]
 public class Ninja : Player_character
 {
-    public GameObject body;
+    // public GameObject body;
 
     public GameObject damage_vocals;
 
@@ -14,7 +14,7 @@ public class Ninja : Player_character
     public GameObject sword_obj;
     public Material out_of_range;
     private Material normal;
-    private float o_o_r=2;
+    // private float o_o_r=2;
 
     private GameObject team_up_point;
 
@@ -44,12 +44,12 @@ public class Ninja : Player_character
 
     public override void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            print("ninja already exists");
-            Destroy(gameObject);
-            return;
-        }
+        // if (instance != null && instance != this)
+        // {
+        //     print("ninja already exists");
+        //     Destroy(gameObject);
+        //     return;
+        // }
 
         base.Awake();
 
@@ -80,9 +80,9 @@ public class Ninja : Player_character
         if (!is_teamed_up)
         {
             //out_of_range
-            if (o_o_r++==1){
-                body.GetComponent<Renderer>().material = normal;
-            }
+            // if (o_o_r++==1){
+            //     body.GetComponent<Renderer>().material = normal;
+            // }
 
             return;
         }
@@ -116,14 +116,15 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
+    public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad)
     {
         // if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
-        if (is_teamed_up)
+        update_rotation(delta_position);
 
+        if (is_teamed_up)
         {
-			if (apply_rotation) update_rotation(delta_position);
-			return;
+			return new Sweep_test_summary();
         }
 
         // if (is_teamed_up)
@@ -136,18 +137,18 @@ public class Ninja : Player_character
         if (GetComponent<Aerial_attack>().is_diving)
         {
             // HAAAACK
-            base.move(delta_position, false);
+            base.move(delta_position);
             if (is_grounded)
             {
                 GetComponent<Aerial_attack>().notify_dive_landed();
             }
-            return;
+            return new Sweep_test_summary();
         }
 
-        if (!GetComponent<Aerial_attack>().is_playing)
-        {
-            base.move(delta_position, apply_rotation);
-        }
+        // if (!GetComponent<Aerial_attack>().is_playing)
+        // {
+            return base.move(delta_position);
+        // }
 
         // if (is_grounded && GetComponent<Aerial_attack>().is_diving)
         // {
@@ -179,10 +180,10 @@ public class Ninja : Player_character
 
         if (distance > 10f)
         {
-            print("out of range");
-            normal = body.GetComponent<Renderer>().material;
-            body.GetComponent<Renderer>().material = out_of_range;
-            o_o_r = 0;
+            // print("out of range");
+            // normal = body.GetComponent<Renderer>().material;
+            // body.GetComponent<Renderer>().material = out_of_range;
+            // o_o_r = 0;
             return;
         }
 
@@ -254,14 +255,14 @@ public class Ninja : Player_character
     protected override void on_team_up_engage()
     {
         notify_on_ground();
-        cc.enabled = false;
+        // cc.enabled = false;
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
     protected override void on_team_up_disengage()
     {
-        cc.enabled = true;
+        // cc.enabled = true;
     }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
@@ -300,46 +301,6 @@ public class Ninja : Player_character
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
 
-    //--------------------------------------------------------------------------
-
-
-    // public override int max_health
-    // {
-    //     get
-    //     {
-    //         return 10;
-    //     }
-    // }// max_health
-
-    //--------------------------------------------------------------------------
-
-    // public override float run_speed
-    // {
-    //     get
-    //     {
-    //         return 5;
-    //     }
-    // }// run_speed
-
-    // //--------------------------------------------------------------------------
-
-    // public override float sprint_speed
-    // {
-    //     get
-    //     {
-    //         return 10;
-    //     }
-    // }// sprint_speed
-
-    // //--------------------------------------------------------------------------
-
-    // public override float jump_speed
-    // {
-    //     get
-    //     {
-    //         return 15;
-    //     }
-    // }// jump_speed
 }
 
 

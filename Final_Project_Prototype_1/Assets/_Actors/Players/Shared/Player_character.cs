@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(CharacterController)),
+[RequireComponent(typeof(Rigidbody)),
  RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
@@ -14,16 +14,16 @@ public class Player_character : Actor
     public float skin_width = 0.01f;
 
     public override float max_health { get { return 10; } }
-    public bool is_grounded { get { return on_ground; } }
+    // public bool is_grounded { get { return on_ground; } }
     // public float gravity { get { return -25f; } }
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
     public float jump_speed { get { return 15f; } }
     public float run_speed { get { return 10f; } }
-    public float acceleration { get { return 30f; } }
+    public float run_acceleration { get { return 30f; } }
 
-    public Vector3 velocity { get { return velocity_; } }
+    // public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
 
@@ -35,15 +35,15 @@ public class Player_character : Actor
 
     // private Player rewired_player;
     // private Rigidbody kinematic_rigidbody;
-    protected CharacterController cc;
+    // protected Rigidbody kinematic_rigidbody;
 
-    private Vector3 velocity_ = Vector3.zero;
+    // private Vector3 velocity_ = Vector3.zero;
 
     // HACK
     protected bool bounce = false;
 
     private bool jumping = false;
-    private bool on_ground = false;
+    // private bool on_ground = false;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
@@ -74,13 +74,13 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // Use this for initialization
-    public override void Start()
-    {
-        base.Start();
-        cc = gameObject.GetComponent<CharacterController>();
-        // kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
-    }// Start
+    // // Use this for initialization
+    // public override void Start()
+    // {
+    //     base.Start();
+    //     // cc = gameObject.GetComponent<CharacterController>();
+    //     kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
+    // }// Start
 
     //--------------------------------------------------------------------------
 
@@ -105,7 +105,8 @@ public class Player_character : Actor
         }
 
         // process_input();
-        move(velocity_ * Time.deltaTime, true);
+        move(velocity * Time.deltaTime);
+        look_toward(velocity);
 
         if (is_locked_on)
         {
@@ -117,6 +118,8 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    // TODO: change to apply_controller_tilt
+    //
     // Given a target velocity_, updates the player's x and z velocities as
     // appropriate.
     // For example, the player should change direction more slowly while in
@@ -129,12 +132,13 @@ public class Player_character : Actor
         //     target_velocity = target_velocity.magnitude *
         //                       Camera.main.transform.forward;
         // }
-        velocity_.y += gravity * Time.deltaTime;
+        // velocity_.y += gravity * Time.deltaTime;
 
+        update_rotation(target_velocity);
         if (is_grounded || is_jumping)
         {
-            target_velocity.y = velocity_.y;
-            velocity_ = target_velocity;
+            target_velocity.y = velocity.y;
+            velocity = target_velocity;
             return;
         }
 
@@ -142,7 +146,7 @@ public class Player_character : Actor
         // if (have_opposite_signs(target_velocity.x, velocity_.x) ||
         //     Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
         // {
-        //     var velocity_step = acceleration * Time.deltaTime;
+        //     var velocity_step = run_acceleration * Time.deltaTime;
         //     if (target_velocity.x < velocity_.x)
         //     {
         //         velocity_step *= -1;
@@ -154,7 +158,7 @@ public class Player_character : Actor
         // if (have_opposite_signs(target_velocity.z, velocity_.z) ||
         //     Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
         // {
-        //     var velocity_step = acceleration * Time.deltaTime;
+        //     var velocity_step = run_acceleration * Time.deltaTime;
         //     if (target_velocity.z < velocity_.z)
         //     {
         //         velocity_step *= -1;
@@ -173,11 +177,11 @@ public class Player_character : Actor
 
     public virtual void apply_momentum(Vector3 new_velocity)
     {
-        velocity_ = new_velocity;
-        if (new_velocity.y > 0)
-        {
-            on_ground = false;
-        }
+        velocity = new_velocity;
+        // if (new_velocity.y > 0)
+        // {
+        //     on_ground = false;
+        // }
     }// apply_momentum
 
     //--------------------------------------------------------------------------
@@ -219,11 +223,11 @@ public class Player_character : Actor
             return;
         }
 
-        var closest_enemy = Enemy.get_closest_potential_lock_on_target(
-                                                                    gameObject);
+        var closest_enemy =
+                Enemy.get_closest_potential_lock_on_target(gameObject);
 
         var enemy_on_screen = Camera_follow.point_in_viewport(
-                                              closest_enemy.transform.position);
+            closest_enemy.transform.position);
 
 
         if (closest_enemy == null || !enemy_on_screen)
@@ -294,12 +298,13 @@ public class Player_character : Actor
 
     public virtual void stop()
     {
-        velocity_ = Vector3.zero;
+        velocity = Vector3.zero;
     }// stop
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
+    public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad)
     {
         // // print(amount);
         // step_axis_direction(Vector3.right, delta_position.x);
@@ -328,23 +333,26 @@ public class Player_character : Actor
 //            return;
 //        }
 
-        cc.Move(delta_position);
-        on_ground = delta_position.y < 0 && cc.isGrounded;
-        if (bounce)
-        {
-            jump();
-            bounce = false;
-        }
+        // print("Player_character move");
+        // kinematic_rigidbody.MovePosition(GetComponent<Rigidbody>().position + delta_position);
+        // on_ground = delta_position.y < 0;// && kinematic_rigidbody.isGrounded;
+        var summary = base.move(delta_position, precision_pad);
+        // if (bounce)
+        // {
+        //     jump();
+        //     bounce = false;
+        // }
         if (is_grounded)
         {
-            velocity_.y = 0;
+            // velocity_.y = 0;
             jumping = false;
         }
 
-        if (apply_rotation)
-        {
-            update_rotation(delta_position);
-        }
+        return summary;
+        // if (apply_rotation)
+        // {
+        //     update_rotation(delta_position);
+        // }
     }// move
 
     //--------------------------------------------------------------------------
@@ -414,13 +422,14 @@ public class Player_character : Actor
     {
         if (!is_grounded && time_in_air > max_time_in_air)
         {
-            // print(cc.isGrounded);
+            // print(kinematic_rigidbody.isGrounded);
             return;
         }
 
-        velocity_.y = jump_speed;
+        var new_velocity = velocity;
+        new_velocity.y = jump_speed;
         // is_jumping = true;
-        on_ground = false;
+        // on_ground = false;
         jumping = true;
         // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
         // new_speed.y = jump_speed;
@@ -481,7 +490,7 @@ public class Player_character : Actor
 
     public void notify_on_ground()
     {
-        on_ground = true;
+        // on_ground = true;
     }// notify_on_ground
     //--------------------------------------------------------------------------
 

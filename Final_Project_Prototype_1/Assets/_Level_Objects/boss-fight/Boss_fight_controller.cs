@@ -113,7 +113,7 @@ public class Boss_fight_controller : MonoBehaviour, Checkpoint_load_subscriber
             var desired_position = Vector3.MoveTowards(
                 cur_pos, player_retreat_point, pos_step);
             var adjusted_step = desired_position - cur_pos;
-            Llama.get().move(adjusted_step, false);
+            Llama.get().move(adjusted_step);
 
             cur_pos = Llama.get().transform.position;
             cur_pos.y = 0;

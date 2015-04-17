@@ -22,10 +22,10 @@ public class Input_reader : MonoBehaviour
 
     void Awake()
     {
-        if (input_readers.Count > 2)
-        {
-            return;
-        }
+        // if (input_readers.Count > 2)
+        // {
+        //     return;
+        // }
 
         input_readers.Add(this);
     }
