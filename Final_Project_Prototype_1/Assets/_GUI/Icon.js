@@ -1,26 +1,30 @@
 ﻿#pragma strict
 
+//Script adapted from http://answers.unity3d.com/questions/229929/using-worldtoviewportpoint-to-find-an-object-off-s.html
+//by user jt78
+//Posted On: January 15, 2013
+//Accessed: April 17, 2013
+
 public var texture: Texture;
-public var frame: float;
 
-var center: Vector3;
-var base_vector: Vector3;
-var upper_right: float;
-var upper_left: float;
-var lower_left: float;
-var lower_right: float;
+public var scale: float;
+public var push_back_x: float;
+public var push_back_y: float;
+public var shift: float;
 
-public var icon_ratio_y = .77f;
-public var icon_ratio_x = .95f;
-public var scale = .01f;
+//var center: Vector3;
+//var base_vector: Vector3;
+//var upper_right: float;
+//var upper_left: float;
+//var lower_left: float;
+//var lower_right: float;
+//
+//public var icon_ratio_y = .77f;
+//public var icon_ratio_x = .95f;
+//public var scale = .01f;
 
 function Start () {
-	center = new Vector3(Screen.width/2f,Screen.height/2f,0);
-	base_vector = new Vector3(Camera.main.pixelWidth,Camera.main.pixelHeight/2f,0) - center;
-	upper_right = angle(base_vector,new Vector3(Camera.main.pixelWidth,Camera.main.pixelHeight,0) - center);
-	upper_left = angle(base_vector, new Vector3(0,Camera.main.pixelHeight,0)-center);
-	lower_left = angle(base_vector, new Vector3(0,0,0)-center);
-	lower_right = angle(base_vector,new Vector3(Camera.main.pixelWidth,0,0)-center);
+	
 
 }
 
@@ -88,9 +92,13 @@ function Update () {
 
  //Now, this function is added to each of the objects that you want to show on screen
  function OnGUI() {
+ 	var temp_scale = scale*Screen.width;
+	var temp_shift=shift*Screen.width;
+	
      var vp = Camera.main.WorldToViewportPoint(transform.position);
-
-     if(vp.z > 0) {
+   	 
+   	 
+     if(vp.z > 0 || vp.z<=0) {
          var ap : Vector2; //In viewport space
 
          if(vp.x >= 0 && vp.x <= 1 && vp.y >= 0 && vp.y <= 1) {
@@ -102,9 +110,9 @@ function Update () {
          ap = Camera.main.ViewportToScreenPoint(ap);
          ap.y = Screen.height - ap.y;
 
-         if (ap.x==0) ap.x=ap.x+frame;
-         else if (ap.y==Screen.height) ap.y=ap.y-frame;
-         else if (ap.x==Screen.width) ap.x=ap.x-frame;
+//         if (ap.x==0) ap.x=ap.x+frame;
+//         else if (ap.y==Screen.height) ap.y=ap.y-frame;
+//         else if (ap.x==Screen.width) ap.x=ap.x-frame;
 
 
 
@@ -132,14 +140,33 @@ function Update () {
 //        if (ap.y>=icon_ratio_y*Screen.height) ap.y = icon_ratio_y*Screen.height;
 //		if (ap.y<=(1-icon_ratio_y)*Screen.height) ap.y = (1-icon_ratio_y)*Screen.height;
 
-        var current = Vector3(ap.x,ap.y,0);
-        var target = Vector3(Screen.width/2,Screen.height/2,0);
-
-        var p = Vector3.MoveTowards(current,target,20f);
-        ap.x = p.x; ap.y = p.y;
+//        var current = Vector3(ap.x,ap.y,0);
+//        var target = Vector3(Screen.width/2,Screen.height/2,0);
+//
+//        var p = Vector3.MoveTowards(current,target,20f);
+//        ap.x = p.x; ap.y = p.y;
 
         // print(ap);
-         GUI.DrawTexture(Rect(ap.x, ap.y, 40, 40),texture);
+//        if (vp.z<=0){
+//        	ap.y = 
+//        }
+
+		 if (vp.z<0){
+		 	if (gameObject.name=="Llama") print("hack");
+         	var temp = ap.x - Screen.width/2;
+         	ap.x=Screen.width/2-temp;
+         	ap.y = Screen.height;
+         }
+         
+         
+         if (ap.x<=0.5) ap.x+=push_back_x*Screen.width;
+         else if (ap.x>=Screen.width-0.5) ap.x-=push_back_x*Screen.width;
+         else if (ap.y>=Screen.height-0.5) ap.y-=push_back_y*Screen.height;
+         
+         GUI.DrawTexture(Rect(ap.x-temp_shift, ap.y, temp_scale, temp_scale),texture);
+         if (gameObject.name=="Llama"){
+         	print(ap);
+         }
 
          // print(Screen.width*Screen.height*scale);
          //GUI.Box(Rect(ap.x,ap.y,5,5),".");
