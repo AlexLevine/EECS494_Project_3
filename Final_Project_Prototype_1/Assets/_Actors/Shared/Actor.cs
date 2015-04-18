@@ -76,7 +76,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    void update_physics()
+    protected void update_physics()
     {
         var net_acceleration = acceleration;
         net_acceleration.y += gravity;

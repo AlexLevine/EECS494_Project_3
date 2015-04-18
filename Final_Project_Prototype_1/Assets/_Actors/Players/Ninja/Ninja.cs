@@ -6,6 +6,8 @@ public class Ninja : Player_character
 {
     // public GameObject body;
 
+    public GameObject swing_sound_player;
+    public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
 
     public GameObject projectile_prefab;
@@ -127,6 +129,19 @@ public class Ninja : Player_character
         animator.SetTrigger(attack_button_pressed_trigger_id);
         // GetComponent<Sword_swing>().swing();
     }// physical_attack
+
+    public void on_sword_swing_start()
+    {
+        get_sword().GetComponent<Collider>().enabled = true;
+
+        basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
+        swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
+    }// on_sword_swing_start
+
+    public void on_sword_swing_end()
+    {
+        get_sword().GetComponent<Collider>().enabled = true;
+    }// on_sword_swing_end()
 
     //--------------------------------------------------------------------------
 

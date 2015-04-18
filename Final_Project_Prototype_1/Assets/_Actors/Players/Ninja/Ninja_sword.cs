@@ -54,10 +54,10 @@ public class Ninja_sword : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!is_attacking)
-        {
-            return;
-        }
+        // if (!is_attacking)
+        // {
+        //     return;
+        // }
 
         var enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy == null)
