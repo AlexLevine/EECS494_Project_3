@@ -29,8 +29,10 @@ public class Actor : MonoBehaviour
 
     public virtual float gravity { get { return -25f; } }
 
-    public virtual Vector3 acceleration { get { return acceleration_; } }
-    public Vector3 velocity { get { return velocity_; } set { velocity_ = value; }}
+    public virtual Vector3 acceleration {
+        get { return acceleration_; } set { acceleration_ = value; }}
+    public Vector3 velocity {
+        get { return velocity_; } set { velocity_ = value; } }
 
     private float health_;
     protected Rigidbody kinematic_rigidbody;

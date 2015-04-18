@@ -74,6 +74,8 @@ public class Player_character : Actor
 
     protected override void update_impl()
     {
+        process_input();
+
         base.update_impl();
 
         if (being_knocked_back)
@@ -81,8 +83,6 @@ public class Player_character : Actor
             stop();
             return;
         }
-
-        process_input();
 
         if (is_grounded)
         {
@@ -99,6 +99,7 @@ public class Player_character : Actor
             return;
         }
 
+        update_rotation(velocity);
     }// update_impl
 
     //--------------------------------------------------------------------------
@@ -112,6 +113,7 @@ public class Player_character : Actor
     // Also applies gravity.
     public virtual void update_movement_velocity(Vector3 target_velocity)
     {
+        // print("pc update_movement_velocity");
         // if (is_teamed_up)
         // {
         //     target_velocity = target_velocity.magnitude *
@@ -280,6 +282,7 @@ public class Player_character : Actor
     public virtual void stop()
     {
         velocity = Vector3.zero;
+        acceleration = Vector3.zero;
     }// stop
 
     //--------------------------------------------------------------------------
@@ -413,12 +416,12 @@ public class Player_character : Actor
             return;
         }
 
-        print("jump_speed: " + jump_speed);
+        // print("jump_speed: " + jump_speed);
         var new_velocity = velocity;
         new_velocity.y = jump_speed;
         velocity = new_velocity;
-        print("new_velocity: " + new_velocity);
-        print("jump_speed: " + jump_speed);
+        // print("new_velocity: " + new_velocity);
+        // print("jump_speed: " + jump_speed);
         is_grounded_ = false;
         jumping = true;
         // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;

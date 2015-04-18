@@ -12,17 +12,25 @@ public class Ninja : Player_character
 
     public GameObject projectile_prefab;
     public GameObject sword_obj;
+    public GameObject aerial_attack_shockwave;
+
+    public bool being_thrown = false;
 
     public override bool animation_controlling_movement
     {
         get
         {
-            return sword_is_swinging || base.animation_controlling_movement;
+            var cur_state_hash =
+                    animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            return cur_state_hash != idle_state_hash ||
+                   base.animation_controlling_movement;
         }
     }
 
     private Animator animator;
     private int attack_button_pressed_trigger_id;
+    private int idle_state_hash;
+    private int on_ground_param_id;
 
     public override bool can_jump
     {
@@ -85,6 +93,8 @@ public class Ninja : Player_character
         base.Start();
         animator = GetComponent<Animator>();
         attack_button_pressed_trigger_id = Animator.StringToHash("attack_button_pressed");
+        idle_state_hash = Animator.StringToHash("Idle");
+        on_ground_param_id = Animator.StringToHash("on_ground");
 
         team_up_point = Llama.get().get_team_up_point();
 
@@ -99,15 +109,17 @@ public class Ninja : Player_character
     {
         base.update_impl();
 
-        // print(velocity.magnitude);
+        // // print(velocity.magnitude);
 
-        // on_sword_swing sets a target velocity. this allows that motion
-        // to take place without being interrupted by the player.
-        if (sword_is_swinging)
+        // // on_sword_swing sets a target velocity. this allows that motion
+        // // to take place without being interrupted by the player.
+        if (animation_controlling_movement)
         {
             update_physics();
             move(velocity * Time.deltaTime);
         }
+
+
 
         if (!is_teamed_up)
         {
@@ -133,16 +145,16 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        if (!is_grounded)
-        {
-            GetComponent<Aerial_attack>().start_attack();
-            return;
-        }
+        // if (!is_grounded)
+        // {
+        //     GetComponent<Aerial_attack>().start_attack();
+        //     return;
+        // }
 
-        if (!sword_is_spinning)
-        {
+        // if (!sword_is_spinning)
+        // {
             animator.SetTrigger(attack_button_pressed_trigger_id);
-        }
+        // }
 
         // GetComponent<Sword_swing>().swing();
     }// physical_attack
@@ -172,18 +184,41 @@ public class Ninja : Player_character
 
     public void on_sword_spin_end()
     {
+        animator.ResetTrigger(attack_button_pressed_trigger_id);
         sword_is_spinning = false;
         get_sword().GetComponent<Collider>().enabled = false;
     }// on_sword_spin_end
+
+    public void on_aerial_attack_wind_up_start()
+    {
+        print("on_aerial_attack_wind_up_start");
+        stop();
+        acceleration = -gravity * Vector3.up;
+    }// on_aerial_attack_wind_up_start
+
+    public void on_aerial_attack_dive_start()
+    {
+        print("on_aerial_attack_dive_start");
+        // acceleration = Vector3.zero;
+        velocity = Vector3.down * 20f;
+        get_sword().GetComponent<Collider>().enabled = true;
+    }// on_aerial_attack_dive_start
+
+    public void on_aerial_attack_dive_end()
+    {
+        print("on_aerial_attack_dive_end");
+        animator.ResetTrigger(attack_button_pressed_trigger_id);
+        stop();
+        aerial_attack_shockwave.SetActive(true);
+        aerial_attack_shockwave.GetComponent<Shockwave>().start_shockwave();
+        get_sword().GetComponent<Collider>().enabled = false;
+    }// on_aerial_attack_dive_end
 
     //--------------------------------------------------------------------------
 
     public override Sweep_test_summary move(
         Vector3 delta_position, float precision_pad)
     {
-        // if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
-        update_rotation(delta_position);
-
         if (is_teamed_up)
         {
 			return new Sweep_test_summary();
@@ -196,25 +231,14 @@ public class Ninja : Player_character
         //     return;
         // }
 
-        // if (GetComponent<Aerial_attack>().is_diving)
-        // {
-        //     // HAAAACK
-        //     base.move(delta_position);
-        //     if (is_grounded)
-        //     {
-        //         GetComponent<Aerial_attack>().notify_dive_landed();
-        //     }
-        //     return new Sweep_test_summary();
-        // }
+        var move_data = base.move(delta_position);
+        animator.SetBool(on_ground_param_id, is_grounded);
+        if (is_grounded && being_thrown)
+        {
+            being_thrown = false;
+        }
 
-        // if (!GetComponent<Aerial_attack>().is_playing)
-        // {
-            return base.move(delta_position);
-        // }
-
-        // if (is_grounded && GetComponent<Aerial_attack>().is_diving)
-        // {
-        //     notify_on_ground();
+        return move_data;
         // }
     }// move
 
@@ -222,7 +246,7 @@ public class Ninja : Player_character
 
     public override void team_up_engage_or_throw()
     {
-        if (is_teamed_up || get_sword().sword_animation_playing)
+        if (animation_controlling_movement)
         {
             return;
         }
@@ -280,11 +304,24 @@ public class Ninja : Player_character
 
     public override void update_movement_velocity(Vector3 target_velocity)
     {
+        // print("ninja update_movement_velocity");
         // Aerial attack takes control of movement.
         // if (GetComponent<Aerial_attack>().is_playing)
         // {
         //     return;
         // }
+        if (being_thrown)
+        {
+            return;
+        }
+
+        if (sword_is_spinning)
+        {
+            // print("updating movment velocity for spinning sword");
+            target_velocity.y = velocity.y;
+            velocity = target_velocity;
+            return;
+        }
 
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity
@@ -332,7 +369,7 @@ public class Ninja : Player_character
         // print("jump");
         if (force_team_up)
         {
-            print("team up being forced");
+            // print("team up being forced");
             return;
         }
 

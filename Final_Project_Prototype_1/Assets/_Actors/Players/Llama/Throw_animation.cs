@@ -44,17 +44,19 @@ public class Throw_animation : MonoBehaviour
 
         // disable controls
 
-        original_rotation = transform.rotation.eulerAngles;
+        original_rotation = Llama.get().body.transform.rotation.eulerAngles;
         state = Throw_animation_state_e.REARING_UP;
 
         if (Llama.get().is_teamed_up)
         {
             // print("teamed up: " + transform.up);
             Llama.get().team_up_disengage();
-            print(transform.up + transform.forward);
             // Ninja.get().on_thrown();
-            Ninja.get().apply_momentum(
-                (transform.up * 1f + transform.forward) * throw_speed);
+            Ninja.get().velocity = (
+                Llama.get().body.transform.up * 1f +
+                Llama.get().body.transform.forward) * throw_speed;
+            Ninja.get().being_thrown = true;
+
 
             // re-enable ninja controls
         }
@@ -71,9 +73,9 @@ public class Throw_animation : MonoBehaviour
         case Throw_animation_state_e.REARING_UP:
 
             var rotation_step = rotation_speed * Time.deltaTime;
-            transform.RotateAround(
+            Llama.get().body.transform.RotateAround(
                 rotation_axis_pos.transform.position,
-                transform.right, rotation_step);
+                Llama.get().body.transform.right, rotation_step);
 
             amount_rotated += rotation_step;
             if (amount_rotated >= max_rotation)
@@ -115,15 +117,15 @@ public class Throw_animation : MonoBehaviour
             amount_rotated -= step;
             if (amount_rotated <= .001f)
             {
-                transform.rotation = Quaternion.Euler(original_rotation);
+                Llama.get().body.transform.rotation = Quaternion.Euler(original_rotation);
                 state = Throw_animation_state_e.NOT_PLAYING;
                 amount_rotated = 0;
                 break;
                 // re-enable llama controls
             }
 
-            transform.RotateAround(
-                rotation_axis_pos.transform.position, transform.right, -step);
+            Llama.get().body.transform.RotateAround(
+                rotation_axis_pos.transform.position, Llama.get().body.transform.right, -step);
 
             break;
         }
