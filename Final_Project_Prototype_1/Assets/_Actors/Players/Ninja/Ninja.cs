@@ -106,7 +106,7 @@ public class Ninja : Player_character
 
 //        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
 //        {
-//            transform.rotation = team_up_point.transform.parent.rotation;
+           // transform.rotation = team_up_point.transform.parent.rotation;
 //        }
     }// update_impl
 

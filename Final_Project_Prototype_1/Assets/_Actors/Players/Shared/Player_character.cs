@@ -339,6 +339,7 @@ public class Player_character : Actor
 
     public virtual void update_rotation(Vector3 delta_position)
     {
+        print("pc update_rotation: " + delta_position);
         if (is_locked_on)
         {
             look_toward(lock_on_target);
