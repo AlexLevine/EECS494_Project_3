@@ -16,6 +16,15 @@ public class Ninja : Player_character
     private Material normal;
     // private float o_o_r=2;
 
+    public override bool can_jump
+    {
+        get
+        {
+            return !get_sword().is_attacking &&
+                   ((is_teamed_up && !force_team_up) || base.can_jump);
+        }
+    }
+
     private GameObject team_up_point;
 
     private bool is_shrunk = false;
@@ -255,26 +264,19 @@ public class Ninja : Player_character
     protected override void on_team_up_engage()
     {
         notify_on_ground();
-        // cc.enabled = false;
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
     protected override void on_team_up_disengage()
     {
-        // cc.enabled = true;
     }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
 
     public override void jump()
     {
-        print("jump");
-        if (get_sword().is_attacking)
-        {
-            return;
-        }
-
+        // print("jump");
         if (force_team_up)
         {
             print("team up being forced");

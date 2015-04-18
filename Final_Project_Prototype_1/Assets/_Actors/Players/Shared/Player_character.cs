@@ -2,57 +2,55 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using InControl;
 
 [RequireComponent(typeof(Rigidbody)),
  RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
+    public static List<GameObject> player_characters = new List<GameObject>();
     public static bool force_team_up = false;
 
-    // public int player_id = 0;
-    public float min_move_distance = 0.001f;
-    public float skin_width = 0.01f;
+    public InputDevice input_device;
+
+    public GameObject lock_on_bar = null;
 
     public override float max_health { get { return 10; } }
-    // public bool is_grounded { get { return on_ground; } }
-    // public float gravity { get { return -25f; } }
+    // Character state information.
     public bool is_locked_on { get { return lock_on_target != null; } }
     public Vector3 lock_on_target_pos {
         get { return lock_on_target.transform.position; } }
-    public float jump_speed { get { return 15f; } }
-    public float run_speed { get { return 10f; } }
-    public float run_acceleration { get { return 30f; } }
-
-    // public Vector3 velocity { get { return velocity_; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
+    public virtual bool can_jump {
+        get { return is_grounded || time_in_air <= max_time_in_air; } }
+
+    // Movement physics
+    public float run_speed { get { return 10f; } }
+    // public float run_acceleration { get { return 30f; } }
+    public override float gravity { get { return -40f; } }
+    // Note that if max_jump_ascend_time is too small, the character will jump
+    // higher than desired.
+    public virtual float max_jump_height { get { return 4f; } }
+    public virtual float max_jump_ascend_time { get { return 0.3f; } }
+    public float jump_speed
+    {
+        get
+        {
+            // x = vt + 1/2 at^2, solved for initial velocity.
+            return (max_jump_height -
+                    0.5f * gravity * Mathf.Pow(max_jump_ascend_time, 2)) /
+                    max_jump_ascend_time;
+        }
+    }
 
     //--------------------------------------------------------------------------
-
-    public static List<GameObject> player_characters = new List<GameObject>();
-
-    //--------------------------------------------------------------------------
-
-    // private Player rewired_player;
-    // private Rigidbody kinematic_rigidbody;
-    // protected Rigidbody kinematic_rigidbody;
-
-    // private Vector3 velocity_ = Vector3.zero;
-
-    // HACK
-    protected bool bounce = false;
 
     private bool jumping = false;
-    // private bool on_ground = false;
     private float time_in_air = 0;
     private float max_time_in_air { get { return 0.1f; } }
     private bool teamed_up = false;
-
-    // private bool is_jumping = false;
-
-    public GameObject lock_on_bar = null;
     private GameObject lock_on_target = null;
-    // private float y_velocity = 0;
 
     //--------------------------------------------------------------------------
 
@@ -74,16 +72,6 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    // // Use this for initialization
-    // public override void Start()
-    // {
-    //     base.Start();
-    //     // cc = gameObject.GetComponent<CharacterController>();
-    //     kinematic_rigidbody = gameObject.GetComponent<Rigidbody>();
-    // }// Start
-
-    //--------------------------------------------------------------------------
-
     protected override void update_impl()
     {
         base.update_impl();
@@ -94,19 +82,16 @@ public class Player_character : Actor
             return;
         }
 
+        process_input();
+
         if (is_grounded)
         {
-            // velocity_.y = 0;
             time_in_air = 0;
         }
         else
         {
             time_in_air += Time.deltaTime;
         }
-
-        // process_input();
-        move(velocity * Time.deltaTime);
-        look_toward(velocity);
 
         if (is_locked_on)
         {
@@ -134,7 +119,6 @@ public class Player_character : Actor
         // }
         // velocity_.y += gravity * Time.deltaTime;
 
-        update_rotation(target_velocity);
         if (is_grounded || is_jumping)
         {
             target_velocity.y = velocity.y;
@@ -193,13 +177,6 @@ public class Player_character : Actor
 
         print("you die!");
     }// on_death
-
-    //--------------------------------------------------------------------------
-
-    // public virtual void projectile_attack()
-    // {
-    //     // throw new Exception("Derived classes must override this method");
-    // }// projectile_attack
 
     //--------------------------------------------------------------------------
 
@@ -304,8 +281,9 @@ public class Player_character : Actor
     //--------------------------------------------------------------------------
 
     public override Sweep_test_summary move(
-        Vector3 delta_position, float precision_pad)
+        Vector3 delta_position, float precision_pad=0.1f)
     {
+        // print("pc move");
         // // print(amount);
         // step_axis_direction(Vector3.right, delta_position.x);
         // // print("delta_position.y: " + delta_position.y);
@@ -337,6 +315,8 @@ public class Player_character : Actor
         // kinematic_rigidbody.MovePosition(GetComponent<Rigidbody>().position + delta_position);
         // on_ground = delta_position.y < 0;// && kinematic_rigidbody.isGrounded;
         var summary = base.move(delta_position, precision_pad);
+        // print(delta_position);
+        update_rotation(delta_position);
         // if (bounce)
         // {
         //     jump();
@@ -365,8 +345,10 @@ public class Player_character : Actor
             return;
         }
 
+        // print(delta_position);
         if (delta_position.x == 0 && delta_position.z == 0)
         {
+            // print("nope");
             return;
         }
 
@@ -420,16 +402,19 @@ public class Player_character : Actor
 
     public virtual void jump()
     {
-        if (!is_grounded && time_in_air > max_time_in_air)
+        if (!can_jump)
         {
             // print(kinematic_rigidbody.isGrounded);
             return;
         }
 
+        print("jump_speed: " + jump_speed);
         var new_velocity = velocity;
         new_velocity.y = jump_speed;
-        // is_jumping = true;
-        // on_ground = false;
+        velocity = new_velocity;
+        print("new_velocity: " + new_velocity);
+        print("jump_speed: " + jump_speed);
+        is_grounded_ = false;
         jumping = true;
         // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
         // new_speed.y = jump_speed;
@@ -490,8 +475,9 @@ public class Player_character : Actor
 
     public void notify_on_ground()
     {
-        // on_ground = true;
+        is_grounded_ = true;
     }// notify_on_ground
+
     //--------------------------------------------------------------------------
 
     public GameObject get_other_player()
@@ -506,5 +492,75 @@ public class Player_character : Actor
         print("COULDN'T FIND OTHER PLAYER");
         return null;
     }
+
+    //--------------------------------------------------------------------------
+
+    private void process_input()
+    {
+        if (input_device.GetControl(InputControlType.Action1).WasPressed)
+        {
+            jump();
+        }
+
+        if (input_device.GetControl(InputControlType.Action2).WasPressed)
+        {
+            team_up_engage_or_throw();
+        }
+
+        if (input_device.GetControl(InputControlType.Action3).WasPressed)
+        {
+            attack();
+        }
+
+        if (input_device.GetControl(InputControlType.Action3).IsPressed)
+        {
+            charge();
+        }
+
+        if (input_device.GetControl(InputControlType.Action3).WasReleased)
+        {
+            stop_charge();
+        }
+
+        if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
+           input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
+           is_locked_on)
+        {
+            toggle_lock_on();
+        }
+
+        var tilt = Vector3.zero;
+        tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;
+        tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
+
+        var cam_right = Camera.main.transform.right;
+        cam_right.y = 0;
+        cam_right = cam_right.normalized;
+        cam_right *= tilt.x;
+
+        var cam_forward = Camera.main.transform.forward;
+        cam_forward.y = 0;
+        cam_forward = cam_forward.normalized;
+        cam_forward *= tilt.z;
+
+        var relative_move_dir = cam_right + cam_forward;
+
+        var target_velocity = relative_move_dir * run_speed;
+        update_movement_velocity(target_velocity);
+
+    }// process_input
+
+    //--------------------------------------------------------------------------
+
+    enum Sword_swing_state_e
+    {
+
+    }
+    void sword_swing_coroutine()
+    {
+
+    }// sword_swing_coroutine
+
+    //--------------------------------------------------------------------------
 
 }

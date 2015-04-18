@@ -122,7 +122,7 @@ public class Llama : Player_character
     //--------------------------------------------------------------------------
 
     public override Sweep_test_summary move(
-        Vector3 delta_position, float precision_pad)
+        Vector3 delta_position, float precision_pad=0.1f)
     {
         if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
@@ -309,29 +309,29 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    void OnControllerColliderHit(ControllerColliderHit c)
-    {
-        var breakable_wall = c.gameObject.GetComponent<Breakable_wall>();
-        if (breakable_wall != null && is_charging)
-        {
-            breakable_wall.break_wall();
-            return;
-        }
+    // void OnControllerColliderHit(ControllerColliderHit c)
+    // {
+    //     var breakable_wall = c.gameObject.GetComponent<Breakable_wall>();
+    //     if (breakable_wall != null && is_charging)
+    //     {
+    //         breakable_wall.break_wall();
+    //         return;
+    //     }
 
-        var ninja = c.gameObject.GetComponent<Ninja>();
-        if (ninja == null)
-        {
-            return;
-        }
+    //     var ninja = c.gameObject.GetComponent<Ninja>();
+    //     if (ninja == null)
+    //     {
+    //         return;
+    //     }
 
-        // var hit_below = c.o
-        // todo!!!!!!! check whether collision was actually below.
-        // requires refactoring move
-        if (c.moveDirection.y < 0)
-        {
-            ninja.toggle_shrunk();
-            bounce = true;
-        }
-    }
+    //     // var hit_below = c.o
+    //     // todo!!!!!!! check whether collision was actually below.
+    //     // requires refactoring move
+    //     if (c.moveDirection.y < 0)
+    //     {
+    //         ninja.toggle_shrunk();
+    //         bounce = true;
+    //     }
+    // }
 }
 
