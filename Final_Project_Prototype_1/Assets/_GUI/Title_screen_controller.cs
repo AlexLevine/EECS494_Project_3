@@ -14,11 +14,17 @@ public class Title_screen_controller : MonoBehaviour
     public GameObject llama_prompt;
     public GameObject ninja_prompt; 
 
+    public GameObject title_screen_parent; 
+    public GameObject HUD_gameobj; 
 
     private float timer = 0f; 
     private float max_time = 3f; 
 
-
+    void Start()
+    {
+        HUD_gameobj.SetActive(false);
+        Input_reader.toggle_player_controls(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,7 +37,9 @@ public class Title_screen_controller : MonoBehaviour
             }
             else
             {
-                //Application.LoadLevel(1);
+                Destroy(title_screen_parent);  
+                HUD_gameobj.SetActive(true);
+                Input_reader.toggle_player_controls(true); 
             }
         }
     }
