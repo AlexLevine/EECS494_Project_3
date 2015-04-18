@@ -12,9 +12,14 @@ public class Ninja : Player_character
 
     public GameObject projectile_prefab;
     public GameObject sword_obj;
-    public Material out_of_range;
-    private Material normal;
-    // private float o_o_r=2;
+
+    public override bool animation_controlling_movement
+    {
+        get
+        {
+            return sword_is_swinging || base.animation_controlling_movement;
+        }
+    }
 
     private Animator animator;
     private int attack_button_pressed_trigger_id;
@@ -33,6 +38,10 @@ public class Ninja : Player_character
     private bool is_shrunk = false;
     private Vector3 original_scale;
     private Vector3 shrunk_scale;
+
+    // Normal swings, not spin attack.
+    private bool sword_is_swinging = false;
+    private bool sword_is_spinning = false;
 
     //--------------------------------------------------------------------------
 
@@ -92,6 +101,14 @@ public class Ninja : Player_character
 
         // print(velocity.magnitude);
 
+        // on_sword_swing sets a target velocity. this allows that motion
+        // to take place without being interrupted by the player.
+        if (sword_is_swinging)
+        {
+            update_physics();
+            move(velocity * Time.deltaTime);
+        }
+
         if (!is_teamed_up)
         {
             //out_of_range
@@ -116,22 +133,24 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        if (get_sword().is_attacking)
-        {
-            return;
-        }
-
         if (!is_grounded)
         {
             GetComponent<Aerial_attack>().start_attack();
             return;
         }
-        animator.SetTrigger(attack_button_pressed_trigger_id);
+
+        if (!sword_is_spinning)
+        {
+            animator.SetTrigger(attack_button_pressed_trigger_id);
+        }
+
         // GetComponent<Sword_swing>().swing();
     }// physical_attack
 
     public void on_sword_swing_start()
     {
+        velocity = body.transform.forward * 3f;
+        sword_is_swinging = true;
         get_sword().GetComponent<Collider>().enabled = true;
 
         basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
@@ -140,8 +159,22 @@ public class Ninja : Player_character
 
     public void on_sword_swing_end()
     {
-        get_sword().GetComponent<Collider>().enabled = true;
+        stop();
+        sword_is_swinging = false;
+        get_sword().GetComponent<Collider>().enabled = false;
     }// on_sword_swing_end()
+
+    public void on_sword_spin_start()
+    {
+        sword_is_spinning = true;
+        get_sword().GetComponent<Collider>().enabled = true;
+    }// on_sword_spin_start
+
+    public void on_sword_spin_end()
+    {
+        sword_is_spinning = false;
+        get_sword().GetComponent<Collider>().enabled = false;
+    }// on_sword_spin_end
 
     //--------------------------------------------------------------------------
 

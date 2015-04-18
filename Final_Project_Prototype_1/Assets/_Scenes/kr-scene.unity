@@ -3109,7 +3109,6 @@ MonoBehaviour:
   damage_vocals: {fileID: 1305845111}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   sword_obj: {fileID: 993815521}
-  out_of_range: {fileID: 2100000, guid: 2805ebebbee61f74d9924d8d23c4fbd0, type: 2}
 --- !u!54 &430351992
 Rigidbody:
   m_ObjectHideFlags: 0

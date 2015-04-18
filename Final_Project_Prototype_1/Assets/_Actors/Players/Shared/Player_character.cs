@@ -118,6 +118,10 @@ public class Player_character : Actor
         //                       Camera.main.transform.forward;
         // }
         // velocity_.y += gravity * Time.deltaTime;
+        if (animation_controlling_movement)
+        {
+            return;
+        }
 
         if (is_grounded || is_jumping)
         {

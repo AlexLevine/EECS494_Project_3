@@ -58,7 +58,7 @@ public class Actor : MonoBehaviour
 
     void Update()
     {
-        if (actors_paused || animation_controlling_movement)
+        if (actors_paused)
         {
             return;
         }
@@ -70,6 +70,11 @@ public class Actor : MonoBehaviour
 
     protected virtual void update_impl()
     {
+        if (animation_controlling_movement)
+        {
+            return;
+        }
+
         update_physics();
         move(velocity * Time.deltaTime);
     }// update_impl
