@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Sword_swing)),
- RequireComponent(typeof(Aerial_attack)),
- RequireComponent(typeof(Team_up_animation))]
+[RequireComponent(typeof(Animator))]
 public class Ninja : Player_character
 {
     // public GameObject body;
@@ -15,6 +13,9 @@ public class Ninja : Player_character
     public Material out_of_range;
     private Material normal;
     // private float o_o_r=2;
+
+    private Animator animator;
+    private int attack_button_pressed_trigger_id;
 
     public override bool can_jump
     {
@@ -71,6 +72,9 @@ public class Ninja : Player_character
     public override void Start()
     {
         base.Start();
+        animator = GetComponent<Animator>();
+        attack_button_pressed_trigger_id = Animator.StringToHash("attack_button_pressed");
+
         team_up_point = Llama.get().get_team_up_point();
 
         original_scale = transform.localScale;
@@ -120,7 +124,8 @@ public class Ninja : Player_character
             GetComponent<Aerial_attack>().start_attack();
             return;
         }
-        GetComponent<Sword_swing>().swing();
+        animator.SetTrigger(attack_button_pressed_trigger_id);
+        // GetComponent<Sword_swing>().swing();
     }// physical_attack
 
     //--------------------------------------------------------------------------
@@ -143,16 +148,16 @@ public class Ninja : Player_character
         //     return;
         // }
 
-        if (GetComponent<Aerial_attack>().is_diving)
-        {
-            // HAAAACK
-            base.move(delta_position);
-            if (is_grounded)
-            {
-                GetComponent<Aerial_attack>().notify_dive_landed();
-            }
-            return new Sweep_test_summary();
-        }
+        // if (GetComponent<Aerial_attack>().is_diving)
+        // {
+        //     // HAAAACK
+        //     base.move(delta_position);
+        //     if (is_grounded)
+        //     {
+        //         GetComponent<Aerial_attack>().notify_dive_landed();
+        //     }
+        //     return new Sweep_test_summary();
+        // }
 
         // if (!GetComponent<Aerial_attack>().is_playing)
         // {
@@ -228,10 +233,10 @@ public class Ninja : Player_character
     public override void update_movement_velocity(Vector3 target_velocity)
     {
         // Aerial attack takes control of movement.
-        if (GetComponent<Aerial_attack>().is_playing)
-        {
-            return;
-        }
+        // if (GetComponent<Aerial_attack>().is_playing)
+        // {
+        //     return;
+        // }
 
         base.update_movement_velocity(target_velocity);
     }// update_movement_velocity

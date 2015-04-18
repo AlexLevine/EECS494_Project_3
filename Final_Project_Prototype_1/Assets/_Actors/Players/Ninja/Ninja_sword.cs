@@ -11,10 +11,11 @@ public class Ninja_sword : MonoBehaviour
     {
         get
         {
-            var aerial_attack = Ninja.get().GetComponent<Aerial_attack>();
-            var swing = Ninja.get().GetComponent<Sword_swing>();
+            return false;
+            // var aerial_attack = Ninja.get().GetComponent<Aerial_attack>();
+            // var swing = Ninja.get().GetComponent<Sword_swing>();
 
-            return aerial_attack.is_diving || swing.is_playing;
+            // return aerial_attack.is_diving || swing.is_playing;
         }
     }
 
@@ -22,10 +23,11 @@ public class Ninja_sword : MonoBehaviour
     {
         get
         {
-            var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
-            var swing = transform.parent.GetComponent<Sword_swing>();
+            return false;
+            // var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
+            // var swing = transform.parent.GetComponent<Sword_swing>();
 
-            return aerial_attack.is_playing || swing.is_playing;
+            // return aerial_attack.is_playing || swing.is_playing;
         }
     }
 
@@ -33,10 +35,10 @@ public class Ninja_sword : MonoBehaviour
     {
         get
         {
-            if (Ninja.get().GetComponent<Aerial_attack>().is_diving)
-            {
-                return 10;
-            }
+            // if (Ninja.get().GetComponent<Aerial_attack>().is_diving)
+            // {
+            //     return 10;
+            // }
             return 5;
         }
     }// attack_power

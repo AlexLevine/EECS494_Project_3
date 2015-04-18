@@ -552,14 +552,15 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    enum Sword_swing_state_e
-    {
+    // enum Sword_swing_state_e
+    // {
+    //     IDLE,
 
-    }
-    void sword_swing_coroutine()
-    {
+    // }
+    // void sword_swing_coroutine()
+    // {
 
-    }// sword_swing_coroutine
+    // }// sword_swing_coroutine
 
     //--------------------------------------------------------------------------
 

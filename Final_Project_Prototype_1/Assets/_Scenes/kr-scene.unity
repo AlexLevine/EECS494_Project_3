@@ -2974,10 +2974,8 @@ GameObject:
   - 4: {fileID: 430351982}
   - 114: {fileID: 430351991}
   - 114: {fileID: 430351990}
-  - 114: {fileID: 430351989}
   - 114: {fileID: 430351987}
   - 114: {fileID: 430351986}
-  - 114: {fileID: 430351985}
   - 114: {fileID: 430351984}
   - 114: {fileID: 430351983}
   - 54: {fileID: 430351992}
@@ -3003,8 +3001,6 @@ Transform:
   - {fileID: 163593994}
   - {fileID: 302092442}
   - {fileID: 815108729}
-  - {fileID: 2143261665}
-  - {fileID: 744589768}
   - {fileID: 1248648678}
   - {fileID: 1868753722}
   m_Father: {fileID: 0}
@@ -3044,22 +3040,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd05ad81a2ff24ce9a5e5aec48267cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &430351985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11488294, guid: 0bf43f198f5784acfbb618c77a949077,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 430351981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3d185c93f3a82f4aa5f91add70dcb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sword_neutral_position: {fileID: 744589767}
-  sword_attack_position: {fileID: 2143261664}
-  attack_vocals: {fileID: 2100021492}
-  shockwave: {fileID: 1248648677}
 --- !u!114 &430351986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3095,25 +3075,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.24210358, z: 1}
-  m_Center: {x: 0, y: .449999988, z: 0}
---- !u!114 &430351989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11491198, guid: 0bf43f198f5784acfbb618c77a949077,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 430351981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a0b0add7c6e154e813c1147dd38f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sword_neutral: {fileID: 744589767}
-  state: 0
-  angle_distance_swung: 0
-  swing_sound_player: {fileID: 507900791}
-  basic_attack_vocals: {fileID: 1653066366}
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.505, z: 0}
 --- !u!114 &430351990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5312,56 +5275,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 470932, guid: eca61b69045954923a5b8c463722827f, type: 2}
   m_PrefabInternal: {fileID: 737899352}
---- !u!1 &744589767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 161604, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 744589768}
-  - 33: {fileID: 744589770}
-  - 65: {fileID: 744589769}
-  m_Layer: 8
-  m_Name: sword_neutral_pos
-  m_TagString: weapon
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &744589768
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 477988, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 744589767}
-  m_LocalRotation: {x: -.464846432, y: .0427321009, z: .0672135204, w: .881801665}
-  m_LocalPosition: {x: .699000001, y: 1.30299997, z: 1.48500001}
-  m_LocalScale: {x: .249999985, y: .25, z: 3}
-  m_Children: []
-  m_Father: {fileID: 430351982}
-  m_RootOrder: 4
---- !u!65 &744589769
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6577172, guid: 0bf43f198f5784acfbb618c77a949077,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 744589767}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &744589770
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 3390654, guid: 0bf43f198f5784acfbb618c77a949077,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 744589767}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &749338799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6154,8 +6067,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 815108728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1.505, z: 0}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 430351982}
   m_RootOrder: 2
@@ -8595,7 +8508,7 @@ Transform:
   m_LocalScale: {x: .00999999978, y: .00999999978, z: .00999999978}
   m_Children: []
   m_Father: {fileID: 430351982}
-  m_RootOrder: 5
+  m_RootOrder: 3
 --- !u!114 &1248648679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13588,7 +13501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1868753722
 Transform:
   m_ObjectHideFlags: 0
@@ -13604,7 +13517,7 @@ Transform:
   - {fileID: 1305845112}
   - {fileID: 507900792}
   m_Father: {fileID: 430351982}
-  m_RootOrder: 6
+  m_RootOrder: 4
 --- !u!1 &1876133818
 GameObject:
   m_ObjectHideFlags: 0
@@ -16023,30 +15936,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2133187458}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2143261664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 186690, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2143261665}
-  m_Layer: 8
-  m_Name: sword_aerial_attack_pos
-  m_TagString: weapon
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2143261665
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 415782, guid: 0bf43f198f5784acfbb618c77a949077, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2143261664}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: .0299999993, y: -1.47000003, z: .839999974}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 430351982}
-  m_RootOrder: 3

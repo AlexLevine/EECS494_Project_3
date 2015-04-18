@@ -80,7 +80,7 @@ public class Actor : MonoBehaviour
     {
         var net_acceleration = acceleration;
         net_acceleration.y += gravity;
-        print("net_acceleration: " + net_acceleration);
+        // print("net_acceleration: " + net_acceleration);
         velocity_ += net_acceleration * Time.deltaTime;
     }
 
@@ -91,7 +91,7 @@ public class Actor : MonoBehaviour
     public virtual Sweep_test_summary move(
         Vector3 delta_position, float precision_pad=0.1f)
     {
-        print("base_move");
+        // print("base_move");
         var summary = new Sweep_test_summary();
         summary.distance_moved = delta_position;
 
