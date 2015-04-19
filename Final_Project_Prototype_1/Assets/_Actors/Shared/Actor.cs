@@ -54,6 +54,8 @@ public class Actor : MonoBehaviour
         knockback_animation = GetComponent<Knockback_animation>();
 
         kinematic_rigidbody = GetComponent<Rigidbody>();
+        kinematic_rigidbody.isKinematic = true;
+        kinematic_rigidbody.useGravity = false;
     }// Start()
 
     //--------------------------------------------------------------------------
@@ -131,11 +133,14 @@ public class Actor : MonoBehaviour
 
         transform.position += summary.distance_moved;
 
-        if (delta_position.y < 0 && summary.hit_y)
+        if (delta_position.y < 0)
         {
-            is_grounded_ = true;
-            summary.hit_ground = true;
-            velocity_.y = 0;
+            is_grounded_ = summary.hit_y;
+            summary.hit_ground = summary.hit_y;
+            if (summary.hit_y)
+            {
+                velocity_.y = 0;
+            }
         }
         if (delta_position.y > 0)
         {

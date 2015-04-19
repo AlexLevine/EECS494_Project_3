@@ -52,6 +52,7 @@ GameObject:
   - 4: {fileID: 478972}
   - 65: {fileID: 6594806}
   - 114: {fileID: 11497432}
+  - 54: {fileID: 5454124}
   m_Layer: 8
   m_Name: ninja_sword
   m_TagString: weapon
@@ -546,7 +547,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -304.200012, y: -19.2700005, z: -113.400002}
+  m_LocalPosition: {x: -304.200012, y: -20.3500004, z: -113.400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432258}
@@ -948,6 +949,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!54 &5454124
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106070}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &6540094
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -992,7 +1008,7 @@ BoxCollider:
   m_GameObject: {fileID: 106070}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1430,16 +1446,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: e70349bd69e80406dbba359d8eb9bf82, type: 3}
-  frame: 0
-  center: {x: 0, y: 0, z: 0}
-  base_vector: {x: 0, y: 0, z: 0}
-  upper_right: 0
-  upper_left: 0
-  lower_left: 0
-  lower_right: 0
-  icon_ratio_y: .769999981
-  icon_ratio_x: .949999988
   scale: 1
+  push_back_x: 0
+  push_back_y: 0
+  shift: 0
 --- !u!114 &11495020
 MonoBehaviour:
   m_ObjectHideFlags: 1
