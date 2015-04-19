@@ -65,12 +65,12 @@ public class Stationary_enemy_script : Enemy
 
         var bullet = Instantiate(
                 projectile_prefab, projectile_spawn_point.transform.position,
-                transform.localRotation) as GameObject;
+                body.transform.localRotation) as GameObject;
 
         // var direction_to_player =
         //         closest_player.transform.position - transform.position;
         // direction_to_player = direction_to_player.normalized;
-        bullet.GetComponent<Rigidbody>().velocity = transform.forward * 14;
+        bullet.GetComponent<Rigidbody>().velocity = body.transform.forward * 14;
         timer = 0;
     }
 
