@@ -5,12 +5,15 @@
 //Posted On: January 15, 2013
 //Accessed: April 17, 2013
 
+
+//values: scale=.1, push_back_x=.04, push_back_y=.16, shift=.05
+
 public var texture: Texture;
 
-public var scale: float;
-public var push_back_x: float;
-public var push_back_y: float;
-public var shift: float;
+private var scale: float;
+private var push_back_x: float;
+private var push_back_y: float;
+private var shift: float;
 
 //var center: Vector3;
 //var base_vector: Vector3;
@@ -24,8 +27,10 @@ public var shift: float;
 //public var scale = .01f;
 
 function Start () {
-	
-
+	scale=.1;
+	push_back_x =.04;
+	push_back_y=.16;
+	shift =.05;
 }
 
 function Update () {
