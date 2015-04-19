@@ -159,6 +159,7 @@ public class Ninja : Player_character
         velocity = body.transform.forward * 3f;
         sword_is_swinging = true;
         get_sword().GetComponent<Collider>().enabled = true;
+        get_sword().GetComponent<TrailRenderer>().enabled = true;
 
         basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
         swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
@@ -169,12 +170,14 @@ public class Ninja : Player_character
         stop();
         sword_is_swinging = false;
         get_sword().GetComponent<Collider>().enabled = false;
+        get_sword().GetComponent<TrailRenderer>().enabled = false;
     }// on_sword_swing_end()
 
     public void on_sword_spin_start()
     {
         sword_is_spinning = true;
         get_sword().GetComponent<Collider>().enabled = true;
+        get_sword().GetComponent<TrailRenderer>().enabled = true;
     }// on_sword_spin_start
 
     public void on_sword_spin_end()
@@ -182,6 +185,7 @@ public class Ninja : Player_character
         animator.ResetTrigger(attack_button_pressed_trigger_id);
         sword_is_spinning = false;
         get_sword().GetComponent<Collider>().enabled = false;
+        get_sword().GetComponent<TrailRenderer>().enabled = false;
     }// on_sword_spin_end
 
     public void on_aerial_attack_wind_up_start()
