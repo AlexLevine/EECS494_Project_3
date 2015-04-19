@@ -7,30 +7,6 @@ public class Ninja_sword : MonoBehaviour
 
     public GameObject hit_sound_player;
 
-    public bool is_attacking
-    {
-        get
-        {
-            return false;
-            // var aerial_attack = Ninja.get().GetComponent<Aerial_attack>();
-            // var swing = Ninja.get().GetComponent<Sword_swing>();
-
-            // return aerial_attack.is_diving || swing.is_playing;
-        }
-    }
-
-    public bool sword_animation_playing
-    {
-        get
-        {
-            return false;
-            // var aerial_attack = transform.parent.GetComponent<Aerial_attack>();
-            // var swing = transform.parent.GetComponent<Sword_swing>();
-
-            // return aerial_attack.is_playing || swing.is_playing;
-        }
-    }
-
     public int attack_power
     {
         get

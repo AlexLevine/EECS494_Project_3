@@ -222,7 +222,7 @@ GameObject:
   - 114: {fileID: 11473900}
   - 114: {fileID: 11432098}
   - 54: {fileID: 5406540}
-  - 65: {fileID: 6581826}
+  - 136: {fileID: 13608324}
   m_Layer: 0
   m_Name: Stationary Enemy
   m_TagString: Untagged
@@ -411,7 +411,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152026}
-  m_LocalRotation: {x: .637291431, y: -.306365252, z: -.637291431, w: .306365192}
+  m_LocalRotation: {x: .637291491, y: -.306365281, z: -.637291491, w: .306365222}
   m_LocalPosition: {x: -.0799865723, y: 2.61000061, z: -.459991455}
   m_LocalScale: {x: .799999952, y: 1, z: .799999774}
   m_Children: []
@@ -913,18 +913,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6581826
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167780}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.70000005, y: 4.30000019, z: 2.07999992}
-  m_Center: {x: 0, y: 0, z: .270000011}
 --- !u!65 &6586288
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -999,6 +987,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &13608324
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167780}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2
+  m_Height: 6.51999998
+  m_Direction: 1
+  m_Center: {x: 0, y: .589999974, z: 0}
 --- !u!136 &13633382
 CapsuleCollider:
   m_ObjectHideFlags: 1

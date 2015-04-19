@@ -4,8 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class Ninja : Player_character
 {
-    // public GameObject body;
-
     public GameObject swing_sound_player;
     public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
@@ -36,7 +34,7 @@ public class Ninja : Player_character
     {
         get
         {
-            return !get_sword().is_attacking &&
+            return !animation_controlling_movement &&
                    ((is_teamed_up && !force_team_up) || base.can_jump);
         }
     }
@@ -47,7 +45,6 @@ public class Ninja : Player_character
     private Vector3 original_scale;
     private Vector3 shrunk_scale;
 
-    // Normal swings, not spin attack.
     private bool sword_is_swinging = false;
     private bool sword_is_spinning = false;
 
@@ -118,8 +115,6 @@ public class Ninja : Player_character
             update_physics();
             move(velocity * Time.deltaTime);
         }
-
-
 
         if (!is_teamed_up)
         {
@@ -246,7 +241,7 @@ public class Ninja : Player_character
 
     public override void team_up_engage_or_throw()
     {
-        if (animation_controlling_movement)
+        if (animation_controlling_movement || is_teamed_up)
         {
             return;
         }
@@ -367,11 +362,11 @@ public class Ninja : Player_character
     public override void jump()
     {
         // print("jump");
-        if (force_team_up)
-        {
-            // print("team up being forced");
-            return;
-        }
+        // if (force_team_up)
+        // {
+        //     // print("team up being forced");
+        //     return;
+        // }
 
         if (is_teamed_up)
         {
@@ -381,7 +376,8 @@ public class Ninja : Player_character
         base.jump();
     }// jump
 
-	public override void on_death() {
+	public override void on_death()
+    {
 		Llama.get ().reset_health();
 		base.on_death();
 	}
