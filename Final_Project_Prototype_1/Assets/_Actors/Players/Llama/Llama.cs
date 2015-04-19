@@ -1,20 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Animator))]
 public class Llama : Player_character
 {
     public GameObject team_up_point;
 
     public GameObject damage_vocals;
-    public GameObject charge_vocals;
+    public GameObject charge_and_throw_vocals;
     public GameObject spit_sounds;
 
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
 
+    public override bool animation_controlling_movement
+    {
+        get
+        {
+            var cur_state_hash =
+                    animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            return cur_state_hash != idle_state_hash ||
+                   base.animation_controlling_movement;
+        }
+    }
+
     public bool spit_is_cooling_down = false;
     private static float max_spit_cooldown_time = 0.75f;
     private float cur_spit_cooldown_time = 0;
+
+    private Animator animator;
+    private int throw_button_pressed_trigger_id;
+    private int idle_state_hash;
+
+    private float throw_speed = 20f;
 
     private enum Charge_state_e
     {
@@ -64,6 +82,20 @@ public class Llama : Player_character
 
         instance = this;
     }// Awake
+
+    //--------------------------------------------------------------------------
+
+    public override void Start()
+    {
+        base.Start();
+
+        animator = GetComponent<Animator>();
+        throw_button_pressed_trigger_id = Animator.StringToHash(
+            "throw_button_pressed");
+        idle_state_hash = Animator.StringToHash("Idle");
+    }// Start
+
+    //--------------------------------------------------------------------------
 
     public override void stop()
     {
@@ -124,10 +156,10 @@ public class Llama : Player_character
     public override Sweep_test_summary move(
         Vector3 delta_position, float precision_pad=0.1f)
     {
-        if (gameObject.GetComponent<Throw_animation>().is_playing)
-        {
-            return new Sweep_test_summary();
-        }
+        // if (gameObject.GetComponent<Throw_animation>().is_playing)
+        // {
+        //     return new Sweep_test_summary();
+        // }
 
         // cc.Move(delta_position);
         // update_rotation(delta_position);
@@ -214,8 +246,31 @@ public class Llama : Player_character
 
     public override void team_up_engage_or_throw()
     {
-        gameObject.GetComponent<Throw_animation>().start_animation();
+        if (animation_controlling_movement)
+        {
+            return;
+        }
+
+        animator.SetTrigger(throw_button_pressed_trigger_id);
+        charge_and_throw_vocals.GetComponent<Sound_effect_randomizer>().play();
+
+        if (!is_teamed_up)
+        {
+            return;
+        }
+
+        // print("teamed up: " + transform.up);
+        Ninja.get().being_thrown = true;
+        team_up_disengage();
+        // Ninja.get().on_thrown();
+        Ninja.get().velocity = (
+            body.transform.up + body.transform.forward) * throw_speed;
     }// team_up_engage_or_throw
+
+    public void on_throw_animation_end()
+    {
+        animator.ResetTrigger(throw_button_pressed_trigger_id);
+    }
 
     //--------------------------------------------------------------------------
 
@@ -259,7 +314,7 @@ public class Llama : Player_character
 
         if (!is_charging)
         {
-            charge_vocals.GetComponent<Sound_effect_randomizer>().play();
+            charge_and_throw_vocals.GetComponent<Sound_effect_randomizer>().play();
         }
 
         charge_state = Charge_state_e.CHARGING;
