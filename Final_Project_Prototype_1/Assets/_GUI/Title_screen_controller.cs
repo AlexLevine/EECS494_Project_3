@@ -23,6 +23,7 @@ public class Title_screen_controller : MonoBehaviour
     void Start()
     {
         HUD_gameobj.SetActive(false);
+        Actor.actors_paused = true; 
         Input_reader.toggle_player_controls(false);
     }
 
@@ -40,6 +41,7 @@ public class Title_screen_controller : MonoBehaviour
                 Destroy(title_screen_parent);  
                 HUD_gameobj.SetActive(true);
                 Input_reader.toggle_player_controls(true); 
+                Actor.actors_paused = false; 
             }
         }
     }

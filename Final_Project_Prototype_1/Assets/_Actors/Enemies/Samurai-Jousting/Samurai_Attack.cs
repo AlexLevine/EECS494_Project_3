@@ -27,7 +27,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
     private static Samurai_Attack instance;
 
     // private CharacterController cc;
-
+    public GameObject item_drop; 
     public Vector3 retreat_destination;
     private Vector3 starting_location;
     private Quaternion starting_rotation;
@@ -235,6 +235,7 @@ public class Samurai_Attack : Enemy, Checkpoint_load_subscriber
     {
         Checkpoint.unsubscribe(gameObject);
         Boss_fight_controller.get().notify_boss_defeated();
+        item_drop.SetActive(true);
         base.on_death();
     }// on_death
 
