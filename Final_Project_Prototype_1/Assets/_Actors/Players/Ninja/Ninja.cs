@@ -1,26 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Sword_swing)),
- RequireComponent(typeof(Aerial_attack)),
- RequireComponent(typeof(Team_up_animation))]
+[RequireComponent(typeof(Animator))]
 public class Ninja : Player_character
 {
-    public GameObject body;
+    // public GameObject body;
 
+    public GameObject swing_sound_player;
+    public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
 
     public GameObject projectile_prefab;
     public GameObject sword_obj;
-    public Material out_of_range;
-    private Material normal;
-    private float o_o_r=2;
+    public GameObject aerial_attack_shockwave;
+
+    public bool being_thrown = false;
+
+    public override bool animation_controlling_movement
+    {
+        get
+        {
+            var cur_state_hash =
+                    animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            return cur_state_hash != idle_state_hash ||
+                   base.animation_controlling_movement;
+        }
+    }
+
+    private Animator animator;
+    private int attack_button_pressed_trigger_id;
+    private int idle_state_hash;
+    private int on_ground_param_id;
+
+    public override bool can_jump
+    {
+        get
+        {
+            return !get_sword().is_attacking &&
+                   ((is_teamed_up && !force_team_up) || base.can_jump);
+        }
+    }
 
     private GameObject team_up_point;
 
     private bool is_shrunk = false;
     private Vector3 original_scale;
     private Vector3 shrunk_scale;
+
+    // Normal swings, not spin attack.
+    private bool sword_is_swinging = false;
+    private bool sword_is_spinning = false;
 
     //--------------------------------------------------------------------------
 
@@ -44,12 +73,12 @@ public class Ninja : Player_character
 
     public override void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            print("ninja already exists");
-            Destroy(gameObject);
-            return;
-        }
+        // if (instance != null && instance != this)
+        // {
+        //     print("ninja already exists");
+        //     Destroy(gameObject);
+        //     return;
+        // }
 
         base.Awake();
 
@@ -62,6 +91,11 @@ public class Ninja : Player_character
     public override void Start()
     {
         base.Start();
+        animator = GetComponent<Animator>();
+        attack_button_pressed_trigger_id = Animator.StringToHash("attack_button_pressed");
+        idle_state_hash = Animator.StringToHash("Idle");
+        on_ground_param_id = Animator.StringToHash("on_ground");
+
         team_up_point = Llama.get().get_team_up_point();
 
         original_scale = transform.localScale;
@@ -75,14 +109,24 @@ public class Ninja : Player_character
     {
         base.update_impl();
 
-        // print(velocity.magnitude);
+        // // print(velocity.magnitude);
+
+        // // on_sword_swing sets a target velocity. this allows that motion
+        // // to take place without being interrupted by the player.
+        if (animation_controlling_movement)
+        {
+            update_physics();
+            move(velocity * Time.deltaTime);
+        }
+
+
 
         if (!is_teamed_up)
         {
             //out_of_range
-            if (o_o_r++==1){
-                body.GetComponent<Renderer>().material = normal;
-            }
+            // if (o_o_r++==1){
+            //     body.GetComponent<Renderer>().material = normal;
+            // }
 
             return;
         }
@@ -93,7 +137,7 @@ public class Ninja : Player_character
 
 //        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
 //        {
-//            transform.rotation = team_up_point.transform.parent.rotation;
+           // transform.rotation = team_up_point.transform.parent.rotation;
 //        }
     }// update_impl
 
@@ -101,29 +145,83 @@ public class Ninja : Player_character
 
     public override void attack()
     {
-        if (get_sword().is_attacking)
-        {
-            return;
-        }
+        // if (!is_grounded)
+        // {
+        //     GetComponent<Aerial_attack>().start_attack();
+        //     return;
+        // }
 
-        if (!is_grounded)
-        {
-            GetComponent<Aerial_attack>().start_attack();
-            return;
-        }
-        GetComponent<Sword_swing>().swing();
+        // if (!sword_is_spinning)
+        // {
+            animator.SetTrigger(attack_button_pressed_trigger_id);
+        // }
+
+        // GetComponent<Sword_swing>().swing();
     }// physical_attack
+
+    public void on_sword_swing_start()
+    {
+        velocity = body.transform.forward * 3f;
+        sword_is_swinging = true;
+        get_sword().GetComponent<Collider>().enabled = true;
+
+        basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
+        swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
+    }// on_sword_swing_start
+
+    public void on_sword_swing_end()
+    {
+        stop();
+        sword_is_swinging = false;
+        get_sword().GetComponent<Collider>().enabled = false;
+    }// on_sword_swing_end()
+
+    public void on_sword_spin_start()
+    {
+        sword_is_spinning = true;
+        get_sword().GetComponent<Collider>().enabled = true;
+    }// on_sword_spin_start
+
+    public void on_sword_spin_end()
+    {
+        animator.ResetTrigger(attack_button_pressed_trigger_id);
+        sword_is_spinning = false;
+        get_sword().GetComponent<Collider>().enabled = false;
+    }// on_sword_spin_end
+
+    public void on_aerial_attack_wind_up_start()
+    {
+        print("on_aerial_attack_wind_up_start");
+        stop();
+        acceleration = -gravity * Vector3.up;
+    }// on_aerial_attack_wind_up_start
+
+    public void on_aerial_attack_dive_start()
+    {
+        print("on_aerial_attack_dive_start");
+        // acceleration = Vector3.zero;
+        velocity = Vector3.down * 20f;
+        get_sword().GetComponent<Collider>().enabled = true;
+    }// on_aerial_attack_dive_start
+
+    public void on_aerial_attack_dive_end()
+    {
+        print("on_aerial_attack_dive_end");
+        animator.ResetTrigger(attack_button_pressed_trigger_id);
+        stop();
+        aerial_attack_shockwave.SetActive(true);
+        aerial_attack_shockwave.GetComponent<Shockwave>().start_shockwave();
+        get_sword().GetComponent<Collider>().enabled = false;
+    }// on_aerial_attack_dive_end
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
+    public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad)
     {
-        // if (GetComponent<Sword_swing>().is_swinging || is_teamed_up)
         if (is_teamed_up)
-
         {
-			if (apply_rotation) update_rotation(delta_position);
-			return;
+			return new Sweep_test_summary();
         }
 
         // if (is_teamed_up)
@@ -133,25 +231,14 @@ public class Ninja : Player_character
         //     return;
         // }
 
-        if (GetComponent<Aerial_attack>().is_diving)
+        var move_data = base.move(delta_position);
+        animator.SetBool(on_ground_param_id, is_grounded);
+        if (is_grounded && being_thrown)
         {
-            // HAAAACK
-            base.move(delta_position, false);
-            if (is_grounded)
-            {
-                GetComponent<Aerial_attack>().notify_dive_landed();
-            }
-            return;
+            being_thrown = false;
         }
 
-        if (!GetComponent<Aerial_attack>().is_playing)
-        {
-            base.move(delta_position, apply_rotation);
-        }
-
-        // if (is_grounded && GetComponent<Aerial_attack>().is_diving)
-        // {
-        //     notify_on_ground();
+        return move_data;
         // }
     }// move
 
@@ -159,7 +246,7 @@ public class Ninja : Player_character
 
     public override void team_up_engage_or_throw()
     {
-        if (is_teamed_up || get_sword().sword_animation_playing)
+        if (animation_controlling_movement)
         {
             return;
         }
@@ -179,10 +266,10 @@ public class Ninja : Player_character
 
         if (distance > 10f)
         {
-            print("out of range");
-            normal = body.GetComponent<Renderer>().material;
-            body.GetComponent<Renderer>().material = out_of_range;
-            o_o_r = 0;
+            // print("out of range");
+            // normal = body.GetComponent<Renderer>().material;
+            // body.GetComponent<Renderer>().material = out_of_range;
+            // o_o_r = 0;
             return;
         }
 
@@ -217,9 +304,22 @@ public class Ninja : Player_character
 
     public override void update_movement_velocity(Vector3 target_velocity)
     {
+        // print("ninja update_movement_velocity");
         // Aerial attack takes control of movement.
-        if (GetComponent<Aerial_attack>().is_playing)
+        // if (GetComponent<Aerial_attack>().is_playing)
+        // {
+        //     return;
+        // }
+        if (being_thrown)
         {
+            return;
+        }
+
+        if (sword_is_spinning)
+        {
+            // print("updating movment velocity for spinning sword");
+            target_velocity.y = velocity.y;
+            velocity = target_velocity;
             return;
         }
 
@@ -254,29 +354,22 @@ public class Ninja : Player_character
     protected override void on_team_up_engage()
     {
         notify_on_ground();
-        cc.enabled = false;
     }// team_up_engage
 
     //--------------------------------------------------------------------------
 
     protected override void on_team_up_disengage()
     {
-        cc.enabled = true;
     }// on_team_up_disengage
 
     //--------------------------------------------------------------------------
 
     public override void jump()
     {
-        print("jump");
-        if (get_sword().is_attacking)
-        {
-            return;
-        }
-
+        // print("jump");
         if (force_team_up)
         {
-            print("team up being forced");
+            // print("team up being forced");
             return;
         }
 
@@ -300,46 +393,6 @@ public class Ninja : Player_character
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
 
-    //--------------------------------------------------------------------------
-
-
-    // public override int max_health
-    // {
-    //     get
-    //     {
-    //         return 10;
-    //     }
-    // }// max_health
-
-    //--------------------------------------------------------------------------
-
-    // public override float run_speed
-    // {
-    //     get
-    //     {
-    //         return 5;
-    //     }
-    // }// run_speed
-
-    // //--------------------------------------------------------------------------
-
-    // public override float sprint_speed
-    // {
-    //     get
-    //     {
-    //         return 10;
-    //     }
-    // }// sprint_speed
-
-    // //--------------------------------------------------------------------------
-
-    // public override float jump_speed
-    // {
-    //     get
-    //     {
-    //         return 15;
-    //     }
-    // }// jump_speed
 }
 
 

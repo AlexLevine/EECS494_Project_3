@@ -10,7 +10,6 @@ public class Input_reader : MonoBehaviour
 
     public InputDevice input_device;
 
-    // private Player player; // The Rewired Player
     private Player_character pc;
     private bool controls_enabled = true;
 
@@ -22,10 +21,10 @@ public class Input_reader : MonoBehaviour
 
     void Awake()
     {
-        if (input_readers.Count > 2)
-        {
-            return;
-        }
+        // if (input_readers.Count > 2)
+        // {
+        //     return;
+        // }
 
         input_readers.Add(this);
     }
@@ -48,6 +47,7 @@ public class Input_reader : MonoBehaviour
 
         pc = Player_character.player_characters[
                 player_id].GetComponent<Player_character>();
+        pc.input_device = input_device;
     }
 
     //--------------------------------------------------------------------------
@@ -55,10 +55,10 @@ public class Input_reader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (controls_enabled && input_device != null)
-        {
-            process_input();
-        }
+        // if (controls_enabled && input_device != null)
+        // {
+        //     process_input();
+        // }
     }
 
     //--------------------------------------------------------------------------
@@ -73,83 +73,58 @@ public class Input_reader : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    private void process_input()
-    {
-        if (input_device.GetControl(InputControlType.Action1).WasPressed)
-        {
-            pc.jump();
-        }
+    // private void process_input()
+    // {
+    //     if (input_device.GetControl(InputControlType.Action1).WasPressed)
+    //     {
+    //         pc.jump();
+    //     }
 
-        if (input_device.GetControl(InputControlType.Action2).WasPressed)
-        {
-            // print("team up");
-            pc.team_up_engage_or_throw();
-        }
+    //     if (input_device.GetControl(InputControlType.Action2).WasPressed)
+    //     {
+    //         pc.team_up_engage_or_throw();
+    //     }
 
-        if (input_device.GetControl(InputControlType.Action3).WasPressed)
-        {
-            pc.attack();
-        }
+    //     if (input_device.GetControl(InputControlType.Action3).WasPressed)
+    //     {
+    //         pc.attack();
+    //     }
 
-        if (input_device.GetControl(InputControlType.Action3).IsPressed)
-        {
-            pc.charge();
-        }
+    //     if (input_device.GetControl(InputControlType.Action3).IsPressed)
+    //     {
+    //         pc.charge();
+    //     }
 
-        if (input_device.GetControl(InputControlType.Action3).WasReleased)
-        {
-            pc.stop_charge();
-        }
+    //     if (input_device.GetControl(InputControlType.Action3).WasReleased)
+    //     {
+    //         pc.stop_charge();
+    //     }
 
-        if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
-           input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
-           pc.is_locked_on)
-        {
-            pc.toggle_lock_on();
-        }
+    //     if(input_device.GetControl(InputControlType.LeftBumper).WasPressed ||
+    //        input_device.GetControl(InputControlType.LeftBumper).WasReleased &&
+    //        pc.is_locked_on)
+    //     {
+    //         pc.toggle_lock_on();
+    //     }
 
-        // if (input_device.GetControl(InputControlType.RightBumper).WasPressed)
-        // {
-        //     pc.charge();
-        // }
+    //     var tilt = Vector3.zero;
+    //     tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;
+    //     tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
 
-        var tilt = Vector3.zero;
-        tilt.x = input_device.GetControl(InputControlType.LeftStickX).Value;
-        tilt.z = input_device.GetControl(InputControlType.LeftStickY).Value;
-        // tilt = tilt.normalized;
+    //     var cam_right = Camera.main.transform.right;
+    //     cam_right.y = 0;
+    //     cam_right = cam_right.normalized;
+    //     cam_right *= tilt.x;
 
+    //     var cam_forward = Camera.main.transform.forward;
+    //     cam_forward.y = 0;
+    //     cam_forward = cam_forward.normalized;
+    //     cam_forward *= tilt.z;
 
+    //     var relative_move_dir = cam_right + cam_forward;
 
-        // var sprint = player.GetButton("sprint");
+    //     var target_velocity = relative_move_dir * pc.run_speed;
+    //     pc.update_movement_velocity(target_velocity);
 
-        // var relative_move_dir = tilt;
-
-        var cam_right = Camera.main.transform.right;
-        cam_right.y = 0;
-        cam_right = cam_right.normalized;
-        cam_right *= tilt.x;
-
-        var cam_forward = Camera.main.transform.forward;
-        cam_forward.y = 0;
-        cam_forward = cam_forward.normalized;
-        cam_forward *= tilt.z;
-
-        var relative_move_dir = cam_right + cam_forward;
-        //         Camera.main.transform.forward +
-        //         Camera.main.transform.right;
-        // relative_move_dir.y = 0;
-        // print(relative_move_dir);
-        // print(cam_forward);
-        // print(cam_right);
-        // relative_move_dir *= 10;
-        // relative_move_dir = relative_move_dir.normalized;
-
-        // relative_move_dir.x *= tilt.x;
-        // relative_move_dir.z *= tilt.z;
-
-        var target_velocity = relative_move_dir * pc.run_speed;
-        pc.update_movement_velocity(target_velocity);
-
-        // move(delta_position);
-    }// process_input
+    // }// process_input
 }

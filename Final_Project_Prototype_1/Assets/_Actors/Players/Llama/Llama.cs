@@ -53,12 +53,12 @@ public class Llama : Player_character
 
     public override void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            print("llama already exists");
-            Destroy(gameObject);
-            return;
-        }
+        // if (instance != null && instance != this)
+        // {
+        //     print("llama already exists");
+        //     Destroy(gameObject);
+        //     return;
+        // }
 
         base.Awake();
 
@@ -121,11 +121,12 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void move(Vector3 delta_position, bool apply_rotation)
+    public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad=0.1f)
     {
         if (gameObject.GetComponent<Throw_animation>().is_playing)
         {
-            return;
+            return new Sweep_test_summary();
         }
 
         // cc.Move(delta_position);
@@ -135,7 +136,38 @@ public class Llama : Player_character
         //     Ninja.get().move(delta_position);//.y * Vector3.up);
         // }
 
-        base.move(delta_position, apply_rotation);
+        var summary = base.move(delta_position);
+        if (!summary.hit_y)
+        {
+            return summary;
+        }
+
+        var ninja = summary.hit_info_y.transform.GetComponent<Ninja>();
+        if (ninja != null)
+        {
+            ninja.toggle_shrunk();
+            jump();
+        }
+
+        if (summary.hit_x)
+        {
+            var breakable_wall = summary.hit_info_x.transform.GetComponent<Breakable_wall>();
+            if (breakable_wall != null && is_charging)
+            {
+                breakable_wall.break_wall();
+            }
+        }
+
+        if (summary.hit_z)
+        {
+            var breakable_wall = summary.hit_info_z.transform.GetComponent<Breakable_wall>();
+            if (breakable_wall != null && is_charging)
+            {
+                breakable_wall.break_wall();
+            }
+        }
+
+        return summary;
         // print(delta_position.y);
         // print(cc.isGrounded);
     }// move
@@ -150,18 +182,18 @@ public class Llama : Player_character
             return;
         }
 
-        //var angle = Vector3.Angle(transform.forward, target_velocity);
+        //var angle = Vector3.Angle(body.transform.forward, target_velocity);
 
         //SCIENCE!
-        var dot_product = transform.forward.x * target_velocity.x +
-                          transform.forward.z * target_velocity.z;
-        var determinant = transform.forward.x * target_velocity.z -
-                          transform.forward.z * target_velocity.x;
+        var dot_product = body.transform.forward.x * target_velocity.x +
+                          body.transform.forward.z * target_velocity.z;
+        var determinant = body.transform.forward.x * target_velocity.z -
+                          body.transform.forward.z * target_velocity.x;
         //gives an angle in (-180,180]
         var angle = Mathf.Rad2Deg * Mathf.Atan2(determinant, dot_product);
         // print(angle);
 
-        var charge_direction = transform.forward;
+        var charge_direction = body.transform.forward;
 
         // print(angle);
         // print(target_velocity.magnitude);
@@ -207,7 +239,7 @@ public class Llama : Player_character
             transform.rotation) as GameObject;
         var direction = (is_locked_on ?
             (lock_on_target_pos - spit.transform.position).normalized :
-            transform.forward);
+            body.transform.forward);
 //        print(direction);
 
         spit.GetComponent<Rigidbody>().velocity = direction * 40f;
@@ -231,7 +263,7 @@ public class Llama : Player_character
         }
 
         charge_state = Charge_state_e.CHARGING;
-        var new_velocity = transform.forward * charge_speed;
+        var new_velocity = body.transform.forward * charge_speed;
         new_velocity.y = velocity.y;
         apply_momentum(new_velocity);
     }// charge
@@ -296,29 +328,19 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    void OnControllerColliderHit(ControllerColliderHit c)
-    {
-        var breakable_wall = c.gameObject.GetComponent<Breakable_wall>();
-        if (breakable_wall != null && is_charging)
-        {
-            breakable_wall.break_wall();
-            return;
-        }
+    // void OnCollisionEnter(Collision c)
+    // {
+    //     var breakable_wall = c.gameObject.GetComponent<Breakable_wall>();
+    //     if (breakable_wall != null && is_charging)
+    //     {
+    //         breakable_wall.break_wall();
+    //         return;
+    //     }
+    // }
 
-        var ninja = c.gameObject.GetComponent<Ninja>();
-        if (ninja == null)
-        {
-            return;
-        }
-
-        // var hit_below = c.o
-        // todo!!!!!!! check whether collision was actually below.
-        // requires refactoring move
-        if (c.moveDirection.y < 0)
-        {
-            ninja.toggle_shrunk();
-            bounce = true;
-        }
-    }
+    // void OnCollisionStay(Collision c)
+    // {
+    //     OnCollisionEnter(c);
+    // }
 }
 

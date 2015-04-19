@@ -36,7 +36,7 @@ public class Knockback_animation : MonoBehaviour
 
         if (knockback_velocity_.magnitude != 0)
         {
-            actor.move(knockback_velocity_ * Time.fixedDeltaTime, false);
+            actor.move(knockback_velocity_ * Time.fixedDeltaTime);
         }
 
         time_elapsed += Time.fixedDeltaTime;
