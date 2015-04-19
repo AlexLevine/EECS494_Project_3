@@ -185,7 +185,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &126280
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -201,7 +201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &131522
 GameObject:
   m_ObjectHideFlags: 1
@@ -420,10 +420,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0299999993, y: -.920000017, z: .839999974}
+  m_LocalPosition: {x: 0, y: -1.26999998, z: .641998291}
   m_LocalScale: {x: .00999999978, y: .00999999978, z: .00999999978}
   m_Children: []
-  m_Father: {fileID: 477290}
+  m_Father: {fileID: 432258}
   m_RootOrder: 3
 --- !u!4 &432258
 Transform:
@@ -438,6 +438,7 @@ Transform:
   - {fileID: 487306}
   - {fileID: 460808}
   - {fileID: 466298}
+  - {fileID: 429394}
   m_Father: {fileID: 477290}
   m_RootOrder: 0
 --- !u!4 &434610
@@ -554,7 +555,6 @@ Transform:
   - {fileID: 432258}
   - {fileID: 420098}
   - {fileID: 421050}
-  - {fileID: 429394}
   - {fileID: 483552}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -586,7 +586,7 @@ Transform:
   - {fileID: 434610}
   - {fileID: 400260}
   m_Father: {fileID: 477290}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &487306
 Transform:
   m_ObjectHideFlags: 1
@@ -1492,10 +1492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: e70349bd69e80406dbba359d8eb9bf82, type: 3}
-  scale: 1
-  push_back_x: 0
-  push_back_y: 0
-  shift: 0
 --- !u!114 &11495020
 MonoBehaviour:
   m_ObjectHideFlags: 1

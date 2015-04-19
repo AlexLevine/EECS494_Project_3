@@ -47,6 +47,7 @@ public class Ninja : Player_character
 
     private bool sword_is_swinging = false;
     private bool sword_is_spinning = false;
+    private bool is_diving = false;
 
     //--------------------------------------------------------------------------
 
@@ -118,11 +119,6 @@ public class Ninja : Player_character
 
         if (!is_teamed_up)
         {
-            //out_of_range
-            // if (o_o_r++==1){
-            //     body.GetComponent<Renderer>().material = normal;
-            // }
-
             return;
         }
 
@@ -199,6 +195,7 @@ public class Ninja : Player_character
     {
         print("on_aerial_attack_dive_start");
         // acceleration = Vector3.zero;
+        is_diving = true;
         velocity = Vector3.down * 20f;
         get_sword().GetComponent<Collider>().enabled = true;
     }// on_aerial_attack_dive_start
@@ -208,6 +205,7 @@ public class Ninja : Player_character
         print("on_aerial_attack_dive_end");
         animator.ResetTrigger(attack_button_pressed_trigger_id);
         stop();
+        is_diving = false;
         aerial_attack_shockwave.SetActive(true);
         aerial_attack_shockwave.GetComponent<Shockwave>().start_shockwave();
         get_sword().GetComponent<Collider>().enabled = false;
@@ -220,6 +218,8 @@ public class Ninja : Player_character
     {
         if (is_teamed_up)
         {
+            is_grounded_ = true;
+            animator.SetBool(on_ground_param_id, true);
 			return new Sweep_test_summary();
         }
 
@@ -287,6 +287,18 @@ public class Ninja : Player_character
         GetComponent<Team_up_animation>().start_animation();
 
     }// team_up_engage_or_throw
+
+    //--------------------------------------------------------------------------
+
+    public override bool receive_hit(
+        float damage, Vector3 knockback_velocity, GameObject attacker)
+    {
+        if (sword_is_spinning || sword_is_swinging || is_diving)
+        {
+            return false;
+        }
+        return base.receive_hit(damage, knockback_velocity, attacker);
+    }// receive_hit
 
     //--------------------------------------------------------------------------
 

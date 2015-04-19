@@ -15,11 +15,28 @@ public class Shockwave : MonoBehaviour
 
     private IEnumerator expand()
     {
-        while (transform.localScale.x < 6)
+        var start_scale = transform.localScale;
+        print("start_scale: " + start_scale);
+        var end_scale = Vector3.one * 10f;
+        print("end_scale: " + end_scale);
+
+        var time_elapsed = 0f;
+        var duration = 0.25f;
+
+        var lerp_percent = time_elapsed / duration;
+        while (lerp_percent < 1)
         {
-            transform.localScale += Vector3.one * 0.7f;
-            yield return new WaitForSeconds(0.001f);
+            transform.localScale = Vector3.Lerp(
+                start_scale, end_scale, lerp_percent);
+            time_elapsed += Time.deltaTime;
+            lerp_percent = time_elapsed / duration;
+            yield return null;
         }
+
+        transform.localScale = Vector3.Lerp(
+            start_scale, end_scale, 1);
+
+        yield return null;
 
         transform.localScale = original_scale;
         gameObject.SetActive(false);
