@@ -41,9 +41,9 @@ public class Fire_enemy : Point_lerp_enemy
         var time_until_next_puff = puff_frequency;
         var puff_duration = 0.45f;
 
-        var hitbox = GetComponent<CapsuleCollider>();
-        var start_radius = hitbox.radius;
-        var end_radius = start_radius * 1.5f;
+        // var hitbox = GetComponent<CapsuleCollider>();
+        // var start_radius = hitbox.radius;
+        // var end_radius = start_radius * 1.5f;
 
         var fire_effect = GetComponentInChildren<ParticleSystem>();
         var start_particle_size = fire_effect.startSize;
@@ -63,8 +63,8 @@ public class Fire_enemy : Point_lerp_enemy
             var lerp_percent = puff_time_elapsed / puff_duration;
             while (lerp_percent < 1)
             {
-                hitbox.radius = Mathf.Lerp(
-                    start_radius, end_radius, lerp_percent);
+                // hitbox.radius = Mathf.Lerp(
+                //     start_radius, end_radius, lerp_percent);
                 fire_effect.startSize = Mathf.Lerp(
                     start_particle_size, end_particle_size, lerp_percent);
 
@@ -74,7 +74,7 @@ public class Fire_enemy : Point_lerp_enemy
             }// while lerp_percent < 1
 
             is_puffing = false;
-            hitbox.radius = start_radius;
+            // hitbox.radius = start_radius;
             fire_effect.startSize = start_particle_size;
             time_until_next_puff = puff_frequency;
             yield return null;

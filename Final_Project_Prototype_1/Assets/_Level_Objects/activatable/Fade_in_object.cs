@@ -22,7 +22,8 @@ public class Fade_in_object : Switchee
         start_color.a = 0;
 
         renderer_.material.color = start_color;
-        to_fade_in.SetActive(false);
+        renderer_.enabled = false;
+        to_fade_in.GetComponent<Collider>().enabled = false;
     }// Start
 
     //--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ public class Fade_in_object : Switchee
             return;
         }
 
+        renderer_.enabled = true;
+        to_fade_in.GetComponent<Collider>().enabled = true;
         base.activate(callback, callback_delay);
 
         activated = true;

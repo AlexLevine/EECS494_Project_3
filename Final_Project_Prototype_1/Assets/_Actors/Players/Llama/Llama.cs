@@ -187,6 +187,10 @@ public class Llama : Player_character
             if (breakable_wall != null && is_charging)
             {
                 breakable_wall.break_wall();
+                // Prevent the player from stopping breifly when they hit the wall.
+                var nudged_pos = transform.position;
+                nudged_pos.x += delta_position.x;
+                transform.position = nudged_pos;
             }
         }
 
@@ -196,6 +200,10 @@ public class Llama : Player_character
             if (breakable_wall != null && is_charging)
             {
                 breakable_wall.break_wall();
+                // Prevent the player from stopping breifly when they hit the wall.
+                var nudged_pos = transform.position;
+                nudged_pos.z += delta_position.z;
+                transform.position = nudged_pos;
             }
         }
 

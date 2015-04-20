@@ -70,23 +70,44 @@ public class Camera_follow : MonoBehaviour
         var target_rotation = calculate_target_camera_rotation(
             target_position);
 
-        // if (boss_mode)
-        // {
-            transform.rotation = target_rotation;
-        // }
-
         if (!is_transitioning_)
         {
-            if (!following_player_)
-            {
-                return;
-            }
-
-            transform.position = Vector3.SmoothDamp(
-                transform.position, target_position, ref velocity, 0.5f);
+            update_smooth_follow(target_position, target_rotation);
             return;
         }
 
+        update_transition(target_position, target_rotation);
+    }// LateUpdate
+
+    //--------------------------------------------------------------------------
+
+    void update_smooth_follow(
+        Vector3 target_position, Quaternion target_rotation)
+    {
+        if (!following_player_)
+        {
+            return;
+        }
+
+        transform.position = Vector3.SmoothDamp(
+            transform.position, target_position, ref velocity, 0.5f);
+
+        var rotation_step = Mathf.SmoothDampAngle(
+            Camera.main.transform.eulerAngles.y,
+            target_rotation.eulerAngles.y,
+            ref y_rotation_speed,
+            smooth);
+        var temp = target_rotation.eulerAngles;
+        temp.y = rotation_step;
+        target_rotation = Quaternion.Euler(temp);
+
+        transform.rotation = target_rotation;
+    }// update_smooth_follow
+
+    //--------------------------------------------------------------------------
+
+    void update_transition(Vector3 target_position, Quaternion target_rotation)
+    {
         var lerp_percent = (
             current_transition_duration <= 0 ? 1f :
                 transition_time_elapsed / current_transition_duration);
@@ -110,7 +131,7 @@ public class Camera_follow : MonoBehaviour
             transition_start_position, target_position, lerp_percent);
 
         transition_time_elapsed += Time.deltaTime;
-    }// LateUpdate
+    }// update_transition
 
     //--------------------------------------------------------------------------
 
@@ -273,15 +294,15 @@ public class Camera_follow : MonoBehaviour
 
         var new_rotation = Quaternion.LookRotation(desired_forward);
 
-        //smoothdamp
-        var rotation_step = Mathf.SmoothDampAngle(
-            Camera.main.transform.eulerAngles.y,
-            new_rotation.eulerAngles.y,
-            ref y_rotation_speed,
-            smooth);
-        var temp = new_rotation.eulerAngles;
-        temp.y = rotation_step;
-        new_rotation = Quaternion.Euler(temp);
+        // //smoothdamp
+        // var rotation_step = Mathf.SmoothDampAngle(
+        //     Camera.main.transform.eulerAngles.y,
+        //     new_rotation.eulerAngles.y,
+        //     ref y_rotation_speed,
+        //     smooth);
+        // var temp = new_rotation.eulerAngles;
+        // temp.y = rotation_step;
+        // new_rotation = Quaternion.Euler(temp);
 
         return new_rotation;
     }

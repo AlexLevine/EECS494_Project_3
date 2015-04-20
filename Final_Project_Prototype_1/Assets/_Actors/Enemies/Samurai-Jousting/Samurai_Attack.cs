@@ -18,8 +18,6 @@ public class Samurai_Attack : Enemy {
 	private GameObject llama;
 	private GameObject ninja;
 	public Samurai_state_e cur_state;
-	public float look_thresh;
-	public float attack_thresh;
 	public bool is_charging {
 		get { return cur_state == Samurai_state_e.ATTACKING; } }
 
@@ -74,7 +72,7 @@ public class Samurai_Attack : Enemy {
 		llama = Llama.get().gameObject;
 		ninja = Ninja.get().gameObject;
 
-		starting_rotation = transform.rotation;
+		starting_rotation = body.transform.rotation;
 		starting_location = transform.position;
 
 		snap_to_ground();
@@ -129,7 +127,7 @@ public class Samurai_Attack : Enemy {
 
 		case Samurai_state_e.RETREATING:
 			look_toward(retreat_destination);
-			move(transform.forward * speed * 0.65f * Time.fixedDeltaTime);
+			move(body.transform.forward * speed * 0.65f * Time.fixedDeltaTime);
 
 			var distance_to_dest = Vector3.Distance(
 				body.transform.position, retreat_destination);
@@ -145,34 +143,40 @@ public class Samurai_Attack : Enemy {
 			print("Oh no!");
 			break;
 		}
-
-		fix_rotation();
 	}
 
-	public override Sweep_test_summary move(Vector3 delta_position, float precision_pad=0.1f){
-		Sweep_test_summary sts = base.move (delta_position,precision_pad);
+	public override Sweep_test_summary move(
+        Vector3 delta_position, float precision_pad=0.1f)
+    {
+		var move_summary = base.move(delta_position, precision_pad);
 
-		if (sts.hit_x){
+		if (move_summary.hit_x)
+        {
 			print ("hit_x");
-			Player_character pc = sts.hit_info_x.transform.GetComponent<Player_character>();
-			if (pc==null){
+			var pc = move_summary.hit_info_x.transform.GetComponent<Player_character>();
+			if (pc == null)
+            {
 				cur_state = Samurai_state_e.LOOKING;
 			}
-			else{
+			else
+            {
 				resolve_collision_with_player(pc);
 			}
 		}
-		else if (sts.hit_z){
-			Player_character pc = sts.hit_info_z.transform.GetComponent<Player_character>();
-			if (pc==null){
+		else if (move_summary.hit_z)
+        {
+			var pc = move_summary.hit_info_z.transform.GetComponent<Player_character>();
+			if (pc == null)
+            {
 				cur_state = Samurai_state_e.LOOKING;
 			}
-			else{
+			else
+            {
 				resolve_collision_with_player(pc);
 			}
 		}
 
-		return sts;
+		return move_summary;
 	}
 
 	//--------------------------------------------------------------------------
@@ -223,7 +227,9 @@ public class Samurai_Attack : Enemy {
 	void resolve_collision_with_player(Player_character pc)
 	{
 		// print(cur_state);
-		// pc.receive_hit(attack_power, body.transform.forward * attack_power, gameObject);
+        var knockback_direction = pc.transform.position - transform.position;
+		pc.receive_hit(
+            attack_power, knockback_direction * attack_power, gameObject);
 
 		if (cur_state == Samurai_state_e.RETREATING)
 		{
@@ -275,16 +281,6 @@ public class Samurai_Attack : Enemy {
 		//cc.Move(Vector3.down);
 	}// snap_to_ground
 
-	void fix_rotation()
-	{
-		var fixed_rotation = transform.rotation.eulerAngles;
-
-		fixed_rotation.x = 0;
-		fixed_rotation.z = 0;
-
-		transform.rotation = Quaternion.Euler(fixed_rotation);
-	}// fix_rotation
-
 	public override float attack_power
 	{
 		get
@@ -333,7 +329,7 @@ public class Samurai_Attack : Enemy {
 	{
 		reset_health();
 		transform.position = starting_location;
-		transform.rotation = starting_rotation;
+		body.transform.rotation = starting_rotation;
 
 		cur_state = Samurai_state_e.WAITING;
 	}
