@@ -57,7 +57,7 @@ public class Shockwave : MonoBehaviour
         knockback_dir.y = 0;
 
         enemy.receive_hit(
-            Ninja.get_sword().attack_power, knockback_dir, gameObject);
+            Ninja.get_sword().attack_power * 1.5f, knockback_dir, gameObject);
     }// OnTriggerEnter
 
     //--------------------------------------------------------------------------

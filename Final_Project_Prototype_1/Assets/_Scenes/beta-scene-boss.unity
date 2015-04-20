@@ -2097,6 +2097,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5448402, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
   m_IsPrefabParent: 0
@@ -2510,7 +2514,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1381602819}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -.100000001, y: -.5, z: -24.3999996}
+  m_LocalPosition: {x: -.100000001, y: -.0799999982, z: -24.3999996}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 24794835}
@@ -2531,8 +2535,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.19999981, y: 7.55999994, z: 5.34000015}
-  m_Center: {x: 0, y: .970000029, z: .50999999}
+  m_Size: {x: 4, y: 10, z: 4}
+  m_Center: {x: 0, y: 1.78999996, z: .50999999}
 --- !u!114 &1381602822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2592,7 +2596,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &1403026268
 GameObject:
   m_ObjectHideFlags: 0
@@ -3397,6 +3401,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1967183904}
   - 114: {fileID: 1967183905}
+  - 54: {fileID: 1967183906}
   m_Layer: 0
   m_Name: Enemy_Jousting_Pole 1
   m_TagString: weapon
@@ -3430,6 +3435,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e565ba5cf49264df7aa57723c9cb18f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1967183906
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1967183903}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2030539856
 GameObject:
   m_ObjectHideFlags: 0

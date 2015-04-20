@@ -7,7 +7,7 @@ public class Samurai_jousting_pole : MonoBehaviour
     {
         get
         {
-            return 10;
+            return 2;
         }
     }// attack_power
 

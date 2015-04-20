@@ -175,7 +175,7 @@ public class Llama : Player_character
         }
 
         var ninja = summary.hit_info_y.transform.GetComponent<Ninja>();
-        if (ninja != null)
+        if (ninja != null && summary.hit_ground)
         {
             ninja.toggle_shrunk();
             jump();
