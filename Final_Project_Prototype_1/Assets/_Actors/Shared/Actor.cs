@@ -104,6 +104,7 @@ public class Actor : MonoBehaviour
         var summary = new Sweep_test_summary();
         summary.distance_moved = delta_position;
 
+        // TODO: cast and move individually instead of cast all and move all.
         // Check for obstacles.
         summary.hit_x = sweep_test_all_filter(
             delta_position.x * Vector3.right, out summary.hit_info_x,

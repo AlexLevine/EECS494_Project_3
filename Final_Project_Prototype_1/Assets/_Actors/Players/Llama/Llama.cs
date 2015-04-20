@@ -186,6 +186,7 @@ public class Llama : Player_character
             var breakable_wall = summary.hit_info_x.transform.GetComponent<Breakable_wall>();
             if (breakable_wall != null && is_charging)
             {
+                print("boom");
                 breakable_wall.break_wall();
                 // Prevent the player from stopping breifly when they hit the wall.
                 var nudged_pos = transform.position;
@@ -199,6 +200,7 @@ public class Llama : Player_character
             var breakable_wall = summary.hit_info_z.transform.GetComponent<Breakable_wall>();
             if (breakable_wall != null && is_charging)
             {
+                print("boom");
                 breakable_wall.break_wall();
                 // Prevent the player from stopping breifly when they hit the wall.
                 var nudged_pos = transform.position;

@@ -152,7 +152,7 @@ public class Ninja : Player_character
 
     public void on_sword_swing_start()
     {
-        velocity = body.transform.forward * 3f;
+        velocity = body.transform.forward * run_speed;
         sword_is_swinging = true;
         get_sword().GetComponent<Collider>().enabled = true;
         get_sword().GetComponent<TrailRenderer>().enabled = true;
