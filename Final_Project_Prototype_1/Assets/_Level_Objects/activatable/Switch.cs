@@ -5,7 +5,10 @@ using System.Collections;
 public class Switch : MonoBehaviour
 {
     public GameObject switchee;
-    public GameObject cut_scene;
+    public bool cut_scene;
+    public GameObject goal_walls;
+    
+    private bool triggered = false;
     // Use this for initialization
     void Start ()
     {
@@ -16,15 +19,18 @@ public class Switch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player")
+    	// if it's not the player or the switch has already been triggered by the player
+    	// then do nothing:
+        if (other.gameObject.tag != "Player" || triggered)
         {
             return;
         }
 
-		if (cut_scene!=null)
+		if (cut_scene)
         {
-			Cut_scene cs = cut_scene.GetComponent<Cut_scene>();
+			Cut_scene cs = goal_walls.GetComponent<Goal_wall_array>().get_next_wall();
 			cs.activate();
+			triggered = true;
 		}
 		else
         {
