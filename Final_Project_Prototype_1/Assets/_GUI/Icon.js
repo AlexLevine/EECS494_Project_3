@@ -157,7 +157,7 @@ function Update () {
 //        }
 
 		 if (vp.z<0){
-		 	if (gameObject.name=="Llama") print("hack");
+		 	//if (gameObject.name=="Llama") print("hack");
          	var temp = ap.x - Screen.width/2;
          	ap.x=Screen.width/2-temp;
          	ap.y = Screen.height;
@@ -170,7 +170,7 @@ function Update () {
          
          GUI.DrawTexture(Rect(ap.x-temp_shift, ap.y, temp_scale, temp_scale),texture);
          if (gameObject.name=="Llama"){
-         	print(ap);
+         	//print(ap);
          }
 
          // print(Screen.width*Screen.height*scale);
