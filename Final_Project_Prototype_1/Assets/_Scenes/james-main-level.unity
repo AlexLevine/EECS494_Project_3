@@ -12676,7 +12676,7 @@ Transform:
   - {fileID: 1739178042}
   - {fileID: 189041219}
   m_Father: {fileID: 1396537530}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &957281047
 GameObject:
   m_ObjectHideFlags: 0
@@ -18714,9 +18714,8 @@ Transform:
   - {fileID: 1956803441}
   - {fileID: 1962159621}
   - {fileID: 1931506569}
-  - {fileID: 1652569070}
   m_Father: {fileID: 1396537530}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1344888359
 GameObject:
   m_ObjectHideFlags: 0
@@ -19117,6 +19116,7 @@ Transform:
   - {fileID: 112374666}
   - {fileID: 1938363703}
   - {fileID: 1556930545}
+  - {fileID: 1652569070}
   - {fileID: 1342399893}
   - {fileID: 951340627}
   m_Father: {fileID: 242473456}
@@ -21451,8 +21451,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1579843818}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -167, y: 7.76000023, z: 65}
+  m_LocalRotation: {x: 0, y: 0, z: .149621651, w: .988743365}
+  m_LocalPosition: {x: -167, y: 8.64999962, z: 65}
   m_LocalScale: {x: 10, y: 1, z: 16}
   m_Children: []
   m_Father: {fileID: 1342399893}
@@ -22279,10 +22279,10 @@ Transform:
   m_GameObject: {fileID: 1652569069}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -167, y: 6.4000001, z: 65}
-  m_LocalScale: {x: 10, y: 2, z: 16}
+  m_LocalScale: {x: 3, y: 2, z: 3}
   m_Children: []
-  m_Father: {fileID: 1342399893}
-  m_RootOrder: 6
+  m_Father: {fileID: 1396537530}
+  m_RootOrder: 4
 --- !u!23 &1652569071
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29673,8 +29673,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed88eab5a91a4e429d4ec82c112dda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first_retreat_point: {fileID: 42761141}
-  second_retreat_point: {fileID: 2007795319}
 --- !u!1 &2025505374
 GameObject:
   m_ObjectHideFlags: 0
