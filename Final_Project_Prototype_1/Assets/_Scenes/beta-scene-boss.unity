@@ -494,8 +494,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 284601988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.29999995, y: 19.3999996, z: -63.5}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalPosition: {x: -2.0999999, y: 5.4000001, z: -44.0999985}
+  m_LocalScale: {x: 75, y: 1, z: 75}
   m_Children: []
   m_Father: {fileID: 1102154784}
   m_RootOrder: 6
@@ -1109,8 +1109,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 638302307}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0999999, y: -2.0999999, z: -82.0999985}
-  m_LocalScale: {x: 75, y: 8, z: 1}
+  m_LocalPosition: {x: -2.0999999, y: .899999976, z: -82.0999985}
+  m_LocalScale: {x: 77, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1102154784}
   m_RootOrder: 5
@@ -1866,7 +1866,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1074063157}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 34.9000015, y: -2.0999999, z: -45.0999985}
+  m_LocalPosition: {x: 35.9000015, y: .899999976, z: -44.0999985}
   m_LocalScale: {x: 75, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1102154784}
@@ -2695,8 +2695,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1445296470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0999999, y: -2.0999999, z: -6.0999999}
-  m_LocalScale: {x: 75, y: 8, z: 1}
+  m_LocalPosition: {x: -1.60000002, y: .899999976, z: -6.0999999}
+  m_LocalScale: {x: 76, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1102154784}
   m_RootOrder: 4
@@ -3292,8 +3292,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1858169243}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: -39.0999985, y: -2.0999999, z: -44.0999985}
-  m_LocalScale: {x: 75, y: 8, z: 1}
+  m_LocalPosition: {x: -40.0999985, y: .899999976, z: -43.5999985}
+  m_LocalScale: {x: 76, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1102154784}
   m_RootOrder: 2
