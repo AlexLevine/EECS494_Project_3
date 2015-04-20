@@ -38,8 +38,11 @@ public class Camera_follow : MonoBehaviour
     private float transition_time_elapsed = 0;
     private float current_transition_duration = 1f;
     private Camera_callback current_transition_callback = null;
-
-    //--------------------------------------------------------------------------
+    private bool boss_mode = false;
+	private float smooth = 0.25f;
+	private float yVelocity = 0.0f;
+	
+	//--------------------------------------------------------------------------
 
     // Use this for initialization
     void Start()
@@ -66,7 +69,11 @@ public class Camera_follow : MonoBehaviour
         var target_position = calculate_target_camera_position();
         var target_rotation = calculate_target_camera_rotation(
             target_position);
-
+		
+		if (boss_mode){
+			transform.rotation=target_rotation;
+		}
+		
         if (!is_transitioning_)
         {
             if (!following_player_)
@@ -207,18 +214,33 @@ public class Camera_follow : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
+
+
+
+	//needs to know if in boss mode
+	//new_forward=b.pos-p.pos
     Vector3 calculate_target_camera_position()
     {
-        var wanted_forward = Quaternion.AngleAxis(y_rotation_, Vector3.up);
-
-        var camera_offset = -(wanted_forward * Vector3.forward);
-        camera_offset.y = 0;
-        camera_offset = camera_offset.normalized;
-        camera_offset *= camera_follow_distance_;
-
-        camera_offset.y += camera_hover_height_;
-
-        return point_of_interest_ + camera_offset;
+        if (!boss_mode){
+	        var wanted_forward = Quaternion.AngleAxis(y_rotation_, Vector3.up);
+	
+	        var camera_offset = -(wanted_forward * Vector3.forward);
+	        camera_offset.y = 0;
+	        camera_offset = camera_offset.normalized;
+	        camera_offset *= camera_follow_distance_;
+	
+	        camera_offset.y += camera_hover_height_;
+	
+	        return point_of_interest_ + camera_offset;
+        }
+        else{
+        	Vector3 a = Ninja.get().transform.position;
+        	Vector3 b = Samurai_Attack.get().transform.position;
+        	Vector3 offset = a-b;
+        	offset = offset + 20*offset.normalized;
+        	offset.y = 10f;
+        	return b+offset;
+        }
         // if (!is_transitioning)
         // {
         //     return target_pos;
@@ -233,15 +255,37 @@ public class Camera_follow : MonoBehaviour
 
     Quaternion calculate_target_camera_rotation(Vector3 target_position)
     {
-        var look_direction = point_of_interest_ - target_position;
-        var new_forward = Vector3.RotateTowards(
-            transform.forward, look_direction, 360f, 0f);
-
-        var target_rotation = Quaternion.LookRotation(new_forward);
-
-        return target_rotation;
-    }
-    //--------------------------------------------------------------------------
+        if (!boss_mode){
+	        var look_direction = point_of_interest_ - target_position;
+	        var new_forward = Vector3.RotateTowards(
+	            transform.forward, look_direction, 360f, 0f);
+	
+	        var target_rotation = Quaternion.LookRotation(new_forward);
+	
+	        return target_rotation;
+	    }
+	    else{
+	   
+			Vector3 a = Ninja.get().transform.position;
+			Vector3 b = Samurai_Attack.get().transform.position;
+			
+			var direction = b-a;
+			
+			var new_forward = Vector3.RotateTowards(
+				Camera.main.transform.forward, direction, 10f*Time.deltaTime, 0f);
+				
+			var new_rotation = Quaternion.LookRotation(new_forward);
+			
+			//smoothdamp
+			var rotation_step = Mathf.SmoothDampAngle(Camera.main.transform.eulerAngles.y,new_rotation.eulerAngles.y,ref yVelocity,smooth);
+			var temp = new_rotation.eulerAngles;
+			temp.y = rotation_step;
+			new_rotation = Quaternion.Euler(temp);
+			
+			return new_rotation;
+		}
+	}
+	//--------------------------------------------------------------------------
 
     // // Returns true if any of the parameters passed to this function are not
     // // null.
@@ -394,4 +438,8 @@ public class Camera_follow : MonoBehaviour
                viewport_pos.x > 0f && viewport_pos.x < 1f;
 
     }// point_in_viewport
+    
+    public void activate_boss_mode(){
+    	boss_mode=true;
+    }
 }
