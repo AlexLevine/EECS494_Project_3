@@ -176,7 +176,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public override void on_death()
+    public override void on_death(GameObject killer=null)
     {
         reset_health();
         Checkpoint.load_last_checkpoint();
@@ -195,11 +195,6 @@ public class Player_character : Actor
 
     public virtual void toggle_lock_on()
     {
-        // if (teamed_up)
-        // {
-        //     return;
-        // }
-
         if (is_locked_on)
         {
             release_lock_on();
@@ -208,12 +203,11 @@ public class Player_character : Actor
 
         var closest_enemy =
                 Enemy.get_closest_potential_lock_on_target(gameObject);
-
         var enemy_on_screen = Camera_follow.point_in_viewport(
             closest_enemy.transform.position);
+        var enemy_visible = closest_enemy.GetComponent<Renderer>().isVisible;
 
-
-        if (closest_enemy == null || !enemy_on_screen)
+        if (closest_enemy == null || !enemy_on_screen || !enemy_visible)
         {
             return;
         }
@@ -264,26 +258,6 @@ public class Player_character : Actor
                 Enemy.get_closest_potential_lock_on_target(gameObject));
         }
     }// on_enemy_gone
-
-    //--------------------------------------------------------------------------
-
-    // public virtual void toggle_jousting_pole()
-    // {
-    // }// toggle_jousting_pole
-
-    //--------------------------------------------------------------------------
-
-    public virtual void adjust_jousting_pole(float vertical_tilt, float horizontal_tilt)
-    {
-    }// adjust_jousting_pole
-
-    //--------------------------------------------------------------------------
-
-    public virtual void stop()
-    {
-        velocity = Vector3.zero;
-        acceleration = Vector3.zero;
-    }// stop
 
     //--------------------------------------------------------------------------
 

@@ -9,6 +9,8 @@ public class Enemy : Actor
 
     public virtual int score_when_killed { get { return 1; } }
 
+    public virtual float attack_power { get { return 1f; } }
+
     public virtual void Awake()
     {
         enemies.Add(gameObject);
@@ -74,61 +76,16 @@ public class Enemy : Actor
         //         transform.position, obj.transform.position));
     }// get_closest_potential_lock_on_target
 
-    //--------------------------------------------------------------------------
-
-    public override bool receive_hit(
-        float damage, Vector3 knockback_velocity, GameObject attacker)
-    {
-        var will_die = base.receive_hit(damage, knockback_velocity, attacker);
-        if (!will_die)
-        {
-            return false;
-        }
-
-        if (attacker.name == Ninja_sword.global_name)
-        {
-            Timer.num_enemies_killed_by_ninja += score_when_killed;
-        }
-
-        if (attacker.name == Llama_spit.global_name)
-        {
-            Timer.num_enemies_killed_by_llama += score_when_killed;
-        }
-
-        if (attacker.name == Ninja_jousting_pole.global_name)
-        {
-            Timer.num_enemies_killed_by_ninja += score_when_killed;
-            Timer.num_enemies_killed_by_llama += score_when_killed;
-        }
-
-        return true;
-    }
-
-
-    //--------------------------------------------------------------------------
-
-    public virtual void on_player_hit(){}
-
-    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------    --------------------------------------------------------------------------
 
     public virtual void OnTriggerEnter(Collider c)
     {
         var player = c.gameObject.GetComponent<Player_character>();
-        var flash_animation_playing = GetComponent<Flash_animation>().is_playing;
-        if (player == null || being_knocked_back || flash_animation_playing)
+        if (player == null || being_knocked_back ||
+            taking_damage_animation_playing)
         {
             return;
         }
-        // var parent = c.gameObject.transform.parent;
-        // (parent != null ? parent.gameObject :
-        //     c.gameObject).GetComponent<Actor>().receive_hit(attack_power);
-
-        // var actor = c.gameObject.GetComponent<Actor>();
-        // // print(actor);
-        // if (actor == null)
-        // {
-        //     return;
-        // }
 
         var knockback_direction = (
             c.gameObject.transform.position - transform.position).normalized;
@@ -136,36 +93,34 @@ public class Enemy : Actor
 
         player.receive_hit(attack_power, knockback_velocity, gameObject);
 
-        on_player_hit();
+        // on_player_hit();
     }// OnTriggerEnter
+
+    //--------------------------------------------------------------------------
 
     void OnTriggerStay(Collider c)
     {
         OnTriggerEnter(c);
-    }
-
-    // void OnCollisionEnter(Collision c)
-    // {
-    //     OnTriggerEnter(c.collider);
-    // }
+    }// OnTriggerStay
 
     //--------------------------------------------------------------------------
 
-    public virtual float attack_power
+    public override void on_death(GameObject killer)
     {
-        get
+        if (killer.name == Ninja_sword.global_name)
         {
-            throw new Exception("Derived classes must override this property");
+            Timer.num_enemies_killed_by_ninja += score_when_killed;
         }
-    }// attack_power
 
-    public override void on_death()
-    {
+        if (killer.name == Llama_spit.global_name)
+        {
+            Timer.num_enemies_killed_by_llama += score_when_killed;
+        }
+
         GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
         boom.transform.position = transform.position;
         Destroy(gameObject);
     }// on_death
-
 
     //--------------------------------------------------------------------------
 

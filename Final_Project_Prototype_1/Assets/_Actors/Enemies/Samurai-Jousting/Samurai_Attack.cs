@@ -299,10 +299,11 @@ public class Samurai_Attack : Enemy {
 
     //--------------------------------------------------------------------------
 
-    public override void on_death()
+    public override void on_death(GameObject killer)
     {
         base.on_death();
         Camera.main.GetComponent<Camera_follow>().deactivate_boss_mode();
+        Player_character.force_team_up = false;
     }
 
 	// -------------------------------------------------------------------------

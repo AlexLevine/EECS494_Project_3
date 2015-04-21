@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody)),
- RequireComponent(typeof(Flash_animation)),
- RequireComponent(typeof(Knockback_animation))]
+[RequireComponent(typeof(Rigidbody))]
 public class Actor : MonoBehaviour
 {
     public static bool actors_paused = false;
 
     // This should reference the game object that contains the actor's visible body.
     // Since we are using box colliders and don't have a good way to detect
-    // collisions resulting from rotating, we will instead rotate the
-    // character's body rather than its colliders.
+    // collisions resulting from rotating, we will rotate the
+    // character's body instead of its colliders.
     public GameObject body;
 
     public virtual float max_health {
@@ -22,24 +21,26 @@ public class Actor : MonoBehaviour
     public bool is_grounded { get { return is_grounded_; } }
 
     public bool being_knocked_back {
-        get { return knockback_animation.is_playing; } }
+        get { return being_knocked_back_; } }
+    public bool taking_damage_animation_playing {
+        get { return taking_damage_animation_playing_; } }
 
     public virtual bool animation_controlling_movement {
-        get { return knockback_animation.is_playing; } }
+        get { return being_knocked_back_; } }
 
     public virtual float gravity { get { return -25f; } }
-
     public virtual Vector3 acceleration {
         get { return acceleration_; } set { acceleration_ = value; }}
     public Vector3 velocity {
         get { return velocity_; } set { velocity_ = value; } }
 
-    private float health_;
     protected Rigidbody kinematic_rigidbody;
     protected bool is_grounded_;
 
-    private Flash_animation invincibility_animation;
-    private Knockback_animation knockback_animation;
+    private float health_;
+
+    private bool taking_damage_animation_playing_ = false;
+    private bool being_knocked_back_ = false;
 
     private Vector3 velocity_ = Vector3.zero;
     private Vector3 acceleration_ = Vector3.zero;
@@ -50,8 +51,8 @@ public class Actor : MonoBehaviour
     {
         health_ = max_health;
 
-        invincibility_animation = GetComponent<Flash_animation>();
-        knockback_animation = GetComponent<Knockback_animation>();
+        // invincibility_animation = GetComponent<Flash_animation>();
+        // knockback_animation = GetComponent<Knockback_animation>();
 
         kinematic_rigidbody = GetComponent<Rigidbody>();
         kinematic_rigidbody.isKinematic = true;
@@ -92,6 +93,14 @@ public class Actor : MonoBehaviour
         // print("net_acceleration: " + net_acceleration);
         velocity_ += net_acceleration * Time.deltaTime;
     }
+
+    //--------------------------------------------------------------------------
+
+    public virtual void stop()
+    {
+        velocity = Vector3.zero;
+        acceleration = Vector3.zero;
+    }// stop
 
     //--------------------------------------------------------------------------
 
@@ -242,36 +251,108 @@ public class Actor : MonoBehaviour
 
     // returns true if the hit is fatal
     public virtual bool receive_hit(
-        float damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker,
+        float knockback_duration=0.5f, float invincibility_flash_duration=0.5f)
     {
-        if (invincibility_animation.is_playing)
+        if (taking_damage_animation_playing_)
         {
             return false;
         }
-        // if(Llama.get().is_charging)
-        // {
-        //     return false;
-        // }
-
 
         health_ -= damage;
         play_damage_vocals();
 
         bool should_die = health_ <= 0;
 
-        // HACK: this lets you use this function for damageless knockback
-        if (damage != 0)
+        if (should_die)
         {
-            invincibility_animation.start_animation();
+            on_death(attacker);
+            return should_die;
         }
 
-        // HACK
-        knockback_velocity = knockback_velocity.normalized * 10;
-
-        knockback_animation.apply_knockback(knockback_velocity, should_die);
+        StartCoroutine(
+            apply_knockback(knockback_velocity, knockback_duration));
+        StartCoroutine(
+            invincibility_flash_animation(invincibility_flash_duration));
 
         return should_die;
     }// receive_hit
+
+    //--------------------------------------------------------------------------
+
+    IEnumerator apply_knockback(
+        Vector3 knockback_velocity, float knockback_duration)
+    {
+        being_knocked_back_ = true;
+
+        stop();
+        velocity = knockback_velocity;
+
+        var time_elapsed = 0f;
+        while (time_elapsed < knockback_duration)
+        {
+            time_elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        stop();
+
+        being_knocked_back_ = false;
+    }// apply_knockback_and_flash
+
+    //--------------------------------------------------------------------------
+
+    IEnumerator invincibility_flash_animation(float duration)
+    {
+        taking_damage_animation_playing_ = true;
+
+        var renderers = new List<MeshRenderer>(
+            GetComponentsInChildren<MeshRenderer>());
+        renderers.AddRange(
+            new List<MeshRenderer>(GetComponents<MeshRenderer>()));
+
+        var main_renderer = GetComponent<MeshRenderer>();
+        if (main_renderer != null)
+        {
+            renderers.Add(main_renderer);
+        }
+
+        toggle_renderers(renderers);
+
+        var time_to_next_toggle = Time.fixedDeltaTime * 5f;
+        var time_elapsed = 0f;
+        while(time_elapsed < duration)
+        {
+            time_to_next_toggle -= Time.deltaTime;
+            if (time_to_next_toggle > 0)
+            {
+                continue;
+            }
+
+            time_to_next_toggle = Time.fixedDeltaTime * 5f;
+            toggle_renderers(renderers);
+
+            time_elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        foreach(var renderer in renderers)
+        {
+            renderer.enabled = true;
+        }
+
+        taking_damage_animation_playing_ = false;
+    }// invincibility_flash_animation
+
+    void toggle_renderers(List<MeshRenderer> renderers)
+    {
+        foreach(var renderer in renderers)
+        {
+            renderer.enabled = !renderer.enabled;
+        }
+    }// toggle_renderers
+
+    //--------------------------------------------------------------------------
 
     protected virtual void play_damage_vocals()
     {
@@ -279,7 +360,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void on_death()
+    public virtual void on_death(GameObject killer=null)
     {
 
     }// on_death

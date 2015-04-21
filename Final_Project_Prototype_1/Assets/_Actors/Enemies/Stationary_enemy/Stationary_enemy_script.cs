@@ -46,9 +46,13 @@ public class Stationary_enemy_script : Enemy
 
     // returns true if the hit is fatal
     public override bool receive_hit(
-        float damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker,
+        float knockback_duration, float invincibility_flash_duration)
     {
-        return base.receive_hit(damage, Vector3.zero, attacker);
+        // This enemy should not be knocked back.
+        return base.receive_hit(
+            damage, Vector3.zero, attacker,
+            knockback_duration, invincibility_flash_duration);
     }// receive_hit
 
     //--------------------------------------------------------------------------
@@ -72,7 +76,7 @@ public class Stationary_enemy_script : Enemy
         // direction_to_player = direction_to_player.normalized;
         bullet.GetComponent<Rigidbody>().velocity = body.transform.forward * 14;
         timer = 0;
-    }
+    }// shoot_projectile
 
     //--------------------------------------------------------------------------
 
@@ -91,5 +95,5 @@ public class Stationary_enemy_script : Enemy
         {
             closest_player = Ninja.get().gameObject;
         }
-    }
+    }// get_closest_player
 }

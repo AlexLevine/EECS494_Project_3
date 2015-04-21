@@ -354,22 +354,41 @@ public class Llama : Player_character
         base.toggle_lock_on();
     }// toggle_lock_on
 
+    //--------------------------------------------------------------------------
+
     public override bool receive_hit(
-            float damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker,
+        float knockback_duration, float invincibility_flash_duration)
     {
-        if(is_teamed_up)
+        if(!is_teamed_up)
         {
-            damage /= 2;
-            Ninja.get().receive_hit(damage, Vector3.zero, attacker);
+            return base.receive_hit(
+                damage, knockback_velocity, attacker,
+                knockback_duration, invincibility_flash_duration);
         }
 
-        return base.receive_hit(damage, knockback_velocity, attacker);
-    }
+        if (Ninja.get().sword_swing_invincibility_active)
+        {
+            return false;
+        }
 
-	public override void on_death()
+        damage /= 2;
+        Ninja.get().receive_hit(
+            damage, Vector3.zero, attacker,
+            knockback_duration, invincibility_flash_duration);
+
+        return base.receive_hit(
+            damage, knockback_velocity, attacker,
+            knockback_duration, invincibility_flash_duration);
+
+    }// receive_hit
+
+    //--------------------------------------------------------------------------
+
+	public override void on_death(GameObject killer)
     {
 		Ninja.get().reset_health();
-		base.on_death();
+		base.on_death(killer);
 	}
 
     //--------------------------------------------------------------------------
@@ -378,33 +397,5 @@ public class Llama : Player_character
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
-
-    //--------------------------------------------------------------------------
-
-    // protected override void on_enemy_gone(GameObject enemy)
-    // {
-    //     if (enemy == lock_on_target)
-    //     {
-
-    //         lock_on_target = null;
-    //     }
-    // }// on_enemy_gone
-
-    //--------------------------------------------------------------------------
-
-    // void OnCollisionEnter(Collision c)
-    // {
-    //     var breakable_wall = c.gameObject.GetComponent<Breakable_wall>();
-    //     if (breakable_wall != null && is_charging)
-    //     {
-    //         breakable_wall.break_wall();
-    //         return;
-    //     }
-    // }
-
-    // void OnCollisionStay(Collision c)
-    // {
-    //     OnCollisionEnter(c);
-    // }
 }
 

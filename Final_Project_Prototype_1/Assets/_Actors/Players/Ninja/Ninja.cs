@@ -14,6 +14,12 @@ public class Ninja : Player_character
 
     public bool being_thrown = false;
 
+    // The Ninja is immune to attacks while his sword is able to deal damage.
+    public bool sword_swing_invincibility_active
+    {
+        get { return sword_is_spinning || sword_is_swinging; }
+    }
+
     public override bool animation_controlling_movement
     {
         get
@@ -291,7 +297,8 @@ public class Ninja : Player_character
     //--------------------------------------------------------------------------
 
     public override bool receive_hit(
-        float damage, Vector3 knockback_velocity, GameObject attacker)
+        float damage, Vector3 knockback_velocity, GameObject attacker,
+        float knockback_duration, float invincibility_flash_duration)
     {
         if (sword_is_spinning || sword_is_swinging || is_diving)
         {
@@ -355,13 +362,6 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    // public void on_thrown()
-    // {
-    //     on_ground = false;
-    // }// on_thrown
-
-    //--------------------------------------------------------------------------
-
     protected override void on_team_up_engage()
     {
         notify_on_ground();
@@ -392,10 +392,12 @@ public class Ninja : Player_character
         base.jump();
     }// jump
 
-	public override void on_death()
+    //--------------------------------------------------------------------------
+
+	public override void on_death(GameObject killer)
     {
 		Llama.get ().reset_health();
-		base.on_death();
+		base.on_death(killer);
 	}
 
     //--------------------------------------------------------------------------
@@ -404,7 +406,6 @@ public class Ninja : Player_character
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
-
 }
 
 
