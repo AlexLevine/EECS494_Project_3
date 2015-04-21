@@ -169,17 +169,6 @@ public class Llama : Player_character
         // }
 
         var summary = base.move(delta_position);
-        if (!summary.hit_y)
-        {
-            return summary;
-        }
-
-        var ninja = summary.hit_info_y.transform.GetComponent<Ninja>();
-        if (ninja != null && summary.hit_ground)
-        {
-            ninja.toggle_shrunk();
-            jump();
-        }
 
         if (summary.hit_x)
         {
@@ -207,6 +196,18 @@ public class Llama : Player_character
                 nudged_pos.z += delta_position.z;
                 transform.position = nudged_pos;
             }
+        }
+
+        if (!summary.hit_y)
+        {
+            return summary;
+        }
+
+        var ninja = summary.hit_info_y.transform.GetComponent<Ninja>();
+        if (ninja != null && summary.hit_ground)
+        {
+            ninja.toggle_shrunk();
+            jump();
         }
 
         return summary;
@@ -243,7 +244,7 @@ public class Llama : Player_character
         {
             var rotate_amount = Quaternion.AngleAxis(
                 angle < 0 ? 2f : -2f, Vector3.up);
-            print(rotate_amount);
+            // print(rotate_amount);
             charge_direction = rotate_amount * charge_direction;
         }
 

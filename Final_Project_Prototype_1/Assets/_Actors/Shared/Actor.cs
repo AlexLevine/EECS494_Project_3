@@ -109,30 +109,32 @@ public class Actor : MonoBehaviour
         summary.hit_x = sweep_test_all_filter(
             delta_position.x * Vector3.right, out summary.hit_info_x,
             delta_position.magnitude + precision_pad);
-        summary.hit_y = sweep_test_all_filter(
-            delta_position.y * Vector3.up, out summary.hit_info_y,
-            delta_position.magnitude + precision_pad);
-        summary.hit_z = sweep_test_all_filter(
-            delta_position.z * Vector3.forward, out summary.hit_info_z,
-            delta_position.magnitude + precision_pad);
-
         if (summary.hit_x)
         {
             summary.distance_moved.x = delta_position.normalized.x * Mathf.Max(
                 summary.hit_info_x.distance - precision_pad, 0);
         }
-        if (summary.hit_y && !summary.hit_info_y.collider.isTrigger)
-        {
-            summary.distance_moved.y = delta_position.normalized.y * Mathf.Max(
-                summary.hit_info_y.distance - precision_pad, 0);
-        }
-        if (summary.hit_z && !summary.hit_info_z.collider.isTrigger)
+        transform.position += new Vector3(summary.distance_moved.x, 0, 0);
+
+        summary.hit_z = sweep_test_all_filter(
+            delta_position.z * Vector3.forward, out summary.hit_info_z,
+            delta_position.magnitude + precision_pad);
+        if (summary.hit_z)
         {
             summary.distance_moved.z = delta_position.normalized.z * Mathf.Max(
                 summary.hit_info_z.distance - precision_pad, 0);
         }
+        transform.position += new Vector3(0, 0, summary.distance_moved.z);
 
-        transform.position += summary.distance_moved;
+        summary.hit_y = sweep_test_all_filter(
+            delta_position.y * Vector3.up, out summary.hit_info_y,
+            delta_position.magnitude + precision_pad);
+        if (summary.hit_y)
+        {
+            summary.distance_moved.y = delta_position.normalized.y * Mathf.Max(
+                summary.hit_info_y.distance - precision_pad, 0);
+        }
+        transform.position += new Vector3(0, summary.distance_moved.y, 0);
 
         if (delta_position.y < 0)
         {
