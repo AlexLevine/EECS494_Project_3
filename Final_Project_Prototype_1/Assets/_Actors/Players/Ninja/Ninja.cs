@@ -237,6 +237,12 @@ public class Ninja : Player_character
         // }
 
         var move_data = base.move(delta_position);
+
+        if (landed_on_llama(move_data))
+        {
+            team_up_engage_or_throw();
+        }
+
         animator.SetBool(on_ground_param_id, is_grounded);
         if (is_grounded && being_thrown)
         {
@@ -246,6 +252,17 @@ public class Ninja : Player_character
         return move_data;
         // }
     }// move
+
+    bool landed_on_llama(Sweep_test_summary move_info)
+    {
+        if (!move_info.hit_y || move_info.distance_moved.y > 0)
+        {
+            return false;
+        }
+
+        var llama = move_info.hit_info_y.transform.GetComponent<Llama>();
+        return llama != null;
+    }// landed_on_llama
 
     //--------------------------------------------------------------------------
 
@@ -298,13 +315,14 @@ public class Ninja : Player_character
 
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker,
-        float knockback_duration, float invincibility_flash_duration)
+        float knockback_duration)
     {
         if (sword_is_spinning || sword_is_swinging || is_diving)
         {
             return false;
         }
-        return base.receive_hit(damage, knockback_velocity, attacker);
+        return base.receive_hit(
+            damage, knockback_velocity, attacker, knockback_duration);
     }// receive_hit
 
     //--------------------------------------------------------------------------

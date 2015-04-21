@@ -21,6 +21,9 @@ public class Samurai_Attack : Enemy {
 	public bool is_charging {
 		get { return cur_state == Samurai_state_e.ATTACKING; } }
 
+    protected override float invincibility_flash_duration {
+        get { return 0.5f; } }
+
 	public static float max_pause_time = 2f;
 	private float cur_pause_time;
 

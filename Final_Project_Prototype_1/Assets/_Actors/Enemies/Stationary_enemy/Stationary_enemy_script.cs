@@ -47,12 +47,10 @@ public class Stationary_enemy_script : Enemy
     // returns true if the hit is fatal
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker,
-        float knockback_duration, float invincibility_flash_duration)
+        float knockback_duration)
     {
         // This enemy should not be knocked back.
-        return base.receive_hit(
-            damage, Vector3.zero, attacker,
-            knockback_duration, invincibility_flash_duration);
+        return base.receive_hit(damage, Vector3.zero, attacker, 0);
     }// receive_hit
 
     //--------------------------------------------------------------------------

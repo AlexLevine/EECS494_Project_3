@@ -358,13 +358,13 @@ public class Llama : Player_character
 
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker,
-        float knockback_duration, float invincibility_flash_duration)
+        float knockback_duration)
     {
         if(!is_teamed_up)
         {
             return base.receive_hit(
                 damage, knockback_velocity, attacker,
-                knockback_duration, invincibility_flash_duration);
+                knockback_duration);
         }
 
         if (Ninja.get().sword_swing_invincibility_active)
@@ -374,12 +374,10 @@ public class Llama : Player_character
 
         damage /= 2;
         Ninja.get().receive_hit(
-            damage, Vector3.zero, attacker,
-            knockback_duration, invincibility_flash_duration);
+            damage, Vector3.zero, attacker, knockback_duration);
 
         return base.receive_hit(
-            damage, knockback_velocity, attacker,
-            knockback_duration, invincibility_flash_duration);
+            damage, knockback_velocity, attacker, knockback_duration);
 
     }// receive_hit
 

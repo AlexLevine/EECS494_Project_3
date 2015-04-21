@@ -36,6 +36,8 @@ public class Actor : MonoBehaviour
 
     protected Rigidbody kinematic_rigidbody;
     protected bool is_grounded_;
+    protected virtual float invincibility_flash_duration {
+        get {return 0.5f; } }
 
     private float health_;
 
@@ -252,7 +254,7 @@ public class Actor : MonoBehaviour
     // returns true if the hit is fatal
     public virtual bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker,
-        float knockback_duration=0.5f, float invincibility_flash_duration=0.5f)
+        float knockback_duration=0.5f)
     {
         if (taking_damage_animation_playing_)
         {
@@ -271,7 +273,8 @@ public class Actor : MonoBehaviour
         }
 
         StartCoroutine(
-            apply_knockback(knockback_velocity, knockback_duration));
+            apply_knockback(knockback_velocity.normalized * 10f,
+                            knockback_duration));
         StartCoroutine(
             invincibility_flash_animation(invincibility_flash_duration));
 
@@ -286,16 +289,17 @@ public class Actor : MonoBehaviour
         being_knocked_back_ = true;
 
         stop();
-        velocity = knockback_velocity;
+        // velocity = knockback_velocity;
 
         var time_elapsed = 0f;
         while (time_elapsed < knockback_duration)
         {
+            move(knockback_velocity * Time.deltaTime);
             time_elapsed += Time.deltaTime;
             yield return null;
         }
 
-        stop();
+        // stop();
 
         being_knocked_back_ = false;
     }// apply_knockback_and_flash
@@ -317,29 +321,30 @@ public class Actor : MonoBehaviour
             renderers.Add(main_renderer);
         }
 
-        toggle_renderers(renderers);
+        // toggle_renderers(renderers);
 
-        var time_to_next_toggle = Time.fixedDeltaTime * 5f;
-        var time_elapsed = 0f;
-        while(time_elapsed < duration)
+        // var time_to_next_toggle = Time.fixedDeltaTime * 10f;
+        // var time_elapsed = 0f;
+        for (int i = 0; i < duration / 0.05f; ++i)
         {
-            time_to_next_toggle -= Time.deltaTime;
-            if (time_to_next_toggle > 0)
-            {
-                continue;
-            }
+            // print(time_to_next_toggle);
+            // time_to_next_toggle -= Time.deltaTime;
+            // if (time_to_next_toggle > 0)
+            // {
+            //     continue;
+            // }
 
-            time_to_next_toggle = Time.fixedDeltaTime * 5f;
+            // time_to_next_toggle = Time.fixedDeltaTime * 10f;
             toggle_renderers(renderers);
 
-            time_elapsed += Time.deltaTime;
-            yield return null;
+            // time_elapsed += Time.deltaTime;
+            yield return new WaitForSeconds(0.05f);
         }
 
-        foreach(var renderer in renderers)
-        {
-            renderer.enabled = true;
-        }
+        // foreach(var renderer in renderers)
+        // {
+        //     renderer.enabled = true;
+        // }
 
         taking_damage_animation_playing_ = false;
     }// invincibility_flash_animation

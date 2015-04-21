@@ -11,6 +11,9 @@ public class Enemy : Actor
 
     public virtual float attack_power { get { return 1f; } }
 
+    protected override float invincibility_flash_duration {
+        get { return 0f; } }
+
     public virtual void Awake()
     {
         enemies.Add(gameObject);

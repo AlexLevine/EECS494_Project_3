@@ -44,6 +44,9 @@ public class Player_character : Actor
         }
     }
 
+    protected virtual float invincibility_flash_duration {
+        get {return 1f; } }
+
     //--------------------------------------------------------------------------
 
     private bool jumping = false;
