@@ -5,6 +5,8 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Collider))]
 public class Checkpoint : MonoBehaviour
 {
+    public delegate void Checkpoint_load_callback();
+
     static public GameObject last_checkpoint = null;
 
     private bool ninja_passed_checkpoint = false;
@@ -65,15 +67,19 @@ public class Checkpoint : MonoBehaviour
         OnTriggerEnter(other);
     }
 
-    public static void load_last_checkpoint()
+    public static void load_last_checkpoint(
+        Checkpoint_load_callback callback=null)
     {
-        // display prompt
-        // do whatever
+        // screen fade to black
+        // disable actors
 
         var new_llama_pos = last_checkpoint.transform.position;
         var new_ninja_pos = new_llama_pos;
-
         new_ninja_pos.x += 2;
+
+        Camera_follow.adjust_main_camera(
+            new_point_of_interest: new_llama_pos,
+            transition_duration: 0);
 
         Ninja.get().gameObject.transform.position = new_ninja_pos;
         Llama.get().gameObject.transform.position = new_llama_pos;
@@ -82,7 +88,31 @@ public class Checkpoint : MonoBehaviour
         {
             subscriber.notify_checkpoint_load();
         }
+
+        // screen fade in
+        // re-enable actors
     }
+
+    // delegate void Fade_screen_callback();
+
+    // static IEnumerator fade_screen(
+    //     bool fade_to_black, Fade_screen_callback callback=null)
+    // {
+    //     var start_alpha_val = 1f;
+    //     var end_alpha_val = 0f;
+
+    //     var fade_duration = 0f;
+    //     var time_elapsed = 1f;
+
+    //     var lerp_percent = Mathf.Clamp01(time_elapsed / fade_duration);
+    //     while (lerp_percent <= 1)
+    //     {
+    //         GUI.color = new Color(0, 0, 0, alphaFadeValue);
+    //         GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), blackTexture );
+
+    //     }
+
+    // }
 
     public static void unsubscribe(GameObject obj)
     {

@@ -412,11 +412,11 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-	public override void on_death(GameObject killer)
-    {
-		Llama.get ().reset_health();
-		base.on_death(killer);
-	}
+	// public override void on_death(GameObject killer)
+ //    {
+	// 	Llama.get ().reset_health();
+	// 	base.on_death(killer);
+	// }
 
     //--------------------------------------------------------------------------
 

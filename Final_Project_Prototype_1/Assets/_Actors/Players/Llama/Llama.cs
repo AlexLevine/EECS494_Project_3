@@ -383,11 +383,11 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-	public override void on_death(GameObject killer)
-    {
-		Ninja.get().reset_health();
-		base.on_death(killer);
-	}
+	// public override void on_death(GameObject killer)
+ //    {
+	// 	Ninja.get().reset_health();
+	// 	base.on_death(killer);
+	// }
 
     //--------------------------------------------------------------------------
 

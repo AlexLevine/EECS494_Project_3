@@ -18,7 +18,7 @@ public class Llama_spit : MonoBehaviour
     {
         time_left -= Time.deltaTime;
 
-        print(time_left);
+        // print(time_left);
         if (time_left <= 0)
         {
             Destroy(gameObject);

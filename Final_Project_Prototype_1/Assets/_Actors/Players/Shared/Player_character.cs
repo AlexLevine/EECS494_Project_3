@@ -181,11 +181,25 @@ public class Player_character : Actor
 
     public override void on_death(GameObject killer=null)
     {
-        reset_health();
+
+        play_death_animation();
         Checkpoint.load_last_checkpoint();
+
+        reset_health();
+        get_other_player().GetComponent<Player_character>().reset_health();
 
         print("you die!");
     }// on_death
+
+    protected virtual void play_death_animation()
+    {
+
+    }// play_death_animation
+
+    protected virtual void on_death_animation_finished()
+    {
+
+    }
 
     //--------------------------------------------------------------------------
 

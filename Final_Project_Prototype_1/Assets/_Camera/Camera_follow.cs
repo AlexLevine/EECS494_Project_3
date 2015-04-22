@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Camera_follow : MonoBehaviour
+public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
 {
     public delegate void Camera_callback();
 
@@ -47,6 +47,7 @@ public class Camera_follow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // Checkpoint.ssubscribe(this);
         // following_player_ = false;
 
         // point_of_interest_ = calculate_player_midpoint();
@@ -78,6 +79,13 @@ public class Camera_follow : MonoBehaviour
 
         update_transition(target_position, target_rotation);
     }// LateUpdate
+
+    //--------------------------------------------------------------------------
+
+    // public void notify_checkpoint_load()
+    // {
+    //     is_transitioning = false;
+    // }// notify_checkpoint_load
 
     //--------------------------------------------------------------------------
 
@@ -138,6 +146,7 @@ public class Camera_follow : MonoBehaviour
     public static void start_following_player()
     {
         Camera.main.GetComponent<Camera_follow>().following_player_ = true;
+
     }// start_following_player
 
     //--------------------------------------------------------------------------
@@ -161,7 +170,7 @@ public class Camera_follow : MonoBehaviour
         var camera_follow =
                 Camera.main.gameObject.GetComponent<Camera_follow>();
 
-       camera_follow.current_transition_callback = callback;
+        camera_follow.current_transition_callback = callback;
 
         camera_follow.start_transition(
             new_point_of_interest: new_point_of_interest,
@@ -204,11 +213,11 @@ public class Camera_follow : MonoBehaviour
         // var target_rotation = calculate_target_camera_rotation(
         //     target_position);
 
-        if (is_transitioning_)
-        {
-            print("already transitioning");
-            return;
-        }
+        // if (is_transitioning_)
+        // {
+        //     print("already transitioning");
+        //     return;
+        // }
 
         // StartCoroutine(do_camera_transition(
         //     target_position, target_rotation, transition_duration));
