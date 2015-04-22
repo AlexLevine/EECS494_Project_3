@@ -65,22 +65,32 @@ public class Health_gui : MonoBehaviour {
         float cur_ninja_health = (float)ninja.health / (float)ninja.max_health; 
         
         
-		if (cur_llama_health < .25) {
-			llama_fill_bar.GetComponent<Image>().color = small_health_col;
-		} else if (cur_llama_health < .5) {
-        	// when health gets lower than half, turn the bar yellow
-        	llama_fill_bar.GetComponent<Image>().color = half_health_col;
-        } else {
-        	llama_fill_bar.GetComponent<Image>().color = full_health_col;
+        if (cur_llama_health < .25) 
+        {
+            llama_fill_bar.GetComponent<Image>().color = small_health_col;
         }
+        else if (cur_llama_health < .5) 
+        {
+            llama_fill_bar.GetComponent<Image>().color = half_health_col;
+        } 
+        else
+        {
+            llama_fill_bar.GetComponent<Image>().color = full_health_col;
+        }
+
         
-		if (cur_ninja_health < .25) {
-			ninja_fill_bar.GetComponent<Image>().color = small_health_col;
-		} else if (cur_ninja_health < .5) {
-        	ninja_fill_bar.GetComponent<Image>().color = half_health_col;
-        } else {
-        	ninja_fill_bar.GetComponent<Image>().color = full_health_col;
-        }	
+        if (cur_ninja_health < .25) 
+        {
+            ninja_fill_bar.GetComponent<Image>().color = small_health_col;
+        } 
+        else if (cur_ninja_health < .5) 
+        {
+            ninja_fill_bar.GetComponent<Image>().color = half_health_col;
+        } 
+        else
+        {
+            ninja_fill_bar.GetComponent<Image>().color = full_health_col;
+        }   
 
 
         llama_health.normalizedValue = cur_llama_health; 
