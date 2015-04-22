@@ -33,13 +33,13 @@ public class Fade_screen : MonoBehaviour
 
     public void fade_to_black(Fade_screen_callback callback=null)
     {
-        print("fade_to_black");
+        // print("fade_to_black");
         StartCoroutine(fade_screen(true, callback));
     }
 
     public void fade_from_black(Fade_screen_callback callback=null)
     {
-        print("fade_from_black");
+        // print("fade_from_black");
         StartCoroutine(fade_screen(false, callback));
     }
 

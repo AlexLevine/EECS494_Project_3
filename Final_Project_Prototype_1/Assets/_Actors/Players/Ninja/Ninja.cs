@@ -79,13 +79,6 @@ public class Ninja : Player_character
 
     public override void Awake()
     {
-        // if (instance != null && instance != this)
-        // {
-        //     print("ninja already exists");
-        //     Destroy(gameObject);
-        //     return;
-        // }
-
         base.Awake();
 
         instance = this;
@@ -116,7 +109,10 @@ public class Ninja : Player_character
     {
         base.update_impl();
 
-        // // print(velocity.magnitude);
+        if (is_teamed_up)
+        {
+            velocity = Vector3.zero;
+        }
 
         // // on_sword_swing sets a target velocity. this allows that motion
         // // to take place without being interrupted by the player.
@@ -125,38 +121,13 @@ public class Ninja : Player_character
             update_physics();
             move(velocity * Time.deltaTime);
         }
-
-        // if (!is_teamed_up)
-        // {
-        //     return;
-        // }
-
-        // // on_ground = true;
-        // // velocity.y = 0;
-        // transform.position = team_up_point.transform.position;
-
-//        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
-//        {
-           // transform.rotation = team_up_point.transform.parent.rotation;
-//        }
     }// update_impl
 
     //--------------------------------------------------------------------------
 
     public override void attack()
     {
-        // if (!is_grounded)
-        // {
-        //     GetComponent<Aerial_attack>().start_attack();
-        //     return;
-        // }
-
-        // if (!sword_is_spinning)
-        // {
-            animator.SetTrigger(attack_button_pressed_trigger_id);
-        // }
-
-        // GetComponent<Sword_swing>().swing();
+        animator.SetTrigger(attack_button_pressed_trigger_id);
     }// physical_attack
 
     public void on_sword_swing_start()
@@ -232,13 +203,6 @@ public class Ninja : Player_character
 			return new Sweep_test_summary();
         }
 
-        // if (is_teamed_up)
-        // {
-        //     // stop();
-        //     // delta_position.y = 0;
-        //     return;
-        // }
-
         var move_data = base.move(delta_position);
 
         if (landed_on_llama(move_data))
@@ -253,7 +217,6 @@ public class Ninja : Player_character
         }
 
         return move_data;
-        // }
     }// move
 
     bool landed_on_llama(Sweep_test_summary move_info)
@@ -269,10 +232,24 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
+    // public override void update_rotation(
+    //     Vector3 delta_position, float rotation_speed)
+    // {
+    //     base.update_rotation(delta_position, 360f);
+    // }// update_rotation
+
+    //--------------------------------------------------------------------------
+
     public override void team_up_engage_or_throw()
     {
-        if (animation_controlling_movement || is_teamed_up)
+        if (animation_controlling_movement)
         {
+            return;
+        }
+
+        if (is_teamed_up)
+        {
+            jump();
             return;
         }
 
@@ -340,25 +317,8 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    // public override void collision_safe_rotate_towards(
-    //     Vector3 direction, float step)
-    // {
-    //     if (!GetComponent<Sword_swing>().is_swinging)
-    //     {
-    //         base.collision_safe_rotate_towards(direction, step);
-    //     }
-    // }// collision_safe_rotate_towards
-
-    //--------------------------------------------------------------------------
-
     public override void update_movement_velocity(Vector3 target_velocity)
     {
-        // print("ninja update_movement_velocity");
-        // Aerial attack takes control of movement.
-        // if (GetComponent<Aerial_attack>().is_playing)
-        // {
-        //     return;
-        // }
         if (being_thrown)
         {
             return;
@@ -408,13 +368,6 @@ public class Ninja : Player_character
 
     protected override void on_jump()
     {
-        // print("jump");
-        // if (force_team_up)
-        // {
-        //     // print("team up being forced");
-        //     return;
-        // }
-
         if (is_teamed_up)
         {
             team_up_disengage();

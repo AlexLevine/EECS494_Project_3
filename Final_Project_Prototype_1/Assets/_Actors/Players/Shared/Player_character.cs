@@ -124,13 +124,6 @@ public class Player_character : Actor
     // Also applies gravity.
     public virtual void update_movement_velocity(Vector3 target_velocity)
     {
-        // print("pc update_movement_velocity");
-        // if (is_teamed_up)
-        // {
-        //     target_velocity = target_velocity.magnitude *
-        //                       Camera.main.transform.forward;
-        // }
-        // velocity_.y += gravity * Time.deltaTime;
         if (animation_controlling_movement)
         {
             return;
@@ -142,31 +135,6 @@ public class Player_character : Actor
             velocity = target_velocity;
             return;
         }
-
-        // // target_velocity *= Time.deltaTime;
-        // if (have_opposite_signs(target_velocity.x, velocity_.x) ||
-        //     Mathf.Abs(target_velocity.x) > Mathf.Abs(velocity_.x))
-        // {
-        //     var velocity_step = run_acceleration * Time.deltaTime;
-        //     if (target_velocity.x < velocity_.x)
-        //     {
-        //         velocity_step *= -1;
-        //     }
-
-        //     velocity_.x += velocity_step;
-        // }
-
-        // if (have_opposite_signs(target_velocity.z, velocity_.z) ||
-        //     Mathf.Abs(target_velocity.z) > Mathf.Abs(velocity_.z))
-        // {
-        //     var velocity_step = run_acceleration * Time.deltaTime;
-        //     if (target_velocity.z < velocity_.z)
-        //     {
-        //         velocity_step *= -1;
-        //     }
-
-        //     velocity_.z += velocity_step;
-        // }
     }// update_movement_velocity
 
     private bool have_opposite_signs(float first, float second)
@@ -179,10 +147,6 @@ public class Player_character : Actor
     public virtual void apply_momentum(Vector3 new_velocity)
     {
         velocity = new_velocity;
-        // if (new_velocity.y > 0)
-        // {
-        //     on_ground = false;
-        // }
     }// apply_momentum
 
     //--------------------------------------------------------------------------
@@ -233,9 +197,9 @@ public class Player_character : Actor
                 Enemy.get_closest_potential_lock_on_target(gameObject);
         var enemy_on_screen = Camera_follow.point_in_viewport(
             closest_enemy.transform.position);
-        var enemy_visible = closest_enemy.GetComponent<Renderer>().isVisible;
+        // var enemy_visible = closest_enemy.GetComponent<Renderer>().isVisible;
 
-        if (closest_enemy == null || !enemy_on_screen || !enemy_visible)
+        if (closest_enemy == null || !enemy_on_screen)// || !enemy_visible)
         {
             return;
         }
@@ -292,61 +256,20 @@ public class Player_character : Actor
     public override Sweep_test_summary move(
         Vector3 delta_position, float precision_pad=0.1f)
     {
-        // print("pc move");
-        // // print(amount);
-        // step_axis_direction(Vector3.right, delta_position.x);
-        // // print("delta_position.y: " + delta_position.y);
-        // var y_collision = step_axis_direction(Vector3.up, delta_position.y);
-        // step_axis_direction(Vector3.forward, delta_position.z);
-
-        // if (delta_position.y < 0)
-        // {
-        //     // is_jumping = false;
-        //     on_ground = y_collision;
-        //     if (is_grounded)
-        //     {
-        //         velocity_.y = 0;
-        //     }
-        // }
-
-//        var this_player_would_be_off_camera =
-//                Camera_follow.point_step_would_leave_viewport(
-//                    transform.position, delta_position);
-//        var other_player_would_be_off_camera =
-//                Camera_follow.point_step_would_leave_viewport(
-//                    get_other_player().transform.position, delta_position * -1);
-//        if (this_player_would_be_off_camera || other_player_would_be_off_camera)
-//        {
-//            return;
-//        }
-
-        // print("Player_character move");
-        // kinematic_rigidbody.MovePosition(GetComponent<Rigidbody>().position + delta_position);
-        // on_ground = delta_position.y < 0;// && kinematic_rigidbody.isGrounded;
         var summary = base.move(delta_position, precision_pad);
-        // print(delta_position);
         update_rotation(delta_position);
-        // if (bounce)
-        // {
-        //     jump();
-        //     bounce = false;
-        // }
         if (is_grounded)
         {
-            // velocity_.y = 0;
             jumping = false;
         }
 
         return summary;
-        // if (apply_rotation)
-        // {
-        //     update_rotation(delta_position);
-        // }
     }// move
 
     //--------------------------------------------------------------------------
 
-    public virtual void update_rotation(Vector3 delta_position)
+    public virtual void update_rotation(
+        Vector3 delta_position, float rotation_speed=10f)
     {
         // print("pc update_rotation: " + delta_position);
         if (is_locked_on)
@@ -363,38 +286,8 @@ public class Player_character : Actor
         }
 
         collision_safe_rotate_towards(
-            delta_position, 10 * Time.deltaTime);
+            delta_position, rotation_speed * Time.deltaTime);
     }// update_rotation
-
-    //--------------------------------------------------------------------------
-
-    // // Returns true if a collision would have occurred.
-    // private bool step_axis_direction(Vector3 direction, float step_amount)
-    // {
-    //     if (Mathf.Abs(step_amount) < min_move_distance)
-    //     {
-    //         // print("too slow! " + Mathf.Abs(step_amount));
-    //         return false;
-    //     }
-
-    //     var move_increment = direction * step_amount;
-
-    //     // print("before: " + move_increment);
-    //     RaycastHit hit_info;
-    //     var hit = kinematic_rigidbody.SweepTest(
-    //         move_increment, out hit_info,
-    //         move_increment.magnitude + skin_width);
-    //     if (hit)
-    //     {
-    //         // print("hit");
-    //         move_increment = move_increment.normalized * Mathf.Max(
-    //             hit_info.distance - skin_width, 0);
-    //     }
-
-    //     transform.position += move_increment;
-
-    //     return hit;
-    // }// step_axis_direction
 
     //--------------------------------------------------------------------------
 
@@ -426,9 +319,6 @@ public class Player_character : Actor
         // print("jump_speed: " + jump_speed);
         is_grounded_ = false;
         jumping = true;
-        // Vector3 new_speed = GetComponent<Rigidbody>().velocity_;
-        // new_speed.y = jump_speed;
-        // GetComponent<Rigidbody>().velocity_ = new_speed;
 
         on_jump();
     }// jump
@@ -567,20 +457,7 @@ public class Player_character : Actor
 
         var target_velocity = relative_move_dir * run_speed;
         update_movement_velocity(target_velocity);
-
     }// process_input
-
-    //--------------------------------------------------------------------------
-
-    // enum Sword_swing_state_e
-    // {
-    //     IDLE,
-
-    // }
-    // void sword_swing_coroutine()
-    // {
-
-    // }// sword_swing_coroutine
 
     //--------------------------------------------------------------------------
 
