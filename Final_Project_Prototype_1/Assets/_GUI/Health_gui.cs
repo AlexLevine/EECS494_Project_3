@@ -7,12 +7,25 @@ public class Health_gui : MonoBehaviour {
 
     Ninja ninja;
     Llama llama;
+    
+    public GameObject llama_fill_bar;
+    public GameObject ninja_fill_bar;
+    
+    Color full_health_col;
+    Color half_health_col;
+    Color small_health_col;
 
 
     void Start()
     {
         ninja = Ninja.get();
         llama = Llama.get();
+        
+        full_health_col = llama_fill_bar.GetComponent<Image>().color;
+        half_health_col = Color.yellow;
+        small_health_col = Color.red;
+        
+        //half_health_col = Color.
     }
     
     public Slider llama_health, ninja_health;     
@@ -50,9 +63,25 @@ public class Health_gui : MonoBehaviour {
 
         float cur_llama_health = (float)llama.health / (float)llama.max_health; 
         float cur_ninja_health = (float)ninja.health / (float)ninja.max_health; 
+        
+        
+		if (cur_llama_health < .25) {
+			llama_fill_bar.GetComponent<Image>().color = small_health_col;
+		} else if (cur_llama_health < .5) {
+        	// when health gets lower than half, turn the bar yellow
+        	llama_fill_bar.GetComponent<Image>().color = half_health_col;
+        } else {
+        	llama_fill_bar.GetComponent<Image>().color = full_health_col;
+        }
+        
+		if (cur_ninja_health < .25) {
+			ninja_fill_bar.GetComponent<Image>().color = small_health_col;
+		} else if (cur_ninja_health < .5) {
+        	ninja_fill_bar.GetComponent<Image>().color = half_health_col;
+        } else {
+        	ninja_fill_bar.GetComponent<Image>().color = full_health_col;
+        }	
 
-        // print(cur_ninja_health);
-        // print(cur_llama_health);
 
         llama_health.normalizedValue = cur_llama_health; 
         ninja_health.normalizedValue = cur_ninja_health; 
