@@ -11,6 +11,8 @@ public class Player_character : Actor
     public static List<GameObject> player_characters = new List<GameObject>();
     public static bool force_team_up = false;
 
+    public static bool controls_enabled = true;
+
     public InputDevice input_device;
 
     public GameObject lock_on_bar = null;
@@ -44,7 +46,7 @@ public class Player_character : Actor
         }
     }
 
-    protected virtual float invincibility_flash_duration {
+    protected override float invincibility_flash_duration {
         get {return 1f; } }
 
     //--------------------------------------------------------------------------
@@ -181,14 +183,10 @@ public class Player_character : Actor
 
     public override void on_death(GameObject killer=null)
     {
-
+        Actor.actors_paused = true;
         play_death_animation();
-        Checkpoint.load_last_checkpoint();
 
-        reset_health();
-        get_other_player().GetComponent<Player_character>().reset_health();
-
-        print("you die!");
+        // print("you die!");
     }// on_death
 
     protected virtual void play_death_animation()
@@ -196,9 +194,12 @@ public class Player_character : Actor
 
     }// play_death_animation
 
-    protected virtual void on_death_animation_finished()
+    public virtual void on_death_animation_finished()
     {
+        reset_health();
+        get_other_player().GetComponent<Player_character>().reset_health();
 
+        Checkpoint.load_last_checkpoint(() => Actor.actors_paused = false);
     }
 
     //--------------------------------------------------------------------------
@@ -496,6 +497,11 @@ public class Player_character : Actor
 
     private void process_input()
     {
+        if (!controls_enabled)
+        {
+            return;
+        }
+
         if (input_device.GetControl(InputControlType.Action1).WasPressed)
         {
             jump();

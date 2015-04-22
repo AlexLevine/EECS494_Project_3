@@ -71,11 +71,11 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         var target_rotation = calculate_target_camera_rotation(
             target_position);
 
-        // if (!is_transitioning_)
-        // {
-        //     update_smooth_follow(target_position, target_rotation);
-        //     return;
-        // }
+        if (!is_transitioning_)
+        {
+            update_smooth_follow(target_position, target_rotation);
+            return;
+        }
 
         update_transition(target_position, target_rotation);
     }// LateUpdate

@@ -11,7 +11,7 @@ public class Input_reader : MonoBehaviour
     public InputDevice input_device;
 
     private Player_character pc;
-    private bool controls_enabled = true;
+    // private bool controls_enabled = true;
 
     private static UnityInputDevice[] keyboard_profiles =
         new UnityInputDevice[] {
@@ -71,10 +71,10 @@ public class Input_reader : MonoBehaviour
 
     public static void toggle_player_controls(bool enable)
     {
-        foreach (var input_reader in input_readers)
-        {
-            input_reader.controls_enabled = enable;
-        }
+        // foreach (var input_reader in input_readers)
+        // {
+        //     input_reader.controls_enabled = enable;
+        // }
     }// toggle_player_controls
 
     //--------------------------------------------------------------------------

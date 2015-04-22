@@ -18,7 +18,7 @@ public class Enemy : Actor
     {
         enemies.Add(gameObject);
     }
-    
+
 
     //--------------------------------------------------------------------------
 
@@ -84,6 +84,11 @@ public class Enemy : Actor
 
     public virtual void OnTriggerEnter(Collider c)
     {
+        if (actors_paused)
+        {
+            return;
+        }
+
         var player = c.gameObject.GetComponent<Player_character>();
         if (player == null || being_knocked_back ||
             taking_damage_animation_playing)
@@ -123,14 +128,14 @@ public class Enemy : Actor
 
         GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
         boom.transform.position = transform.position;
-        
+
         // drop health object a third of the time
 		int rand = UnityEngine.Random.Range(0, 2);
 		if (rand < 1) {
         	GameObject biscuit = (GameObject)Instantiate(Resources.Load ("Collectable"));
         	biscuit.transform.position = transform.position;
         }
-        
+
         Destroy(gameObject);
     }// on_death
 

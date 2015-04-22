@@ -39,7 +39,7 @@ public class Actor : MonoBehaviour
     protected virtual float invincibility_flash_duration {
         get {return 0.5f; } }
 
-    private float health_;
+    public float health_;
 
     private bool taking_damage_animation_playing_ = false;
     private bool being_knocked_back_ = false;
@@ -233,11 +233,23 @@ public class Actor : MonoBehaviour
     {
         direction.y = body.transform.forward.y;
 
+        // print("direction: " + direction);
         var new_forward = Vector3.RotateTowards(
             body.transform.forward, direction, step, 0f);
 
         // var rb = gameObject.GetComponent<Rigidbody>();
         var new_rotation = Quaternion.LookRotation(new_forward);
+
+        // HACK to hopefully prevent the heisen bug where llama suddenly rotates
+        // backwards around the x axis.
+        if (new_rotation.eulerAngles.x != 0 || new_rotation.eulerAngles.z != 0)
+        {
+            print("WTF new_rotation: " + new_rotation.eulerAngles);
+            var adjusted_rotation = new_rotation.eulerAngles;
+            adjusted_rotation.x = 0;
+            adjusted_rotation.z = 0;
+            new_rotation = Quaternion.Euler(adjusted_rotation);
+        }
         // if (rb == null)
         // {
         // GetComponent<Rigidbody>().MoveRotation(new_rotation);
@@ -262,7 +274,6 @@ public class Actor : MonoBehaviour
         }
 
         health_ -= damage;
-        play_damage_vocals();
 
         bool should_die = health_ <= 0;
 
@@ -271,6 +282,8 @@ public class Actor : MonoBehaviour
             on_death(attacker);
             return should_die;
         }
+
+        play_damage_vocals();
 
         StartCoroutine(
             apply_knockback(knockback_velocity.normalized * 10f,

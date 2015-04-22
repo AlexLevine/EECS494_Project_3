@@ -39,13 +39,14 @@ public class Fade_screen : MonoBehaviour
 
     public void fade_from_black(Fade_screen_callback callback=null)
     {
+        print("fade_from_black");
         StartCoroutine(fade_screen(false, callback));
     }
 
     IEnumerator fade_screen(
         bool fade_to_black, Fade_screen_callback callback)
     {
-        print("fade_screen");
+        // print("fade_screen");
         var start_color = image.color;
         start_color.a = (fade_to_black ? 0 : 1);
         var end_color = image.color;

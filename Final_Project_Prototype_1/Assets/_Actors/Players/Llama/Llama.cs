@@ -9,6 +9,7 @@ public class Llama : Player_character
     public GameObject damage_vocals;
     public GameObject charge_and_throw_vocals;
     public GameObject spit_sounds;
+    public GameObject death_vocals;
 
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
@@ -381,10 +382,15 @@ public class Llama : Player_character
 
     }// receive_hit
 
-    protected virtual void play_death_animation()
+    protected override void play_death_animation()
     {
         animator.SetTrigger(die_trigger_id);
     }// play_death_animation
+
+    public void play_death_vocals()
+    {
+        death_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }//
 
     //--------------------------------------------------------------------------
 
