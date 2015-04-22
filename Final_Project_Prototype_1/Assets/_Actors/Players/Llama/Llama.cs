@@ -395,7 +395,7 @@ public class Llama : Player_character
     public void play_death_vocals()
     {
         death_vocals.GetComponent<Sound_effect_randomizer>().play();
-    }//
+    }// play_death_vocals
 
     //--------------------------------------------------------------------------
 
@@ -407,7 +407,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override void play_damage_vocals()
+    public override void play_damage_vocals()
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals

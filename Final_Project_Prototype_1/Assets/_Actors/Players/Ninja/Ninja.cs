@@ -7,6 +7,7 @@ public class Ninja : Player_character
     public GameObject swing_sound_player;
     public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
+    public GameObject death_vocals;
 
     public GameObject projectile_prefab;
     public GameObject sword_obj;
@@ -35,6 +36,7 @@ public class Ninja : Player_character
     private int attack_button_pressed_trigger_id;
     private int idle_state_hash;
     private int on_ground_param_id;
+    private int die_trigger_id;
 
     public override bool can_jump
     {
@@ -99,6 +101,7 @@ public class Ninja : Player_character
         attack_button_pressed_trigger_id = Animator.StringToHash("attack_button_pressed");
         idle_state_hash = Animator.StringToHash("Idle");
         on_ground_param_id = Animator.StringToHash("on_ground");
+        die_trigger_id = Animator.StringToHash("die");
 
         team_up_point = Llama.get().get_team_up_point();
 
@@ -325,6 +328,16 @@ public class Ninja : Player_character
             damage, knockback_velocity, attacker, knockback_duration);
     }// receive_hit
 
+    protected override void play_death_animation()
+    {
+        animator.SetTrigger(die_trigger_id);
+    }// play_death_animation
+
+    public void play_death_vocals()
+    {
+        death_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }// play_death_vocals
+
     //--------------------------------------------------------------------------
 
     // public override void collision_safe_rotate_towards(
@@ -420,10 +433,16 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    protected override void play_damage_vocals()
+    public override void play_damage_vocals()
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
+
+    // HACK
+    public void play_damage_vocal_for_death_animation()
+    {
+        damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }
 }
 
 

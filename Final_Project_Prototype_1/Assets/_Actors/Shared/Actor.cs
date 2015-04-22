@@ -372,7 +372,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    protected virtual void play_damage_vocals()
+    public virtual void play_damage_vocals()
     {
     }
 
