@@ -192,6 +192,10 @@ public class Player_character : Actor
         Actor.actors_paused = true;
         play_death_animation();
 
+        if (teamed_up)
+        {
+            team_up_disengage();
+        }
         // print("you die!");
     }// on_death
 

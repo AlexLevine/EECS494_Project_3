@@ -123,14 +123,14 @@ public class Ninja : Player_character
             move(velocity * Time.deltaTime);
         }
 
-        if (!is_teamed_up)
-        {
-            return;
-        }
+        // if (!is_teamed_up)
+        // {
+        //     return;
+        // }
 
-        // on_ground = true;
-        // velocity.y = 0;
-        transform.position = team_up_point.transform.position;
+        // // on_ground = true;
+        // // velocity.y = 0;
+        // transform.position = team_up_point.transform.position;
 
 //        if (!Llama.get().gameObject.GetComponent<Throw_animation>().is_playing)
 //        {

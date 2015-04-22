@@ -173,6 +173,11 @@ public class Llama : Player_character
 
         var summary = base.move(delta_position);
 
+        if (is_teamed_up)
+        {
+            Ninja.get().transform.position += summary.distance_moved;
+        }
+
         if (summary.hit_x)
         {
             var breakable_wall = summary.hit_info_x.transform.GetComponent<Breakable_wall>();
