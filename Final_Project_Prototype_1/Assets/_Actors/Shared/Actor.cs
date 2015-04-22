@@ -109,7 +109,7 @@ public class Actor : MonoBehaviour
     // Moves this actor the specified amount, resolves any collisions that
     // occur, and returns information about those collisions.
     public virtual Sweep_test_summary move(
-        Vector3 delta_position, float precision_pad=0.1f)
+        Vector3 delta_position, float precision_pad=0.2f)
     {
         // print("base_move");
         var summary = new Sweep_test_summary();

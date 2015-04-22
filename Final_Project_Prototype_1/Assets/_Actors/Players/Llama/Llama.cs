@@ -31,6 +31,7 @@ public class Llama : Player_character
     private Animator animator;
     private int throw_button_pressed_trigger_id;
     private int idle_state_hash;
+    private int die_trigger_id;
 
     private float throw_speed = 20f;
 
@@ -93,6 +94,7 @@ public class Llama : Player_character
         throw_button_pressed_trigger_id = Animator.StringToHash(
             "throw_button_pressed");
         idle_state_hash = Animator.StringToHash("Idle");
+        die_trigger_id = Animator.StringToHash("die");
     }// Start
 
     //--------------------------------------------------------------------------
@@ -308,9 +310,7 @@ public class Llama : Player_character
 
         spit.GetComponent<Rigidbody>().velocity = direction * 40f;
         spit_is_cooling_down = true;
-    }// projectile_attack
-
-
+    }// attack
 
     //--------------------------------------------------------------------------
 
@@ -380,6 +380,11 @@ public class Llama : Player_character
             damage, knockback_velocity, attacker, knockback_duration);
 
     }// receive_hit
+
+    protected virtual void play_death_animation()
+    {
+        animator.SetTrigger(die_trigger_id);
+    }// play_death_animation
 
     //--------------------------------------------------------------------------
 
