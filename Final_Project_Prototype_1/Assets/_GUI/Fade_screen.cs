@@ -11,7 +11,7 @@ public class Fade_screen : MonoBehaviour
     // private
 
     private static Fade_screen instance;
-    private Material material;
+    private Image image;
 
     public static Fade_screen get()
     {
@@ -25,14 +25,15 @@ public class Fade_screen : MonoBehaviour
 
     void Start()
     {
-        material = black_panel.GetComponent<Image>().material;
-        var start_color = material.color;
+        image = black_panel.GetComponent<Image>();
+        var start_color = Color.black;
         start_color.a = 0;
-        material.color = start_color;
+        image.color = start_color;
     }
 
     public void fade_to_black(Fade_screen_callback callback=null)
     {
+        print("fade_to_black");
         StartCoroutine(fade_screen(true, callback));
     }
 
@@ -45,24 +46,32 @@ public class Fade_screen : MonoBehaviour
         bool fade_to_black, Fade_screen_callback callback)
     {
         print("fade_screen");
-        var start_color = material.color;
+        var start_color = image.color;
         start_color.a = (fade_to_black ? 0 : 1);
-        var end_color = material.color;
+        var end_color = image.color;
         end_color.a = (fade_to_black ? 1 : 0);
 
-        var fade_duration = 0f;
-        var time_elapsed = 1f;
+        var fade_duration = 0.5f;
+        var time_elapsed = 0f;
 
-        var lerp_percent = Mathf.Clamp01(time_elapsed / fade_duration);
-        while (lerp_percent <= 1)
+        var lerp_percent = time_elapsed / fade_duration;
+        while (lerp_percent < 1)
         {
-            material.color = Color.Lerp(
+            image.color = Color.Lerp(
                 start_color, end_color, lerp_percent);
 
             yield return null;
             time_elapsed += Time.deltaTime;
-            lerp_percent = Mathf.Clamp01(time_elapsed / fade_duration);
+            lerp_percent = time_elapsed / fade_duration;
+
+            if (lerp_percent > 1)
+            {
+                lerp_percent = 1;
+            }
         }
+
+        image.color = Color.Lerp(
+            start_color, end_color, lerp_percent);
 
         if (callback != null)
         {

@@ -47,7 +47,7 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     // Use this for initialization
     void Start()
     {
-        // Checkpoint.ssubscribe(this);
+        // Checkpoint.subscribe(this);
         // following_player_ = false;
 
         // point_of_interest_ = calculate_player_midpoint();
@@ -71,11 +71,11 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         var target_rotation = calculate_target_camera_rotation(
             target_position);
 
-        if (!is_transitioning_)
-        {
-            update_smooth_follow(target_position, target_rotation);
-            return;
-        }
+        // if (!is_transitioning_)
+        // {
+        //     update_smooth_follow(target_position, target_rotation);
+        //     return;
+        // }
 
         update_transition(target_position, target_rotation);
     }// LateUpdate

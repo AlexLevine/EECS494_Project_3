@@ -73,27 +73,46 @@ public class Checkpoint : MonoBehaviour
         // screen fade to black
         // disable actors
 
-        Fade_screen.get().fade_to_black();
+        last_checkpoint.GetComponent<Checkpoint>().load(callback);
 
-        var new_llama_pos = last_checkpoint.transform.position;
+
+        // screen fade in
+        // re-enable actors
+    }
+
+    void load(Checkpoint_load_callback callback)
+    {
+        Fade_screen.get().fade_to_black(() => StartCoroutine(snap_camera(callback)));
+        // StartCoroutine(snap_camera(callback));
+    }
+
+    IEnumerator snap_camera(Checkpoint_load_callback callback)
+    {
+        // Actor.actors_paused = true;
+
+        var new_llama_pos = transform.position;
         var new_ninja_pos = new_llama_pos;
         new_ninja_pos.x += 2;
+
+        Ninja.get().gameObject.transform.position = new_ninja_pos;
+        Llama.get().gameObject.transform.position = new_llama_pos;
 
         Camera_follow.adjust_main_camera(
             new_point_of_interest: new_llama_pos,
             transition_duration: 0);
 
-        Ninja.get().gameObject.transform.position = new_ninja_pos;
-        Llama.get().gameObject.transform.position = new_llama_pos;
+        yield return new WaitForSeconds(0.5f);
 
         foreach (var subscriber in subscribers)
         {
             subscriber.notify_checkpoint_load();
         }
 
-        // screen fade in
-        // re-enable actors
+        // Fade_screen.get().fade_from_black(() => Actor.actors_paused = false);
+        Fade_screen.get().fade_from_black(() => callback());
     }
+
+    //--------------------------------------------------------------------------
 
     public static void unsubscribe(GameObject obj)
     {
