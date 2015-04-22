@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Collectable : MonoBehaviour {
     void OnTriggerEnter(Collider other){
+    
         if (other.GetComponent<Player_character>() == null)
         {
             return; 
