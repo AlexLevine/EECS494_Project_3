@@ -27,13 +27,16 @@ public class Input_reader : MonoBehaviour
         // }
 
         input_readers.Add(this);
+
     }
 
     //--------------------------------------------------------------------------
 
     // Use this for initialization
-    void Start()
+    IEnumerator Start()
     {
+        Player_character.controls_enabled = false;
+
         input_device = (InputManager.Devices.Count > player_id) ?
                        InputManager.Devices[player_id] : null;
 
@@ -42,12 +45,15 @@ public class Input_reader : MonoBehaviour
             print("player " + player_id +
                   " doesn't have a controller, assigning keyboard");
             input_device = keyboard_profiles[player_id];
+            yield return new WaitForSeconds(1f);
             InputManager.AttachDevice(input_device);
         }
 
         pc = Player_character.player_characters[
                 player_id].GetComponent<Player_character>();
         pc.input_device = input_device;
+
+        Player_character.controls_enabled = true;
     }
 
     //--------------------------------------------------------------------------
