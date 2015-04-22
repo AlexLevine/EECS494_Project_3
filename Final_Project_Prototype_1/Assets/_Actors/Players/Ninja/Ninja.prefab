@@ -9,9 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 477290}
   - 114: {fileID: 11441846}
-  - 114: {fileID: 11410758}
   - 114: {fileID: 11408552}
-  - 114: {fileID: 11495020}
   - 114: {fileID: 11446132}
   - 114: {fileID: 11491572}
   - 54: {fileID: 5425446}
@@ -946,9 +944,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!54 &5454124
 Rigidbody:
@@ -1379,18 +1377,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 74564cfca62cc4648b4417f3a43ba234, type: 3}
   - {fileID: 8300000, guid: 05942914af2814d4e80e06a87950ea24, type: 3}
   allow_overlap: 0
---- !u!114 &11410758
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!114 &11414982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1430,6 +1416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 140478}
+  health_: 0
   lock_on_bar: {fileID: 0}
   swing_sound_player: {fileID: 107470}
   basic_attack_vocals: {fileID: 114038}
@@ -1492,17 +1479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: e70349bd69e80406dbba359d8eb9bf82, type: 3}
---- !u!114 &11495020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c687e9866613ffb44a6c17e22a3a6a5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11497432
 MonoBehaviour:
   m_ObjectHideFlags: 1

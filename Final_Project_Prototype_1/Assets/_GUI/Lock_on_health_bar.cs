@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-
-public class Lock_on_health_bar : MonoBehaviour {
+[RequireComponent(typeof(Slider))]
+public class Lock_on_health_bar : MonoBehaviour
+{
     public GameObject target;
 
     void Start()

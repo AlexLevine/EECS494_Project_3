@@ -393,7 +393,7 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void jump()
+    protected override void on_jump()
     {
         // print("jump");
         // if (force_team_up)
@@ -407,7 +407,7 @@ public class Ninja : Player_character
             team_up_disengage();
         }
 
-        base.jump();
+        base.on_jump();
     }// jump
 
     //--------------------------------------------------------------------------

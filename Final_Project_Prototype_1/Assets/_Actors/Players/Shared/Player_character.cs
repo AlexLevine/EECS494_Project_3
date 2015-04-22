@@ -24,8 +24,14 @@ public class Player_character : Actor
         get { return lock_on_target.transform.position; } }
     public bool is_teamed_up { get { return teamed_up; } }
     public bool is_jumping { get { return jumping; } }
-    public virtual bool can_jump {
-        get { return is_grounded || time_in_air <= max_time_in_air; } }
+    public virtual bool can_jump
+    {
+        get
+        {
+            return !animation_controlling_movement &&
+                   (is_grounded || time_in_air <= max_time_in_air);
+        }
+    }
 
     // Movement physics
     public float run_speed { get { return 10f; } }
@@ -400,7 +406,7 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void jump()
+    public void jump()
     {
         if (!can_jump)
         {
@@ -420,7 +426,12 @@ public class Player_character : Actor
         // new_speed.y = jump_speed;
         // GetComponent<Rigidbody>().velocity_ = new_speed;
 
+        on_jump();
     }// jump
+
+    protected virtual void on_jump()
+    {
+    }// on_jump
 
     //--------------------------------------------------------------------------
 
