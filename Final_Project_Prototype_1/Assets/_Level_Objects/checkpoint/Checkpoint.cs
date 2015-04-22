@@ -73,6 +73,8 @@ public class Checkpoint : MonoBehaviour
         // screen fade to black
         // disable actors
 
+        Fade_screen.get().fade_to_black();
+
         var new_llama_pos = last_checkpoint.transform.position;
         var new_ninja_pos = new_llama_pos;
         new_ninja_pos.x += 2;
@@ -92,27 +94,6 @@ public class Checkpoint : MonoBehaviour
         // screen fade in
         // re-enable actors
     }
-
-    // delegate void Fade_screen_callback();
-
-    // static IEnumerator fade_screen(
-    //     bool fade_to_black, Fade_screen_callback callback=null)
-    // {
-    //     var start_alpha_val = 1f;
-    //     var end_alpha_val = 0f;
-
-    //     var fade_duration = 0f;
-    //     var time_elapsed = 1f;
-
-    //     var lerp_percent = Mathf.Clamp01(time_elapsed / fade_duration);
-    //     while (lerp_percent <= 1)
-    //     {
-    //         GUI.color = new Color(0, 0, 0, alphaFadeValue);
-    //         GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), blackTexture );
-
-    //     }
-
-    // }
 
     public static void unsubscribe(GameObject obj)
     {
