@@ -2903,8 +2903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 15
-  camera_hover_height: 5
+  camera_follow_distance: 13
+  camera_hover_height: 15
   set_rotation_manually: 0
   y_rotation_override: 0
   transition_duration: 2
@@ -5669,7 +5669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!1 &403014573
 GameObject:
   m_ObjectHideFlags: 0
@@ -7241,7 +7240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!199 &538778614
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
@@ -9882,7 +9880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!114 &712820635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11176,6 +11173,66 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 823413567}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &823973060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 823973061}
+  - 108: {fileID: 823973062}
+  m_Layer: 0
+  m_Name: Spotlight 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &823973061
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 823973060}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalPosition: {x: -150, y: 5.90558243, z: 65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1342399893}
+  m_RootOrder: 6
+--- !u!108 &823973062
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 823973060}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_NormalBias: .400000006
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_BounceIntensity: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &825642128
 GameObject:
   m_ObjectHideFlags: 0
@@ -18183,7 +18240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!114 &1273322858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18698,7 +18754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!199 &1295266529
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
@@ -20472,6 +20527,7 @@ Transform:
   - {fileID: 1956803441}
   - {fileID: 1962159621}
   - {fileID: 1931506569}
+  - {fileID: 823973061}
   m_Father: {fileID: 1396537530}
   m_RootOrder: 5
 --- !u!1 &1344888359
@@ -21423,8 +21479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 15
-  camera_hover_height: 7
+  camera_follow_distance: 13
+  camera_hover_height: 15
   set_rotation_manually: 0
   y_rotation_override: 0
   transition_duration: 2
@@ -22568,6 +22624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc5bfd0493de468d839ccf18c7f474a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera_follow_distance_: 15
+  camera_hover_height_: 15
+  y_rotation_: 0
 --- !u!4 &1491637501
 Transform:
   m_PrefabParentObject: {fileID: 493602, guid: 7c96b5d956f7c4f5b956bac5ab3b0277, type: 2}
@@ -23637,7 +23696,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: c7779d7e520d9bf4ca7094f5dcffd0b4, type: 2}
+  - {fileID: 2100000, guid: e9207137956b34146bfa93d56f9c8677, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -27404,7 +27463,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 454754, guid: 2d682dc963d6ae74d9abb5781f695d2d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -167
+      value: -169.449997
       objectReference: {fileID: 0}
     - target: {fileID: 454754, guid: 2d682dc963d6ae74d9abb5781f695d2d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -27626,7 +27685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!114 &1827612278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28433,7 +28491,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!199 &1890162705
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
@@ -31582,10 +31639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2366194a4d0c4b519d1dd98adf31046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_follow_distance: 20
-  camera_hover_height: 5
+  camera_follow_distance: 15
+  camera_hover_height: 13
   set_rotation_manually: 1
-  y_rotation_override: 75
+  y_rotation_override: 85
   transition_duration: 2
 --- !u!65 &1964598581
 BoxCollider:
