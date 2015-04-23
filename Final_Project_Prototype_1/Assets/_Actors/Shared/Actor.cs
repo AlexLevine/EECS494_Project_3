@@ -42,7 +42,7 @@ public class Actor : MonoBehaviour
     protected virtual float invincibility_flash_duration {
         get { return 0.5f; } }
 
-    public float health_;
+    private float health_;
 
     private bool taking_damage_animation_playing_ = false;
     private bool being_knocked_back_ = false;
