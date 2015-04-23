@@ -5,6 +5,7 @@ public class Llama_spit : MonoBehaviour
 {
     public static string global_name = "llama_spit";
 
+    public Vector3 velocity = Vector3.zero;
     public int attack_power { get { return 5; } }
 
     private float time_left = 0.50f;
@@ -14,8 +15,15 @@ public class Llama_spit : MonoBehaviour
         name = global_name;
     }
 
+    void Start()
+    {
+        GetComponent<Collider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
+
     void Update()
     {
+        transform.position += velocity * Time.deltaTime;
         time_left -= Time.deltaTime;
 
         // print(time_left);
