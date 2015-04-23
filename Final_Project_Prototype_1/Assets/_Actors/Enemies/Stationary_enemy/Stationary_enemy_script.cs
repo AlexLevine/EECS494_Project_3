@@ -47,6 +47,13 @@ public class Stationary_enemy_script : Enemy
 
     //--------------------------------------------------------------------------
 
+    // public override Sweep_test_summary move()
+    // {
+    //     return new Sweep_test_summary();
+    // }
+
+    //--------------------------------------------------------------------------
+
     // returns true if the hit is fatal
     public override bool receive_hit(
         float damage, Vector3 knockback_velocity, GameObject attacker,

@@ -187,7 +187,7 @@ public class Llama : Player_character
                 // Prevent the player from stopping briefly when they hit the wall.
                 var nudged_pos = transform.position;
                 nudged_pos.x += delta_position.x;
-                transform.position = nudged_pos;
+                kinematic_rigidbody.MovePosition(nudged_pos);
             }
         }
 
@@ -200,7 +200,7 @@ public class Llama : Player_character
                 // Prevent the player from stopping briefly when they hit the wall.
                 var nudged_pos = transform.position;
                 nudged_pos.z += delta_position.z;
-                transform.position = nudged_pos;
+                kinematic_rigidbody.MovePosition(nudged_pos);
             }
         }
 

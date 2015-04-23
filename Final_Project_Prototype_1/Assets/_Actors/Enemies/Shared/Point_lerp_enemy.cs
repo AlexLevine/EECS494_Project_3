@@ -24,6 +24,11 @@ public class Point_lerp_enemy : Enemy
         kinematic_rigidbody.isKinematic = true;
     }// Start
 
+    // public override Sweep_test_summary move()
+    // {
+    //     return new Sweep_test_summary();
+    // }
+
     //--------------------------------------------------------------------------
 
     protected override void update_impl()
