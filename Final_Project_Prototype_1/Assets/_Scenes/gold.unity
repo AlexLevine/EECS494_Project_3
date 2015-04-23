@@ -1830,6 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026af6031dc234fd6a7947bf94b912a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_dying: 0
 --- !u!23 &117263515
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13774,6 +13775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026af6031dc234fd6a7947bf94b912a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_dying: 0
 --- !u!1 &920908987
 GameObject:
   m_ObjectHideFlags: 0
@@ -23770,6 +23772,22 @@ Prefab:
     - target: {fileID: 22406312, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11407406, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22447252, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.10000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 22447252, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.10000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 22447252, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1.10000002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb1789f236931415ab8ecd2457a86abf, type: 2}
