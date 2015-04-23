@@ -17,12 +17,15 @@ public class Stationary_enemy_script : Enemy
 
     public override float max_health { get { return 15; } }
 
+    public override float gravity { get { return 0; } }
+
     // Use this for initialization
     public override void Start()
     {
         base.Start();
 
         time_between_shots += Random.Range(0f, 1f);
+        kinematic_rigidbody.isKinematic = true;
     }// Start
 
     //--------------------------------------------------------------------------

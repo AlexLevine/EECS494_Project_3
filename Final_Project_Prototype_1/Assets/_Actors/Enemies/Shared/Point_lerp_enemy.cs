@@ -10,6 +10,7 @@ public class Point_lerp_enemy : Enemy
 
     public float speed;
 
+    public override float gravity { get { return 0; } }
 
     //--------------------------------------------------------------------------
 
@@ -19,6 +20,8 @@ public class Point_lerp_enemy : Enemy
         base.Start();
         transform.position = path_nodes[destination_index].transform.position;
         ++destination_index;
+
+        kinematic_rigidbody.isKinematic = true;
     }// Start
 
     //--------------------------------------------------------------------------

@@ -114,6 +114,10 @@ public class Ninja : Player_character
             velocity = Vector3.zero;
             transform.position = team_up_point.transform.position;
         }
+        else if (is_grounded)
+        {
+            GetComponent<Collider>().isTrigger = false;
+        }
 
         // // on_sword_swing sets a target velocity. this allows that motion
         // // to take place without being interrupted by the player.
@@ -357,6 +361,7 @@ public class Ninja : Player_character
     protected override void on_team_up_engage()
     {
         notify_on_ground();
+        GetComponent<Collider>().isTrigger = true;
     }// team_up_engage
 
     //--------------------------------------------------------------------------

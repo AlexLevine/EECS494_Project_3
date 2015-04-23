@@ -55,6 +55,8 @@ public class Player_character : Actor
     protected override float invincibility_flash_duration {
         get {return 1f; } }
 
+    // protected override int num_sweeps { get { return 50; } }
+
     //--------------------------------------------------------------------------
 
     private bool jumping = false;
@@ -83,9 +85,14 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    protected override void update_impl()
+    void Update()
     {
         process_input();
+    }
+
+    protected override void update_impl()
+    {
+        // process_input();
 
         base.update_impl();
 

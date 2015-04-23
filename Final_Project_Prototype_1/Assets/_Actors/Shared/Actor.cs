@@ -34,6 +34,9 @@ public class Actor : MonoBehaviour
     public Vector3 velocity {
         get { return velocity_; } set { velocity_ = value; } }
 
+    // number of times to sweep test when calling move
+    protected virtual int num_sweeps { get { return 1; } }
+
     protected Rigidbody kinematic_rigidbody;
     protected bool is_grounded_;
     protected virtual float invincibility_flash_duration {
@@ -57,13 +60,13 @@ public class Actor : MonoBehaviour
         // knockback_animation = GetComponent<Knockback_animation>();
 
         kinematic_rigidbody = GetComponent<Rigidbody>();
-        kinematic_rigidbody.isKinematic = true;
+        kinematic_rigidbody.isKinematic = false;
         kinematic_rigidbody.useGravity = false;
     }// Start()
 
     //--------------------------------------------------------------------------
 
-    void Update()
+    void FixedUpdate()
     {
         if (actors_paused)
         {
@@ -122,30 +125,34 @@ public class Actor : MonoBehaviour
             delta_position.magnitude + precision_pad);
         if (summary.hit_x)
         {
-            summary.distance_moved.x = delta_position.normalized.x * Mathf.Max(
-                summary.hit_info_x.distance - precision_pad, 0);
+            summary.distance_moved.x = delta_position.normalized.x * (
+                summary.hit_info_x.distance - precision_pad);
         }
-        transform.position += new Vector3(summary.distance_moved.x, 0, 0);
+        // transform.position += new Vector3(summary.distance_moved.x, 0, 0);
 
         summary.hit_z = sweep_test_all_filter(
             delta_position.z * Vector3.forward, out summary.hit_info_z,
             delta_position.magnitude + precision_pad);
         if (summary.hit_z)
         {
-            summary.distance_moved.z = delta_position.normalized.z * Mathf.Max(
-                summary.hit_info_z.distance - precision_pad, 0);
+            summary.distance_moved.z = delta_position.normalized.z * (
+                summary.hit_info_z.distance - precision_pad);
         }
-        transform.position += new Vector3(0, 0, summary.distance_moved.z);
+        // transform.position += new Vector3(0, 0, summary.distance_moved.z);
 
         summary.hit_y = sweep_test_all_filter(
             delta_position.y * Vector3.up, out summary.hit_info_y,
             delta_position.magnitude + precision_pad);
         if (summary.hit_y)
         {
-            summary.distance_moved.y = delta_position.normalized.y * Mathf.Max(
-                summary.hit_info_y.distance - precision_pad, 0);
+            summary.distance_moved.y = delta_position.normalized.y * (
+                summary.hit_info_y.distance - precision_pad);
         }
-        transform.position += new Vector3(0, summary.distance_moved.y, 0);
+        // transform.position += new Vector3(0, summary.distance_moved.y, 0);
+
+        kinematic_rigidbody.MovePosition(
+            kinematic_rigidbody.position + summary.distance_moved);
+        // transform.position += summary.distance_moved;
 
         if (delta_position.y < 0)
         {
@@ -173,32 +180,39 @@ public class Actor : MonoBehaviour
     bool sweep_test_all_filter(
         Vector3 delta_position, out RaycastHit hit_info, float distance)
     {
-        var hits = kinematic_rigidbody.SweepTestAll(delta_position, distance);
-        if (hits.Length == 0)
+        // It appears that sweep test "misses" sometimes. If at first you
+        // don't succeed, try again.
+        for (int i = 0; i < num_sweeps; ++i)
         {
-            hit_info = new RaycastHit();
-            return false;
-        }
-
-        bool found_valid_hit = false;
-        RaycastHit closest_non_trigger_hit = new RaycastHit();
-        foreach (var hit in hits)
-        {
-            if (hit.collider.isTrigger)
+            var hits = kinematic_rigidbody.SweepTestAll(delta_position, distance);
+            if (hits.Length == 0)
             {
                 continue;
             }
 
-            if (!found_valid_hit ||
-                hit.distance < closest_non_trigger_hit.distance)
+            bool found_valid_hit = false;
+            RaycastHit closest_non_trigger_hit = new RaycastHit();
+            foreach (var hit in hits)
             {
-                closest_non_trigger_hit = hit;
-                found_valid_hit = true;
+                if (hit.collider.isTrigger)
+                {
+                    continue;
+                }
+
+                if (!found_valid_hit ||
+                    hit.distance < closest_non_trigger_hit.distance)
+                {
+                    closest_non_trigger_hit = hit;
+                    found_valid_hit = true;
+                }
             }
+
+            hit_info = closest_non_trigger_hit;
+            return found_valid_hit;
         }
 
-        hit_info = closest_non_trigger_hit;
-        return found_valid_hit;
+        hit_info = new RaycastHit();
+        return false;
     }// sweep_test_all_filter
 
     //--------------------------------------------------------------------------
@@ -243,7 +257,7 @@ public class Actor : MonoBehaviour
         // backwards around the x axis.
         if (new_rotation.eulerAngles.x != 0 || new_rotation.eulerAngles.z != 0)
         {
-            print("WTF new_rotation: " + new_rotation.eulerAngles);
+            // print("WTF new_rotation: " + new_rotation.eulerAngles);
             var adjusted_rotation = new_rotation.eulerAngles;
             adjusted_rotation.x = 0;
             adjusted_rotation.z = 0;

@@ -660,6 +660,18 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 720486d8f3b86470195e84276406ad24, type: 2}
+    - target: {fileID: 129714, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138080, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
   m_IsPrefabParent: 0
@@ -1173,7 +1185,7 @@ GameObject:
   - 65: {fileID: 87074057}
   - 23: {fileID: 87074056}
   - 54: {fileID: 87074055}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: fragment_cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1637,6 +1649,18 @@ Prefab:
     - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 129714, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138080, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
@@ -5443,6 +5467,18 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 720486d8f3b86470195e84276406ad24, type: 2}
+    - target: {fileID: 129714, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138080, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
   m_IsPrefabParent: 0
@@ -11154,6 +11190,18 @@ Prefab:
     - target: {fileID: 437578, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
       propertyPath: m_LocalScale.z
       value: .75
+      objectReference: {fileID: 0}
+    - target: {fileID: 129714, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138080, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
@@ -21160,7 +21208,7 @@ GameObject:
   - 65: {fileID: 1408399849}
   - 23: {fileID: 1408399848}
   - 54: {fileID: 1408399847}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: fragment_cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26398,6 +26446,18 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 720486d8f3b86470195e84276406ad24, type: 2}
+    - target: {fileID: 129714, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138080, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128818, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4df32031a1e641c89a638ed3ef6d261, type: 2}
   m_IsPrefabParent: 0
@@ -33044,7 +33104,7 @@ GameObject:
   - 65: {fileID: 2066609383}
   - 23: {fileID: 2066609382}
   - 54: {fileID: 2066609381}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: fragment_cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
