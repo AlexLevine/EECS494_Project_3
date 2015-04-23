@@ -68,6 +68,7 @@ public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscrib
 
     public void notify_checkpoint_load()
     {
+        // TODO we only want to know if player was killed by boss
         player_died = true;
         fight_started = false;
     }// notify_checkpoint_load

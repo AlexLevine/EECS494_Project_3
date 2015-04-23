@@ -82,7 +82,8 @@ public class Stationary_enemy_script : Enemy
         // var direction_to_player =
         //         closest_player.transform.position - transform.position;
         // direction_to_player = direction_to_player.normalized;
-        bullet.GetComponent<Rigidbody>().velocity = body.transform.forward * 14;
+        bullet.GetComponent<Enemy_projectile>().velocity =
+                body.transform.forward * 14;
         timer = 0;
     }// shoot_projectile
 
