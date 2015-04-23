@@ -2,11 +2,25 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Enemy_projectile : MonoBehaviour {
+public class Enemy_projectile : MonoBehaviour
+{
+
+    public Vector3 velocity = Vector3.zero;
 
     private int attack_power = 1;
 
-    void OnCollisionEnter(Collision c)
+    void Start()
+    {
+        GetComponent<Collider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    void Update()
+    {
+        transform.position += velocity * Time.deltaTime;
+    }
+
+    void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.tag == "Player")
         {
@@ -22,8 +36,8 @@ public class Enemy_projectile : MonoBehaviour {
         Destroy (gameObject);
     }// OnCollisionEnter
 
-    void OnCollisionStay(Collision collision)
+    void OnTriggerStay(Collider c)
     {
-        OnCollisionEnter(collision);
+        OnTriggerEnter(c);
     } // OnCollisionStay
 }

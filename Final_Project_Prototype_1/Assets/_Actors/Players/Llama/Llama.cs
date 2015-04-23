@@ -314,7 +314,7 @@ public class Llama : Player_character
             body.transform.forward);
 //        print(direction);
 
-        spit.GetComponent<Rigidbody>().velocity = direction * 40f;
+        spit.GetComponent<Llama_spit>().velocity = direction * 40f;
         spit_is_cooling_down = true;
     }// attack
 
