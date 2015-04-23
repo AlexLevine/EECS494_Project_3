@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Samurai_Attack : Enemy {
+public class Samurai_Attack : Enemy
+{
     public enum Samurai_state_e
     {
         WAITING,
@@ -15,7 +16,23 @@ public class Samurai_Attack : Enemy {
 
     public GameObject[] retreat_point_markers;
 
-    public GameObject diamond; 
+    public GameObject diamond_cut_scene;
+
+    public override float attack_power
+    {
+        get
+        {
+            return 1;
+        }
+    }
+
+    public override float max_health
+    {
+        get
+        {
+            return 20;
+        }
+    }
 
     private GameObject llama;
     private GameObject ninja;
@@ -37,6 +54,10 @@ public class Samurai_Attack : Enemy {
 
     private List<Vector3> retreat_points = new List<Vector3>();
     private Vector3 retreat_destination;
+    private Vector3 retreat_start;
+    private float retreat_duration;
+    private float retreat_time_elapsed;
+
     private Vector3 starting_location;
     private Quaternion starting_rotation;
 
@@ -80,41 +101,46 @@ public class Samurai_Attack : Enemy {
         starting_rotation = body.transform.rotation;
         starting_location = transform.position;
 
-        snap_to_ground();
+        // snap_to_ground();
     }
 
     // Update is called once per frame
     protected override void update_impl()
     {
-        // base.Update();
-        if (being_knocked_back)
+        base.update_impl();
+        // if (being_knocked_back)
+        // {
+        //     return;
+        // }
+
+        // var closest_player = look_for_player();
+
+
+        switch(cur_state)
         {
-            return;
-        }
-
-        var closest_player = look_for_player();
-
-
-        switch(cur_state){
         case Samurai_state_e.WAITING:
             break;
 
         case Samurai_state_e.LOOKING:
-            look_toward(closest_player);
+            look_toward(look_for_player(), 360f);
 
             cur_pause_time += Time.fixedDeltaTime;
-            if(cur_pause_time >= max_pause_time / 2)
+            if(cur_pause_time >= max_pause_time)
             {
                 print("looking to attacking");
                 cur_pause_time = 0;
                 cur_state = Samurai_state_e.ATTACKING;
+
+                // velocity = body.transform.forward * speed;
                 // print("attack!");
             }
 
-            snap_to_ground();
+            // snap_to_ground();
             break;
 
         case Samurai_state_e.ATTACKING:
+            print("attack");
+            // velocity = body.transform.forward * speed;
             var delta_pos = body.transform.forward * speed;
             delta_pos *= Time.fixedDeltaTime;
 
@@ -131,16 +157,20 @@ public class Samurai_Attack : Enemy {
             break;
 
         case Samurai_state_e.RETREATING:
-            look_toward(retreat_destination);
-            move(body.transform.forward * speed * 0.65f * Time.fixedDeltaTime);
+            look_toward(retreat_destination, 360f);
 
-            var distance_to_dest = Vector3.Distance(
-                body.transform.position, retreat_destination);
-            //print(distance_to_dest);
-            if (distance_to_dest < 3f)
+            var lerp_percent = retreat_time_elapsed / retreat_duration;
+
+            if (lerp_percent >= 1)
             {
+                lerp_percent = 1;
                 cur_state = Samurai_state_e.LOOKING;
+                retreat_time_elapsed = 0;
             }
+
+            var new_pos = Vector3.Lerp(
+                retreat_start, retreat_destination, lerp_percent);
+            move(new_pos - transform.position);
 
             break;
 
@@ -151,13 +181,14 @@ public class Samurai_Attack : Enemy {
     }
 
     public override Sweep_test_summary move(
-        Vector3 delta_position, float precision_pad=0.1f)
+        Vector3 delta_position, float precision_pad=0.2f)
     {
         var move_summary = base.move(delta_position, precision_pad);
 
         if (move_summary.hit_x)
         {
             print ("hit_x");
+            // stop();
             var pc = move_summary.hit_info_x.transform.GetComponent<Player_character>();
             if (pc == null)
             {
@@ -170,6 +201,7 @@ public class Samurai_Attack : Enemy {
         }
         else if (move_summary.hit_z)
         {
+            // stop();
             var pc = move_summary.hit_info_z.transform.GetComponent<Player_character>();
             if (pc == null)
             {
@@ -205,8 +237,14 @@ public class Samurai_Attack : Enemy {
             return;
         }
 
+        // stop();
         resolve_collision_with_player(player);
     }// OnTriggerEnter
+
+    void OnTriggerStay(Collider c)
+    {
+        OnTriggerEnter(c);
+    }
 
 //  void OnControllerColliderHit(ControllerColliderHit c)
 //  {
@@ -231,6 +269,7 @@ public class Samurai_Attack : Enemy {
 
     void resolve_collision_with_player(Player_character pc)
     {
+        print("resolve_collision_with_player");
         // print(cur_state);
         var knockback_direction = pc.transform.position - transform.position;
         pc.receive_hit(
@@ -255,12 +294,17 @@ public class Samurai_Attack : Enemy {
             var index = Random.Range(0, retreat_points.Count);
             // print(index);
             retreat_destination = retreat_points[index];
+            // retreat_destination.y = transform.position.y;
+            retreat_duration = Vector3.Distance(
+                retreat_destination, transform.position) / speed;
+            retreat_time_elapsed = 0;
             var something_in_way = Physics.Raycast(
-                body.transform.position, retreat_destination,
-                Vector3.Distance(body.transform.position, retreat_destination));
+                transform.position, retreat_destination,
+                Vector3.Distance(transform.position, retreat_destination));
 
             if (!something_in_way)
             {
+                print("retreat_destination: " + retreat_destination);
                 return;
             }
 
@@ -281,56 +325,19 @@ public class Samurai_Attack : Enemy {
         return (llama_dist < ninja_dist) ? llama : ninja;
     }
 
-    void snap_to_ground()
-    {
-        //cc.Move(Vector3.down);
-    }// snap_to_ground
-
-    public override float attack_power
-    {
-        get
-        {
-            return 1;
-        }
-    }
-
-    public override float max_health
-    {
-        get
-        {
-            return 20;
-        }
-    }
-
     //--------------------------------------------------------------------------
 
     public override void on_death(GameObject killer)
     {
-        base.on_death();
+        print("da boss mans is ded");
         Camera.main.GetComponent<Camera_follow>().deactivate_boss_mode();
         Player_character.force_team_up = false;
-        diamond.GetComponent<Diamond_Manager>().activate(null, null); 
+
+        base.on_death(killer);
+        diamond_cut_scene.GetComponent<Cut_scene>().activate();
     }
 
     // -------------------------------------------------------------------------
-
-    // public override bool receive_hit(
-    //  float damage, Vector3 knockback_velocity, GameObject attacker)
-    // {
-
-    //  if(attacker.name.Contains(Ninja_sword.global_name))
-    //  {
-    //      Ninja.get().receive_hit(0, transform.forward * attack_power, attacker);
-    //      return false;
-    //  }
-
-    //  if (!attacker.name.Contains(Ninja_jousting_pole.global_name))
-    //  {
-    //      return false;
-    //  }
-
-    //  return base.receive_hit(damage, knockback_velocity, attacker);
-    // }
 
     public void notify_checkpoint_load()
     {

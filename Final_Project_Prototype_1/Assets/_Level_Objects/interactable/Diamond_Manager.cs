@@ -3,33 +3,33 @@ using System.Collections;
 
 public class Diamond_Manager : Switchee {
 
-    public bool running = false; 
-    public float lerp_duration = 5f; 
-    public float time_elapsed = 0; 
-    public GameObject target_position; 
-    private Vector3 start_pos; 
+    public bool running = false;
+    public float lerp_duration = 5f;
+    public float time_elapsed = 0;
+    public GameObject target_position;
+    private Vector3 start_pos;
 
-    public GameObject youre_winner_canvas; 
-    
+    public GameObject youre_winner_canvas;
+
 
     public override void activate(
         Switchee_callback callback, float? callback_delay)
     {
-        base.activate(callback, callback_delay); 
+        base.activate(callback, callback_delay);
 
-        StartCoroutine(lerp_diamond());  
+        StartCoroutine(lerp_diamond());
     }
 
     void Start()
     {
-        start_pos = transform.position; 
+        start_pos = transform.position;
         youre_winner_canvas.SetActive(false);
-        // StartCoroutine(lerp_diamond());  
+        // StartCoroutine(lerp_diamond());
     }
 
     void Update()
     {
-        rotate_around_self(); 
+        rotate_around_self();
     }
 
 
@@ -46,7 +46,7 @@ public class Diamond_Manager : Switchee {
                 target_position.transform.position, lerp_percent);
         }
 
-        do_callback(); 
+        do_callback();
     }
 
 
@@ -56,10 +56,20 @@ public class Diamond_Manager : Switchee {
     }
 
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag != "Player")
+        {
+            return;
+        }
+
         Destroy(gameObject);
         youre_winner_canvas.SetActive(true);
+    }
+
+    void OnTriggerStay(Collider c)
+    {
+        OnTriggerEnter(c);
     }
 
 }

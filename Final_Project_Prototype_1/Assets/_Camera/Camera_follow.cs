@@ -42,6 +42,9 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     private float smooth = 0.25f;
     private float y_rotation_speed = 0.0f; // used by SmoothDampAngle
 
+    private static float boss_hover_height = 10f;
+    public static float boss_follow_distance = 15f;
+
     //--------------------------------------------------------------------------
 
     // Use this for initialization
@@ -263,12 +266,7 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
             return point_of_interest_ + camera_offset;
         }
 
-        Vector3 ninja_pos = Ninja.get().transform.position;
-        Vector3 samurai_pos = Samurai_Attack.get().transform.position;
-        Vector3 offset = ninja_pos - samurai_pos;
-        offset = offset + 20 * offset.normalized;
-        offset.y = 10f;
-        return samurai_pos + offset;
+        return calculate_target_boss_mode_pos();
         // if (!is_transitioning)
         // {
         //     return target_pos;
@@ -278,6 +276,17 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         //     transform.position, target_pos,
         //     lerp_speed * Time.deltaTime);
     }// calculate_target_camera_position
+
+    Vector3 calculate_target_boss_mode_pos()
+    {
+        var ninja_pos = Ninja.get().transform.position;
+        var samurai_pos = Samurai_Attack.get().transform.position;
+        var offset = ninja_pos - samurai_pos;
+        offset = offset + boss_follow_distance * offset.normalized;
+        offset.y = boss_hover_height;
+
+        return samurai_pos + offset;
+    }
 
     //--------------------------------------------------------------------------
 
@@ -293,8 +302,13 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
             return target_rotation;
         }
 
-        Vector3 ninja_pos = Ninja.get().transform.position;
-        Vector3 samurai_pos = Samurai_Attack.get().transform.position;
+        return calculate_target_boss_mode_rot(target_position);
+    }
+
+    Quaternion calculate_target_boss_mode_rot(Vector3 target_position)
+    {
+        var ninja_pos = Ninja.get().transform.position;
+        var samurai_pos = Samurai_Attack.get().transform.position;
 
         var direction = samurai_pos - ninja_pos;
 
@@ -303,161 +317,8 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
 
         var new_rotation = Quaternion.LookRotation(desired_forward);
 
-        // //smoothdamp
-        // var rotation_step = Mathf.SmoothDampAngle(
-        //     Camera.main.transform.eulerAngles.y,
-        //     new_rotation.eulerAngles.y,
-        //     ref y_rotation_speed,
-        //     smooth);
-        // var temp = new_rotation.eulerAngles;
-        // temp.y = rotation_step;
-        // new_rotation = Quaternion.Euler(temp);
-
         return new_rotation;
     }
-
-    //--------------------------------------------------------------------------
-
-    // // Returns true if any of the parameters passed to this function are not
-    // // null.
-    // bool update_camera_follow_data(
-    //     Vector3? new_point_of_interest=null,
-    //     float? y_rotation=null, float? camera_follow_distance=null,
-    //     float? camera_hover_height=null)
-    // {
-    //     if (new_point_of_interest != null)
-    //     {
-    //         point_of_interest_ = (Vector3) new_point_of_interest;
-    //     }
-
-    //     if (y_rotation != null)
-    //     {
-    //         y_rotation_ = (float) y_rotation;
-    //     }
-
-    //     if (camera_follow_distance != null)
-    //     {
-    //         camera_follow_distance_ = (float) camera_follow_distance;
-    //     }
-
-    //     if (camera_hover_height != null)
-    //     {
-    //         camera_hover_height_ = (float) camera_hover_height;
-    //     }
-
-    //     return new_point_of_interest != null || y_rotation != null ||
-    //            camera_follow_distance != null || camera_hover_height != null;
-    // }// update_camera_follow_data
-
-    //--------------------------------------------------------------------------
-
-    // IEnumerator do_camera_transition(
-    //     Vector3 target_position, Quaternion target_rotation,
-    //     float transition_duration)
-    // {
-    //     print("do_camera_transition");
-
-    //     is_transitioning_ = true;
-
-    //     for (float time_elapsed = 0; time_elapsed < transition_duration; time_elapsed += Time.deltaTime)
-    //     {
-    //         if (following_player_)
-    //         {
-    //             point_of_interest_ = calculate_player_midpoint();
-
-    //             target_position = calculate_target_camera_position();
-    //         }
-
-    //         var lerp_percent = Mathf.Min(1f, time_elapsed / transition_duration);
-    //         print(lerp_percent);
-    //         transform.rotation = Quaternion.Lerp(
-    //             transform.rotation, target_rotation, lerp_percent / 2f);
-    //         transform.position = Vector3.Lerp(
-    //             transform.position, target_position, lerp_percent);
-    //         yield return null;
-    //     }
-
-    //     is_transitioning_ = false;
-
-    //     print("transition finished");
-    // }// do_camera_transition
-
-    //--------------------------------------------------------------------------
-
-    // void snap_camera_to_position()
-    // {
-    //     var wanted_forward = Quaternion.AngleAxis(y_rotation_, Vector3.up);
-    //     var camera_offset = -(wanted_forward * Vector3.forward);
-    //     camera_offset.y = 0;
-    //     camera_offset = camera_offset.normalized;
-    //     camera_offset *= camera_follow_distance_;
-
-    //     camera_offset.y += camera_hover_height_;
-
-    //     transform.position = player_midpoint + camera_offset;
-    // }// snap_camera_to_position
-
-
-
-    //--------------------------------------------------------------------------
-
-    // void update_rotation()
-    // {
-    //     var look_direction = player_midpoint - transform.position;
-    //     var new_forward = Vector3.RotateTowards(
-    //         transform.forward, look_direction, 360f, 0f);
-
-    //     var target_rotation = Quaternion.LookRotation(new_forward);
-    //     if (!is_transitioning)
-    //     {
-    //         return transform.rotation;
-    //     }
-
-    //     // return Quaternion.Lerp(
-    //     //     transform.rotation, target_rotation, lerp_speed * Time.deltaTime);
-    // }// update_rotation
-
-    //--------------------------------------------------------------------------
-
-    // public bool both_points_in_viewport(Vector3 first, Vector3 second)
-    // {
-    //     return false;
-    // }// both_points_in_viewport
-
-    //--------------------------------------------------------------------------
-
-    // public static bool point_step_would_leave_viewport(
-    //     Vector3 point, Vector3 delta_position)
-    // {
-    //     // if (delta_position.y != 0)
-    //     // {
-    //     //     return false;
-    //     // }
-
-    //     var desired_position = point + delta_position;
-    //     var viewport_pos = Camera.main.WorldToViewportPoint(desired_position);
-
-    //     // print("direction: " + direction);
-    //     // print("step: " + step);
-    //     // print("desired_position: " + desired_position);
-    //     // print("viewport_pos: " + viewport_pos);
-
-    //     var leave_z_far_edge = delta_position.z > 0 && viewport_pos.y > 1f;
-    //     var leave_z_near_edge = delta_position.z < 0 && viewport_pos.y < 0f;
-    //     var leave_x_left_edge = delta_position.x < 0 && viewport_pos.x < 0f;
-    //     var leave_x_right_edge = delta_position.x > 0 && viewport_pos.x > 1f;
-
-    //     return leave_z_far_edge || leave_z_near_edge ||
-    //            leave_x_left_edge || leave_x_right_edge;
-
-
-    //     // if (!point_inside_viewport(viewport_pos))
-    //     // {
-    //     //     return true;
-    //     // }
-    //     // return point.x < 0.9f && point.x > 0.1f &&
-    //     //        point.y < 0.9f && point.y > 0.1f;
-    // }// point_step_would_leave_viewport
 
     //--------------------------------------------------------------------------
 
@@ -475,6 +336,34 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     public void activate_boss_mode()
     {
         boss_mode = true;
+        velocity = Vector3.zero;
+        y_rotation_speed = 0f;
+
+        // Samurai_Attack.get().notify_players_in_arena();
+
+        // following_player_ = false;
+
+        var target_boss_camera_pos = calculate_target_boss_mode_pos();
+        var target_boss_camera_rot = calculate_target_boss_mode_rot(
+            target_boss_camera_pos);
+        var horizontal_offset =
+                target_boss_camera_pos - Samurai_Attack.get().transform.position;
+        horizontal_offset.y = 0;
+
+        adjust_main_camera(
+            new_point_of_interest: Samurai_Attack.get().transform.position,
+            y_rotation: target_boss_camera_rot.eulerAngles.y,
+            camera_follow_distance: horizontal_offset.magnitude,
+            camera_hover_height: boss_hover_height,
+            transition_duration: 1f,
+            callback: () => Samurai_Attack.get().notify_players_in_arena());
+
+        //         Vector3? new_point_of_interest=null,
+        // float? y_rotation=null,
+        // float? camera_follow_distance=null,
+        // float? camera_hover_height=null,
+        // float transition_duration=1.5f,
+        // Camera_callback callback=null)
     }
 
     //--------------------------------------------------------------------------
@@ -482,5 +371,7 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     public void deactivate_boss_mode()
     {
         boss_mode = false;
+        camera_hover_height_ = 10f;
+        camera_follow_distance_ = 10f;
     }
 }

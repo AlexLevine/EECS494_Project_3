@@ -112,6 +112,7 @@ public class Ninja : Player_character
         if (is_teamed_up)
         {
             velocity = Vector3.zero;
+            transform.position = team_up_point.transform.position;
         }
 
         // // on_sword_swing sets a target velocity. this allows that motion

@@ -37,7 +37,7 @@ public class Actor : MonoBehaviour
     protected Rigidbody kinematic_rigidbody;
     protected bool is_grounded_;
     protected virtual float invincibility_flash_duration {
-        get {return 0.5f; } }
+        get { return 0.5f; } }
 
     public float health_;
 
@@ -217,7 +217,6 @@ public class Actor : MonoBehaviour
 
     public void look_toward(Vector3 point, float step=10f)
     {
-        // TODO: should we be multiplying by deltaTime in the above overload?
         step *= Time.deltaTime;
 
         var target_direction =
@@ -378,7 +377,7 @@ public class Actor : MonoBehaviour
 
     //--------------------------------------------------------------------------
 
-    public virtual void on_death(GameObject killer=null)
+    public virtual void on_death(GameObject killer)
     {
 
     }// on_death
