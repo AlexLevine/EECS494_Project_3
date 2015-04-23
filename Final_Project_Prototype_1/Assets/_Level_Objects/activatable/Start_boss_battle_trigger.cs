@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscriber
 {
+    public GameObject lock_player_in_cutscene;
     public GameObject boss_rear_up_cutscene;
 
     bool fight_started = false;
@@ -31,14 +32,22 @@ public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscrib
             return;
         }
 
-        boss_rear_up_cutscene.GetComponent<Cut_scene>().activate(
-            start_fight_for_first_time);
+        lock_player_in_cutscene.GetComponent<Cut_scene>().activate(
+            play_rear_up_cutscene);
     }// OnTriggerEnter
 
     void OnTriggerStay(Collider c)
     {
         OnTriggerEnter(c);
     }// OnTriggerStay
+
+    //--------------------------------------------------------------------------
+
+    void play_rear_up_cutscene()
+    {
+        boss_rear_up_cutscene.GetComponent<Cut_scene>().activate(
+            start_fight_for_first_time);
+    }
 
     //--------------------------------------------------------------------------
 
@@ -51,7 +60,6 @@ public class Start_boss_battle_trigger : MonoBehaviour, Checkpoint_load_subscrib
 
         Player_character.force_team_up = true;
         fight_started = true;
-        // Samurai_Attack.get().notify_players_in_arena();
         Camera.main.GetComponent<Camera_follow>().activate_boss_mode();
         print("battle started");
     }// start_fight_for_first_time

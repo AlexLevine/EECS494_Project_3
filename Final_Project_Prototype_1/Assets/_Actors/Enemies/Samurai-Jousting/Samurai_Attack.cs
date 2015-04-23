@@ -22,7 +22,7 @@ public class Samurai_Attack : Enemy
     {
         get
         {
-            return 1;
+            return 2;
         }
     }
 
@@ -139,7 +139,7 @@ public class Samurai_Attack : Enemy
             break;
 
         case Samurai_state_e.ATTACKING:
-            print("attack");
+            // print("attack");
             // velocity = body.transform.forward * speed;
             var delta_pos = body.transform.forward * speed;
             delta_pos *= Time.fixedDeltaTime;
@@ -160,7 +160,7 @@ public class Samurai_Attack : Enemy
             look_toward(retreat_destination, 360f);
 
             var lerp_percent = retreat_time_elapsed / retreat_duration;
-
+            retreat_time_elapsed += Time.deltaTime;
             if (lerp_percent >= 1)
             {
                 lerp_percent = 1;
@@ -170,7 +170,11 @@ public class Samurai_Attack : Enemy
 
             var new_pos = Vector3.Lerp(
                 retreat_start, retreat_destination, lerp_percent);
-            move(new_pos - transform.position);
+            var step = new_pos - transform.position;
+            print("retreat_start: " + retreat_start);
+            print("retreat_destination: " + retreat_destination);
+            print("step: " + step);
+            move(step);
 
             break;
 
@@ -279,25 +283,19 @@ public class Samurai_Attack : Enemy
         {
             return;
         }
-
-        cur_state = Samurai_state_e.RETREATING;
-
         choose_retreat_point();
     }// resolve_collision_with_player
 
     //--------------------------------------------------------------------------
 
-    void choose_retreat_point()
+    public void choose_retreat_point()
     {
         for (int i = 0; i < 10; ++i)
         {
             var index = Random.Range(0, retreat_points.Count);
             // print(index);
             retreat_destination = retreat_points[index];
-            // retreat_destination.y = transform.position.y;
-            retreat_duration = Vector3.Distance(
-                retreat_destination, transform.position) / speed;
-            retreat_time_elapsed = 0;
+
             var something_in_way = Physics.Raycast(
                 transform.position, retreat_destination,
                 Vector3.Distance(transform.position, retreat_destination));
@@ -305,10 +303,18 @@ public class Samurai_Attack : Enemy
             if (!something_in_way)
             {
                 print("retreat_destination: " + retreat_destination);
-                return;
+                break;
             }
 
         }
+
+        retreat_destination.y = transform.position.y;
+        retreat_duration = Vector3.Distance(
+            retreat_destination, transform.position) / speed;
+        retreat_time_elapsed = 0;
+        retreat_start = transform.position;
+
+        cur_state = Samurai_state_e.RETREATING;
     }// choose_retreat_point
 
     //--------------------------------------------------------------------------

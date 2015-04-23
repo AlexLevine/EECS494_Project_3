@@ -42,7 +42,7 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     private float smooth = 0.25f;
     private float y_rotation_speed = 0.0f; // used by SmoothDampAngle
 
-    private static float boss_hover_height = 10f;
+    private static float boss_hover_height = 15f;
     public static float boss_follow_distance = 15f;
 
     //--------------------------------------------------------------------------
