@@ -16,6 +16,7 @@ public class Samurai_Attack : Enemy
 
     public GameObject[] retreat_point_markers;
 
+    public GameObject diamond_drop;
     public GameObject diamond_cut_scene;
 
     public override float attack_power
@@ -43,7 +44,7 @@ public class Samurai_Attack : Enemy
     protected override float invincibility_flash_duration {
         get { return 0.5f; } }
 
-    public static float max_pause_time = 2f;
+    public static float max_pause_time = 1.25f;
     private float cur_pause_time;
 
     private float speed;
@@ -341,6 +342,14 @@ public class Samurai_Attack : Enemy
 
         base.on_death(killer);
         diamond_cut_scene.GetComponent<Cut_scene>().activate();
+    }
+
+    protected override void drop_item()
+    {
+        var diamond_pos = transform.position;
+        diamond_pos.y += 3;
+        diamond_drop.transform.position = diamond_pos;
+        diamond_drop.SetActive(true);
     }
 
     // -------------------------------------------------------------------------

@@ -39,11 +39,11 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
     private float current_transition_duration = 1f;
     private Camera_callback current_transition_callback = null;
     private bool boss_mode = false;
-    private float smooth = 0.25f;
+    private float smooth = 0.5f;
     private float y_rotation_speed = 0.0f; // used by SmoothDampAngle
 
-    private static float boss_hover_height = 15f;
-    public static float boss_follow_distance = 15f;
+    private static float boss_hover_height = 10f;
+    public static float boss_follow_distance = 20f;
 
     //--------------------------------------------------------------------------
 

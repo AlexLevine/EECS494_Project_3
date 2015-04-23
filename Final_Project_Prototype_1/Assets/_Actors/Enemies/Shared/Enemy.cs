@@ -129,15 +129,22 @@ public class Enemy : Actor
         GameObject boom = (GameObject)Instantiate(Resources.Load("dead_enemy"));
         boom.transform.position = transform.position;
 
-        // drop health object a third of the time
-		int rand = UnityEngine.Random.Range(0, 2);
-		if (rand < 1) {
-        	GameObject biscuit = (GameObject)Instantiate(Resources.Load ("Collectable"));
-        	biscuit.transform.position = transform.position;
-        }
+        drop_item();
 
         Destroy(gameObject);
     }// on_death
+
+    //--------------------------------------------------------------------------
+
+    protected virtual void drop_item()
+    {
+        // drop health object a third of the time
+        int rand = UnityEngine.Random.Range(0, 2);
+        if (rand < 1) {
+            GameObject biscuit = (GameObject)Instantiate(Resources.Load ("Collectable"));
+            biscuit.transform.position = transform.position;
+        }
+    }
 
     //--------------------------------------------------------------------------
 
