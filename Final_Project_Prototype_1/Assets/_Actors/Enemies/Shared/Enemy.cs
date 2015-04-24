@@ -141,8 +141,8 @@ public class Enemy : Actor
         // drop health object a third of the time
         int rand = UnityEngine.Random.Range(0, 2);
         if (rand < 1) {
-            GameObject biscuit = (GameObject)Instantiate(Resources.Load ("Collectable"));
-            biscuit.transform.position = transform.position;
+            GameObject heart = (GameObject)Instantiate(Resources.Load ("Collectable_Heart"));
+            heart.transform.position = transform.position;
         }
     }
 
