@@ -95,7 +95,7 @@ public class Enemy : Actor
     protected virtual void drop_item()
     {
         // drop health object a third of the time
-        int rand = UnityEngine.Random.Range(0, 4);
+        int rand = UnityEngine.Random.Range(0, 5);
         if (rand < 1) {
             GameObject heart = (GameObject)Instantiate(Resources.Load ("Collectable_Heart"));
             heart.transform.position = transform.position;
