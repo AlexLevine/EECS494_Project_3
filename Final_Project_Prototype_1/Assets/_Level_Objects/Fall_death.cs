@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Fall_death : MonoBehaviour, Checkpoint_load_subscriber
 {
-    public bool is_dying = false; 
+    public bool is_dying = false;
 
     void Start()
     {
@@ -18,10 +18,23 @@ public class Fall_death : MonoBehaviour, Checkpoint_load_subscriber
         }
         if(is_dying)
         {
-            return; 
+            return;
         }
 
-        is_dying = true; 
+        var llama = c.gameObject.GetComponent<Llama>();
+        var ninja = c.gameObject.GetComponent<Ninja>();
+
+        if (llama != null)
+        {
+            llama.play_death_vocals();
+        }
+
+        if (ninja != null)
+        {
+            ninja.play_death_vocals();
+        }
+
+        is_dying = true;
         Camera_follow.stop_following_player();
         Checkpoint.load_last_checkpoint(notify_checkpoint_load);
     }
@@ -33,7 +46,7 @@ public class Fall_death : MonoBehaviour, Checkpoint_load_subscriber
 
     public void notify_checkpoint_load()
     {
-        is_dying = false; 
+        is_dying = false;
         Camera_follow.start_following_player();
     }// notify_checkpoint_load
 }

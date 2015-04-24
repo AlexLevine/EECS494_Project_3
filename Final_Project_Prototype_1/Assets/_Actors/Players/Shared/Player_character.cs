@@ -368,6 +368,18 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
+    // public override bool receive_hit(
+    //     float damage, Vector3 knockback_velocity, GameObject attacker,
+    //     float knockback_duration=0.5f)
+    // {
+    //     if (animation_controlling_movement)
+    //     {
+
+    //     }
+    // }
+
+    //--------------------------------------------------------------------------
+
     protected virtual void on_team_up_disengage()
     {
     }// on_team_up_disengage
@@ -406,7 +418,7 @@ public class Player_character : Actor
         if(input_device.GetControl(InputControlType.Start).WasPressed)
         {
             Pause_screen_controller.get().gameObject.SetActive(true);
-            Actor.actors_paused = true; 
+            Actor.actors_paused = true;
         }
 
         if (input_device.GetControl(InputControlType.Action1).WasPressed)

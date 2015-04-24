@@ -26,7 +26,7 @@ public class Samurai_Attack : Enemy
     {
         get
         {
-            return 2;
+            return 3;
         }
     }
 
