@@ -68,7 +68,6 @@ public class Team_up_animation : MonoBehaviour
             break;
 
         case Team_up_animation_state_e.DIVING:
-            if (Player_character.)
             step_dive();
             break;
         }
