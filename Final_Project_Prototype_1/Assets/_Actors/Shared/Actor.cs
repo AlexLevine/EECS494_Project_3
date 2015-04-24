@@ -408,6 +408,12 @@ public class Actor : MonoBehaviour
         {
             health_ = max_health;
         }
+
+        play_health_item_sound();
+    }
+
+    protected virtual void play_health_item_sound()
+    {
     }
 }
 

@@ -62,6 +62,6 @@ public class Rear_up_animation : Switchee
     public void play_roar()
     {
         print("roar!");
-        // roar_sound_player.GetComponent<Sound_effect_randomizer>().play();
+        roar_sound_player.GetComponent<Sound_effect_randomizer>().play();
     }
 }
