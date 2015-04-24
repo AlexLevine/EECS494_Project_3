@@ -2123,8 +2123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 1c4daf14d10d5492d90c26a5f14a8248, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
   allow_overlap: 0
 --- !u!114 &11446132
 MonoBehaviour:
@@ -2181,8 +2179,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 0c84bf522d2d44a03b9a6763154b483e, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
   allow_overlap: 0
 --- !u!114 &11491572
 MonoBehaviour:
