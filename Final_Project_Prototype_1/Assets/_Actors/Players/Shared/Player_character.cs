@@ -393,14 +393,36 @@ public class Player_character : Actor
 
     private void process_input()
     {
-        if (!controls_enabled)
-        {
-            return;
-        }
 
         if (input_device.GetControl(InputControlType.Start).WasPressed)
         {
-            print("start");
+            // Pause Screen is visible
+            if(Pause_screen_controller.get().gameObject.activeSelf)
+            {
+                Actor.actors_paused = false; 
+                Pause_screen_controller.get().gameObject.SetActive(false);
+            }
+            // Pause Screen is not visible
+            else
+            {
+                Actor.actors_paused = true; 
+                Pause_screen_controller.get().gameObject.SetActive(true);    
+            }
+        }
+
+    
+        if(input_device.GetControl(InputControlType.Select).WasPressed)
+        {
+            if(Pause_screen_controller.get().gameObject.activeSelf)
+            {
+                // Restart
+            }
+        }
+
+
+        if (!controls_enabled)
+        {
+            return;
         }
 
         if (input_device.GetControl(InputControlType.Action1).WasPressed)
