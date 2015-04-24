@@ -62,7 +62,7 @@ public class Point_lerp_enemy : Enemy
     public override void play_damage_vocals()
     {
         print("play damage vocals");
-        GetComponent<Sound_effect_randomizer>().play();
+        GetComponentInParent<Sound_effect_randomizer>().play();
     }
 
 }
