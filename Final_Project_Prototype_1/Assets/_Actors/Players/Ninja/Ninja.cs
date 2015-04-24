@@ -287,13 +287,12 @@ public class Ninja : Player_character
         }
 
         // print("teaming up");
-        team_up_engage();
         // transform.position = team_up_point.transform.position;
 //        sword_obj.SetActive(false);
 //        jousting_pole.SetActive(true);
 
         GetComponent<Team_up_animation>().start_animation();
-
+        team_up_engage();
     }// team_up_engage_or_throw
 
     //--------------------------------------------------------------------------
