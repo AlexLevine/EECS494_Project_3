@@ -54,14 +54,14 @@ public class Point_lerp_enemy : Enemy
 
     public override void on_death(GameObject killer)
     {
-        print("point lerp on death");
+        // print("point lerp on death");
         play_damage_vocals();
         base.on_death(killer);
     }
 
     public override void play_damage_vocals()
     {
-        print("play damage vocals");
+        // print("play damage vocals");
         GetComponentInParent<Sound_effect_randomizer>().play();
     }
 

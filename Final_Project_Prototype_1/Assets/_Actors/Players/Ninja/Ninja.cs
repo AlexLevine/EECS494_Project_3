@@ -4,12 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class Ninja : Player_character
 {
-    public GameObject swing_sound_player;
+    // public GameObject swing_sound_player;
     public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
     public GameObject death_vocals;
     public GameObject spin_attack_vocals;
-    public GameObject spin_attack_sound;
+    public GameObject aerial_attack_vocals;
+    // public GameObject spin_attack_sound;
     public GameObject squish_sound;
     public GameObject unsquish_sound;
     public GameObject health_item_pickup_sound;
@@ -139,6 +140,11 @@ public class Ninja : Player_character
 
     public override void attack()
     {
+        if (being_knocked_back)
+        {
+            return;
+        }
+
         animator.SetTrigger(attack_button_pressed_trigger_id);
     }// physical_attack
 
@@ -150,7 +156,7 @@ public class Ninja : Player_character
         get_sword().GetComponent<TrailRenderer>().enabled = true;
 
         basic_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
-        swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
+        // swing_sound_player.GetComponent<Sound_effect_randomizer>().play();
     }// on_sword_swing_start
 
     public void on_sword_swing_end()
@@ -169,7 +175,7 @@ public class Ninja : Player_character
         get_sword().GetComponent<TrailRenderer>().enabled = true;
 
         spin_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
-        spin_attack_sound.GetComponent<Sound_effect_randomizer>().play();
+        // spin_attack_sound.GetComponent<Sound_effect_randomizer>().play();
     }// on_sword_spin_start
 
     public void on_sword_spin_end()
@@ -194,6 +200,8 @@ public class Ninja : Player_character
         is_diving = true;
         velocity = Vector3.down * 20f;
         get_sword().GetComponent<Collider>().enabled = true;
+
+        aerial_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// on_aerial_attack_dive_start
 
     public void on_aerial_attack_dive_end()

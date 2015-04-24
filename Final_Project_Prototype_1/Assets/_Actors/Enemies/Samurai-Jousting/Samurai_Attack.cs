@@ -87,6 +87,7 @@ public class Samurai_Attack : Enemy
     {
         base.Start();
 
+        death_vocals.transform.parent = transform.parent;
         //cc = gameObject.GetComponent<CharacterController>();
 
         foreach (var obj in retreat_point_markers)
@@ -125,7 +126,7 @@ public class Samurai_Attack : Enemy
             break;
 
         case Samurai_state_e.LOOKING:
-            look_toward(look_for_player(), 360f);
+            look_toward(look_for_player(), 10f);
 
             cur_pause_time += Time.fixedDeltaTime;
             if(cur_pause_time >= max_pause_time)
@@ -160,7 +161,7 @@ public class Samurai_Attack : Enemy
             break;
 
         case Samurai_state_e.RETREATING:
-            look_toward(retreat_destination, 360f);
+            look_toward(retreat_destination, 90f);
 
             var lerp_percent = retreat_time_elapsed / retreat_duration;
             retreat_time_elapsed += Time.deltaTime;

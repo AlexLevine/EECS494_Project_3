@@ -867,7 +867,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -936,7 +936,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1005,7 +1005,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1074,7 +1074,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1143,7 +1143,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1255,9 +1255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 84f96ca750fe64aad993d9f9b9253f86, type: 3}
-  - {fileID: 8300000, guid: 9b4a1863954034f1a8892c19a10a3060, type: 3}
   - {fileID: 8300000, guid: 846d33ae71b78417db1101ffc49d286e, type: 3}
+  - {fileID: 8300000, guid: 9b4a1863954034f1a8892c19a10a3060, type: 3}
   allow_overlap: 0
 --- !u!114 &11443050
 MonoBehaviour:
@@ -1334,7 +1333,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: ae04a8989412b42b5a40d74f8f11673e, type: 3}
   - {fileID: 8300000, guid: 027403116457c493abfd625cc2abb299, type: 3}
   allow_overlap: 0
 --- !u!114 &11499664

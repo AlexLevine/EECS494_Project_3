@@ -18624,6 +18624,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 23
       objectReference: {fileID: 0}
+    - target: {fileID: 8292390, guid: bcbd7b3aedad24024a191165f8946b47, type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e4a0ffde405f42e4b64fce9bd4ecba3, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcbd7b3aedad24024a191165f8946b47, type: 2}
   m_IsPrefabParent: 0
@@ -28007,7 +28011,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427470, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11457380, guid: 1f0cc4ddb5ba84b3e8aa52f8765c6c0f, type: 2}
       propertyPath: lock_on_bar
@@ -28637,7 +28641,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470222, guid: 353e52b24495d412f910a45cfde14d68, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11428082, guid: 353e52b24495d412f910a45cfde14d68, type: 2}
       propertyPath: HUD_gameobj

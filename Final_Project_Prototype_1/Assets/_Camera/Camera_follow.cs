@@ -89,6 +89,20 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         }
     }// LateUpdate
 
+    // void LateUpdate()
+    // {
+    //     if (!is_transitioning_)
+    //     {
+    //         return;
+    //     }
+
+    //     var target_position = calculate_target_camera_position();
+    //     var target_rotation = calculate_target_camera_rotation(
+    //         target_position);
+
+    //     update_transition(target_position, target_rotation);
+    // }
+
     //--------------------------------------------------------------------------
 
     // public void notify_checkpoint_load()

@@ -1299,7 +1299,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1437,7 +1437,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1575,7 +1575,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2098,12 +2098,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 140478}
   lock_on_bar: {fileID: 0}
-  swing_sound_player: {fileID: 107470}
   basic_attack_vocals: {fileID: 114038}
   damage_vocals: {fileID: 106634}
   death_vocals: {fileID: 109366}
   spin_attack_vocals: {fileID: 150270}
-  spin_attack_sound: {fileID: 192192}
+  aerial_attack_vocals: {fileID: 131522}
   squish_sound: {fileID: 177392}
   unsquish_sound: {fileID: 131490}
   health_item_pickup_sound: {fileID: 131718}
@@ -2124,8 +2123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 1c4daf14d10d5492d90c26a5f14a8248, type: 3}
-  - {fileID: 8300000, guid: 58d171b6e533049378fa09945ade1891, type: 3}
-  - {fileID: 8300000, guid: fd54735d08d784581b08f517c94c22d5, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   allow_overlap: 0
 --- !u!114 &11446132
 MonoBehaviour:
@@ -2182,8 +2181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 0c84bf522d2d44a03b9a6763154b483e, type: 3}
-  - {fileID: 8300000, guid: f62eef541df1449578f3691010801e8a, type: 3}
-  - {fileID: 8300000, guid: 0c0876ec1e6e340cfacddb75ae8c254e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   allow_overlap: 0
 --- !u!114 &11491572
 MonoBehaviour:
