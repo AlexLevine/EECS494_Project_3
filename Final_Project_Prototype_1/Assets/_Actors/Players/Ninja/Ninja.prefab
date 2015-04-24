@@ -2106,7 +2106,7 @@ MonoBehaviour:
   spin_attack_sound: {fileID: 192192}
   squish_sound: {fileID: 177392}
   unsquish_sound: {fileID: 131490}
-  health_item_pickup_sound: {fileID: 0}
+  health_item_pickup_sound: {fileID: 131718}
   projectile_prefab: {fileID: 146830, guid: 431c685c01aeb49a29b5198b30ce9358, type: 2}
   sword_obj: {fileID: 106070}
   aerial_attack_shockwave: {fileID: 126280}
