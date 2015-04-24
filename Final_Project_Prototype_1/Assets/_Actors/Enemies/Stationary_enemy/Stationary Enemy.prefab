@@ -27,8 +27,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 417460}
   - 33: {fileID: 3390208}
-  - 136: {fileID: 13666886}
-  - 23: {fileID: 2368560}
   m_Layer: 0
   m_Name: Base 1
   m_TagString: Untagged
@@ -399,7 +397,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -306.579987, y: -21.7900009, z: -97.9199982}
+  m_LocalPosition: {x: -13, y: -1.82000005, z: 25.4400005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417460}
@@ -580,30 +578,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2368560
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 112358}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: c7354f0be12ae4cca88ff0f122d4f49b, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
   m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
@@ -936,7 +910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd1aa6407a2c424cb3d492a19d38be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_playing: 0
 --- !u!114 &11432098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1032,19 +1005,6 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143758}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &13666886
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 112358}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
