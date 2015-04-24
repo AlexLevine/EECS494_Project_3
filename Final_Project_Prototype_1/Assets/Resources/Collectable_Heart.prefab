@@ -44,6 +44,7 @@ GameObject:
   - 4: {fileID: 497454}
   - 114: {fileID: 11498340}
   - 65: {fileID: 6590492}
+  - 114: {fileID: 11458142}
   m_Layer: 0
   m_Name: Collectable_Heart
   m_TagString: Untagged
@@ -224,6 +225,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.70000005, y: 1.70000005, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11458142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f3ac1e16430f5408eb54e85ffb73fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11498340
 MonoBehaviour:
   m_ObjectHideFlags: 1
