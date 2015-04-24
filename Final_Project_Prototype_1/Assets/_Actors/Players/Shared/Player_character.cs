@@ -77,10 +77,11 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public virtual void Awake()
+    public override void Start()
     {
+        base.Start();
         Model.get().register_player(gameObject);
-    }// Awake
+    }// Start
 
     //--------------------------------------------------------------------------
 

@@ -12,8 +12,9 @@ public class Enemy : Actor
     //protected override float invincibility_flash_duration {
     //   get { return 0f; } }
 
-    public virtual void Awake()
+    public override void Start()
     {
+        base.Start();
         Model.get().register_enemy(this);
     }
 

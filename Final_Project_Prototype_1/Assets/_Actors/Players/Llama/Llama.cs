@@ -72,7 +72,7 @@ public class Llama : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void Awake()
+    void Awake()
     {
         // if (instance != null && instance != this)
         // {
@@ -81,7 +81,7 @@ public class Llama : Player_character
         //     return;
         // }
 
-        base.Awake();
+        // base.Awake();
 
         instance = this;
     }// Awake

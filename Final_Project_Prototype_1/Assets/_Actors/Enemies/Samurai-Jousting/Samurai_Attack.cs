@@ -75,9 +75,8 @@ public class Samurai_Attack : Enemy
 
     //--------------------------------------------------------------------------
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
         instance = this;
     }
 

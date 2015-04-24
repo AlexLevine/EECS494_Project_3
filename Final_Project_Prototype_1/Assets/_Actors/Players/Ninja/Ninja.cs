@@ -82,9 +82,9 @@ public class Ninja : Player_character
 
     //--------------------------------------------------------------------------
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
+        // base.Awake();
 
         instance = this;
     }// Awake
