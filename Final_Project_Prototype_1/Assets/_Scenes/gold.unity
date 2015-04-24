@@ -23096,7 +23096,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -110}
+  m_AnchoredPosition: {x: 0, y: -1}
   m_SizeDelta: {x: 1200, y: 530}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1396389845
@@ -27125,6 +27125,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 11425648, guid: 0fc1f2a02e913de4a8e3434943841048, type: 2}
+      propertyPath: overworld_music
+      value: 
+      objectReference: {fileID: 2001823285}
     - target: {fileID: 11472304, guid: 0fc1f2a02e913de4a8e3434943841048, type: 2}
       propertyPath: retreat_point_markers.Array.data[0]
       value: 
@@ -35069,6 +35073,10 @@ Transform:
   - {fileID: 395069852}
   m_Father: {fileID: 871482868}
   m_RootOrder: 1
+--- !u!1 &2001823285
+GameObject:
+  m_PrefabParentObject: {fileID: 152364, guid: bcbd7b3aedad24024a191165f8946b47, type: 2}
+  m_PrefabInternal: {fileID: 1150917756}
 --- !u!1 &2002628763
 GameObject:
   m_ObjectHideFlags: 0

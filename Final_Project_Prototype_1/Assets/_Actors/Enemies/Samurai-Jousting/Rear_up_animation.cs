@@ -5,6 +5,8 @@ public class Rear_up_animation : Switchee
 {
     public GameObject roar_sound_player;
 
+    public GameObject overworld_music; 
+
     public bool is_rearing_up
     {
         get
@@ -41,6 +43,8 @@ public class Rear_up_animation : Switchee
         base.activate(callback, callback_delay);
 
         StartCoroutine(do_rear_up());
+        print("Slowing Down Game Music");
+        StartCoroutine(slow_down_game_music());
     }
 
     //--------------------------------------------------------------------------
@@ -63,5 +67,17 @@ public class Rear_up_animation : Switchee
     {
         print("roar!");
         roar_sound_player.GetComponent<Sound_effect_randomizer>().play();
+    }
+
+    IEnumerator slow_down_game_music()
+    {
+        yield return new WaitForSeconds(1.5f);
+        AudioSource game_music = overworld_music.GetComponent<AudioSource>();
+
+        while(game_music.pitch < 1.25)
+        {
+            game_music.pitch += 0.001f;
+            yield return null; 
+        }
     }
 }
