@@ -1557,7 +1557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 140478}
-  health_: 0
   lock_on_bar: {fileID: 0}
   swing_sound_player: {fileID: 107470}
   basic_attack_vocals: {fileID: 114038}

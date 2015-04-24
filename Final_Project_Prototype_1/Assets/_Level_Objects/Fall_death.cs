@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fall_death : MonoBehaviour//, Checkpoint_load_subscriber
+public class Fall_death : MonoBehaviour, Checkpoint_load_subscriber
 {
-    // void Start()
-    // {
-    //     Checkpoint.subscribe(this);
-    // }
+    public bool is_dying = false; 
+
+    void Start()
+    {
+        Checkpoint.subscribe(this);
+    }
 
     void OnTriggerEnter(Collider c)
     {
@@ -14,7 +16,12 @@ public class Fall_death : MonoBehaviour//, Checkpoint_load_subscriber
         {
             return;
         }
+        if(is_dying)
+        {
+            return; 
+        }
 
+        is_dying = true; 
         Camera_follow.stop_following_player();
         Checkpoint.load_last_checkpoint(notify_checkpoint_load);
     }
@@ -26,6 +33,7 @@ public class Fall_death : MonoBehaviour//, Checkpoint_load_subscriber
 
     public void notify_checkpoint_load()
     {
+        is_dying = false; 
         Camera_follow.start_following_player();
     }// notify_checkpoint_load
 }

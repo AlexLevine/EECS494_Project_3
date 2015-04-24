@@ -33,13 +33,14 @@ public class Fade_screen : MonoBehaviour
 
     public void fade_to_black(Fade_screen_callback callback=null)
     {
-        // print("fade_to_black");
+        print("fade_to_black");
+        
         StartCoroutine(fade_screen(true, callback));
     }
 
     public void fade_from_black(Fade_screen_callback callback=null)
     {
-        // print("fade_from_black");
+        print("fade_from_black");
         StartCoroutine(fade_screen(false, callback));
     }
 
@@ -64,7 +65,7 @@ public class Fade_screen : MonoBehaviour
             yield return null;
             time_elapsed += Time.deltaTime;
             lerp_percent = time_elapsed / fade_duration;
-
+            // print(lerp_percent);
             if (lerp_percent > 1)
             {
                 lerp_percent = 1;

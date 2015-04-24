@@ -58,29 +58,35 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         // transform.position = calculate_target_camera_position();
         // transform.rotation = calculate_target_camera_rotation(
         //     transform.position);
+
+        StartCoroutine(LateFixedUpdate());
     }
 
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    void LateUpdate()
+    IEnumerator LateFixedUpdate()
     {
-        if (following_player_)
+        while(true)
         {
-            point_of_interest_ = calculate_player_midpoint();
+            yield return new WaitForFixedUpdate();
+            if (following_player_)
+            {
+                point_of_interest_ = calculate_player_midpoint();
+            }
+
+            var target_position = calculate_target_camera_position();
+            var target_rotation = calculate_target_camera_rotation(
+                target_position);
+
+            if (!is_transitioning_)
+            {
+                update_smooth_follow(target_position, target_rotation);
+                continue;
+            }
+
+            update_transition(target_position, target_rotation);
         }
-
-        var target_position = calculate_target_camera_position();
-        var target_rotation = calculate_target_camera_rotation(
-            target_position);
-
-        if (!is_transitioning_)
-        {
-            update_smooth_follow(target_position, target_rotation);
-            return;
-        }
-
-        update_transition(target_position, target_rotation);
     }// LateUpdate
 
     //--------------------------------------------------------------------------
