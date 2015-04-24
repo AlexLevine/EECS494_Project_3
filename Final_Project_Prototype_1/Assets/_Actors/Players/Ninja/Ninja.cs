@@ -20,6 +20,8 @@ public class Ninja : Player_character
 
     public bool being_thrown = false;
 
+    public override float run_speed { get { return 13f; } }
+
     // The Ninja is immune to attacks while his sword is able to deal damage.
     public bool sword_swing_invincibility_active
     {
@@ -418,7 +420,7 @@ public class Ninja : Player_character
 
     protected override void play_health_item_sound()
     {
-        // health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
+        health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
     }
 }
 
