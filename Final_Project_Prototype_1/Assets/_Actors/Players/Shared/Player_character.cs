@@ -87,6 +87,11 @@ public class Player_character : Actor
 
     void Update()
     {
+        if (actors_paused)
+        {
+            return;
+        }
+
         process_input();
     }
 
