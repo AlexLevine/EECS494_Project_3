@@ -6,9 +6,8 @@ public class Model : MonoBehaviour
 {
     private static Model instance;
 
-    private List<GameObject> players = new List<Player_character>();
-    private List<GameObject> enemies = new List<Enemy>();
-    private List<Checkpoint> checkpoints = new List<Checkpoint>();
+    private List<GameObject> players = new List<GameObject>();
+    private List<Enemy> enemies = new List<Enemy>();
 
     private List<Checkpoint_load_subscriber> checkpoint_subscribers =
             new List<Checkpoint_load_subscriber>();
@@ -23,9 +22,43 @@ public class Model : MonoBehaviour
         instance = this;
     }
 
-    public void register_enemy(GameObject enemy)
+    public void register_enemy(Enemy enemy)
     {
         enemies.Add(enemy);
+    }
+
+    public void remove_enemy(Enemy enemy)
+    {
+        var removed = enemies.Remove(enemy);
+        print("removed: " + removed);
+        broadcast_enemy_gone(enemy);
+    }
+
+    public void register_player(GameObject player)
+    {
+        players.Add(player);
+    }
+
+    public List<GameObject> get_players()
+    {
+        return players;
+    }
+
+    public void subscribe_to_checkpoint_load(
+        Checkpoint_load_subscriber subscriber)
+    {
+        checkpoint_subscribers.Add(subscriber);
+    }
+
+    public void unsubscribe_from_checkpoint_load(
+        Checkpoint_load_subscriber subscriber)
+    {
+        checkpoint_subscribers.Remove(subscriber);
+    }
+
+    public List<Checkpoint_load_subscriber> get_checkpoint_subscribers()
+    {
+        return checkpoint_subscribers;
     }
 
     // // Use this for initialization
@@ -34,22 +67,42 @@ public class Model : MonoBehaviour
 
     // }
 
-    // // Update is called once per frame
-    // void Update ()
+    // Update is called once per frame
+    // void LateUpdate()
     // {
-
+    //     enemies.RemoveAll((Enemy obj) => obj == null);
     // }
 
     public void reset()
     {
-
+        players = new List<GameObject>();
+        enemies = new List<Enemy>();
+        checkpoint_subscribers = new List<Checkpoint_load_subscriber>();
     }
 
-    public List<GameObject> get_potential_lock_on_targets(
+    //--------------------------------------------------------------------------
+
+    public void broadcast_enemy_gone(Enemy enemy)
+    {
+        foreach (var player in players)
+        {
+            if (player == null)
+            {
+                continue;
+            }
+
+            player.GetComponent<Player_character>().notify_enemy_gone(
+                enemy.gameObject);
+        }
+    }// broadcast_enemy_gone
+
+    //--------------------------------------------------------------------------
+
+    public List<Enemy> get_potential_lock_on_targets(
         GameObject player)
     {
         return enemies.FindAll(
-            (GameObject obj) => Vector3.Angle(
+            (Enemy obj) => Vector3.Angle(
                 player.transform.position, obj.transform.position) <= 90f);
     }// get_potential_lock_on_targets
 
@@ -67,7 +120,7 @@ public class Model : MonoBehaviour
 
         // I am currently very angry at C#'s apparent lack of a min() function
         // that does this.
-        GameObject closest_target = potential_targets[0];
+        var closest_target = potential_targets[0];
         var closest_distance = Vector3.Distance(
             player.transform.position, closest_target.transform.position);
         foreach (var obj in potential_targets)
@@ -81,7 +134,7 @@ public class Model : MonoBehaviour
             }
         }
 
-        return closest_target;
+        return closest_target.gameObject;
         // return potential_targets.MinBy(
         //     (GameObject obj) => Vector3.Distance(
         //         transform.position, obj.transform.position));

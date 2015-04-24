@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class Enemy : Actor
 {
-    public static List<GameObject> enemies = new List<GameObject>();
-
     public virtual int score_when_killed { get { return 1; } }
 
     public virtual float attack_power { get { return 1f; } }
@@ -16,7 +14,7 @@ public class Enemy : Actor
 
     public virtual void Awake()
     {
-        enemies.Add(gameObject);
+        Model.get().register_enemy(this);
     }
 
 
@@ -35,50 +33,6 @@ public class Enemy : Actor
     // {
     //     base.Update();
     // }// Update
-
-    //--------------------------------------------------------------------------
-
-    public static List<GameObject> get_potential_lock_on_targets(
-        GameObject player)
-    {
-        return enemies.FindAll(
-            (GameObject obj) => Vector3.Angle(
-                player.transform.position, obj.transform.position) <= 90f);
-    }// get_potential_lock_on_targets
-
-    //--------------------------------------------------------------------------
-
-    public static GameObject get_closest_potential_lock_on_target(
-        GameObject player)
-    {
-        var potential_targets = get_potential_lock_on_targets(player);
-
-        if (potential_targets.Count == 0)
-        {
-            return null;
-        }
-
-        // I am currently very angry at C#'s apparent lack of a min() function
-        // that does this.
-        GameObject closest_target = potential_targets[0];
-        var closest_distance = Vector3.Distance(
-            player.transform.position, closest_target.transform.position);
-        foreach (var obj in potential_targets)
-        {
-            var distance = Vector3.Distance(
-                player.transform.position, obj.transform.position);
-            if (distance < closest_distance)
-            {
-                closest_target = obj;
-                closest_distance = distance;
-            }
-        }
-
-        return closest_target;
-        // return potential_targets.MinBy(
-        //     (GameObject obj) => Vector3.Distance(
-        //         transform.position, obj.transform.position));
-    }// get_closest_potential_lock_on_target
 
     //--------------------------------------------------------------------------    --------------------------------------------------------------------------
 
@@ -130,6 +84,7 @@ public class Enemy : Actor
         boom.transform.position = transform.position;
 
         drop_item();
+        Model.get().remove_enemy(this);
 
         Destroy(gameObject);
     }// on_death
@@ -148,9 +103,10 @@ public class Enemy : Actor
 
     //--------------------------------------------------------------------------
 
-    void OnDestroy()
-    {
-        enemies.Remove(gameObject);
-        Player_character.notify_enemy_gone(gameObject);
-    }// OnDestroy
+    // void OnDestroy()
+    // {
+    //     Model.get().remove_enemy(gameObject);
+    //     // enemies.Remove(gameObject);
+    //     // Player_character.notify_enemy_gone(gameObject);
+    // }// OnDestroy
 }
