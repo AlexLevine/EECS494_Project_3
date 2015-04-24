@@ -105,4 +105,15 @@ public class Stationary_enemy_script : Enemy
             closest_player = Ninja.get().gameObject;
         }
     }// get_closest_player
+
+    public override void on_death(GameObject killer)
+    {
+        play_damage_vocals();
+        base.on_death(killer);
+    }
+
+    public override void play_damage_vocals()
+    {
+        GetComponent<Sound_effect_randomizer>().play();
+    }
 }

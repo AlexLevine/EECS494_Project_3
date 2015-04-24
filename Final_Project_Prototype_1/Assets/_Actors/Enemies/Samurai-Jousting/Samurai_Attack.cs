@@ -5,6 +5,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class Samurai_Attack : Enemy
 {
+    public GameObject damage_vocals;
+    public GameObject death_vocals;
+
     public enum Samurai_state_e
     {
         WAITING,
@@ -334,12 +337,18 @@ public class Samurai_Attack : Enemy
 
     //--------------------------------------------------------------------------
 
+    public override void play_damage_vocals()
+    {
+        damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }
+
     public override void on_death(GameObject killer)
     {
         print("da boss mans is ded");
         Camera.main.GetComponent<Camera_follow>().deactivate_boss_mode();
         Player_character.force_team_up = false;
 
+        death_vocals.GetComponent<Sound_effect_randomizer>().play();
         base.on_death(killer);
         diamond_cut_scene.GetComponent<Cut_scene>().activate();
     }

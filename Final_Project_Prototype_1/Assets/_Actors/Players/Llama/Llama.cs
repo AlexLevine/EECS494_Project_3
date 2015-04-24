@@ -10,6 +10,7 @@ public class Llama : Player_character
     public GameObject charge_and_throw_vocals;
     public GameObject spit_sounds;
     public GameObject death_vocals;
+    public GameObject health_item_pickup_sound;
 
     public GameObject spit_prefab;
     public GameObject spit_spawn_point;
@@ -417,5 +418,10 @@ public class Llama : Player_character
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
     }// play_damage_vocals
+
+    protected override void play_health_item_sound()
+    {
+        health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
+    }
 }
 

@@ -5,6 +5,8 @@ public class Breakable_wall : MonoBehaviour
 {
     public GameObject fragment_cube_prefab;
 
+    public GameObject break_sound;
+
     bool is_dead = false;
     private float time_until_despawn = 1f;
 
@@ -100,6 +102,9 @@ public class Breakable_wall : MonoBehaviour
             // block.TriggerDestruction(new Vector3(0,0,0), 11f);
         }
         is_dead = true;
+
+        break_sound.GetComponent<Sound_effect_randomizer>().play();
+
     }
 
     // void OnTriggerStay(Collider other)

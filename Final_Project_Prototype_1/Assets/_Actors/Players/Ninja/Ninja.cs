@@ -8,6 +8,11 @@ public class Ninja : Player_character
     public GameObject basic_attack_vocals;
     public GameObject damage_vocals;
     public GameObject death_vocals;
+    public GameObject spin_attack_vocals;
+    public GameObject spin_attack_sound;
+    public GameObject squish_sound;
+    public GameObject unsquish_sound;
+    public GameObject health_item_pickup_sound;
 
     public GameObject projectile_prefab;
     public GameObject sword_obj;
@@ -157,8 +162,12 @@ public class Ninja : Player_character
     public void on_sword_spin_start()
     {
         sword_is_spinning = true;
+
         get_sword().GetComponent<Collider>().enabled = true;
         get_sword().GetComponent<TrailRenderer>().enabled = true;
+
+        spin_attack_vocals.GetComponent<Sound_effect_randomizer>().play();
+        spin_attack_sound.GetComponent<Sound_effect_randomizer>().play();
     }// on_sword_spin_start
 
     public void on_sword_spin_end()
@@ -352,7 +361,12 @@ public class Ninja : Player_character
             var adjusted_pos = transform.position;
             adjusted_pos.y += GetComponent<Collider>().bounds.extents.y;
             transform.position = adjusted_pos;
+
+            unsquish_sound.GetComponent<Sound_effect_randomizer>().play();
+            return;
         }
+
+        squish_sound.GetComponent<Sound_effect_randomizer>().play();
     }// toggle_shrunk
 
     //--------------------------------------------------------------------------
@@ -400,6 +414,11 @@ public class Ninja : Player_character
     public void play_damage_vocal_for_death_animation()
     {
         damage_vocals.GetComponent<Sound_effect_randomizer>().play();
+    }
+
+    protected override void play_health_item_sound()
+    {
+        health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
     }
 }
 
