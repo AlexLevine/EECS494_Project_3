@@ -68,6 +68,7 @@ public class Team_up_animation : MonoBehaviour
             break;
 
         case Team_up_animation_state_e.DIVING:
+            if (Player_character.)
             step_dive();
             break;
         }
@@ -109,6 +110,7 @@ public class Team_up_animation : MonoBehaviour
         {
             state = Team_up_animation_state_e.NOT_PLAYING;
 
+            GetComponent<Ninja>().team_up_engage();
             Actor.actors_paused = false;
             // Time.timeScale = 1;
             // Input_reader.toggle_player_controls(true);

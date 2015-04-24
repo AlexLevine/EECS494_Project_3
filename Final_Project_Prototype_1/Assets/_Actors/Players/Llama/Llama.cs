@@ -268,6 +268,12 @@ public class Llama : Player_character
             return;
         }
 
+        if (force_team_up)
+        {
+            // play vocal
+            return;
+        }
+
         animator.SetTrigger(throw_button_pressed_trigger_id);
         charge_and_throw_vocals.GetComponent<Sound_effect_randomizer>().play();
 
