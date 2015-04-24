@@ -6,7 +6,6 @@ using InControl;
 public class Input_reader : MonoBehaviour
 {
     public int player_id = 0;
-    // public static List<Input_reader> input_readers = new List<Input_reader>();
 
     public InputDevice input_device;
 
@@ -49,7 +48,7 @@ public class Input_reader : MonoBehaviour
             InputManager.AttachDevice(input_device);
         }
 
-        pc = Player_character.player_characters[
+        pc = Model.get().get_players()[
                 player_id].GetComponent<Player_character>();
         pc.input_device = input_device;
 

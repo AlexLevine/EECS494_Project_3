@@ -12,9 +12,6 @@ public class Checkpoint : MonoBehaviour
     private bool ninja_passed_checkpoint = false;
     private bool llama_passed_checkpoint = false;
 
-    private static List<Checkpoint_load_subscriber> subscribers =
-            new List<Checkpoint_load_subscriber>();
-
     //--------------------------------------------------------------------------
 
     void Start()
@@ -26,7 +23,7 @@ public class Checkpoint : MonoBehaviour
 
     public static void subscribe(Checkpoint_load_subscriber subscriber)
     {
-        subscribers.Add(subscriber);
+        Model.get().subscribe_to_checkpoint_load(subscriber);
     }// subscribe
 
     //--------------------------------------------------------------------------
@@ -103,7 +100,7 @@ public class Checkpoint : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        foreach (var subscriber in subscribers)
+        foreach (var subscriber in Model.get().get_checkpoint_subscribers())
         {
             subscriber.notify_checkpoint_load();
         }
@@ -116,7 +113,8 @@ public class Checkpoint : MonoBehaviour
 
     public static void unsubscribe(GameObject obj)
     {
-        subscribers.Remove(obj.GetComponent<Checkpoint_load_subscriber>());
+        Model.get().unsubscribe_from_checkpoint_load(
+            obj.GetComponent<Checkpoint_load_subscriber>());
     }
 
 }

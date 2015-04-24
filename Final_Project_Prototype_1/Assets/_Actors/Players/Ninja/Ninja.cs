@@ -418,7 +418,7 @@ public class Ninja : Player_character
 
     protected override void play_health_item_sound()
     {
-        health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
+        // health_item_pickup_sound.GetComponent<Sound_effect_randomizer>().play();
     }
 }
 

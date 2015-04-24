@@ -8,7 +8,6 @@ using InControl;
  RequireComponent(typeof(Input_reader))]
 public class Player_character : Actor
 {
-    public static List<GameObject> player_characters = new List<GameObject>();
     public static bool force_team_up = false;
 
     public static bool controls_enabled = true;
@@ -69,7 +68,7 @@ public class Player_character : Actor
 
     public static void drop_lock_on_targets()
     {
-        foreach (var player in player_characters)
+        foreach (var player in Model.get().get_players())
         {
             var pc = player.GetComponent<Player_character>();
             pc.release_lock_on();
@@ -80,7 +79,7 @@ public class Player_character : Actor
 
     public virtual void Awake()
     {
-        player_characters.Add(gameObject);
+        Model.get().register_player(gameObject);
     }// Awake
 
     //--------------------------------------------------------------------------
@@ -201,7 +200,7 @@ public class Player_character : Actor
         }
 
         var closest_enemy =
-                Enemy.get_closest_potential_lock_on_target(gameObject);
+                Model.get().get_closest_potential_lock_on_target(gameObject);
         var enemy_on_screen = Camera_follow.point_in_viewport(
             closest_enemy.transform.position);
         // var enemy_visible = closest_enemy.GetComponent<Renderer>().isVisible;
@@ -233,30 +232,14 @@ public class Player_character : Actor
 
     //--------------------------------------------------------------------------
 
-    public static void notify_enemy_gone(GameObject enemy)
-    {
-        foreach (var player in player_characters)
-        {
-            if (player == null)
-            {
-                continue;
-            }
-
-            player.GetComponent<Player_character>().on_enemy_gone(
-                enemy.gameObject);
-        }
-    }// notify_enemy_gone
-
-    //--------------------------------------------------------------------------
-
-    protected virtual void on_enemy_gone(GameObject enemy)
+    public virtual void notify_enemy_gone(GameObject enemy)
     {
         if (enemy == lock_on_target)
         {
             lock_on_to_enemy(
-                Enemy.get_closest_potential_lock_on_target(gameObject));
+                Model.get().get_closest_potential_lock_on_target(gameObject));
         }
-    }// on_enemy_gone
+    }// notify_enemy_gone
 
     //--------------------------------------------------------------------------
 
@@ -346,7 +329,7 @@ public class Player_character : Actor
     protected void team_up_engage()
     {
         // print(player_characters.Count);
-        foreach (var player_char in player_characters)
+        foreach (var player_char in Model.get().get_players())
         {
             var pc = player_char.GetComponent<Player_character>();
             pc.teamed_up = true;
@@ -369,7 +352,7 @@ public class Player_character : Actor
             return;
         }
 
-        foreach (var player_char in player_characters)
+        foreach (var player_char in Model.get().get_players())
         {
             var pc = player_char.GetComponent<Player_character>();
             pc.teamed_up = false;
@@ -394,7 +377,7 @@ public class Player_character : Actor
 
     public GameObject get_other_player()
     {
-        foreach (var pc in player_characters)
+        foreach (var pc in Model.get().get_players())
         {
             if (pc != gameObject)
             {
