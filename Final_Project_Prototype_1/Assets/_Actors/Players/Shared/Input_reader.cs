@@ -6,7 +6,7 @@ using InControl;
 public class Input_reader : MonoBehaviour
 {
     public int player_id = 0;
-    public static List<Input_reader> input_readers = new List<Input_reader>();
+    // public static List<Input_reader> input_readers = new List<Input_reader>();
 
     public InputDevice input_device;
 
@@ -26,7 +26,7 @@ public class Input_reader : MonoBehaviour
         //     return;
         // }
 
-        input_readers.Add(this);
+        // input_readers.Add(this);
 
     }
 
