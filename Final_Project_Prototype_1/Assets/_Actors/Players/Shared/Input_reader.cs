@@ -36,6 +36,10 @@ public class Input_reader : MonoBehaviour
     {
         Player_character.controls_enabled = false;
 
+        yield return null;
+
+        Player_character.controls_enabled = false;
+
         input_device = (InputManager.Devices.Count > player_id) ?
                        InputManager.Devices[player_id] : null;
 
@@ -58,13 +62,13 @@ public class Input_reader : MonoBehaviour
     //--------------------------------------------------------------------------
 
     // Update is called once per frame
-    void Update()
-    {
-        // if (controls_enabled && input_device != null)
-        // {
-        //     process_input();
-        // }
-    }
+    // void Update()
+    // {
+    //     // if (controls_enabled && input_device != null)
+    //     // {
+    //     //     process_input();
+    //     // }
+    // }
 
     //--------------------------------------------------------------------------
 

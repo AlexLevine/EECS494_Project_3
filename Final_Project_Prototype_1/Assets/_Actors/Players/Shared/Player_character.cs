@@ -398,6 +398,11 @@ public class Player_character : Actor
             return;
         }
 
+        if (input_device.GetControl(InputControlType.Start).WasPressed)
+        {
+            print("start");
+        }
+
         if (input_device.GetControl(InputControlType.Action1).WasPressed)
         {
             jump();
