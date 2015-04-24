@@ -321,9 +321,10 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         var desired_forward = Vector3.RotateTowards(
             Camera.main.transform.forward, direction, 360f, 0f);
 
-        var new_rotation = Quaternion.LookRotation(desired_forward);
+        var new_rotation = Quaternion.LookRotation(desired_forward).eulerAngles;
+        new_rotation.x = 30f;
 
-        return new_rotation;
+        return Quaternion.Euler(new_rotation);
     }
 
     //--------------------------------------------------------------------------

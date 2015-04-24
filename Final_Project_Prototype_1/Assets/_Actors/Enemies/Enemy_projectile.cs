@@ -9,7 +9,7 @@ public class Enemy_projectile : MonoBehaviour
 
     private int attack_power = 1;
 
-    void Start()
+    void Awake()
     {
         GetComponent<Collider>().isTrigger = true;
         GetComponent<Rigidbody>().isKinematic = true;

@@ -33,7 +33,7 @@ public class Player_character : Actor
     }
 
     // Movement physics
-    public float run_speed { get { return 10f; } }
+    public virtual float run_speed { get { return 10f; } }
     // public float run_acceleration { get { return 30f; } }
     public override float gravity { get { return -40f; } }
     // Note that if max_jump_ascend_time is too small, the character will jump
