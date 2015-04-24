@@ -251,6 +251,14 @@ public class Camera_follow : MonoBehaviour//, Checkpoint_load_subscriber
         transition_time_elapsed = 0;
         current_transition_duration = transition_duration;
 
+        if (transition_duration >= 0.1f)
+        {
+            return;
+        }
+
+        transform.position = calculate_target_camera_position();
+        transform.rotation = calculate_target_camera_rotation(
+            transform.position);
     }// start_transition
 
     //--------------------------------------------------------------------------
