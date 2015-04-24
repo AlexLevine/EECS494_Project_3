@@ -12,7 +12,7 @@ public class Pause_screen_controller : MonoBehaviour {
     }// get
 
 
-    public GameObject start_screen; 
+    // public GameObject start_screen; 
 
     void Awake()
     {
@@ -28,11 +28,10 @@ public class Pause_screen_controller : MonoBehaviour {
 
     void Update()
     {
-        if(start_screen != null && start_screen.activeSelf)
-        {
-            print("Yoooo");
-            return; 
-        }
+        // if(start_screen != null && start_screen.activeSelf)
+        // {
+        //     return; 
+        // }
 
         if (Llama.get().input_device.GetControl(InputControlType.Start).WasPressed || 
             Ninja.get().input_device.GetControl(InputControlType.Start).WasPressed)
@@ -44,13 +43,7 @@ public class Pause_screen_controller : MonoBehaviour {
                 // Pause_screen_controller.get().gameObject.SetActive(false);
                 gameObject.SetActive(false);
             }
-            // Pause Screen is not visible
-            else
-            {
-                Actor.actors_paused = true; 
-                // Pause_screen_controller.get().gameObject.SetActive(true);    
-                gameObject.SetActive(true);    
-            }
+            
         }
 
     
@@ -58,7 +51,7 @@ public class Pause_screen_controller : MonoBehaviour {
             Ninja.get().input_device.GetControl(InputControlType.Back).WasPressed)        {
             if(Pause_screen_controller.get().gameObject.activeSelf)
             {
-                // Restart
+                Application.LoadLevel(Application.loadedLevel);
             }
         }
     }

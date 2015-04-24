@@ -403,6 +403,12 @@ public class Player_character : Actor
             return;
         }
 
+        if(input_device.GetControl(InputControlType.Start).WasPressed)
+        {
+            Pause_screen_controller.get().gameObject.SetActive(true);
+            Actor.actors_paused = true; 
+        }
+
         if (input_device.GetControl(InputControlType.Action1).WasPressed)
         {
             jump();
